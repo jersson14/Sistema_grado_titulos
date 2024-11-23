@@ -1521,15 +1521,20 @@ function fetchSheetData() {
               console.log('Fila encontrada:', filaEncontrada);
               fillFormWithData(filaEncontrada);  // Llamamos a la función para llenar el formulario
           } else {
-              console.log('No se encontró un estudiante con ese DNI.');
+              // Ventana de advertencia si no se encuentra el DNI
+              Swal.fire("Mensaje de Advertencia", "No se encontró un estudiante con ese DNI.", "warning");
+              return;  // Detenemos ejecución adicional en este bloque
           }
       } else {
-          console.log('No se encontraron datos.');
+          // Ventana de advertencia si no hay datos
+          Swal.fire("Mensaje de Advertencia", "No se encontraron datos.", "warning");
+          return;  // Detenemos ejecución adicional en este bloque
       }
   }).catch(function(error) {
       console.error('Error al obtener los datos:', error);
   });
 }
+
 
 function fillFormWithData(fila) {
   // Llenamos los campos con los datos obtenidos de la fila

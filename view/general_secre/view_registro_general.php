@@ -1,4 +1,6 @@
 
+<script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+<script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
 <script src="../js/console_registro_general_titulo_secre.js?rev=<?php echo time();?>"></script>
 
 <!-- Content Header (Page header) -->
@@ -152,7 +154,7 @@
                         <div class="col-12 form-group" style="color:red">
                             <h6><b>Campos Obligatorios (*)</b></h6>
                         </div><br>
-                        <div class="col-3 form-group">
+                        <div class="col-2 form-group">
                             <label for="" style="font-size:small;">Tipo de documento<b style="color:red">(*)</b>:</label>
                             <select class="form-control" id="select_tipo_documento" style="width:100%">
                                 <option value="" disabled>Seleccione</option>
@@ -162,19 +164,24 @@
                             </select>
                         </div>
 
-                        <div id="dni_section" class="col-3 form-group">
+                        <div id="dni_section" class="col-4 form-group">
                             <label for="" style="font-size:small;">N° Documento<b style="color:red">(*)</b>:</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="txt_dni">
                                 <div class="input-group-append">
-                                    <button onclick="" class="btn btn-primary" id="prueba"><i class="fa fa-search"></i><b> Reniec</b></button>
+                                    <button onclick="" class="btn btn-success" id="umil" hidden><i class="fa fa-search"></i><b> UMIL</b></button>
+                                    <button onclick="" class="btn btn-primary" id="prueba" ><i class="fa fa-search" ></i><b> Reniec</b></button>
                                 </div>
                             </div>
                         </div>
-
-                        <div id="otros_documentos_section" class="col-3 form-group" style="display: none;">
-                            <label for="" style="font-size:small;">N° Documento<b style="color:red">(*)</b>:</label>
-                            <input type="text" class="form-control" id="txt_dni2">
+                        <div id="otros_documentos_section" class="col-4 form-group" style="display: none;">
+                        <label for="" style="font-size:small;">N° Documento<b style="color:red">(*)</b>:</label>
+                        <div class="input-group">
+                                <input type="text" class="form-control" id="txt_dni2">
+                                <div class="input-group-append">
+                                    <button onclick="" class="btn btn-success" id="umil2" hidden><i class="fa fa-search" ></i><b> UMIL</b></button>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="col-3 form-group">
@@ -675,66 +682,67 @@
                                 </select>                            
                             </div>
                             <div class="col-12 form-group" style="border: 1px solid #ccc; padding: 10px;" id="datos_antiguos">
-                                <li for="" style="color:white;background-color:black;text-align:center;font-family:Arial">    <b>DATOS DEL DIPLOMA</b>
+                                <li for="" style="color:white;background-color:black;text-align:center;font-family:Arial">    
+                                    <b>DATOS DEL DIPLOMA</b>
                                 </li><br>
                                 <div class="row">         
                                 <input type="text" id="txt_id_diploma" hidden>     
                                 <div class="col-2 form-group">
                                         <label for="" style="font-size:small;">Fecha de C.U.:<b style="color:red">(*)</b>:</label>
-                                        <input type="date" class="form-control" id="txt_fecha_cu_editar">                                                      
+                                        <input type="date" class="form-control" id="txt_fecha_cu_editar" readonly>                                                      
                                     </div>
                                     <div class="col-2 form-group">
                                         <label for="" style="font-size:small;">Fecha de Firma<b style="color:red">(*)</b>:</label>
-                                        <input type="date" class="form-control" id="txt_fecha_firma_editar">                           
+                                        <input type="date" class="form-control" id="txt_fecha_firma_editar" readonly>                           
                                     </div>      
                                     <div class="col-4 form-group">
                                         <label for="" style="font-size:small;">Resolucíon N°<b style="color:red">(*)</b>:</label>
-                                        <input type="text" class="form-control" id="txt_resol_editar">                                                     
+                                        <input type="text" class="form-control" id="txt_resol_editar" readonly>                                                     
                                     </div>
                                     <div class="col-2 form-group">
                                         <label for="" style="font-size:small;">Fecha de Resolución<b style="color:red">(*)</b>:</label>
-                                        <input type="date" class="form-control" id="txt_fecha_reso_editar">                           
+                                        <input type="date" class="form-control" id="txt_fecha_reso_editar" readonly>                           
                                     </div>     
                                     <div class="col-2 form-group">
                                         <label for="" style="font-size:small;">Diploma N°<b style="color:red">(*)</b>:</label>
-                                        <input type="text" class="form-control" id="txt_diploma_nume_editar">                           
+                                        <input type="text" class="form-control" id="txt_diploma_nume_editar" readonly>                           
                                     </div>
                                     <div class="col-3 form-group">
                                         <label for="" style="font-size:small;">Registro N°<b style="color:red">(*)</b>:</label>
-                                        <input type="text" class="form-control" id="txt_registro_n°_editar">                           
+                                        <input type="text" class="form-control" id="txt_registro_n°_editar" readonly>                           
                                     </div>
                                     
                                     <div class="col-3 form-group">
                                         <label for="" style="font-size:small;">Registro Libro<b style="color:red">(*)</b>:</label>
-                                        <input type="text" class="form-control" id="txt_registro_libr_editar">                           
+                                        <input type="text" class="form-control" id="txt_registro_libr_editar" readonly>                           
                                     </div>
                                     <div class="col-3 form-group">
                                         <label for="" style="font-size:small;">Registro Folio<b style="color:red">(*)</b>:</label>
-                                        <input type="text" class="form-control" id="txt_registro_folio_editar">                           
+                                        <input type="text" class="form-control" id="txt_registro_folio_editar" readonly>                           
                                     </div>
                                    
                                     <div class="col-3 form-group">
                                         <label for="" style="font-size:small;">Tipo de diploma<b style="color:red">(*)</b>:</label>
-                                        <select class="form-control" id="select_tipo_diplo_editar" style="width:100%">
+                                        <select class="form-control" id="select_tipo_diplo_editar" style="width:100%" readonly>
                                             <option value="O">ORIGINAL</option>
                                             <option value="D">DUPLICADO</option>
                                         </select>                            
                                     </div>
                                     <div class="col-3 form-group">
                                         <label for="" style="font-size:small;">Fecha inicio trámite<b style="color:red">(*)</b>:</label>
-                                        <input type="date" class="form-control" id="txt_fecha_inicio_tra_editar">                           
+                                        <input type="date" class="form-control" id="txt_fecha_inicio_tra_editar" readonly>                           
                                     </div>
                                     <div class="col-3 form-group">
                                     <label for="" style="font-size:small;">Número de creditos<b style="color:red">(*)</b>:</label>
-                                    <input type="number" class="form-control" id="txt_nro_credi_editar">                           
+                                    <input type="number" class="form-control" id="txt_nro_credi_editar" readonly>                           
                                     </div>
                                     <div class="col-3 form-group">
                                     <label for="" style="font-size:small;">Nro. Oficio<b style="color:red">(*)</b>:</label>
-                                        <input type="text" class="form-control" id="txt_nro_oficio_editar">                           
+                                        <input type="text" class="form-control" id="txt_nro_oficio_editar" readonly>                           
                                     </div>
                                     <div class="col-3 form-group">
                                         <label for="" style="font-size:small;">Fecha Secretaria General<b style="color:red">(*)</b>:</label>
-                                        <input type="date" class="form-control" id="txt_fecha_secre_editar">                           
+                                        <input type="date" class="form-control" id="txt_fecha_secre_editar" readonly>                           
                                     </div>
                             </div>
                             </div>
@@ -1634,7 +1642,14 @@ $.ajax({
     }
 });
 })
+//ESTOS 2 TRAE DATOS DE GOOGLE API
 
+document.getElementById('umil').addEventListener('click', function() {
+    fetchSheetData(); // Llama a la función que obtiene los datos de la hoja de Google Sheets
+});
+document.getElementById('umil2').addEventListener('click', function() {
+    fetchSheetData(); // Llama a la función que obtiene los datos de la hoja de Google Sheets
+});
 </script>
 <style>
         .hiddenantiguo {
@@ -1645,116 +1660,3 @@ $.ajax({
 
 
 
-
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Formulario de Email</title>
-    
-    <!-- Importante: Cargar la versión 4 específicamente -->
-    
-    <style>
-        .field {
-            margin-bottom: 15px;
-        }
-        .field label {
-            display: block;
-            font-size: 14px;
-            color: #555;
-            margin-bottom: 5px;
-        }
-        .field input, .field textarea {
-            display: block;
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-        .field textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-    </style>
-</head>
-<body>
-<div class="modal fade" id="modalEmail" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Enviar Email</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="form">
-                    <div class="field">
-                        <label for="to_name">Nombre del destinatario</label>
-                        <input type="text" name="to_name" id="to_name" required>
-                    </div>
-                    <div class="field">
-                        <label for="from_name">Tu nombre</label>
-                        <input type="text" name="from_name" id="from_name" required>
-                    </div>
-                    <div class="field">
-                        <label for="message">Mensaje</label>
-                        <textarea name="message" id="message" required></textarea>
-                    </div>
-                    <div class="field">
-                        <label for="email_id">Email del destinatario</label>
-                        <input type="email" name="email_id" id="email_id" required>
-                    </div>
-                    <div class="field">
-                        <label for="reply_to">Tu email</label>
-                        <input type="email" name="reply_to" id="reply_to" required>
-                    </div>
-                    <div class="text-center">
-                        <input type="submit" id="sendEmailButton" class="btn btn-primary" value="Enviar Email">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
-<!-- Coloca este script después de cargar la librería de EmailJS -->
-<script type="text/javascript">
-    // Inicializar EmailJS
-    emailjs.init('9upDkx9M0nvaxvXrz');
-
-    // Esperar a que el DOM esté listo
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.getElementById('form');
-        const button = document.getElementById('sendEmailButton');
-
-        form.addEventListener('submit', function(event) {
-            event.preventDefault(); // Evitar redirección del formulario
-
-            // Cambiar el estado del botón
-            button.value = 'Enviando...';
-            button.disabled = true;
-
-            // Enviar el formulario con EmailJS
-            emailjs.sendForm('default_service', 'template_s4dx2on', form)
-                .then(function(response) {
-                    console.log('SUCCESS!', response.status, response.text);
-                    button.value = 'Enviar Email';
-                    button.disabled = false;
-                    alert('¡Email enviado correctamente!');
-                    form.reset(); // Reiniciar el formulario
-                })
-                .catch(function(error) {
-                    console.error('FAILED...', error);
-                    button.value = 'Enviar Email';
-                    button.disabled = false;
-                    alert('Error al enviar: ' + JSON.stringify(error));
-                });
-        });
-    });
-</script>
-
-</body>
-</html>

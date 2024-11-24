@@ -134,9 +134,9 @@ function listar_expedientes_titulado(){
            {"data":"estado",
             render: function (data, type, row ) {
               if(data=='SIN DIPLOMA'){
-                return "<button hidden class='diploma btn btn-primary btn-sm' style='margin-right: 10px;' title='Ver diploma'><i class='fa fa-file'></i> Diploma</button><button hidden class='informe btn btn-dark btn-sm' style='margin-right: 10px;' title='Imprimir informe'><i class='fa fa-file'></i> Informe</button><button  class='agregar btn btn-secondary btn-sm' style='margin-right: 10px;' title='Agregar diploma'><i class='fa fa-file'></i> Agregar diploma</button><button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>&nbsp;<button style='margin-right: 10px;' class='delete btn btn-danger btn-sm' title='Eliminar datos'><i class='fa fa-trash'></i> Eliminar</button>";             
+                return "<button class='letra btn btn-dark btn-sm' hidden style='margin-right: 10px;' title='Cambiar tamaño de letra a nombre'><i class='fa fa-edit'></i> Cambiar tamaño letra</button><button hidden class='diploma btn btn-primary btn-sm' style='margin-right: 10px;' title='Ver diploma'><i class='fa fa-file'></i> Diploma</button><button  class='agregar btn btn-secondary btn-sm' style='margin-right: 10px;' title='Agregar diploma'><i class='fa fa-file'></i> Agregar diploma</button><button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>&nbsp;<button style='margin-right: 10px;' class='delete btn btn-danger btn-sm' title='Eliminar datos'><i class='fa fa-trash'></i> Eliminar</button>";             
               }else if(data=='CON DIPLOMA'){
-                  return "<button  class='diploma btn btn-primary btn-sm' style='margin-right: 10px;' title='Ver diploma'><i class='fa fa-file'></i> Diploma</button><button hidden  class='informe btn btn-dark btn-sm' style='margin-right: 10px;' title='Imprimir informe'><i class='fa fa-file'></i> Informe</button><br><button  class='agregar btn btn-secondary btn-sm' hidden style='margin-right: 10px;' title='Agregar diploma'><i class='fa fa-file'></i> Agregar diploma</button><button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>&nbsp;<button style='margin-right: 10px;' class='delete btn btn-danger btn-sm' title='Eliminar datos'><i class='fa fa-trash'></i> Eliminar</button>";             
+                  return "<button class='letra btn btn-dark btn-sm' style='margin-right: 10px;' title='Cambiar tamaño de letra a nombre'><i class='fa fa-edit'></i> Cambiar tamaño letra</button><button  class='diploma btn btn-primary btn-sm' style='margin-right: 10px;' title='Ver diploma'><i class='fa fa-file'></i> Diploma</button><br><button  class='agregar btn btn-secondary btn-sm' hidden style='margin-right: 10px;' title='Agregar diploma'><i class='fa fa-file'></i> Agregar diploma</button><button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>&nbsp;<button style='margin-right: 10px;' class='delete btn btn-danger btn-sm' title='Eliminar datos'><i class='fa fa-trash'></i> Eliminar</button>";             
               }
             }
           },
@@ -292,7 +292,7 @@ function listar_fechas_busqueda(){
               if(data=='SIN DIPLOMA'){
                 return "<button hidden class='diploma btn btn-primary btn-sm' style='margin-right: 10px;' title='Ver diploma'><i class='fa fa-file'></i> Diploma</button><button hidden class='informe btn btn-dark btn-sm' style='margin-right: 10px;' title='Imprimir informe'><i class='fa fa-file'></i> Informe</button><button  class='agregar btn btn-secondary btn-sm' style='margin-right: 10px;' title='Agregar diploma'><i class='fa fa-file'></i> Agregar diploma</button><button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>&nbsp;<button style='margin-right: 10px;' class='delete btn btn-danger btn-sm' title='Eliminar datos'><i class='fa fa-trash'></i> Eliminar</button>";             
               }else if(data=='CON DIPLOMA'){
-                  return "<button  class='diploma btn btn-primary btn-sm' style='margin-right: 10px;' title='Ver diploma'><i class='fa fa-file'></i> Diploma</button><button hidden  class='informe btn btn-dark btn-sm' style='margin-right: 10px;' title='Imprimir informe'><i class='fa fa-file'></i> Informe</button><br><button  class='agregar btn btn-secondary btn-sm' hidden style='margin-right: 10px;' title='Agregar diploma'><i class='fa fa-file'></i> Agregar diploma</button><button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>&nbsp;<button style='margin-right: 10px;' class='delete btn btn-danger btn-sm' title='Eliminar datos'><i class='fa fa-trash'></i> Eliminar</button>";             
+                return "<button class='letra btn btn-dark btn-sm' style='margin-right: 10px;' title='Cambiar tamaño de letra a nombre'><i class='fa fa-edit'></i> Cambiar tamaño letra</button><button  class='diploma btn btn-primary btn-sm' style='margin-right: 10px;' title='Ver diploma'><i class='fa fa-file'></i> Diploma</button><br><button  class='agregar btn btn-secondary btn-sm' hidden style='margin-right: 10px;' title='Agregar diploma'><i class='fa fa-file'></i> Agregar diploma</button><button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>&nbsp;<button style='margin-right: 10px;' class='delete btn btn-danger btn-sm' title='Eliminar datos'><i class='fa fa-trash'></i> Eliminar</button>";             
               }
             }
           },
@@ -762,11 +762,13 @@ function Agregar_diploma() {
     console.log("Respuesta del servidor:", resp);
 
     if (resp.status) {
+      var tamaño = 37;
+      var tamaño2 = 89;
         // Si la respuesta es exitosa, muestra el mensaje
         Swal.fire("Mensaje de Confirmación", resp.message, "success");
 
         // Aquí abres la ventana del modal con la URL construida
-        var url = "../view/MPDF/REPORTE/diploma.php?codigo="+id+"#zoom=100%";
+        var url = "../view/MPDF/REPORTE/diploma.php?codigo="+id+ "&tamaño=" + encodeURIComponent(tamaño)+  "&tamaño2=" + encodeURIComponent(tamaño2)+"#zoom=100%";
         tbl_general_titulo.ajax.reload();
         $("#modal_registrar_diploma").modal('hide');
         // Abrir una nueva ventana con la URL construida
@@ -1337,9 +1339,6 @@ function Imprimir_informe() {
 }
 }
 
-
-
-
 // Función para imprimir informe por facultad
 function Imprimir_informe_facultad() {
   var infoValue = parseInt(document.getElementById('txt_info').value, 10) || 0; // Obtener el valor actual de txt_info
@@ -1376,13 +1375,19 @@ function Imprimir_informe_facultad() {
   
 }
 
+
+//IMPRIMIR DIPLOMA
 $('#tabla_registro_general').on('click','.diploma',function(){
   var data = tbl_general_titulo.row($(this).parents('tr')).data();
+
+  var tamaño = 37;
+  var tamaño2 = 89;
+
 
   if(tbl_general_titulo.row(this).child.isShown()){
       var data = tbl_general_titulo.row(this).data();
   }
-  var url = "../view/MPDF/REPORTE/diploma.php?codigo=" + encodeURIComponent(data.Id_Diploma) + "#zoom=100%";
+  var url = "../view/MPDF/REPORTE/diploma.php?codigo=" + encodeURIComponent(data.Id_Diploma) + "&tamaño=" + encodeURIComponent(tamaño)+  "&tamaño2=" + encodeURIComponent(tamaño2)+"#zoom=100%";
 
 // Abrir una nueva ventana con la URL construida
 var newWindow = window.open(url, "DIPLOMA TITULO PROFESIONAL", "scrollbars=NO");
@@ -1395,6 +1400,45 @@ if (newWindow) {
 });
 
 
+$('#tabla_registro_general').on('click','.letra',function(){
+
+  var data = tbl_general_titulo.row($(this).parents('tr')).data();
+
+  if(tbl_general_titulo.row(this).child.isShown()){
+      var data = tbl_general_titulo.row(this).data();
+  }
+  $("#modal_editar_letra").modal('show');
+  document.getElementById('txt_id_expediente').value=data.Id_Diploma;
+
+  
+});
+
+function imprimir_numero(){
+  var codigo = document.getElementById('txt_id_expediente').value.toString();
+
+  var tamaño = document.getElementById('txt_tamaño').value.toString();
+  var tamaño2 = document.getElementById('txt_posición').value.toString();
+
+
+if(codigo.length==0||tamaño.length==0){
+  return Swal.fire("Mensaje de Advertencia","El numero de documento es obligatorio.","warning");
+}
+else{
+    var url = "../view/MPDF/REPORTE/diploma.php?"
++ "codigo=" + encodeURIComponent(codigo)
++ "&tamaño=" + encodeURIComponent(tamaño)
++ "&tamaño2=" + encodeURIComponent(tamaño2)
++ "#zoom=100%";
+
+var width = screen.width;
+var height = screen.height;
+
+window.open(url, "DIPLOMA TITULO PROFESIONAL", "scrollbars=NO,width=" + width + ",height=" + height + ",top=0,left=0");
+
+}
+} 
+
+//TRAE NUMERO
 function Traernumero() {
   $.ajax({
     url: "../controller/registro_general/controlador_traernumero.php",

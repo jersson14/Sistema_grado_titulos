@@ -127,9 +127,9 @@ function listar_expedientes_bachiller(){
            {"data":"estado",
             render: function (data, type, row ) {
               if(data=='SIN DIPLOMA'){
-                return "<button hidden class='diploma btn btn-primary btn-sm' style='margin-right: 10px;' title='Ver diploma'><i class='fa fa-file'></i> Diploma</button><button hidden class='informe btn btn-dark btn-sm' style='margin-right: 10px;' title='Imprimir informe'><i class='fa fa-file'></i> Informe</button><button  class='agregar btn btn-secondary btn-sm' style='margin-right: 10px;' title='Agregar diploma'><i class='fa fa-file'></i> Agregar diploma</button><button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>&nbsp;<button style='margin-right: 10px;' class='delete btn btn-danger btn-sm' title='Eliminar datos' hidden><i class='fa fa-trash'></i> Eliminar</button>";             
+                return "<button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>";             
               }else if(data=='CON DIPLOMA'){
-                  return "<button  class='diploma btn btn-primary btn-sm' style='margin-right: 10px;' title='Ver diploma'><i class='fa fa-file'></i> Diploma</button><button hidden  class='informe btn btn-dark btn-sm' style='margin-right: 10px;' title='Imprimir informe'><i class='fa fa-file'></i> Informe</button><br><button  class='agregar btn btn-secondary btn-sm' hidden style='margin-right: 10px;' title='Agregar diploma'><i class='fa fa-file'></i> Agregar diploma</button><button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>&nbsp;<button style='margin-right: 10px;' hidden class='delete btn btn-danger btn-sm' title='Eliminar datos'><i class='fa fa-trash'></i> Eliminar</button>";             
+                  return "<button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>";             
               }
             }
           },
@@ -281,9 +281,9 @@ function listar_fechas_busqueda(){
           {"data":"estado",
             render: function (data, type, row ) {
               if(data=='SIN DIPLOMA'){
-                return "<button hidden class='diploma btn btn-primary btn-sm' style='margin-right: 10px;' title='Ver diploma'><i class='fa fa-file'></i> Diploma</button><button hidden class='informe btn btn-dark btn-sm' style='margin-right: 10px;' title='Imprimir informe'><i class='fa fa-file'></i> Informe</button><button  class='agregar btn btn-secondary btn-sm' style='margin-right: 10px;' title='Agregar diploma'><i class='fa fa-file'></i> Agregar diploma</button><button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>&nbsp;<button style='margin-right: 10px;' class='delete btn btn-danger btn-sm' title='Eliminar datos' hidden><i class='fa fa-trash'></i> Eliminar</button>";             
+                return "<button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>";             
               }else if(data=='CON DIPLOMA'){
-                  return "<button  class='diploma btn btn-primary btn-sm' style='margin-right: 10px;' title='Ver diploma'><i class='fa fa-file'></i> Diploma</button><button hidden  class='informe btn btn-dark btn-sm' style='margin-right: 10px;' title='Imprimir informe'><i class='fa fa-file'></i> Informe</button><br><button  class='agregar btn btn-secondary btn-sm' hidden style='margin-right: 10px;' title='Agregar diploma'><i class='fa fa-file'></i> Agregar diploma</button><button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>&nbsp;<button style='margin-right: 10px;' hidden class='delete btn btn-danger btn-sm' title='Eliminar datos'><i class='fa fa-trash'></i> Eliminar</button>";             
+                  return "<button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>";             
               }
             }
           },
@@ -1567,3 +1567,110 @@ function Imprimir_informe2() {
   document.getElementById('txt_info').value = infoValue;
 }
 }
+
+//IMPLEMENTACIÓN API GOOGLE SHEETS
+function authenticate(callback) {
+  gapi.auth2.getAuthInstance().signIn().then(callback);
+}
+
+function loadClient() {
+  gapi.client.init({
+      apiKey: 'AIzaSyC_vDVZz83KcQpVX93XztX833Lk4rsYlvg', // Sustituye con tu API Key
+      clientId: '695497491441-k3jdp35u6k2dq6ntfs7isphfdm8d1tuf.apps.googleusercontent.com', // Sustituye con tu Client ID
+      scope: 'https://www.googleapis.com/auth/spreadsheets.readonly',
+      discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4']
+  }).then(function () {
+      authenticate(fetchSheetData); // Llama a la función fetchSheetData después de la autenticación
+  });
+}
+
+gapi.load('client:auth2', loadClient);
+
+
+function fetchSheetData() {
+  var spreadsheetId = '14ITvjf_jC-oQ4-sRAXr7x7i9gr6-KdxoWssZ07pp4VE'; // ID de tu hoja de cálculo de Google Sheets
+  var range = 'estudiante!A2:T';  // Rango donde están los datos (sin incluir el encabezado)
+
+  var dniIngresado = document.getElementById('txt_dni').value;  // Obtienes el DNI ingresado
+  var dniIngresado2 = document.getElementById('txt_dni2').value;  // Obtienes el DNI ingresado
+
+  gapi.client.sheets.spreadsheets.values.get({
+      spreadsheetId: spreadsheetId,
+      range: range
+  }).then(function(response) {
+      var data = response.result.values;  // Obtienes los datos de la hoja
+
+      if (data.length > 0) {
+          console.log('Datos obtenidos:', data);
+
+          // Buscar la fila que tiene el DNI ingresado
+          var filaEncontrada = null;
+          for (var i = 0; i < data.length; i++) {
+              var fila = data[i];
+              if (fila[1] === dniIngresado || fila[1] === dniIngresado2) {  // Suponiendo que el DNI está en la columna 2 (índice 1)
+                  filaEncontrada = fila;
+                  break;
+              }
+          }
+
+          if (filaEncontrada) {
+              console.log('Fila encontrada:', filaEncontrada);
+              fillFormWithData(filaEncontrada);  // Llamamos a la función para llenar el formulario
+          } else {
+              // Ventana de advertencia si no se encuentra el DNI
+              Swal.fire("Mensaje de Advertencia", "No se encontró un estudiante con ese DNI.", "warning");
+              return;  // Detenemos ejecución adicional en este bloque
+          }
+      } else {
+          // Ventana de advertencia si no hay datos
+          Swal.fire("Mensaje de Advertencia", "No se encontraron datos.", "warning");
+          return;  // Detenemos ejecución adicional en este bloque
+      }
+  }).catch(function(error) {
+      console.error('Error al obtener los datos:', error);
+  });
+}
+
+
+function fillFormWithData(fila) {
+  // Llenamos los campos con los datos obtenidos de la fila
+  var tipodoc = fila[0];  // Suponiendo que el DNI está en la columna 2 (índice 1)
+  var dni = fila[1];
+  var dni2 = fila[1];  // Suponiendo que el DNI está en la columna 2 (índice 1)
+  var nombre = fila[3];  // Suponiendo que el nombre está en la columna 4 (índice 3)
+  var apellidoPaterno = fila[4];  // Suponiendo que el apellido paterno está en la columna 5 (índice 4)
+  var apellidoMaterno = fila[5];  // Suponiendo que el apellido materno está en la columna 6 (índice 5)
+  var codigo = fila[2];  // Suponiendo que el código está en la columna 3 (índice 2)
+  var sexo = fila[6];  // Suponiendo que el sexo está en la columna 7 (índice 6)
+  var celular = fila[7];  // Suponiendo que el celular está en la columna 8 (índice 7)
+  var direccion = fila[8];  // Suponiendo que la dirección está en la columna 9 (índice 8)
+  var email = fila[11];  // Suponiendo que el email está en la columna 10 (índice 9)
+  var emailinsti = fila[12];  // Suponiendo que el email institucional está en la columna 11 (índice 10)
+
+  // Llenamos el formulario con los valores encontrados
+  document.getElementById('select_tipo_documento').value = tipodoc;
+  if (tipodoc === 'dni') {
+    document.getElementById('txt_dni').value = dni;
+  } else if (tipodoc === 'PASAPORTE' || tipodoc === 'CARNET DE EXTRANJERIA') {
+    document.getElementById('txt_dni2').value = dni2;
+  }
+  document.getElementById('txt_nom').value = nombre;
+  document.getElementById('txt_apepa').value = apellidoPaterno;
+  document.getElementById('txt_apema').value = apellidoMaterno;
+  document.getElementById('txt_codigo').value = codigo;
+
+  // Establecemos el valor de 'sexo'
+  if (sexo === 'M') {
+    document.getElementById('select_sexo').value = 'M';
+  } else if (sexo === 'F') {
+    document.getElementById('select_sexo').value = 'F';
+  }
+
+  document.getElementById('txt_movil').value = celular;
+  document.getElementById('txt_dire').value = direccion;
+  document.getElementById('txt_email_per').value = email;
+  document.getElementById('txt_email_insti').value = emailinsti;
+
+  // Puedes agregar más campos si es necesario
+}
+

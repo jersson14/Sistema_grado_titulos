@@ -2,6 +2,8 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once '../conexion.php'; // Incluye tu archivo de conexión si es necesario
 $codigo = $mysqli->real_escape_string($_GET['codigo']);
+$tamaño = $mysqli->real_escape_string($_GET['tamaño']);
+$tamaño2 = $mysqli->real_escape_string($_GET['tamaño2']);
 
 use Mpdf\Mpdf;
 $query="SELECT
@@ -169,8 +171,8 @@ for ($i = 1; $i <= $pagecount; $i++) {
         $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 27px;margin-left: -70px;">'.$row1['Titulo_de'].'</h1>');
 
         $estudiante = ucwords(strtolower($row1['Estudiante']));
-        $mpdf->SetXY(0, 89.5);
-        $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 37px;margin-left: -70px;">'.$estudiante.'</h1>');
+        $mpdf->SetXY(0, $tamaño2);
+        $mpdf->WriteHTML('<h1 style="text-align:center;font-size: '.$tamaño.'px;margin-left: -70px;">'.$estudiante.'</h1>');
         
         $mpdf->SetXY(0, 104);
         $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 27px;margin-left: -70px;">'.$row1['Facultad'].'</h1>');

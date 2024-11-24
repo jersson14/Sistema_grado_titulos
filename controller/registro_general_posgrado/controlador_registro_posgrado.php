@@ -119,7 +119,7 @@ if ($consulta) {
     
                 <p>Previo un cordial saludo, se comunica que su expediente se encuentra en la Oficina de Grados y Títulos para continuar con el proceso correspondiente. Usted podrá hacer seguimiento de su expediente a través del siguiente enlace:</p>
     
-                <p><a href="https://gradosapp.fun/seguimiento.php" target="_blank">Hacer seguimiento (Clic)</a></p>
+                <p><a href="http://localhost/gradito/seguimiento_posgrado.php" target="_blank">Hacer seguimiento (Clic)</a></p>
 
                 <p>Su expediente se encuentra en estado: <b style="color:#c9b701">PENDIENTE DE REVISIÓN</b></p>
     

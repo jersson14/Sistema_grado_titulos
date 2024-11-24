@@ -25,7 +25,7 @@
     <div class="wrapper">
 
       <!-- Navbar -->
-      <nav class="main-header navbar navbar-expand-md navbar-light navbar-white" style="background-color:#0A9BF9">
+      <nav class="main-header navbar navbar-expand-md navbar-light navbar-white" style="background-color:#0065B2">
         <div class="container">
 
           <img src="img/utea.png" alt="" width="20%">
@@ -64,7 +64,7 @@
               <a style="color:blue" href="seguimiento_posgrado.php" class="nav-link"><i class="fa fa-user"></i><b> Seguimiento Posgrado(click👇)</b></a>
             </li>
             <li class="nav-item">
-              <a style="color:green" href="manual_usu_externo.pdf" target="_blank" class="nav-link"><i class="fa fa-file"></i><b> Manual de usuario(click👇)</b></a>
+              <a style="color:green" href="manual_usuario.pdf" target="_blank" class="nav-link"><i class="fa fa-file"></i><b> Manual de usuario(click👇)</b></a>
             </li>
           </ul>
 
@@ -110,7 +110,7 @@
               <div class="card">
                 <div class="card-header">
                   <hr>
-                  <p style="font-size:14px; text-align:justify"><b>La UNIVERSIDAD TECNOLÓGICA DE LOS ANDES le ofrece la plataforma de Seguimiento de Graduados, que le permite consultar el estado de su expediente y mantenerse actualizado con la información relevante. Para realizar una búsqueda precisa y obtener los detalles de su expediente, es fundamental ingresar el DNI del graduado sin espacios en blanco. Asegúrese de completar el campo correctamente para garantizar una búsqueda efectiva.
+                  <p style="font-size:14px; text-align:justify"><b>La UNIVERSIDAD TECNOLÓGICA DE LOS ANDES le ofrece la plataforma de Seguimiento de Graduados, que le permite consultar el estado de su expediente y mantenerse actualizado con la información relevante. Para realizar una búsqueda precisa y obtener los detalles de su expediente, es fundamental ingresar el N° DE DOCUMENTO (DNI, PASAPORTE O CANET DE EXTRANJERIA) del graduado sin espacios en blanco. Asegúrese de completar el campo correctamente para garantizar una búsqueda efectiva.
                   <hr>
                   <div class="card-header bg-primary">
                     <h5 class="card-title m-0"><b>Buscador de Trámite Pregrado</b></h5>
@@ -118,8 +118,8 @@
                   <div class="card-body">
                     <div class="row">
                       <div class="col-md-6 col-sm-12 mb-3">
-                        <label for="txt_dni">Número de DNI <b style="color:red">(*)</b>:</label>
-                        <input type="text" class="form-control" id="txt_dni" onkeypress="return soloNumeros(event)" maxlength="9">
+                        <label for="txt_dni">Número de Documento <b style="color:red">(*)</b>:</label>
+                        <input type="text" class="form-control" id="txt_dni" onkeypress="return soloNumeros(event)">
                       </div>
                       <div class="col-md-6 col-sm-12 mb-3">
                         <label for="">&nbsp;</label><br>
@@ -145,7 +145,7 @@
                         <tr>
                           <th style="text-align:center; font-size: 0.9rem;">Tipo</th>
                           <th style="text-align:center; font-size: 0.9rem;">Denominación</th>
-                          <th style="text-align:center; font-size: 0.9rem;">Dni</th>
+                          <th style="text-align:center; font-size: 0.9rem;">N° Documento</th>
                           <th style="text-align:center; font-size: 0.9rem;">Estudiante</th>
                           <th style="text-align:center; font-size: 0.9rem;">Facultad</th>
                           <th style="text-align:center; font-size: 0.9rem;">Escuela</th>
@@ -213,11 +213,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-      var input = document.getElementById('txt_dni');
-      input.addEventListener('input', function() {
-        if (this.value.length > 8)
-          this.value = this.value.slice(0, 8);
-      })
+     
 
       function sololetras(e) {
         key = e.keyCode || e.which;

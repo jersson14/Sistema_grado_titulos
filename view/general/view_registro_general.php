@@ -1,5 +1,5 @@
 <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
-    <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
+<script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
 <script src="../js/console_registro_general_titulo.js?rev=<?php echo time();?>"></script>
 
 <!-- Content Header (Page header) -->
@@ -1333,6 +1333,41 @@
 </div>
 
 
+<div class="modal fade" id="modal_editar_letra" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header" style="background-color:#1FA0E0;">
+            <h5 class="modal-title" id="exampleModalLabel" style="color:white; text-align:center"><b>EDITAR TAMAÑO DE LETRA EN EL NOMBRE</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+          <div class="alert alert-warning alert-dismissible" style="text-align:justify">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h5><i class="icon fas fa-exclamation-triangle"></i> ¡Aviso Importante!</h5>
+               <b>NOTA:</b> Aqui puede cambiar el tamaño de la letra y posición del nombre y apellidos del estudiante para el diploma, por defecto el tamaño es 37 puntos y posición 89 si quiere minimizar el tamaño reduce y aumenta la posición y si quiere aumentar lo contrario reduce la posición.
+            </div>
+            <div class="row">
+            <div class="col-12 form-group">
+            <input type="text" id="txt_id_expediente" hidden>
+                <label for="">Tamaño de letra:</label>
+                <input class="form-control" type="number" id="txt_tamaño" value="37">
+              </div>
+              <div class="col-12 form-group">
+              <label for="">Posición:</label>
+                <input class="form-control" type="number" id="txt_posición" value="89">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times ml-1"></i> Cerrar</button>
+            <button type="button" class="btn btn-success" onclick="imprimir_numero()"><i class="fas fa-file"></i> Imprimir Diploma</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
 <script>
 $(document).ready(function () {
@@ -1650,6 +1685,8 @@ $.ajax({
     }
 });
 })
+//ESTOS 2 TRAE DATOS DE GOOGLE API
+
 document.getElementById('umil').addEventListener('click', function() {
     fetchSheetData(); // Llama a la función que obtiene los datos de la hoja de Google Sheets
 });

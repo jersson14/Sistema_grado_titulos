@@ -94,7 +94,7 @@
                     <img src="cid:logo_universidad" alt="Logo Universidad Tecnológica de los Andes"/><br><br>
                     <p><b>Estimado(a) Posgraduado(a), '.$nom.' '.$ape.' '.$mate.'.</b></p>
                     <p>Su diploma ha sido registrado exitosamente en el sistema de GRADOS Y TITULOS. Puede hacerle seguimiento en el siguiente enlace:</p>
-                    <p><a href="https://gradosapp.fun/seguimiento.php" target="_blank">Hacer seguimiento (Clic)</a></p>
+                    <p><a href="http://localhost/gradito/seguimiento_posgrado.php" target="_blank">Hacer seguimiento (Clic)</a></p>
                     <p>Su expediente se encuentra en estado: <b style="color:#0eb34a">LISTO PARA COLACIÓN</b></p>
                     <p><b style="color:#0eb34a">FECHA DE COLACIÓN: '.$fecha_formateada.'</b></p>
     

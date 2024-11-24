@@ -1,4 +1,6 @@
 
+<script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+<script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
 <script src="../js/console_registro_general_posgrado.js?rev=<?php echo time();?>"></script>
 <link rel="stylesheet" href="../plantilla/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
 
@@ -143,10 +145,7 @@
                   <div class="row">
                     <div class="col-12">
                         <div class="row">
-                        <div class="col-12 form-group" style="color:red">
-                            <h6><b>Campos Obligatorios (*)</b></h6>
-                        </div><br>
-                        <div class="col-3 form-group">
+                        <div class="col-2 form-group">
                             <label for="" style="font-size:small;">Tipo de documento<b style="color:red">(*)</b>:</label>
                             <select class="form-control" id="select_tipo_documento" style="width:100%">
                                 <option value="" disabled>Seleccione</option>
@@ -156,19 +155,24 @@
                             </select>
                         </div>
 
-                        <div id="dni_section" class="col-3 form-group">
+                        <div id="dni_section" class="col-4 form-group">
                             <label for="" style="font-size:small;">N° Documento<b style="color:red">(*)</b>:</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="txt_dni">
                                 <div class="input-group-append">
+                                    <button onclick="" class="btn btn-success" id="umil" hidden><i class="fa fa-search"></i><b> UMIL</b></button>
                                     <button onclick="" class="btn btn-primary" id="prueba"><i class="fa fa-search"></i><b> Reniec</b></button>
                                 </div>
                             </div>
                         </div>
-
-                        <div id="otros_documentos_section" class="col-3 form-group" style="display: none;">
-                            <label for="" style="font-size:small;">N° Documento<b style="color:red">(*)</b>:</label>
-                            <input type="text" class="form-control" id="txt_dni2">
+                        <div id="otros_documentos_section" class="col-4 form-group" style="display: none;">
+                        <label for="" style="font-size:small;">N° Documento<b style="color:red">(*)</b>:</label>
+                        <div class="input-group">
+                                <input type="text" class="form-control" id="txt_dni2">
+                                <div class="input-group-append">
+                                    <button onclick="" class="btn btn-success" id="umil2" hidden><i class="fa fa-search"></i><b> UMIL</b></button>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-3 form-group">
                             <label for="" style="font-size:small;">Nombres<b style="color:red">(*)</b>:</label>
@@ -1231,7 +1235,40 @@
     </div>
   </div>
 </div>
-
+<div class="modal fade" id="modal_editar_letra" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header" style="background-color:#1FA0E0;">
+            <h5 class="modal-title" id="exampleModalLabel" style="color:white; text-align:center"><b>EDITAR TAMAÑO DE LETRA EN EL NOMBRE</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+          <div class="alert alert-warning alert-dismissible" style="text-align:justify">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h5><i class="icon fas fa-exclamation-triangle"></i> ¡Aviso Importante!</h5>
+               <b>NOTA:</b> Aqui puede cambiar el tamaño de la letra y posición del nombre y apellidos del estudiante para el diploma, por defecto el tamaño es 37 puntos y posición 97 si quiere minimizar el tamaño reduce y aumenta la posición y si quiere aumentar lo contrario reduce la posición.
+            </div>
+            <div class="row">
+            <div class="col-12 form-group">
+            <input type="text" id="txt_id_expediente" hidden>
+                <label for="">Tamaño de letra:</label>
+                <input class="form-control" type="number" id="txt_tamaño" value="37">
+              </div>
+              <div class="col-12 form-group">
+              <label for="">Posición:</label>
+                <input class="form-control" type="number" id="txt_posición" value="97">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times ml-1"></i> Cerrar</button>
+            <button type="button" class="btn btn-success" onclick="imprimir_numero()"><i class="fas fa-file"></i> Imprimir Diploma</button>
+          </div>
+        </div>
+      </div>
+    </div>
 <script>
 
 $(document).ready(function () {
@@ -1512,7 +1549,14 @@ $.ajax({
     }
 });
 })
+//ESTOS 2 TRAE DATOS DE GOOGLE API
 
+document.getElementById('umil').addEventListener('click', function() {
+    fetchSheetData(); // Llama a la función que obtiene los datos de la hoja de Google Sheets
+});
+document.getElementById('umil2').addEventListener('click', function() {
+    fetchSheetData(); // Llama a la función que obtiene los datos de la hoja de Google Sheets
+});
 </script>
 <style>
         .hiddenantiguo {

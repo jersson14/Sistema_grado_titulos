@@ -1,4 +1,6 @@
 
+<script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+<script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
 <script src="../js/console_registro_general_bachiller_secre.js?rev=<?php echo time();?>"></script>
 <link rel="stylesheet" href="../plantilla/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
 
@@ -148,7 +150,7 @@
                         <div class="col-12 form-group" style="color:red">
                             <h6><b>Campos Obligatorios (*)</b></h6>
                         </div><br>
-                        <div class="col-3 form-group">
+                        <div class="col-2 form-group">
                             <label for="" style="font-size:small;">Tipo de documento<b style="color:red">(*)</b>:</label>
                             <select class="form-control" id="select_tipo_documento" style="width:100%">
                                 <option value="" disabled>Seleccione</option>
@@ -158,19 +160,24 @@
                             </select>
                         </div>
 
-                        <div id="dni_section" class="col-3 form-group">
+                        <div id="dni_section" class="col-4 form-group">
                             <label for="" style="font-size:small;">N° Documento<b style="color:red">(*)</b>:</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="txt_dni">
                                 <div class="input-group-append">
-                                    <button onclick="" class="btn btn-primary" id="prueba"><i class="fa fa-search"></i><b> Reniec</b></button>
+                                    <button onclick="" class="btn btn-success" id="umil" hidden><i class="fa fa-search"></i><b> UMIL</b></button>
+                                    <button onclick="" class="btn btn-primary" id="prueba" ><i class="fa fa-search" ></i><b> Reniec</b></button>
                                 </div>
                             </div>
                         </div>
-
-                        <div id="otros_documentos_section" class="col-3 form-group" style="display: none;">
-                            <label for="" style="font-size:small;">N° Documento<b style="color:red">(*)</b>:</label>
-                            <input type="text" class="form-control" id="txt_dni2">
+                        <div id="otros_documentos_section" class="col-4 form-group" style="display: none;">
+                        <label for="" style="font-size:small;">N° Documento<b style="color:red">(*)</b>:</label>
+                        <div class="input-group">
+                                <input type="text" class="form-control" id="txt_dni2">
+                                <div class="input-group-append">
+                                    <button onclick="" class="btn btn-success" id="umil2" hidden><i class="fa fa-search"></i><b > UMIL</b></button>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="col-3 form-group">
@@ -660,66 +667,67 @@
                                 </select>                            
                             </div>
                             <div class="col-12 form-group" style="border: 1px solid #ccc; padding: 10px;" id="datos_antiguos">
-                                <li for="" style="color:white;background-color:black;text-align:center;font-family:Arial">    <b>DATOS DEL DIPLOMA</b>
+                                <li for="" style="color:white;background-color:black;text-align:center;font-family:Arial">    
+                                    <b>DATOS DEL DIPLOMA</b>
                                 </li><br>
                                 <div class="row">         
                                 <input type="text" id="txt_id_diploma" hidden>     
                                 <div class="col-2 form-group">
                                         <label for="" style="font-size:small;">Fecha de C.U.:<b style="color:red">(*)</b>:</label>
-                                        <input type="date" class="form-control" id="txt_fecha_cu_editar">                                                      
+                                        <input type="date" class="form-control" id="txt_fecha_cu_editar" readonly>                                                      
                                     </div>
                                     <div class="col-2 form-group">
                                         <label for="" style="font-size:small;">Fecha de Firma<b style="color:red">(*)</b>:</label>
-                                        <input type="date" class="form-control" id="txt_fecha_firma_editar">                           
+                                        <input type="date" class="form-control" id="txt_fecha_firma_editar" readonly>                           
                                     </div>      
                                     <div class="col-4 form-group">
                                         <label for="" style="font-size:small;">Resolucíon N°<b style="color:red">(*)</b>:</label>
-                                        <input type="text" class="form-control" id="txt_resol_editar">                                                     
+                                        <input type="text" class="form-control" id="txt_resol_editar" readonly>                                                     
                                     </div>
                                     <div class="col-2 form-group">
                                         <label for="" style="font-size:small;">Fecha de Resolución<b style="color:red">(*)</b>:</label>
-                                        <input type="date" class="form-control" id="txt_fecha_reso_editar">                           
+                                        <input type="date" class="form-control" id="txt_fecha_reso_editar" readonly>                           
                                     </div>     
                                     <div class="col-2 form-group">
                                         <label for="" style="font-size:small;">Diploma N°<b style="color:red">(*)</b>:</label>
-                                        <input type="text" class="form-control" id="txt_diploma_nume_editar">                           
+                                        <input type="text" class="form-control" id="txt_diploma_nume_editar" readonly>                           
                                     </div>
                                     <div class="col-3 form-group">
                                         <label for="" style="font-size:small;">Registro N°<b style="color:red">(*)</b>:</label>
-                                        <input type="text" class="form-control" id="txt_registro_n°_editar">                           
+                                        <input type="text" class="form-control" id="txt_registro_n°_editar" readonly>                           
                                     </div>
                                     
                                     <div class="col-3 form-group">
                                         <label for="" style="font-size:small;">Registro Libro<b style="color:red">(*)</b>:</label>
-                                        <input type="text" class="form-control" id="txt_registro_libr_editar">                           
+                                        <input type="text" class="form-control" id="txt_registro_libr_editar" readonly>                           
                                     </div>
                                     <div class="col-3 form-group">
                                         <label for="" style="font-size:small;">Registro Folio<b style="color:red">(*)</b>:</label>
-                                        <input type="text" class="form-control" id="txt_registro_folio_editar">                           
+                                        <input type="text" class="form-control" id="txt_registro_folio_editar" readonly>                           
                                     </div>
                                    
                                     <div class="col-3 form-group">
                                         <label for="" style="font-size:small;">Tipo de diploma<b style="color:red">(*)</b>:</label>
-                                        <select class="form-control" id="select_tipo_diplo_editar" style="width:100%">
+                                        <select class="form-control" id="select_tipo_diplo_editar" style="width:100%" readonly>
                                             <option value="O">ORIGINAL</option>
                                             <option value="D">DUPLICADO</option>
                                         </select>                            
                                     </div>
                                     <div class="col-3 form-group">
                                         <label for="" style="font-size:small;">Fecha inicio trámite<b style="color:red">(*)</b>:</label>
-                                        <input type="date" class="form-control" id="txt_fecha_inicio_tra_editar">                           
+                                        <input type="date" class="form-control" id="txt_fecha_inicio_tra_editar" readonly>                           
                                     </div>
                                     <div class="col-3 form-group">
                                     <label for="" style="font-size:small;">Número de creditos<b style="color:red">(*)</b>:</label>
-                                    <input type="number" class="form-control" id="txt_nro_credi_editar">                           
+                                    <input type="number" class="form-control" id="txt_nro_credi_editar" readonly>                           
                                     </div>
                                     <div class="col-3 form-group">
                                     <label for="" style="font-size:small;">Nro. Oficio<b style="color:red">(*)</b>:</label>
-                                        <input type="text" class="form-control" id="txt_nro_oficio_editar">                           
+                                        <input type="text" class="form-control" id="txt_nro_oficio_editar" readonly>                           
                                     </div>
                                     <div class="col-3 form-group">
                                         <label for="" style="font-size:small;">Fecha Secretaria General<b style="color:red">(*)</b>:</label>
-                                        <input type="date" class="form-control" id="txt_fecha_secre_editar">                           
+                                        <input type="date" class="form-control" id="txt_fecha_secre_editar" readonly>                           
                                     </div>
                             </div>
                             </div>
@@ -1608,7 +1616,14 @@ $.ajax({
     }
 });
 })
+//ESTOS 2 TRAE DATOS DE GOOGLE API
 
+document.getElementById('umil').addEventListener('click', function() {
+    fetchSheetData(); // Llama a la función que obtiene los datos de la hoja de Google Sheets
+});
+document.getElementById('umil2').addEventListener('click', function() {
+    fetchSheetData(); // Llama a la función que obtiene los datos de la hoja de Google Sheets
+});
 </script>
 <style>
         .hiddenantiguo {

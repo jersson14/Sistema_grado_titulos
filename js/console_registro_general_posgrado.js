@@ -141,6 +141,149 @@ tbl_general_posgrado.on('draw.td',function(){
 });
 }
 
+
+//LISTADO ALFABETICO
+function listar_expedientes_posgrado_Alfa(){
+  tbl_general_posgrado = $("#tabla_registro_general_posgrado").DataTable({
+    "ordering":false,   
+      "bLengthChange":true,
+      "searching": { "regex": false },
+      "lengthMenu": [ [10, 25, 50, 100, -1], [10, 25, 50, 100, "All"] ],
+      "pageLength": 10,
+      "destroy":true,
+      "pagingType": 'full_numbers',
+      "scrollCollapse": true,
+      "responsive": true,
+      "async": false ,
+      "processing": true,
+    "ajax":{
+        "url":"../controller/registro_general_posgrado/controlador_listar_registro_general_posgrado_alfabetico.php",
+        type:'POST'
+    },
+    dom: 'Bfrtip', 
+    buttons:[ 
+        {
+            extend: 'excelHtml5',
+            text: '<i class="fas fa-file-excel"></i> ',
+            titleAttr: 'Exportar a Excel',
+            filename: function() {
+                return  "LISTA GENERAL DE POSGRADUADOS";
+            },
+            title: function() {
+                return  "LISTA GENERAL DE POSGRADUADOS";
+            },
+            exportOptions: {
+                columns: [0, 1, 2, 3, 4, 5]  // Especifica las columnas a exportar hasta "estado"
+            }
+        },
+        {
+            extend: 'pdfHtml5',
+            text: '<i class="fas fa-file-pdf"></i> ',
+            titleAttr: 'Exportar a PDF',
+            orientation: 'landscape',  // Exportar en formato horizontal
+            filename: function() {
+                return  "LISTA GENERAL DE POSGRADUADOS";
+            },
+            title: function() {
+                return  "LISTA GENERAL DE POSGRADUADOS";
+            },
+            exportOptions: {
+                columns: [0, 1, 2, 3, 4, 5]  // Especifica las columnas a exportar hasta "estado"
+            }
+        },
+        {
+            extend: 'print',
+            text: '<i class="fa fa-print"></i> ',
+            titleAttr: 'Imprimir',
+            title: function() {
+                return  "LISTA GENERAL DE POSGRADUADOS";
+            },
+            exportOptions: {
+                columns: [0, 1, 2, 3, 4, 5]  // Especifica las columnas a exportar hasta "estado"
+            }
+        }
+    ],
+    "columns":[
+      {"data":"Diploma_numero"},
+      {"data":"tipo_documento",
+        render: function(data,type,row){
+            if(data=='DNI'){
+                return '<span class="badge bg-success">DNI</span>';
+            }else if(data=='PASAPORTE'){
+                return '<span class="badge bg-primary">PASAPORTE</span>';
+            }else{
+                return '<span class="badge bg-warning">CARNET DE EXTRANJERIA</span>';
+            }
+         } 
+        },        {"data":"Dni"},
+      {"data":"Estudiante"},
+      {"data":"Grado_academico",
+          render: function(data,type,row){
+              if(data=='MAESTRIA'){
+                  return '<span class="badge bg-success">MAESTRIA</span>';
+              }else if(data=='DOCTORADO'){
+                  return '<span class="badge bg-primary">DOCTORADO</span>';
+              }else{
+                  return '<span class="badge bg-primary">SEGUNDA ESPECIALIDAD</span>';
+  
+              }
+           } 
+      },
+      {"data":"posgrado"},
+      {"data":"ESTADO",
+        render: function(data,type,row){
+            if(data=='SIN DIPLOMA'){
+                return '<span class="badge bg-danger">SIN DIPLOMA</span>';
+            }else if(data=='CON DIPLOMA'){
+                return '<span class="badge bg-success">CON DIPLOMA</span>';
+            }
+         } 
+        },
+        { "data":"Reglamento_metadado",
+          render: function (datae, type, row ) {
+            if(datae==''){
+              return "<a href="+datae+"  target='_blank'><button disabled style='font-size:13px;' type='button' class='control btn btn-danger btn-sm' title='Ver Trabajo de investigación'><i class='fas fa-eye'></i> Ver</button></a>  ";                 
+            }
+            {
+              return "<a href="+datae+" target='_blank'><button style='font-size:13px;' type='button' class='control btn btn-warning btn-sm' title='Ver Trabajo de investigación'><i class='fas fa-eye'></i> Ver tesis</button></a>  ";                 
+            }
+          }
+        }, 
+      {"data":"Archivo",
+        render: function(data,type,row){
+                if(data=='controller/registro_general_posgrado/documentos/' || data==''){
+                  return "<a href=''  target='_blank'><button disabled style='font-size:13px;' type='button' class='control btn btn-danger btn-sm' title='Ver Trabajo de investigación'><i class='fas fa-file-download'></i> Expediente</button></a>  ";                 
+                }
+                {
+                  return "<a href='../"+data+"' target='_blank'><button style='font-size:13px;' type='button' class='control btn btn-primary btn-sm' title='Ver Trabajo de investigación'><i class='fas fa-file-download'></i> Expediente</button></a>  ";                 
+                }
+                
+            }   
+        },
+        {"data":"ESTADO",
+          render: function (data, type, row ) {
+            if(data=='SIN DIPLOMA'){
+              return "<button hidden class='diploma btn btn-primary btn-sm' style='margin-right: 10px;' title='Ver diploma'><i class='fa fa-file'></i> Diploma</button><button hidden  class='informe btn btn-dark btn-sm' style='margin-right: 10px;' title='Imprimir informe'><i class='fa fa-file'></i> Informe</button><button  class='agregar btn btn-secondary btn-sm' style='margin-right: 10px;' title='Agregar diploma'><i class='fa fa-file'></i> Agregar diploma</button><button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>&nbsp;<button style='margin-right: 10px;' class='delete btn btn-danger btn-sm' title='Eliminar datos'><i class='fa fa-trash'></i> Eliminar</button>";             
+            }else if(data=='CON DIPLOMA'){
+              return "<button class='letra btn btn-dark btn-sm' style='margin-right: 10px;' title='Cambiar tamaño de letra a nombre'><i class='fa fa-edit'></i> Cambiar tamaño letra</button><button  class='diploma btn btn-primary btn-sm' style='margin-right: 10px;' title='Ver diploma'><i class='fa fa-file'></i> Diploma</button><br><button  class='agregar btn btn-secondary btn-sm' hidden style='margin-right: 10px;' title='Agregar diploma'><i class='fa fa-file'></i> Agregar diploma</button><button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>&nbsp;<button style='margin-right: 10px;' class='delete btn btn-danger btn-sm' title='Eliminar datos'><i class='fa fa-trash'></i> Eliminar</button>";             
+            }
+          }
+        },
+  ],
+
+  "language":idioma_espanol,
+  select: true
+});
+
+tbl_general_posgrado.on('draw.td',function(){
+var PageInfo = $("#tabla_registro_general_posgrado").DataTable().page.info();
+tbl_general_posgrado.column(0, {page: 'current'}).nodes().each(function(cell, i){
+  cell.innerHTML = i + 1 + PageInfo.start;
+
+});
+});
+}
+
 //LISTAR POR FECHAS
 function listar_fechas_busqueda(){
     let fechainicio = document.getElementById('txtfechainicio').value;
@@ -209,73 +352,73 @@ function listar_fechas_busqueda(){
               }
           }
       ],
-      "columns":[
-        {"data":"Diploma_numero"},
-        {"data":"tipo_documento",
+    "columns":[
+      {"data":"Diploma_numero"},
+      {"data":"tipo_documento",
+        render: function(data,type,row){
+            if(data=='DNI'){
+                return '<span class="badge bg-success">DNI</span>';
+            }else if(data=='PASAPORTE'){
+                return '<span class="badge bg-primary">PASAPORTE</span>';
+            }else{
+                return '<span class="badge bg-warning">CARNET DE EXTRANJERIA</span>';
+            }
+         } 
+        },        {"data":"Dni"},
+      {"data":"Estudiante"},
+      {"data":"Grado_academico",
           render: function(data,type,row){
-              if(data=='DNI'){
-                  return '<span class="badge bg-success">DNI</span>';
-              }else if(data=='PASAPORTE'){
-                  return '<span class="badge bg-primary">PASAPORTE</span>';
+              if(data=='MAESTRIA'){
+                  return '<span class="badge bg-success">MAESTRIA</span>';
+              }else if(data=='DOCTORADO'){
+                  return '<span class="badge bg-primary">DOCTORADO</span>';
               }else{
-                  return '<span class="badge bg-warning">CARNET DE EXTRANJERIA</span>';
+                  return '<span class="badge bg-primary">SEGUNDA ESPECIALIDAD</span>';
+  
               }
            } 
-          },        {"data":"Dni"},
-        {"data":"Estudiante"},
-        {"data":"Grado_academico",
-            render: function(data,type,row){
-                if(data=='MAESTRIA'){
-                    return '<span class="badge bg-success">MAESTRIA</span>';
-                }else if(data=='DOCTORADO'){
-                    return '<span class="badge bg-primary">DOCTORADO</span>';
-                }else{
-                    return '<span class="badge bg-primary">SEGUNDA ESPECIALIDAD</span>';
-    
-                }
-             } 
+      },
+      {"data":"posgrado"},
+      {"data":"ESTADO",
+        render: function(data,type,row){
+            if(data=='SIN DIPLOMA'){
+                return '<span class="badge bg-danger">SIN DIPLOMA</span>';
+            }else if(data=='CON DIPLOMA'){
+                return '<span class="badge bg-success">CON DIPLOMA</span>';
+            }
+         } 
         },
-        {"data":"posgrado"},
+        { "data":"Reglamento_metadado",
+          render: function (datae, type, row ) {
+            if(datae==''){
+              return "<a href="+datae+"  target='_blank'><button disabled style='font-size:13px;' type='button' class='control btn btn-danger btn-sm' title='Ver Trabajo de investigación'><i class='fas fa-eye'></i> Ver</button></a>  ";                 
+            }
+            {
+              return "<a href="+datae+" target='_blank'><button style='font-size:13px;' type='button' class='control btn btn-warning btn-sm' title='Ver Trabajo de investigación'><i class='fas fa-eye'></i> Ver tesis</button></a>  ";                 
+            }
+          }
+        }, 
+      {"data":"Archivo",
+        render: function(data,type,row){
+                if(data=='controller/registro_general_posgrado/documentos/' || data==''){
+                  return "<a href=''  target='_blank'><button disabled style='font-size:13px;' type='button' class='control btn btn-danger btn-sm' title='Ver Trabajo de investigación'><i class='fas fa-file-download'></i> Expediente</button></a>  ";                 
+                }
+                {
+                  return "<a href='../"+data+"' target='_blank'><button style='font-size:13px;' type='button' class='control btn btn-primary btn-sm' title='Ver Trabajo de investigación'><i class='fas fa-file-download'></i> Expediente</button></a>  ";                 
+                }
+                
+            }   
+        },
         {"data":"ESTADO",
-          render: function(data,type,row){
-              if(data=='SIN DIPLOMA'){
-                  return '<span class="badge bg-danger">SIN DIPLOMA</span>';
-              }else if(data=='CON DIPLOMA'){
-                  return '<span class="badge bg-success">CON DIPLOMA</span>';
-              }
-           } 
-          },
-          { "data":"Reglamento_metadado",
-            render: function (datae, type, row ) {
-              if(datae==''){
-                return "<a href="+datae+"  target='_blank'><button disabled style='font-size:13px;' type='button' class='control btn btn-danger btn-sm' title='Ver Trabajo de investigación'><i class='fas fa-eye'></i> Ver</button></a>  ";                 
-              }
-              {
-                return "<a href="+datae+" target='_blank'><button style='font-size:13px;' type='button' class='control btn btn-warning btn-sm' title='Ver Trabajo de investigación'><i class='fas fa-eye'></i> Ver tesis</button></a>  ";                 
-              }
+          render: function (data, type, row ) {
+            if(data=='SIN DIPLOMA'){
+              return "<button hidden class='diploma btn btn-primary btn-sm' style='margin-right: 10px;' title='Ver diploma'><i class='fa fa-file'></i> Diploma</button><button hidden  class='informe btn btn-dark btn-sm' style='margin-right: 10px;' title='Imprimir informe'><i class='fa fa-file'></i> Informe</button><button  class='agregar btn btn-secondary btn-sm' style='margin-right: 10px;' title='Agregar diploma'><i class='fa fa-file'></i> Agregar diploma</button><button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>&nbsp;<button style='margin-right: 10px;' class='delete btn btn-danger btn-sm' title='Eliminar datos'><i class='fa fa-trash'></i> Eliminar</button>";             
+            }else if(data=='CON DIPLOMA'){
+              return "<button class='letra btn btn-dark btn-sm' style='margin-right: 10px;' title='Cambiar tamaño de letra a nombre'><i class='fa fa-edit'></i> Cambiar tamaño letra</button><button  class='diploma btn btn-primary btn-sm' style='margin-right: 10px;' title='Ver diploma'><i class='fa fa-file'></i> Diploma</button><br><button  class='agregar btn btn-secondary btn-sm' hidden style='margin-right: 10px;' title='Agregar diploma'><i class='fa fa-file'></i> Agregar diploma</button><button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>&nbsp;<button style='margin-right: 10px;' class='delete btn btn-danger btn-sm' title='Eliminar datos'><i class='fa fa-trash'></i> Eliminar</button>";             
             }
-          }, 
-        {"data":"Archivo",
-          render: function(data,type,row){
-                  if(data=='controller/registro_general_posgrado/documentos/' || data==''){
-                    return "<a href=''  target='_blank'><button disabled style='font-size:13px;' type='button' class='control btn btn-danger btn-sm' title='Ver Trabajo de investigación'><i class='fas fa-file-download'></i> Expediente</button></a>  ";                 
-                  }
-                  {
-                    return "<a href='../"+data+"' target='_blank'><button style='font-size:13px;' type='button' class='control btn btn-primary btn-sm' title='Ver Trabajo de investigación'><i class='fas fa-file-download'></i> Expediente</button></a>  ";                 
-                  }
-                  
-              }   
-          },
-          {"data":"ESTADO",
-            render: function (data, type, row ) {
-              if(data=='SIN DIPLOMA'){
-                return "<button hidden class='diploma btn btn-primary btn-sm' style='margin-right: 10px;' title='Ver diploma'><i class='fa fa-file'></i> Diploma</button><button hidden  class='informe btn btn-dark btn-sm' style='margin-right: 10px;' title='Imprimir informe'><i class='fa fa-file'></i> Informe</button><button  class='agregar btn btn-secondary btn-sm' style='margin-right: 10px;' title='Agregar diploma'><i class='fa fa-file'></i> Agregar diploma</button><button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>&nbsp;<button style='margin-right: 10px;' class='delete btn btn-danger btn-sm' title='Eliminar datos'><i class='fa fa-trash'></i> Eliminar</button>";             
-              }else if(data=='CON DIPLOMA'){
-                return "<button class='letra btn btn-dark btn-sm' style='margin-right: 10px;' title='Cambiar tamaño de letra a nombre'><i class='fa fa-edit'></i> Cambiar tamaño letra</button><button  class='diploma btn btn-primary btn-sm' style='margin-right: 10px;' title='Ver diploma'><i class='fa fa-file'></i> Diploma</button><br><button  class='agregar btn btn-secondary btn-sm' hidden style='margin-right: 10px;' title='Agregar diploma'><i class='fa fa-file'></i> Agregar diploma</button><button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>&nbsp;<button style='margin-right: 10px;' class='delete btn btn-danger btn-sm' title='Eliminar datos'><i class='fa fa-trash'></i> Eliminar</button>";             
-              }
-            }
-          },
-    ],
+          }
+        },
+  ],
 
   
       "language":idioma_espanol,
@@ -343,12 +486,12 @@ $('#tabla_registro_general_posgrado').on('click','.mostrar',function(){
   document.getElementById('txt_fecha_fin_mas').value=data.Fecha_fin_modalidad;
   document.getElementById('select_modo_sustenta_mas').value=data.Modo_sustentacion;
   
-  document.getElementById('txt_fecha_cu_mas').value=data.fecha_consejo_uni;
-  document.getElementById('txt_fecha_firma_mas').value=data.fecha_firma;
+  document.getElementById('txt_fecha_cu_mas').value=data.FECHA_CONSEJO;
+  document.getElementById('txt_fecha_firma_mas').value=data.FECHAFIRMA;
 
 
   document.getElementById('txt_resol_num').value=data.Resolucion_numero;
-  document.getElementById('txt_fecha_reso_mas').value=data.fecha_resolucion;
+  document.getElementById('txt_fecha_reso_mas').value=data.FECHA_RESO;
   document.getElementById('txt_diploma_nume_mas').value=data.Diploma_numero;
   document.getElementById('txt_registro_n°_mas').value=data.Registro_numero;
   document.getElementById('txt_registro_libr_mas').value=data.Registro_libro;
@@ -356,8 +499,8 @@ $('#tabla_registro_general_posgrado').on('click','.mostrar',function(){
   document.getElementById('select_tipo_diplo_mas').value=data.Diploma_tipo_emitido;
   document.getElementById('txt_fecha_inicio_tra_mas').value=data.Fecha_inicio_tramite;
   document.getElementById('txt_nro_credi_mas').value=data.Nro_creditos;
-  document.getElementById('txt_nro_oficio_mas').value=data.Nro_oficio;
-  document.getElementById('txt_fecha_secre_mas').value=data.fecha_secreatria_general;
+  document.getElementById('txt_nro_oficio_mas').value=data.OFICIO;
+  document.getElementById('txt_fecha_secre_mas').value=data.FECHA_SECRE;
 
 })
 
@@ -429,10 +572,10 @@ $('#tabla_registro_general_posgrado').on('click','.editar',function(){
 
   document.getElementById('txt_id_diploma').value=data.Id_Diploma;
     
-  document.getElementById('txt_fecha_cu_editar').value=data.fecha_consejo_uni;
-  document.getElementById('txt_fecha_firma_editar').value=data.fecha_firma;
+  document.getElementById('txt_fecha_cu_editar').value=data.FECHA_CONSEJO;
+  document.getElementById('txt_fecha_firma_editar').value=data.FECHAFIRMA;
   document.getElementById('txt_resol_editar').value=data.Resolucion_numero;
-  document.getElementById('txt_fecha_reso_editar').value=data.fecha_resolucion;
+  document.getElementById('txt_fecha_reso_editar').value=data.FECHA_RESO;
   document.getElementById('txt_diploma_nume_editar').value=data.Diploma_numero;
   document.getElementById('txt_registro_n°_editar').value=data.Registro_numero;
   document.getElementById('txt_registro_libr_editar').value=data.Registro_libro;
@@ -440,8 +583,8 @@ $('#tabla_registro_general_posgrado').on('click','.editar',function(){
   document.getElementById('select_tipo_diplo_editar').value=data.Diploma_tipo_emitido;
   document.getElementById('txt_fecha_inicio_tra_editar').value=data.Fecha_inicio_tramite;
   document.getElementById('txt_nro_credi_editar').value=data.Nro_creditos;
-  document.getElementById('txt_nro_oficio_editar').value=data.Nro_oficio;
-  document.getElementById('txt_fecha_secre_editar').value=data.fecha_secreatria_general;
+  document.getElementById('txt_nro_oficio_editar').value=data.OFICIO;
+  document.getElementById('txt_fecha_secre_editar').value=data.FECHA_SECRE;
 
 })
 
@@ -607,75 +750,116 @@ function AbrirModal(){
   listar_autoridad();
 }
 
-//AGREGAR DIPLOMA
-function Agregar_diploma(){
-  let idexpe = document.getElementById('id_expe').value;
-  let id = document.getElementById('txt_id_diplo').value;
-  let fechacu = document.getElementById('txt_fecha_cu').value;
-  let fechafirma = document.getElementById('txt_fecha_firma').value;
-  let numreso = document.getElementById('txt_nume_resol').value;
-  let fechareso = document.getElementById('txt_fecha_reso').value;
-  let diplonum = document.getElementById('txt_diploma_nume').value;
-  let regis = document.getElementById('txt_registro_n°').value;
-  let regilibro = document.getElementById('txt_registro_libr').value;
-  let regisfolio = document.getElementById('txt_registro_folio').value;
-  let tipodiplo = document.getElementById('select_tipo_diplo').value;
-  let fechainiciotra = document.getElementById('txt_fecha_inicio_tra').value;
-  let nrocred = document.getElementById('txt_nro_credi').value;
-  let nrooficio = document.getElementById('txt_nro_oficio').value;
-  let fechasecre = document.getElementById('txt_fecha_secre').value;
-  let idusuario = document.getElementById('txtprincipalid').value;
 
-  let correo = document.getElementById('txt_correo').value;
-  let fechacol = document.getElementById('txt_fecha_cola').value;
+  //AGREGAR DIPLOMA
+  function Agregar_diploma() {
+    let idexpe = document.getElementById('id_expe').value;
+    let id = document.getElementById('txt_id_diplo').value;
+    let fechacu = document.getElementById('txt_fecha_cu').value;
+    let fechafirma = document.getElementById('txt_fecha_firma').value;
+    let numreso = document.getElementById('txt_nume_resol').value;
+    let fechareso = document.getElementById('txt_fecha_reso').value;
+    let diplonum = document.getElementById('txt_diploma_nume').value;
+    let regis = document.getElementById('txt_registro_n°').value;
+    let regilibro = document.getElementById('txt_registro_libr').value;
+    let regisfolio = document.getElementById('txt_registro_folio').value;
+    let tipodiplo = document.getElementById('select_tipo_diplo').value;
+    let fechainiciotra = document.getElementById('txt_fecha_inicio_tra').value;
+    let nrocred = document.getElementById('txt_nro_credi').value;
+    let nrooficio = document.getElementById('txt_nro_oficio').value;
+    let fechasecre = document.getElementById('txt_fecha_secre').value;
+    let idusuario = document.getElementById('txtprincipalid').value;
+    let correo = document.getElementById('txt_correo').value;
+    let fechacol = document.getElementById('txt_fecha_cola').value;
 
-  let nom = document.getElementById('nom').value;
-  let ape = document.getElementById('ape').value;
-  let mate = document.getElementById('mate').value;
+    let nom = document.getElementById('nom').value;
+    let ape = document.getElementById('ape').value;
+    let mate = document.getElementById('mate').value;
 
-
-  if (
-    fechacu.length === 0 || fechafirma.length === 0 || numreso.length === 0 || fechareso.length === 0 ||
-    tipodiplo.length === 0 || diplonum.length === 0 || regis.length === 0 || regilibro.length === 0 ||
-    regisfolio.length === 0 || fechainiciotra.length === 0 || nrocred.length === 0 || nrooficio.length === 0 ||
-    fechasecre.length === 0
-  ) {
-    return Swal.fire("Mensaje de Advertencia", "Tiene campos vacíos", "warning");
-  }
-
-  $.ajax({
-    url: "../controller/registro_general_posgrado/controlador_agregar_diploma.php",
-    type: 'POST',
-    data: {
-        idexpe, id, fechacu, fechafirma, numreso, fechareso, diplonum, regis, regilibro, regisfolio,
-        tipodiplo, fechainiciotra, nrocred, nrooficio, fechasecre, idusuario, correo, fechacol,nom,ape,mate
+    if (
+      fechacu.length === 0 || fechafirma.length === 0 || numreso.length === 0 || fechareso.length === 0 ||
+      tipodiplo.length === 0 || diplonum.length === 0 || regis.length === 0 || regilibro.length === 0 ||
+      regisfolio.length === 0 || fechainiciotra.length === 0 || nrocred.length === 0 || nrooficio.length === 0 ||
+      fechasecre.length === 0
+    ) {
+      return Swal.fire("Mensaje de Advertencia", "Tiene campos vacíos", "warning");
     }
-}).done(function (resp) {
-    console.log("Respuesta del servidor:", resp);
 
-    if (resp.status) {
-      var tamaño = 37;
-      var tamaño2 = 97;
-        // Si la respuesta es exitosa, muestra el mensaje
+    $.ajax({
+      url: "../controller/registro_general_posgrado/controlador_agregar_diploma.php",
+      type: 'POST',
+      data: {
+          idexpe, id, fechacu, fechafirma, numreso, fechareso, diplonum, regis, regilibro, regisfolio,
+          tipodiplo, fechainiciotra, nrocred, nrooficio, fechasecre, idusuario, correo, fechacol, nom, ape, mate
+      }
+    }).done(function(resp) {
+      if (resp.status) {
+        contadorFolio3++;
+        contadorLibro3++;
+
+        localStorage.setItem("contadorFolio3", contadorFolio3); // Actualizar localStorage
+        localStorage.setItem("contadorLibro3", contadorLibro3); // Actualizar localStorage
+
+        console.log(contadorFolio3,contadorLibro3);
         Swal.fire("Mensaje de Confirmación", resp.message, "success");
-
-        // Aquí abres la ventana del modal con la URL construida
-        var url = "../view/MPDF/REPORTE/maestria.php?codigo="+id+ "&tamaño=" + encodeURIComponent(tamaño)+  "&tamaño2=" + encodeURIComponent(tamaño2)+"#zoom=100%";
+        var url = "../view/MPDF/REPORTE/maestria.php?codigo=" + id + "&tamaño=37&tamaño2=97#zoom=100%";
         tbl_general_posgrado.ajax.reload();
         $("#modal_registrar_diploma").modal('hide');
-        // Abrir una nueva ventana con la URL construida
         var newWindow = window.open(url, "DIPLOMA TITULO PROFESIONAL", "scrollbars=NO");
         if (newWindow) {
-            newWindow.moveTo(0, 0);
-            newWindow.resizeTo(screen.width, screen.height);
+          newWindow.moveTo(0, 0);
+          newWindow.resizeTo(screen.width, screen.height);
         }
-    } else {
-        // Si la respuesta no es exitosa, muestra el error
+      } else {
         Swal.fire("Mensaje de Error", resp.message, "error");
-    }
-});
-}
+      }
+    });
+  }
 
+
+
+  var contadorFolio3 = parseInt(localStorage.getItem("contadorFolio3")) || 0;
+  var contadorLibro3 = parseInt(localStorage.getItem("contadorLibro3")) || 0;
+  function Traernumero() {
+  $.ajax({
+    url: "../controller/registro_general_posgrado/controlador_traernumero.php",
+    type: 'POST'
+  }).done(function(resp) {
+    var data = JSON.parse(resp);
+    var valor = data.length > 0 ? data[0][0] : "No se encontraron registros";
+    var valor2 = data.length > 0 ? data[0][1] : "No se encontraron registros";
+    var valor3 = data.length > 0 ? data[0][2] : "No se encontraron registros";
+    var valor4 = data.length > 0 ? parseInt(data[0][3]) || 0 : 0; // Convertir a número o establecer 0
+    var valor5 = data.length > 0 ? parseInt(data[0][4]) || 0 : 0; // Convertir a número o establecer 0
+
+    // Incrementar el folio si el contador ya alcanzó 2
+    if (contadorFolio3 >= 20) {
+      contadorFolio3 = 0; // Reiniciar el contador
+      localStorage.setItem("contadorFolio3", contadorFolio3); // Actualizar localStorage
+      valor5+=2; // Incrementar el folio
+    }
+// Incrementar el folio si el contador ya alcanzó 2
+    if (contadorLibro3 >= 100) {
+      contadorLibro3 = 0; // Reiniciar el contador
+      localStorage.setItem("contadorLibro3", contadorLibro3); // Actualizar localStorage
+      valor4+=1; // Incrementar el folio
+    }
+    // Concatenar el valor5 con su incremento
+    let concatenatedValue = `${valor5}-${valor5 + 1}`;
+    let concatenatedValue2 = `${valor4}`;
+
+    // Asignar valores a los inputs
+    document.getElementById('txt_nume_resol').value = valor;
+    document.getElementById('txt_diploma_nume').value = valor2;
+    document.getElementById('txt_registro_n°').value = valor3;
+    document.getElementById('txt_registro_libr').value = concatenatedValue2;
+    document.getElementById('txt_registro_folio').value = concatenatedValue;
+  }).fail(function(jqXHR, textStatus, errorThrown) {
+    console.error("Error en la solicitud: " + textStatus, errorThrown);
+    $("#lbl_numero").text("Error al obtener los datos");
+    document.getElementById('txt_dni').value = "Error al obtener los datos";
+  });
+}
 
 //REGISTRAR TITULADO
 function Registrar_Posgraduado(){
@@ -754,7 +938,7 @@ function Registrar_Posgraduado(){
         documentoFinal = doc;
     }
    // Validación general de campos
-if(codigo.length === 0 || nombres.length === 0 || apepa.length === 0 || 
+if(nombres.length === 0 || apepa.length === 0 || 
   apema.length === 0 || sexo.length === 0 || celular.length === 0 || 
   direc.length === 0 || fecha_matr.length === 0 || fecha_egre.length === 0) {
    return Swal.fire("Mensaje de Advertencia", "Tiene campos vacíos, revise por favor", "warning");
@@ -973,7 +1157,7 @@ function Modificar_Posgraduado(){
     let extension = arc.split('.').pop();//DOCUMENTO.PPT
     let nombrearchivo="";
     let f = new Date();
-    if(dni.length==0|| codigo.length==0 ||nombres.length==0  || apepa.length==0 ||apema.length==0 || sexo.length==0 ||celular.length==0 || direc.length==0 || fecha_matr.length==0 ||fecha_egre.length==0){
+    if(dni.length==0||nombres.length==0  || apepa.length==0 ||apema.length==0 || sexo.length==0 ||celular.length==0 || direc.length==0 || fecha_matr.length==0 ||fecha_egre.length==0){
       return Swal.fire("Mensaje de Advertencia","Tiene campos vacios en el registro de estudiantes, revise por favor","warning");
     }
 
@@ -1224,7 +1408,7 @@ function Imprimir_informe() {
 $('#tabla_registro_general_posgrado').on('click','.diploma',function(){
   var data = tbl_general_posgrado.row($(this).parents('tr')).data();
 
-  var tamaño = 37;
+  var tamaño = 45;
   var tamaño2 = 97;
 
 
@@ -1281,35 +1465,6 @@ window.open(url, "DIPLOMA MAESTRIA", "scrollbars=NO,width=" + width + ",height="
 
 }
 } 
-///NUMERO
-function Traernumero() {
-  $.ajax({
-    url: "../controller/registro_general_posgrado/controlador_traernumero.php",
-    type: 'POST'
-  }).done(function(resp) {
-    var data = JSON.parse(resp);
-    var mensaje = "El siguiente número debe ser: ";
-    var valor = data.length > 0 ? data[0][0] : "No se encontraron registros";
-    var valor2 = data.length > 0 ? data[0][1] : "No se encontraron registros";
-    var valor3 = data.length > 0 ? data[0][2] : "No se encontraron registros";
-    var valor4 = data.length > 0 ? data[0][3] : "No se encontraron registros";
-    var valor5 = data.length > 0 ? data[0][4] : "No se encontraron registros";
-
-    // Actualizar el label
-    
-    // Actualizar el input de texto
-    document.getElementById('txt_nume_resol').value = valor;
-    document.getElementById('txt_diploma_nume').value = valor2;
-    document.getElementById('txt_registro_n°').value = valor3;
-    document.getElementById('txt_registro_libr').value = valor4;
-    document.getElementById('txt_registro_folio').value = valor5;
-
-  }).fail(function(jqXHR, textStatus, errorThrown) {
-    console.error("Error en la solicitud: " + textStatus, errorThrown);
-    $("#lbl_numero").text("Error al obtener los datos");
-    document.getElementById('txt_dni').value = "Error al obtener los datos";
-  });
-}
 
 
 

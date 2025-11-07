@@ -18,48 +18,49 @@ function listar_expedientes_posgrado(){
           type:'POST'
       },
       dom: 'Bfrtip', 
-      buttons:[ 
-          {
-              extend: 'excelHtml5',
-              text: '<i class="fas fa-file-excel"></i> ',
-              titleAttr: 'Exportar a Excel',
-              filename: function() {
-                  return  "LISTA GENERAL DE POSGRADUADOS";
-              },
-              title: function() {
-                  return  "LISTA GENERAL DE POSGRADUADOS";
-              },
-              exportOptions: {
-                  columns: [0, 1, 2, 3, 4, 5]  // Especifica las columnas a exportar hasta "estado"
-              }
-          },
-          {
-              extend: 'pdfHtml5',
-              text: '<i class="fas fa-file-pdf"></i> ',
-              titleAttr: 'Exportar a PDF',
-              orientation: 'landscape',  // Exportar en formato horizontal
-              filename: function() {
-                  return  "LISTA GENERAL DE POSGRADUADOS";
-              },
-              title: function() {
-                  return  "LISTA GENERAL DE POSGRADUADOS";
-              },
-              exportOptions: {
-                  columns: [0, 1, 2, 3, 4, 5]  // Especifica las columnas a exportar hasta "estado"
-              }
-          },
-          {
-              extend: 'print',
-              text: '<i class="fa fa-print"></i> ',
-              titleAttr: 'Imprimir',
-              title: function() {
-                  return  "LISTA GENERAL DE POSGRADUADOS";
-              },
-              exportOptions: {
-                  columns: [0, 1, 2, 3, 4, 5]  // Especifica las columnas a exportar hasta "estado"
-              }
-          }
-      ],
+     buttons: [ 
+    {
+        extend: 'excelHtml5',
+        text: '<i class="fas fa-file-excel"></i> Excel',
+        titleAttr: 'Exportar a Excel',
+        filename: function() {
+            return "LISTA GENERAL DE POSGRADUADOS";
+        },
+        title: function() {
+            return "LISTA GENERAL DE POSGRADUADOS";
+        },
+        exportOptions: {
+            columns: [0, 1, 2, 3, 4, 5]  // Especifica las columnas a exportar hasta "estado"
+        }
+    },
+    {
+        extend: 'pdfHtml5',
+        text: '<i class="fas fa-file-pdf"></i> PDF',
+        titleAttr: 'Exportar a PDF',
+        orientation: 'landscape',  // Exportar en formato horizontal
+        filename: function() {
+            return "LISTA GENERAL DE POSGRADUADOS";
+        },
+        title: function() {
+            return "LISTA GENERAL DE POSGRADUADOS";
+        },
+        exportOptions: {
+            columns: [0, 1, 2, 3, 4, 5]  // Especifica las columnas a exportar hasta "estado"
+        }
+    },
+    {
+        extend: 'print',
+        text: '<i class="fa fa-print"></i> Imprimir',
+        titleAttr: 'Imprimir',
+        title: function() {
+            return "LISTA GENERAL DE POSGRADUADOS";
+        },
+        exportOptions: {
+            columns: [0, 1, 2, 3, 4, 5]  // Especifica las columnas a exportar hasta "estado"
+        }
+    }
+],
+
       "columns":[
         {"data":"Diploma_numero"},
         {"data":"tipo_documento",
@@ -168,49 +169,49 @@ function listar_fechas_busqueda(){
             }
         },
         dom: 'Bfrtip', 
-        buttons: [
-            {
-                extend: 'excelHtml5',
-                text: '<i class="fas fa-file-excel"></i> ',
-                titleAttr: 'Exportar a Excel',
-                filename: function() {
-                    return "LISTA_GENERAL_DE_POSGRADUADOS";
-                },
-                exportOptions: {
-                    columns: ':hidden',
-                    rows: function ( idx, data, node ) {
-                        return idx < 1000; // Limita a 1000 filas, ajusta según necesites
-                    }
-                }
-            },
-            
-            {
-                extend: 'pdfHtml5',
-                text: '<i class="fas fa-file-pdf"></i> ',
-                titleAttr: 'Exportar a PDF',
-                orientation: 'landscape', // Exportar en formato horizontal
-                filename: function() {
-                    return "LISTA_GENERAL_DE_POSGRADUADOS"; // No uses espacios ni caracteres especiales
-                },
-                title: function() {
-                    return "LISTA GENERAL DE POSGRADUADOS";
-                },
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 9] // Especifica las columnas a exportar hasta "estado"
-                }
-            },
-            {
-                extend: 'print',
-                text: '<i class="fa fa-print"></i> ',
-                titleAttr: 'Imprimir',
-                title: function() {
-                    return "LISTA GENERAL DE POSGRADUADOS";
-                },
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 9] // Especifica las columnas a exportar hasta "estado"
-                }
-            }
-        ],
+       buttons: [ 
+    {
+        extend: 'excelHtml5',
+        text: '<i class="fas fa-file-excel"></i> Excel',
+        titleAttr: 'Exportar a Excel',
+        filename: function() {
+            return "LISTA GENERAL DE POSGRADUADOS";
+        },
+        title: function() {
+            return "LISTA GENERAL DE POSGRADUADOS";
+        },
+        exportOptions: {
+            columns: [0, 1, 2, 3, 4, 5]  // Especifica las columnas a exportar hasta "estado"
+        }
+    },
+    {
+        extend: 'pdfHtml5',
+        text: '<i class="fas fa-file-pdf"></i> PDF',
+        titleAttr: 'Exportar a PDF',
+        orientation: 'landscape',  // Exportar en formato horizontal
+        filename: function() {
+            return "LISTA GENERAL DE POSGRADUADOS";
+        },
+        title: function() {
+            return "LISTA GENERAL DE POSGRADUADOS";
+        },
+        exportOptions: {
+            columns: [0, 1, 2, 3, 4, 5]  // Especifica las columnas a exportar hasta "estado"
+        }
+    },
+    {
+        extend: 'print',
+        text: '<i class="fa fa-print"></i> Imprimir',
+        titleAttr: 'Imprimir',
+        title: function() {
+            return "LISTA GENERAL DE POSGRADUADOS";
+        },
+        exportOptions: {
+            columns: [0, 1, 2, 3, 4, 5]  // Especifica las columnas a exportar hasta "estado"
+        }
+    }
+],
+
         "columns":[
             {"data":"Diploma_numero"}, // 0
             {"data":"tipo_documento",

@@ -19,12 +19,13 @@ function listar_fechas_busqueda(){
         "processing": true,
         "ajax":{
             "url":"../controller/reportes/controlador_listar_expediente_titulo_fecha_facultas.php",
-            type:'POST',
-          data:{
+           "type":'POST',
+          "data":{
             fechainicio:fechainicio,
             fechafin:fechafin,
             facu:facu
-          }
+          },
+           "dataSrc": "data" // 👈 Importante
       },
         dom: 'Bfrtip', 
        
@@ -85,22 +86,22 @@ function listar_fechas_busqueda(){
           },
         {"data":"Dni"},
         {"data":"Estudiante"},
-        {"data":"Facultad",
-        render: function(data,type,row){
-            if(data=='Ingeniería'){
-                return '<span class="badge bg-success">INGENIERIA</span>';
-            }else if(data=='Ciencias de la Salud'){
-                return '<span class="badge bg-primary">CIENCIAS DE LA SALUD</span>';
-            }else{
-                return '<span class="badge bg-warning">CIENCIAS SOCIALES</span>';
-            }
-         } 
-        },
+       {"data":"Facultad",
+            render: function(data,type,row){
+                if(data=='Ingeniería'){
+                    return '<span class="badge bg-success">INGENIERIA</span>';
+                }else if(data=='Ciencias de la Salud'){
+                    return '<span class="badge bg-primary">CIENCIAS DE LA SALUD</span>';
+                }else{
+                    return '<span class="badge bg-warning">CIENCIAS SOCIALES</span>';
+                }
+             } 
+            },
         {"data":"Escuela"},
         {"data":"Titulo_de"},
         {"data":"Modalidad"},
         {"data":"cede_nombre"},
-        {"data":"ESTADO",
+        {"data":"estadiplo",
             render: function(data,type,row){
                 if(data=='SIN DIPLOMA'){
                     return '<span class="badge bg-danger">SIN DIPLOMA</span>';
@@ -146,12 +147,13 @@ function listar_fechas_busqueda_bach(){
         "processing": true,
         "ajax":{
             "url":"../controller/reportes/controlador_listar_expediente_bachiller_fecha_facultad.php",
-            type:'POST',
-          data:{
+           "type":'POST',
+          "data":{
             fechainicio:fechainicio,
             fechafin:fechafin,
             facu:facu
-          }
+          },
+           "dataSrc": "data" // 👈 Importante
       },
         dom: 'Bfrtip', 
        
@@ -212,22 +214,22 @@ function listar_fechas_busqueda_bach(){
           },
         {"data":"Dni"},
         {"data":"Estudiante"},
-        {"data":"Facultad",
-        render: function(data,type,row){
-            if(data=='INGENIERIA'){
-                return '<span class="badge bg-success">INGENIERIA</span>';
-            }else if(data=='CIENCIAS DE LA SALUD'){
-                return '<span class="badge bg-primary">CIENCIAS DE LA SALUD</span>';
-            }else{
-                return '<span class="badge bg-warning">CIENCIAS SOCIALES</span>';
-            }
-         } 
-        },
+       {"data":"Facultad",
+            render: function(data,type,row){
+                if(data=='Ingeniería'){
+                    return '<span class="badge bg-success">INGENIERIA</span>';
+                }else if(data=='Ciencias de la Salud'){
+                    return '<span class="badge bg-primary">CIENCIAS DE LA SALUD</span>';
+                }else{
+                    return '<span class="badge bg-warning">CIENCIAS SOCIALES</span>';
+                }
+             } 
+            },
         {"data":"Escuela"},
         {"data":"Grado_bachiller_de"},
         {"data":"Modalidad"},
         {"data":"cede_nombre"},
-        {"data":"ESTADO",
+        {"data":"estadiplo",
             render: function(data,type,row){
                 if(data=='SIN DIPLOMA'){
                     return '<span class="badge bg-danger">SIN DIPLOMA</span>';

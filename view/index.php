@@ -24,6 +24,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="../plantilla/plugins//fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="icon" href="https://i0.wp.com/utea.edu.pe/wp-content/uploads/2021/12/logo-utea2022.png?w=485&ssl=1" type="image/jpg">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 
   <link rel="stylesheet" href="../plantilla/dist//css/adminlte.min.css">
   <link href="../utilitario/DataTables/datatables.min.css" type="text/css" rel="stylesheet" />
@@ -442,6 +443,25 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </ul>
               </li>
               <li class="nav-item">
+                <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-file"></i>
+                  <p>
+                    Auditorias
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="#" onclick="cargar_contenido('contenido_principal','auditoria/view_auditoria_informe.php')" class="nav-link">
+                      <i class="nav-icon far fa-circle"></i>
+                      <p>Auditoria informes
+                      </p>
+                    </a>
+                  </li>
+                
+                </ul>
+              </li>
+              <li class="nav-item">
                 <a href="#" class="nav-link" onclick="cargar_contenido('contenido_principal','usuario/view_usuario.php')">
                   <i class="nav-icon fas fa-user"></i>
                   <p>
@@ -707,7 +727,25 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </li>
                 </ul>
               </li>
-
+  <li class="nav-item">
+                <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-file"></i>
+                  <p>
+                    Auditorias
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="#" onclick="cargar_contenido('contenido_principal','auditoria/view_auditoria_informe.php')" class="nav-link">
+                      <i class="nav-icon far fa-circle"></i>
+                      <p>Auditoria informes
+                      </p>
+                    </a>
+                  </li>
+                
+                </ul>
+              </li>
 
             <?php
             }
@@ -1390,7 +1428,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   </div>
 
   <!-- Default to the left -->
-  <strong>Copyright &copy; 2024 <a href="https://utea.edu.pe/" target="_blank"><em>UTEA - ABANCAY</em></a></strong>
+  <strong>Copyright &copy; 2024 <a href="https://web.facebook.com/jerzhitho.cm/" target="_blank"><em>DESARROLLADO POR JCM</em></a></strong>
 
 </footer>
 
@@ -1471,7 +1509,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     teclado = String.fromCharCode(key).toLowerCase();
 
-    letras = "qwertyuiopasdfghjklñzxcvbnmáéíóúÁÉÍÓÚ.- ";
+    letras = "qwertyuiopasdfghjklñzxcvbnmáéíóúÁÉÍÓÚ.-, ";
 
     especiales = "8-37-38-46-164";
 
@@ -1544,4 +1582,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
     Total_programada();
     Total_autoridad();
   });
+// Reiniciar los valores en el localStorage
+
+
+// Obtener los valores para verificar
+var contadorFolio = parseInt(localStorage.getItem("contadorFolio")) || 0;
+  var contadorLibro = parseInt(localStorage.getItem("contadorLibro")) || 0;
+
+
+console.log(contadorFolio);
+console.log(contadorLibro);
+
+
 </script>

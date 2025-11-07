@@ -97,15 +97,7 @@ function listar_expedientes_bachiller(){
               }
            } 
           },
-         {"data":"estadiplo",
-        render: function (data, type, row ) {
-          if(data=='SIN DIPLOMA'){
-            return "<button  class='diploma btn btn-danger btn-sm' disabled style='margin-right: 10px;' title='Ver diploma'><i class='fa fa-file'></i> Diploma</button>";             
-          }else if(data=='CON DIPLOMA'){
-            return "<button  class='diploma btn btn-primary btn-sm'  style='margin-right: 10px;' title='Ver diploma'><i class='fa fa-file'></i> Diploma</button>";             
-          }
-        }
-      },
+       
           {"data":"estado_diploma_escaneo",
             render: function(data,type,row){
                 if(data=='SI'){
@@ -149,6 +141,8 @@ tbl_general_bachiller.on('draw.td',function(){
 });
 }
 
+
+
 //LISTAR POR FECHAS
 function listar_fechas_busqueda(){
     let fechainicio = document.getElementById('txtfechainicio').value;
@@ -168,12 +162,13 @@ function listar_fechas_busqueda(){
         "processing": true,
         "ajax":{
             "url":"../controller/diplomas/controlador_listar_diploma_bachiller_fecha.php",
-            type:'POST',
-          data:{
-            fechainicio:fechainicio,
-            fechafin:fechafin,
-          }
-      },
+           "type": "POST",
+            "data": {
+                fechainicio: fechainicio,
+                fechafin: fechafin,
+            },
+            "dataSrc": "data" // 👈 Importante
+        },
         dom: 'Bfrtip', 
       "buttons": [
         {
@@ -217,7 +212,7 @@ function listar_fechas_busqueda(){
           }
         }
       ],
-      "columns":[
+       "columns":[
         {"data":"Diploma_numero"},
         {"data":"tipo_documento",
           render: function(data,type,row){
@@ -232,67 +227,59 @@ function listar_fechas_busqueda(){
           },
         {"data":"Dni"},
         {"data":"Estudiante"},
-        {"data":"Facultad",
+       {"data":"Facultad",
+        render: function(data,type,row){
+            if(data=='Ingeniería'){
+                return '<span class="badge bg-success">INGENIERIA</span>';
+            }else if(data=='Ciencias de la Salud'){
+                return '<span class="badge bg-primary">CIENCIAS DE LA SALUD</span>';
+            }else{
+                return '<span class="badge bg-warning">CIENCIAS SOCIALES</span>';
+            }
+         } 
+        },
+        {"data":"Escuela"},
+        {"data":"Modo_obtencion"},
+        {"data":"estadiplo",
+          render: function(data,type,row){
+              if(data=='SIN DIPLOMA'){
+                  return '<span class="badge bg-danger">SIN DIPLOMA</span>';
+              }else if(data=='CON DIPLOMA'){
+                  return '<span class="badge bg-success">CON DIPLOMA</span>';
+              }
+           } 
+          },
+       
+          {"data":"estado_diploma_escaneo",
             render: function(data,type,row){
-                if(data=='INGENIERIA'){
-                    return '<span class="badge bg-success">INGENIERIA</span>';
-                }else if(data=='CIENCIAS DE LA SALUD'){
-                    return '<span class="badge bg-primary">CIENCIAS DE LA SALUD</span>';
-                }else{
-                    return '<span class="badge bg-warning">CIENCIAS SOCIALES</span>';
+                if(data=='SI'){
+                    return '<span class="badge bg-success">SI</span>';
+                }else {
+                    return '<span class="badge bg-danger">NO</span>';
                 }
              } 
             },
-            {"data":"Escuela"},
-            {"data":"Modo_obtencion"},
-            {"data":"estadiplo",
+            {"data":"diploma_escaneado",
               render: function(data,type,row){
-                  if(data=='SIN DIPLOMA'){
-                      return '<span class="badge bg-danger">SIN DIPLOMA</span>';
-                  }else if(data=='CON DIPLOMA'){
-                      return '<span class="badge bg-success">CON DIPLOMA</span>';
-                  }
-               } 
-              },
-             {"data":"estadiplo",
-            render: function (data, type, row ) {
-              if(data=='SIN DIPLOMA'){
-                return "<button  class='diploma btn btn-danger btn-sm' disabled style='margin-right: 10px;' title='Ver diploma'><i class='fa fa-file'></i> Diploma</button>";             
-              }else if(data=='CON DIPLOMA'){
-                return "<button  class='diploma btn btn-primary btn-sm'  style='margin-right: 10px;' title='Ver diploma'><i class='fa fa-file'></i> Diploma</button>";             
-              }
-            }
-          },
-              {"data":"estado_diploma_escaneo",
-                render: function(data,type,row){
-                    if(data=='SI'){
-                        return '<span class="badge bg-success">SI</span>';
-                    }else {
-                        return '<span class="badge bg-danger">NO</span>';
-                    }
-                 } 
-                },
-                {"data":"diploma_escaneado",
-                  render: function(data,type,row){
-                          if(data===null||data===''){
-                            return "<a href='' target='_blank'><button disabled style='font-size:13px;' type='button' class='control btn btn-danger btn-sm' title='Sin diploma'><i class='fas fa-file-download'></i> Sin diploma escaneado</button></a>  ";                 
-                          }
-                          {
-                            return "<a href='../"+data+"' target='_blank'><button style='font-size:13px;' type='button' class='control btn btn-primary btn-sm' title='Ver Ver diploma escaneado'><i class='fas fa-file-download'></i> Ver diploma escaneado</button></a>  ";                 
-                          }
-                          
-                      }   
-                  },
-                  {"data":"estado_diploma_escaneo",
-                    render: function (data, type, row ) {
-                      if(data=='SI'){
-                        return "<button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='subir btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar diploma escaneado'><i class='fa fa-edit'></i> Editar diploma escaneado</button>";             
-                      }else {
-                          return "<button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='subir btn btn-primary btn-sm' style='margin-right: 10px;' title='Subir diploma'><i class='fa fa-upload'></i> Subir diploma</button>";             
+                      if(data===null||data===''){
+                        return "<a href='' target='_blank'><button disabled style='font-size:13px;' type='button' class='control btn btn-danger btn-sm' title='Sin diploma'><i class='fas fa-file-download'></i> Sin diploma escaneado</button></a>  ";                 
                       }
-                    }
-                  },
-            ],
+                      {
+                        return "<a href='../"+data+"' target='_blank'><button style='font-size:13px;' type='button' class='control btn btn-primary btn-sm' title='Ver Ver diploma escaneado'><i class='fas fa-file-download'></i> Ver diploma escaneado</button></a>  ";                 
+                      }
+                      
+                  }   
+              },
+              {"data":"estado_diploma_escaneo",
+                render: function (data, type, row ) {
+                  if(data=='SI'){
+                    return "<button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='subir btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar diploma escaneado'><i class='fa fa-edit'></i> Editar diploma escaneado</button>";             
+                  }else {
+                    return "<button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='subir btn btn-primary btn-sm' style='margin-right: 10px;' title='Subir diploma'><i class='fa fa-upload'></i> Subir diploma escaneado</button>";             
+                  }
+                }
+              },
+        ],
   
       "language":idioma_espanol,
       select: true
@@ -304,7 +291,167 @@ tbl_general_bachiller.on('draw.td',function(){
 });
 }
 
+function listar_colacion(){
+  let fechacol = document.getElementById('select_fechacola').value;
 
+  tbl_general_bachiller = $("#tabla_registro_general").DataTable({
+      "ordering":false,   
+      "bLengthChange":true,
+      "searching": { "regex": false },
+      "lengthMenu": [ [10, 25, 50, 100, -1], [10, 25, 50, 100, "All"] ],
+      "pageLength": 10,
+      "destroy":true,
+      "pagingType": 'full_numbers',
+      "scrollCollapse": true,
+      "responsive": true,
+      "async": false ,
+      "processing": true,
+      "ajax":{
+        "url":"../controller/registro_general_bachiller/controlador_listar_registro_general_bachiller_colacion.php",
+        "type":'POST',
+        "data":{
+          fechacol:fechacol
+         },
+            "dataSrc": "data" // 👈 Importante
+      },
+      dom: 'Bfrtip', 
+    "buttons": [
+      {
+        extend: 'excelHtml5',
+        text: '<i class="fas fa-file-excel"></i>',
+        titleAttr: 'Exportar a Excel',
+        filename: function() {
+          return "LISTA DE DIPLOMAS BACHILLER";
+        },
+        title: function() {
+          return "LISTA DE DIPLOMAS BACHILLER";
+        },
+        exportOptions: {
+          columns: [0, 1, 2, 3, 4, 5, 6]  // Especifica las columnas a exportar hasta "estadiplo"
+        }
+      },
+      {
+        extend: 'pdfHtml5',
+        text: '<i class="fas fa-file-pdf"></i>',
+        titleAttr: 'Exportar a PDF',
+        filename: function() {
+          return "LISTA DE DIPLOMAS BACHILLER";
+        },
+        title: function() {
+          return "LISTA DE DIPLOMAS BACHILLER";
+        },
+        orientation: 'landscape',  // Exportar en formato horizontal
+        exportOptions: {
+          columns: [0, 1, 2, 3, 4, 5, 6]  // Especifica las columnas a exportar hasta "estadiplo"
+        }
+      },
+      {
+        extend: 'print',
+        text: '<i class="fa fa-print"></i>',
+        titleAttr: 'Imprimir',
+        title: function() {
+          return "LISTA DE DIPLOMAS BACHILLER";
+        },
+        exportOptions: {
+          columns: [0, 1, 2, 3, 4, 5, 6]  // Especifica las columnas a exportar hasta "estadiplo"
+        }
+      }
+    ],
+    "columns":[
+        {"data":"Diploma_numero"},
+        {"data":"tipo_documento",
+          render: function(data,type,row){
+              if(data=='DNI'){
+                  return '<span class="badge bg-success">DNI</span>';
+              }else if(data=='PASAPORTE'){
+                  return '<span class="badge bg-primary">PASAPORTE</span>';
+              }else{
+                  return '<span class="badge bg-warning">CARNET DE EXTRANJERIA</span>';
+              }
+           } 
+          },
+        {"data":"Dni"},
+        {"data":"Estudiante"},
+       {"data":"Facultad",
+        render: function(data,type,row){
+            if(data=='Ingeniería'){
+                return '<span class="badge bg-success">INGENIERIA</span>';
+            }else if(data=='Ciencias de la Salud'){
+                return '<span class="badge bg-primary">CIENCIAS DE LA SALUD</span>';
+            }else{
+                return '<span class="badge bg-warning">CIENCIAS SOCIALES</span>';
+            }
+         } 
+        },
+        {"data":"Escuela"},
+        {"data":"Modo_obtencion"},
+        {"data":"estadiplo",
+          render: function(data,type,row){
+              if(data=='SIN DIPLOMA'){
+                  return '<span class="badge bg-danger">SIN DIPLOMA</span>';
+              }else if(data=='CON DIPLOMA'){
+                  return '<span class="badge bg-success">CON DIPLOMA</span>';
+              }
+           } 
+          },
+       
+          {"data":"estado_diploma_escaneo",
+            render: function(data,type,row){
+                if(data=='SI'){
+                    return '<span class="badge bg-success">SI</span>';
+                }else {
+                    return '<span class="badge bg-danger">NO</span>';
+                }
+             } 
+            },
+            {"data":"diploma_escaneado",
+              render: function(data,type,row){
+                      if(data===null||data===''){
+                        return "<a href='' target='_blank'><button disabled style='font-size:13px;' type='button' class='control btn btn-danger btn-sm' title='Sin diploma'><i class='fas fa-file-download'></i> Sin diploma escaneado</button></a>  ";                 
+                      }
+                      {
+                        return "<a href='../"+data+"' target='_blank'><button style='font-size:13px;' type='button' class='control btn btn-primary btn-sm' title='Ver Ver diploma escaneado'><i class='fas fa-file-download'></i> Ver diploma escaneado</button></a>  ";                 
+                      }
+                      
+                  }   
+              },
+              {"data":"estado_diploma_escaneo",
+                render: function (data, type, row ) {
+                  if(data=='SI'){
+                    return "<button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='subir btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar diploma escaneado'><i class='fa fa-edit'></i> Editar diploma escaneado</button>";             
+                  }else {
+                    return "<button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='subir btn btn-primary btn-sm' style='margin-right: 10px;' title='Subir diploma'><i class='fa fa-upload'></i> Subir diploma escaneado</button>";             
+                  }
+                }
+              },
+        ],
+
+    "language":idioma_espanol,
+    select: true
+});
+tbl_general_bachiller.on('draw.td',function(){
+var PageInfo = $("#tabla_registro_general").DataTable().page.info();
+tbl_general_bachiller.column(0, {page: 'current'}).nodes().each(function(cell, i){
+});
+});
+}
+function Cargar_Select_Colacion(){
+  $.ajax({
+    url: "../controller/registro_general/controlador_cargar_select_colacion.php",
+    type: 'POST',
+  }).done(function(resp){
+    let data = JSON.parse(resp);
+    let cadena = "<option value=''>Seleccione</option>"; // Agrega la opción "Seleccione" al inicio
+    if(data.length > 0){
+      for (let i = 0; i < data.length; i++) {
+        cadena += "<option value='" + data[i][0] + "'>" + data[i][1] + "</option>";    
+      }
+    } else {
+      cadena += "<option value=''>No hay cedes en la base de datos</option>";
+    }
+    document.getElementById('select_fechacola').innerHTML = cadena;
+  });
+}
 
 
 //AGREGAR DIPLOMA
@@ -343,13 +490,17 @@ $('#tabla_registro_general').on('click','.mostrar',function(){
 $('#tabla_registro_general').on('click','.diploma',function(){
   var data = tbl_general_bachiller.row($(this).parents('tr')).data();
 
+  var tamaño = 37;
+  var tamaño2 = 89;
+
+
   if(tbl_general_bachiller.row(this).child.isShown()){
       var data = tbl_general_bachiller.row(this).data();
   }
-  var url = "../view/MPDF/REPORTE/diploma_bachiller.php?codigo=" + encodeURIComponent(data.Id_Diploma) + "#zoom=100%";
+  var url = "../view/MPDF/REPORTE/diploma_bachiller.php?codigo=" + encodeURIComponent(data.Id_Diploma) + "&tamaño=" + encodeURIComponent(tamaño)+  "&tamaño2=" + encodeURIComponent(tamaño2)+"#zoom=100%";
 
 // Abrir una nueva ventana con la URL construida
-var newWindow = window.open(url, "DIPLOMA GRADO DE BACHILLER", "scrollbars=NO");
+var newWindow = window.open(url, "DIPLOMA BACHILLER", "scrollbars=NO");
 
 // Asegurarse de que la ventana se abre en tamaño máximo
 if (newWindow) {

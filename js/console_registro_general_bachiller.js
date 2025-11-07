@@ -62,6 +62,12 @@ function listar_expedientes_bachiller(){
       ],
       "columns":[
         {"data":"Diploma_numero"},
+         {
+          "data": "number_informe",
+          render: function(data, type, row) {
+            return `<span style="font-weight: bold; font-size: 1.2em;">${data}</span>`;
+          }
+        },
         {"data":"tipo_documento",
           render: function(data,type,row){
               if(data=='DNI'){
@@ -72,7 +78,8 @@ function listar_expedientes_bachiller(){
                   return '<span class="badge bg-warning">CARNET DE EXTRANJERIA</span>';
               }
            } 
-          },        {"data":"Dni"},
+          },
+        {"data":"Dni"},
         {"data":"Estudiante"},
         {"data":"Facultad",
           render: function(data,type,row){
@@ -87,7 +94,21 @@ function listar_expedientes_bachiller(){
           },
         {"data":"Escuela"},
         {"data":"Modo_obtencion"},
+                {"data":"fecha_registro1"},
         {"data":"cede_nombre"},
+        {
+          data: "aumento",
+          render: function (data, type, row) {
+            console.log(row);
+            if (data === 0) {
+              return "<button class='validar btn btn-primary btn-sm' style='margin-right: 10px;' title='Validar datos'><i class='fa fa-check'></i> Validar</button>";
+            
+            } else{
+              return "<button class='validar btn btn-success btn-sm' disabled style='margin-right: 10px;' title='Ya se validó'><i class='fa fa-check'></i> Ya esta Validado</button>";
+            }
+          }
+        }
+        ,
         {"data":"estado",
           render: function(data,type,row){
               if(data=='SIN DIPLOMA'){
@@ -118,11 +139,12 @@ function listar_expedientes_bachiller(){
                   
               }   
           },
-           {"data":"estado",
+          {"data":"estado",
             render: function (data, type, row ) {
+              console.log(row);
               if(data=='SIN DIPLOMA'){
-                return "<button hidden class='diploma btn btn-primary btn-sm' style='margin-right: 10px;' title='Ver diploma'><i class='fa fa-file'></i> Diploma</button><button hidden class='informe btn btn-dark btn-sm' style='margin-right: 10px;' title='Imprimir informe'><i class='fa fa-file'></i> Informe</button><button  class='agregar btn btn-secondary btn-sm' style='margin-right: 10px;' title='Agregar diploma'><i class='fa fa-file'></i> Agregar diploma</button><button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>&nbsp;<button style='margin-right: 10px;' class='delete btn btn-danger btn-sm' title='Eliminar datos' ><i class='fa fa-trash'></i> Eliminar</button>";             
-              }else if(data=='CON DIPLOMA'){
+                return "<button hidden class='diploma btn btn-primary btn-sm' style='margin-right: 10px;' title='Ver diploma'><i class='fa fa-file'></i> Diploma</button><button hidden class='informe btn btn-dark btn-sm' style='margin-right: 10px;' title='Imprimir informe'><i class='fa fa-file'></i> Informe</button><button  class='agregar btn btn-secondary btn-sm' style='margin-right: 10px;' title='Agregar diploma'><i class='fa fa-file'></i> Agregar diploma</button><button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>&nbsp;<button style='margin-right: 10px;' class='delete btn btn-danger btn-sm' title='Eliminar datos' ><i class='fa fa-trash'></i> Eliminar</button>&nbsp;<button style='margin-right: 10px;' class='pasar btn btn-info btn-sm' title='Pasar datos a titulado'><i class='fa fa-arrow-right'></i> Pasar a Bachiller</button>";             
+             }else if(data=='CON DIPLOMA'){
                 return "<button class='letra btn btn-dark btn-sm' style='margin-right: 10px;' title='Cambiar tamaño de letra a nombre'><i class='fa fa-edit'></i> Cambiar tamaño letra</button><button  class='diploma btn btn-primary btn-sm' style='margin-right: 10px;' title='Ver diploma'><i class='fa fa-file'></i> Diploma</button><br><button  class='agregar btn btn-secondary btn-sm' hidden style='margin-right: 10px;' title='Agregar diploma'><i class='fa fa-file'></i> Agregar diploma</button><button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>&nbsp;<button style='margin-right: 10px;' class='delete btn btn-danger btn-sm' title='Eliminar datos'><i class='fa fa-trash'></i> Eliminar</button>";             
               }
             }
@@ -136,9 +158,174 @@ function listar_expedientes_bachiller(){
 tbl_general_bachiller.on('draw.td',function(){
   var PageInfo = $("#tabla_registro_general_bachiller").DataTable().page.info();
   tbl_general_bachiller.column(0, {page: 'current'}).nodes().each(function(cell, i){
-    cell.innerHTML = i + 1 + PageInfo.start;
 
   });
+});
+}
+
+
+//LISTADO ALFABETICO
+function listar_expedientes_alfabetico(){
+  tbl_general_bachiller = $("#tabla_registro_general_bachiller").DataTable({
+    "ordering":false,   
+      "bLengthChange":true,
+      "searching": { "regex": false },
+      "lengthMenu": [ [10, 25, 50, 100, -1], [10, 25, 50, 100, "All"] ],
+      "pageLength": 10,
+      "destroy":true,
+      "pagingType": 'full_numbers',
+      "scrollCollapse": true,
+      "responsive": true,
+      "async": false ,
+      "processing": true,
+    "ajax":{
+        "url":"../controller/registro_general_bachiller/controlador_listar_registro_alfabetico.php",
+        type:'POST'
+    },
+    dom: 'Bfrtip', 
+    buttons:[ 
+        {
+            extend: 'excelHtml5',
+            text: '<i class="fas fa-file-excel"></i> ',
+            titleAttr: 'Exportar a Excel',
+            filename: function() {
+                return  "LISTA GENERAL DE BACHILLERES";
+            },
+            title: function() {
+                return  "LISTA GENERAL DE BACHILLERES";
+            },
+            exportOptions: {
+                columns: [0, 1, 2, 3, 4, 5, 6]  // Especifica las columnas a exportar hasta "estado"
+            }
+        },
+        {
+            extend: 'pdfHtml5',
+            text: '<i class="fas fa-file-pdf"></i> ',
+            titleAttr: 'Exportar a PDF',
+            orientation: 'landscape',  // Exportar en formato horizontal
+            filename: function() {
+                return  "LISTA GENERAL DE BACHILLERES";
+            },
+            title: function() {
+                return  "LISTA GENERAL DE BACHILLERES";
+            },
+            exportOptions: {
+                columns: [0, 1, 2, 3, 4, 5, 6]  // Especifica las columnas a exportar hasta "estado"
+            }
+        },
+        {
+            extend: 'print',
+            text: '<i class="fa fa-print"></i> ',
+            titleAttr: 'Imprimir',
+            title: function() {
+                return  "LISTA GENERAL DE BACHILLERES";
+            },
+            exportOptions: {
+                columns: [0, 1, 2, 3, 4, 5, 6]  // Especifica las columnas a exportar hasta "estado"
+            }
+        }
+    ],
+    "columns":[
+      {"data":"Diploma_numero"},
+       {
+          "data": "number_informe",
+          render: function(data, type, row) {
+            return `<span style="font-weight: bold; font-size: 1.2em;">${data}</span>`;
+          }
+        },
+      {"data":"tipo_documento",
+        render: function(data,type,row){
+            if(data=='DNI'){
+                return '<span class="badge bg-success">DNI</span>';
+            }else if(data=='PASAPORTE'){
+                return '<span class="badge bg-primary">PASAPORTE</span>';
+            }else{
+                return '<span class="badge bg-warning">CARNET DE EXTRANJERIA</span>';
+            }
+         } 
+        },
+      {"data":"Dni"},
+      {"data":"Estudiante"},
+      {"data":"Facultad",
+        render: function(data,type,row){
+            if(data=='Ingeniería'){
+                return '<span class="badge bg-success">INGENIERIA</span>';
+            }else if(data=='Ciencias de la Salud'){
+                return '<span class="badge bg-primary">CIENCIAS DE LA SALUD</span>';
+            }else{
+                return '<span class="badge bg-warning">CIENCIAS SOCIALES</span>';
+            }
+         } 
+        },
+      {"data":"Escuela"},
+      {"data":"Modo_obtencion"},
+                      {"data":"fecha_registro1"},
+
+      {"data":"cede_nombre"},
+      {
+        data: "aumento",
+        render: function (data, type, row) {
+          console.log(row);
+          if (data === 0) {
+            return "<button class='validar btn btn-primary btn-sm' style='margin-right: 10px;' title='Validar datos'><i class='fa fa-check'></i> Validar</button>";
+          
+          } else{
+            return "<button class='validar btn btn-success btn-sm' disabled style='margin-right: 10px;' title='Ya se validó'><i class='fa fa-check'></i> Ya esta Validado</button>";
+          }
+        }
+      }
+      ,
+      {"data":"estado",
+        render: function(data,type,row){
+            if(data=='SIN DIPLOMA'){
+                return '<span class="badge bg-danger">SIN DIPLOMA</span>';
+            }else if(data=='CON DIPLOMA'){
+                return '<span class="badge bg-success">CON DIPLOMA</span>';
+            }
+         } 
+        },
+        { "data":"Reglamento_metadado",
+          render: function (datae, type, row ) {
+            if(datae==''){
+              return "<a href="+datae+"  target='_blank'><button disabled style='font-size:13px;' type='button' class='control btn btn-danger btn-sm' title='Ver Trabajo de investigación'><i class='fas fa-eye'></i> Ver</button></a>  ";                 
+            }
+            {
+              return "<a href="+datae+" target='_blank'><button style='font-size:13px;' type='button' class='control btn btn-warning btn-sm' title='Ver Trabajo de investigación'><i class='fas fa-eye'></i> Ver tesis</button></a>  ";                 
+            }
+          }
+        }, 
+      {"data":"Archivo",
+        render: function(data,type,row){
+                if(data=='controller/registro_general_bachiller/documentos/' || data==''){
+                  return "<a href=''  target='_blank'><button disabled style='font-size:13px;' type='button' class='control btn btn-danger btn-sm' title='Ver Trabajo de investigación'><i class='fas fa-file-download'></i> Expediente</button></a>  ";                 
+                }
+                {
+                  return "<a href='../"+data+"' target='_blank'><button style='font-size:13px;' type='button' class='control btn btn-primary btn-sm' title='Ver Trabajo de investigación'><i class='fas fa-file-download'></i> Expediente</button></a>  ";                 
+                }
+                
+            }   
+        },
+        {"data":"estado",
+          render: function (data, type, row ) {
+            console.log(row);
+            if(data=='SIN DIPLOMA'){
+              return "<button hidden class='diploma btn btn-primary btn-sm' style='margin-right: 10px;' title='Ver diploma'><i class='fa fa-file'></i> Diploma</button><button hidden class='informe btn btn-dark btn-sm' style='margin-right: 10px;' title='Imprimir informe'><i class='fa fa-file'></i> Informe</button><button  class='agregar btn btn-secondary btn-sm' style='margin-right: 10px;' title='Agregar diploma'><i class='fa fa-file'></i> Agregar diploma</button><button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>&nbsp;<button style='margin-right: 10px;' class='delete btn btn-danger btn-sm' title='Eliminar datos' ><i class='fa fa-trash'></i> Eliminar</button>&nbsp;<button style='margin-right: 10px;' class='pasar btn btn-info btn-sm' title='Pasar datos a titulado'><i class='fa fa-arrow-right'></i> Pasar a Bachiller</button>";             
+           }else if(data=='CON DIPLOMA'){
+              return "<button class='letra btn btn-dark btn-sm' style='margin-right: 10px;' title='Cambiar tamaño de letra a nombre'><i class='fa fa-edit'></i> Cambiar tamaño letra</button><button  class='diploma btn btn-primary btn-sm' style='margin-right: 10px;' title='Ver diploma'><i class='fa fa-file'></i> Diploma</button><br><button  class='agregar btn btn-secondary btn-sm' hidden style='margin-right: 10px;' title='Agregar diploma'><i class='fa fa-file'></i> Agregar diploma</button><button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>&nbsp;<button style='margin-right: 10px;' class='delete btn btn-danger btn-sm' title='Eliminar datos'><i class='fa fa-trash'></i> Eliminar</button>";             
+            }
+          }
+        },
+  ],
+
+  "language":idioma_espanol,
+  select: true
+});
+
+tbl_general_bachiller.on('draw.td',function(){
+var PageInfo = $("#tabla_registro_general_bachiller").DataTable().page.info();
+tbl_general_bachiller.column(0, {page: 'current'}).nodes().each(function(cell, i){
+
+});
 });
 }
 
@@ -212,6 +399,12 @@ function listar_fechas_busqueda(){
       ],
       "columns":[
         {"data":"Diploma_numero"},
+         {
+          "data": "number_informe",
+          render: function(data, type, row) {
+            return `<span style="font-weight: bold; font-size: 1.2em;">${data}</span>`;
+          }
+        },
         {"data":"tipo_documento",
           render: function(data,type,row){
               if(data=='DNI'){
@@ -238,7 +431,22 @@ function listar_fechas_busqueda(){
           },
         {"data":"Escuela"},
         {"data":"Modo_obtencion"},
+        {"data":"fecha_registro1"},
+
         {"data":"cede_nombre"},
+        {
+          data: "aumento",
+          render: function (data, type, row) {
+            console.log(row);
+            if (data === 0) {
+              return "<button class='validar btn btn-primary btn-sm' style='margin-right: 10px;' title='Validar datos'><i class='fa fa-check'></i> Validar</button>";
+            
+            } else{
+              return "<button class='validar btn btn-success btn-sm' disabled style='margin-right: 10px;' title='Ya se validó'><i class='fa fa-check'></i> Ya esta Validado</button>";
+            }
+          }
+        }
+        ,
         {"data":"estado",
           render: function(data,type,row){
               if(data=='SIN DIPLOMA'){
@@ -271,9 +479,10 @@ function listar_fechas_busqueda(){
           },
           {"data":"estado",
             render: function (data, type, row ) {
+              console.log(row);
               if(data=='SIN DIPLOMA'){
-                return "<button hidden class='diploma btn btn-primary btn-sm' style='margin-right: 10px;' title='Ver diploma'><i class='fa fa-file'></i> Diploma</button><button hidden class='informe btn btn-dark btn-sm' style='margin-right: 10px;' title='Imprimir informe'><i class='fa fa-file'></i> Informe</button><button  class='agregar btn btn-secondary btn-sm' style='margin-right: 10px;' title='Agregar diploma'><i class='fa fa-file'></i> Agregar diploma</button><button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>&nbsp;<button style='margin-right: 10px;' class='delete btn btn-danger btn-sm' title='Eliminar datos' ><i class='fa fa-trash'></i> Eliminar</button>";             
-              }else if(data=='CON DIPLOMA'){
+                return "<button hidden class='diploma btn btn-primary btn-sm' style='margin-right: 10px;' title='Ver diploma'><i class='fa fa-file'></i> Diploma</button><button hidden class='informe btn btn-dark btn-sm' style='margin-right: 10px;' title='Imprimir informe'><i class='fa fa-file'></i> Informe</button><button  class='agregar btn btn-secondary btn-sm' style='margin-right: 10px;' title='Agregar diploma'><i class='fa fa-file'></i> Agregar diploma</button><button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>&nbsp;<button style='margin-right: 10px;' class='delete btn btn-danger btn-sm' title='Eliminar datos' ><i class='fa fa-trash'></i> Eliminar</button>&nbsp;<button style='margin-right: 10px;' class='pasar btn btn-info btn-sm' title='Pasar datos a titulado'><i class='fa fa-arrow-right'></i> Pasar a Bachiller</button>";             
+             }else if(data=='CON DIPLOMA'){
                 return "<button class='letra btn btn-dark btn-sm' style='margin-right: 10px;' title='Cambiar tamaño de letra a nombre'><i class='fa fa-edit'></i> Cambiar tamaño letra</button><button  class='diploma btn btn-primary btn-sm' style='margin-right: 10px;' title='Ver diploma'><i class='fa fa-file'></i> Diploma</button><br><button  class='agregar btn btn-secondary btn-sm' hidden style='margin-right: 10px;' title='Agregar diploma'><i class='fa fa-file'></i> Agregar diploma</button><button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>&nbsp;<button style='margin-right: 10px;' class='delete btn btn-danger btn-sm' title='Eliminar datos'><i class='fa fa-trash'></i> Eliminar</button>";             
               }
             }
@@ -287,12 +496,178 @@ function listar_fechas_busqueda(){
 tbl_general_bachiller.on('draw.td',function(){
   var PageInfo = $("#tabla_registro_general_bachiller").DataTable().page.info();
   tbl_general_bachiller.column(0, {page: 'current'}).nodes().each(function(cell, i){
-    cell.innerHTML = i + 1 + PageInfo.start;
 
   });
 });
 }
+function listar_colacion(){
+  let fechacol = document.getElementById('select_fechacola').value;
 
+  tbl_general_bachiller = $("#tabla_registro_general_bachiller").DataTable({
+      "ordering":false,   
+      "bLengthChange":true,
+      "searching": { "regex": false },
+      "lengthMenu": [ [10, 25, 50, 100, -1], [10, 25, 50, 100, "All"] ],
+      "pageLength": 10,
+      "destroy":true,
+      "pagingType": 'full_numbers',
+      "scrollCollapse": true,
+      "responsive": true,
+      "async": false ,
+      "processing": true,
+      "ajax":{
+          "url":"../controller/registro_general_bachiller/controlador_listar_registro_general_bachiller_colacion.php",
+          type:'POST',
+        data:{
+          fechacol:fechacol
+        }
+    },
+    dom: 'Bfrtip', 
+    buttons:[ 
+        {
+            extend: 'excelHtml5',
+            text: '<i class="fas fa-file-excel"></i> ',
+            titleAttr: 'Exportar a Excel',
+            filename: function() {
+                return  "LISTA GENERAL DE BACHILLERES";
+            },
+            title: function() {
+                return  "LISTA GENERAL DE BACHILLERES";
+            },
+            exportOptions: {
+                columns: [0, 1, 2, 3, 4, 5, 6]  // Especifica las columnas a exportar hasta "estado"
+            }
+        },
+        {
+            extend: 'pdfHtml5',
+            text: '<i class="fas fa-file-pdf"></i> ',
+            titleAttr: 'Exportar a PDF',
+            orientation: 'landscape',  // Exportar en formato horizontal
+            filename: function() {
+                return  "LISTA GENERAL DE BACHILLERES";
+            },
+            title: function() {
+                return  "LISTA GENERAL DE BACHILLERES";
+            },
+            exportOptions: {
+                columns: [0, 1, 2, 3, 4, 5, 6]  // Especifica las columnas a exportar hasta "estado"
+            }
+        },
+        {
+            extend: 'print',
+            text: '<i class="fa fa-print"></i> ',
+            titleAttr: 'Imprimir',
+            title: function() {
+                return  "LISTA GENERAL DE BACHILLERES";
+            },
+            exportOptions: {
+                columns: [0, 1, 2, 3, 4, 5, 6]  // Especifica las columnas a exportar hasta "estado"
+            }
+        }
+    ],
+    "columns":[
+      {"data":"Diploma_numero"},
+       {
+          "data": "number_informe",
+          render: function(data, type, row) {
+            return `<span style="font-weight: bold; font-size: 1.2em;">${data}</span>`;
+          }
+        },
+      {"data":"tipo_documento",
+        render: function(data,type,row){
+            if(data=='DNI'){
+                return '<span class="badge bg-success">DNI</span>';
+            }else if(data=='PASAPORTE'){
+                return '<span class="badge bg-primary">PASAPORTE</span>';
+            }else{
+                return '<span class="badge bg-warning">CARNET DE EXTRANJERIA</span>';
+            }
+         } 
+        },
+      {"data":"Dni"},
+      {"data":"Estudiante"},
+      {"data":"Facultad",
+        render: function(data,type,row){
+            if(data=='Ingeniería'){
+                return '<span class="badge bg-success">INGENIERIA</span>';
+            }else if(data=='Ciencias de la Salud'){
+                return '<span class="badge bg-primary">CIENCIAS DE LA SALUD</span>';
+            }else{
+                return '<span class="badge bg-warning">CIENCIAS SOCIALES</span>';
+            }
+         } 
+        },
+      {"data":"Escuela"},
+      {"data":"Modo_obtencion"},
+      {"data":"fecha_registro1"},
+
+      {"data":"cede_nombre"},
+      {
+        data: "aumento",
+        render: function (data, type, row) {
+          console.log(row);
+          if (data === 0) {
+            return "<button class='validar btn btn-primary btn-sm' style='margin-right: 10px;' title='Validar datos'><i class='fa fa-check'></i> Validar</button>";
+          
+          } else{
+            return "<button class='validar btn btn-success btn-sm' disabled style='margin-right: 10px;' title='Ya se validó'><i class='fa fa-check'></i> Ya esta Validado</button>";
+          }
+        }
+      }
+      ,
+      {"data":"estadiplo",
+        render: function(data,type,row){
+            if(data=='SIN DIPLOMA'){
+                return '<span class="badge bg-danger">SIN DIPLOMA</span>';
+            }else if(data=='CON DIPLOMA'){
+                return '<span class="badge bg-success">CON DIPLOMA</span>';
+            }
+         } 
+        },
+        { "data":"Reglamento_metadado",
+          render: function (datae, type, row ) {
+            if(datae==''){
+              return "<a href="+datae+"  target='_blank'><button disabled style='font-size:13px;' type='button' class='control btn btn-danger btn-sm' title='Ver Trabajo de investigación'><i class='fas fa-eye'></i> Ver</button></a>  ";                 
+            }
+            {
+              return "<a href="+datae+" target='_blank'><button style='font-size:13px;' type='button' class='control btn btn-warning btn-sm' title='Ver Trabajo de investigación'><i class='fas fa-eye'></i> Ver tesis</button></a>  ";                 
+            }
+          }
+        }, 
+      {"data":"Archivo",
+        render: function(data,type,row){
+                if(data=='controller/registro_general_bachiller/documentos/' || data==''){
+                  return "<a href=''  target='_blank'><button disabled style='font-size:13px;' type='button' class='control btn btn-danger btn-sm' title='Ver Trabajo de investigación'><i class='fas fa-file-download'></i> Expediente</button></a>  ";                 
+                }
+                {
+                  return "<a href='../"+data+"' target='_blank'><button style='font-size:13px;' type='button' class='control btn btn-primary btn-sm' title='Ver Trabajo de investigación'><i class='fas fa-file-download'></i> Expediente</button></a>  ";                 
+                }
+                
+            }   
+        },
+        {"data":"estadiplo",
+          render: function (data, type, row ) {
+            console.log(row);
+            if(data=='SIN DIPLOMA'){
+              return "<button hidden class='diploma btn btn-primary btn-sm' style='margin-right: 10px;' title='Ver diploma'><i class='fa fa-file'></i> Diploma</button><button hidden class='informe btn btn-dark btn-sm' style='margin-right: 10px;' title='Imprimir informe'><i class='fa fa-file'></i> Informe</button><button  class='agregar btn btn-secondary btn-sm' style='margin-right: 10px;' title='Agregar diploma'><i class='fa fa-file'></i> Agregar diploma</button><button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>&nbsp;<button style='margin-right: 10px;' class='delete btn btn-danger btn-sm' title='Eliminar datos' ><i class='fa fa-trash'></i> Eliminar</button>&nbsp;<button style='margin-right: 10px;' class='pasar btn btn-info btn-sm' title='Pasar datos a titulado'><i class='fa fa-arrow-right'></i> Pasar a Bachiller</button>";             
+           }else if(data=='CON DIPLOMA'){
+              return "<button class='letra btn btn-dark btn-sm' style='margin-right: 10px;' title='Cambiar tamaño de letra a nombre'><i class='fa fa-edit'></i> Cambiar tamaño letra</button><button  class='diploma btn btn-primary btn-sm' style='margin-right: 10px;' title='Ver diploma'><i class='fa fa-file'></i> Diploma</button><br><button  class='agregar btn btn-secondary btn-sm' hidden style='margin-right: 10px;' title='Agregar diploma'><i class='fa fa-file'></i> Agregar diploma</button><button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>&nbsp;<button style='margin-right: 10px;' class='delete btn btn-danger btn-sm' title='Eliminar datos'><i class='fa fa-trash'></i> Eliminar</button>";             
+            }
+          }
+        },
+  ],
+
+
+    "language":idioma_espanol,
+    select: true
+});
+tbl_general_bachiller.on('draw.td',function(){
+var PageInfo = $("#tabla_registro_general_bachiller").DataTable().page.info();
+tbl_general_bachiller.column(0, {page: 'current'}).nodes().each(function(cell, i){
+
+});
+});
+}
 $('#tabla_registro_general_bachiller').on('click','.mostrar',function(){
   var data = tbl_general_bachiller.row($(this).parents('tr')).data();
 
@@ -399,7 +774,7 @@ document.getElementById('txt_id_expediente').value=data.Id_expediente;
   $("#txt_escuela_editar").select2().val(data.Id_escuela).trigger('change.select2');
 
   document.getElementById('txt_bachiller_editar').value=data.Grado_bachiller_de;
-  document.getElementById('txt_modalidad_editar').value=data.Modalidad;
+  document.getElementById('txt_modalidad_editar').value = data.Modalidad.replace(/&QUOT;/g, '"');
   document.getElementById('id_autoridad_editar').value=data.id_autoridad;
 
   document.getElementById('txt_rector_editar').value=data.Autoridad_1;
@@ -481,7 +856,24 @@ document.getElementById('mate').value=data.Apellido_materno;
   Traernumero();
 })
 
-
+function Cargar_Select_Colacion(){
+  $.ajax({
+    url: "../controller/registro_general/controlador_cargar_select_colacion.php",
+    type: 'POST',
+  }).done(function(resp){
+    let data = JSON.parse(resp);
+    let cadena = "<option value=''>Seleccione</option>"; // Agrega la opción "Seleccione" al inicio
+    if(data.length > 0){
+      for (let i = 0; i < data.length; i++) {
+        cadena += "<option value='" + data[i][0] + "'>" + data[i][1] + "</option>";    
+      }
+    } else {
+      cadena += "<option value=''>No hay cedes en la base de datos</option>";
+    }
+    document.getElementById('select_fechacola').innerHTML = cadena;
+    document.getElementById('select_fechacola_varios').innerHTML = cadena;
+  });
+}
 function Cargar_Select_Cede(){
   $.ajax({
     url: "../controller/expediente_bachiller/controlador_cargar_select_cede.php",
@@ -501,35 +893,36 @@ function Cargar_Select_Cede(){
     document.getElementById('txtfilial').innerHTML = cadena;
   });
 }
-function Cargar_Select_Carrera_editar(){
+function Cargar_Select_Carrera_editar() {
   $.ajax({
-    "url":"../controller/expediente_bachiller/controlador_cargar_select_carrerasolo.php",
-    type:'POST',
-   
-  }).done(function(resp){
-    let data=JSON.parse(resp);
-    if(data.length>0){
-      let cadena ="";
-      for (let i = 0; i < data.length; i++) {
-        cadena+="<option value='"+data[i][0]+"'>FACULTAD: "+data[i][1]+" - ESCUELA: "+data[i][2]+"</option>";    
-      }
-        document.getElementById('txt_escuela_editar').innerHTML=cadena;
-        document.getElementById(' ').innerHTML=cadena;
-        var id =$("#txt_escuela_editar").val();
-        Traergrado2(id);  
-
-
-    }else{
-      cadena+="<option value=''>No hay tipos disponibles</option>";
-      document.getElementById('txt_escuela_editar').innerHTML=cadena;
-
-    }
+    url: "../controller/expediente_bachiller/controlador_cargar_select_carrerasolo.php",
+    type: 'POST',
   })
+    .done(function (resp) {
+      console.log("Respuesta AJAX: ", resp); // Depurar la respuesta del servidor
+      let data = JSON.parse(resp);
+    let cadena = "<option value=''>Seleccione</option>"; // Agrega la opción "Seleccione" al inicio
+
+      if (data.length > 0) {
+        for (let i = 0; i < data.length; i++) {
+          cadena += `<option value="${data[i][0]}">FACULTAD: ${data[i][1]} - ESCUELA: ${data[i][2]}</option>`;
+        }
+
+        document.getElementById('txt_escuela_editar').innerHTML = cadena;
+
+        var id = $("#txt_escuela_editar").val();
+        console.log("ID seleccionado: ", id); // Depurar el valor seleccionado
+        Traergrado(id);
+      } else {
+        let cadena = "<option value=''>No hay tipos disponibles</option>";
+        document.getElementById('txt_escuela_editar').innerHTML = cadena;
+      }
+    })
+    .fail(function () {
+      alert("Error al cargar las carreras");
+    });
 }
 
-
-
- //REGISTRO 
 function Cargar_Select_Facultad(){
   $.ajax({
     "url":"../controller/carreras/controlador_cargar_select_facultad.php",
@@ -537,7 +930,7 @@ function Cargar_Select_Facultad(){
    
   }).done(function(resp){
     let data=JSON.parse(resp);
-    var cadena="";
+    let cadena = "<option value=''>Seleccione</option>";
     if(data.length>0){
       for(var i=0; i < data.length; i++){
         cadena+="<option value='"+data[i][0]+"'>"+data[i][1]+"</option>";
@@ -549,145 +942,125 @@ function Cargar_Select_Facultad(){
       var id =$("#select_facultad").val();
       Cargar_Select_facul_carrera(id);
       
- var id =$("#txtfacu").val();
-      Cargar_Select_facul_carrera(id);
-      var id =$("#txtfacu_filial").val();
+      var id =$("#txtfacu").val();
       Cargar_Select_facul_carrera(id);
       
+      var id =$("#txtfacu_filial").val();
+      Cargar_Select_facul_carrera(id);
 
-  }
-  else{
-      cadena+="<option value=''>No se encontraron regitros</option>";
+    }
+    else{
+      cadena+="<option value=''>No se encontraron registros</option>";
       $('#select_facultad').html(cadena);
       $('#txtfacu').html(cadena);
       $('#txtfacu_filial').html(cadena);
-
-  }
+    }
   })
 }
-
-
-
 
 function Traerauto(id_auto){
   $.ajax({
     "url":"../controller/expediente_titulado/controlador_traerautoridad.php",
     type:'POST',
-        data:{
-          id_auto:id_auto
-        }
-      }).done(function(resp){
-        
-      var data = JSON.parse(resp);
-      var cadena="";
-      if(data.length>0){
-        $("#id_autoridad").val(data[0][2]);
-        $("#txt_rector").val(data[0][3]);
-        $("#txt_secretario").val(data[0][4]);
-        $("#txt_decano").val(data[0][5]);
+    data:{
+      id_auto:id_auto
+    }
+  }).done(function(resp){
+    var data = JSON.parse(resp);
+    var cadena="";
+    if(data.length>0){
+      $("#id_autoridad").val(data[0][2]);
+      $("#txt_rector").val(data[0][3]);
+      $("#txt_secretario").val(data[0][4]);
+      $("#txt_decano").val(data[0][5]);
 
-        $("#id_autoridad_editar").val(data[0][2]);
-        $("#txt_rector_editar").val(data[0][3]);
-        $("#txt_secretario_editar").val(data[0][4]);
-        $("#txt_decano_editar").val(data[0][5]);
+      $("#id_autoridad_editar").val(data[0][2]);
+      $("#txt_rector_editar").val(data[0][3]);
+      $("#txt_secretario_editar").val(data[0][4]);
+      $("#txt_decano_editar").val(data[0][5]);
+    }
+    else{
+      cadena+="<option value=''>No se encontraron registros</option>";
+      $("#id_autoridad").val(data[0][2]);
+      $("#txt_rector").val(data[0][3]);
+      $("#txt_secretario").val(data[0][4]);
+      $("#txt_decano").val(data[0][5]);
 
-      }
-      else{
-        cadena+="<option value=''>No se encontraron regitros</option>";
-        $("#id_autoridad").val(data[0][2]);
-        $("#txt_rector").val(data[0][3]);
-        $("#txt_secretario").val(data[0][4]);
-        $("#txt_decano").val(data[0][5]);
-
-        $("#id_autoridad_editar").val(data[0][2]);
-        $("#txt_rector_editar").val(data[0][3]);
-        $("#txt_secretario_editar").val(data[0][4]);
-        $("#txt_decano_editar").val(data[0][5]);
+      $("#id_autoridad_editar").val(data[0][2]);
+      $("#txt_rector_editar").val(data[0][3]);
+      $("#txt_secretario_editar").val(data[0][4]);
+      $("#txt_decano_editar").val(data[0][5]);
     }
   })
 }
-//TRAER TODO LAS CARRERAS
+
 function Cargar_Select_facul_carrera(id){
   $.ajax({
     "url":"../controller/expediente_bachiller/controlador_cargar_select_facu_carrera.php",
     type:'POST',
-      data:{
-        id:id
+    data:{
+      id:id
+    }
+  }).done(function(resp){
+    var data = JSON.parse(resp);
+    var cadena="<option value=''>Seleccione</option>";
+    if(data.length > 0){
+      for(var i=0; i < data.length; i++){
+        cadena += "<option value='"+data[i][0]+"'>"+data[i][1]+"</option>";
       }
-    }).done(function(resp){
-        var data = JSON.parse(resp);
-        var cadena="";
-        if(data.length>0){
-            for(var i=0; i < data.length; i++){
-              cadena+="<option value='"+data[i][0]+"'>"+data[i][1]+"</option>";
-            }
-            $('#select_escuela').html(cadena);
-            $('#txtes').html(cadena);
-            $('#txtes_filial').html(cadena);
+      $('#select_escuela').html(cadena);
+      $('#txtes').html(cadena);
+      $('#txtes_filial').html(cadena);
 
-            var id =$("#select_escuela").val();
-            Traergrado(id);
-            var id_auto =$("#select_escuela").val();
-            Traerauto(id_auto);
-
+      // Esperar a que el usuario seleccione un valor antes de llamar a Traerauto
+      $('#select_escuela').on('change', function() {
+        var idSeleccionado = $(this).val();
+        if (idSeleccionado) {
+          Traergrado(idSeleccionado);
+          Traerauto(idSeleccionado);
         }
-        else{
-            cadena+="<option value=''>No se encontraron regitros</option>";
-            $('#select_escuela').html(cadena);
+      });
 
+    } else {
+      cadena += "<option value=''>No se encontraron registros</option>";
+      $('#select_escuela').html(cadena);
+      $('#txtes').html(cadena);
+      $('#txtes_filial').html(cadena);
+    }
+  });
+}
 
-        }
-    })
-  }
+function Traergrado(idgrado) {
+  console.log("Cargando datos para el ID: ", idgrado);
 
-  function Traergrado(idgrado){
-    $.ajax({
-        "url":"../controller/expediente_bachiller/controlador_traergrado.php",
-        type:'POST',
-          data:{
-            id:idgrado
-          }
-        }).done(function(resp){
-          
-        var data = JSON.parse(resp);
-        var cadena="";
-        if(data.length>0){
-          $("#txt_bachiller").val(data[0][1]);
-          $('#txt_bachiller_editar').html(cadena);
+  $.ajax({
+      url: "../controller/expediente_bachiller/controlador_traergrado.php",
+    type: 'POST',
+    data: { 
+      id: idgrado 
+    }
+  }).done(function(resp){
+    console.log("Respuesta Traergrado: ", resp);
+    var data = JSON.parse(resp);
 
-        }
-        else{
-          cadena+="<option value=''>No se encontraron regitros</option>";
-          $('#txt_bachiller').html(cadena);
-          $('#txt_bachiller_editar').html(cadena);
+    if(data.length>0){
+      console.log("Datos recibidos: ", data);
+      $("#txt_bachiller").val(data[0][1]);
+      $("#txt_bachiller_editar").val(data[0][1]);
+    }
+    else{
+      console.log("No se encontraron datos.");
+      $("#txt_bachiller").val("");
+      $("#txt_bachiller_editar").val("No se encontraron registros");
+    }
+  }).fail(function(){
+    alert("Error al cargar la información de grado");
+  });
+}
 
-
-      }
-    })
-  }
 //EDICION
 
-  function Traergrado2(idgrado){
-    $.ajax({
-        "url":"../controller/expediente_bachiller/controlador_traergrado.php",
-        type:'POST',
-          data:{
-            id:idgrado
-          }
-        }).done(function(resp){
-          
-        var data = JSON.parse(resp);
-        var cadena="";
-        if(data.length>0){
-          $("#txt_bachiller_editar").val(data[0][1]);
 
-        }
-        else{
-          cadena+="<option value=''>No se encontraron regitros</option>";
-          $('#txt_bachiller_editar').html(cadena);
-      }
-    })
-  }
 
 function AbrirModal(){
   $("#modal_registro").modal({backdrop:'static',keyboard:false})
@@ -695,8 +1068,9 @@ function AbrirModal(){
   listar_autoridad();
 }
 
-//AGREGAR DIPLOMA
-function Agregar_diploma(){
+
+  //AGREGAR DIPLOMA
+function Agregar_diploma() {
   let idexpe = document.getElementById('id_expe').value;
   let id = document.getElementById('txt_id_diplo').value;
   let fechacu = document.getElementById('txt_fecha_cu').value;
@@ -709,60 +1083,171 @@ function Agregar_diploma(){
   let regisfolio = document.getElementById('txt_registro_folio').value;
   let tipodiplo = document.getElementById('select_tipo_diplo').value;
   let fechainiciotra = document.getElementById('txt_fecha_inicio_tra').value;
-  let nrocred = document.getElementById('txt_nro_credi').value;
+  let nrocred = parseInt(document.getElementById('txt_nro_credi').value) || 0;
   let nrooficio = document.getElementById('txt_nro_oficio').value;
   let fechasecre = document.getElementById('txt_fecha_secre').value;
-  let idusuario = document.getElementById('txtprincipalid').value;
-  
-  let correo = document.getElementById('txt_correo').value;
+  let fechamatri = document.getElementById('txt_fecha_matricula').value;
+  let fechaegre = document.getElementById('txt_fecha_egreso').value;
 
+  let idusuario = document.getElementById('txtprincipalid').value;
+  let correo = document.getElementById('txt_correo').value;
   let fechacol = document.getElementById('txt_fecha_cola').value;
 
   let nom = document.getElementById('nom').value;
   let ape = document.getElementById('ape').value;
   let mate = document.getElementById('mate').value;
 
-  if (
-    fechacu.length === 0 || fechafirma.length === 0 || numreso.length === 0 || fechareso.length === 0 ||
-    tipodiplo.length === 0 || diplonum.length === 0 || regis.length === 0 || regilibro.length === 0 ||
-    regisfolio.length === 0 || fechainiciotra.length === 0 || nrocred.length === 0 || nrooficio.length === 0 ||
-    fechasecre.length === 0
-  ) {
+  // Validar campos vacíos
+  if (!fechacu || !fechafirma || !numreso || !fechareso || !tipodiplo || !diplonum || !regis || !regilibro || 
+      !regisfolio || !fechainiciotra || isNaN(nrocred) || !nrooficio || !fechasecre) {
     return Swal.fire("Mensaje de Advertencia", "Tiene campos vacíos", "warning");
+  }
+
+  if (fechamatri.length === 0 || fechaegre.length === 0) {
+    return Swal.fire("Mensaje de Advertencia", "La fecha de matrícula y fecha de egreso son importantes", "warning");
+  }
+
+  // Función para validar si una fecha es válida
+  function esFechaValida(fechaString) {
+    let fecha = new Date(fechaString);
+    return fecha instanceof Date && !isNaN(fecha) && fechaString.match(/^\d{4}-\d{2}-\d{2}$/);
+  }
+
+  // Validar que todas las fechas sean válidas
+  let fechasAValidar = [
+    { valor: fechacu, nombre: "fecha de culminación" },
+    { valor: fechafirma, nombre: "fecha de firma" },
+    { valor: fechareso, nombre: "fecha de resolución" },
+    { valor: fechainiciotra, nombre: "fecha de inicio de trámite" },
+    { valor: fechasecre, nombre: "fecha de secretaría" },
+    { valor: fechamatri, nombre: "fecha de matrícula" },
+    { valor: fechaegre, nombre: "fecha de egreso" },
+    { valor: fechacol, nombre: "fecha de colegiatura" }
+  ];
+
+  for (let i = 0; i < fechasAValidar.length; i++) {
+    if (!esFechaValida(fechasAValidar[i].valor)) {
+      return Swal.fire("Mensaje de Advertencia", `La ${fechasAValidar[i].nombre} no es válida. Use el formato AAAA-MM-DD`, "warning");
+    }
+  }
+
+  // Validar que nrocred no sea menor a 210
+  if (nrocred < 210) {
+    return Swal.fire("Mensaje de Advertencia", "El número de créditos no puede ser menor a 210", "warning");
+  }
+
+  let fechaMatricula = new Date(fechamatri);
+  let fechaEgreso = new Date(fechaegre);
+  let fechaInicioTramite = new Date(fechainiciotra);
+  let añoActual = new Date().getFullYear();
+
+  // Validar que la fecha de inicio de trámite sea del año actual
+  if (fechaInicioTramite.getFullYear() !== añoActual) {
+    return Swal.fire("Mensaje de Advertencia", `La fecha de inicio de trámite debe ser del año actual (${añoActual})`, "warning");
+  }
+
+  // Validar que fecha de matrícula no sea mayor a fecha de egreso
+  if (fechaMatricula > fechaEgreso) {
+    return Swal.fire("Mensaje de Advertencia", "La fecha de matrícula no puede ser mayor a la fecha de egreso", "warning");
+  }
+
+  // Validar que la fecha de egreso no sea menor a la fecha de matrícula
+  if (fechaEgreso < fechaMatricula) {
+    return Swal.fire("Mensaje de Advertencia", "La fecha de egreso no puede ser menor a la fecha de matrícula", "warning");
+  }
+
+  // Validar que la diferencia entre matrícula y egreso sea >= 5 años (CORREGIDO)
+  let diferenciaAnios = fechaEgreso.getFullYear() - fechaMatricula.getFullYear();
+  let mesesDiferencia = fechaEgreso.getMonth() - fechaMatricula.getMonth();
+  let diasDiferencia = fechaEgreso.getDate() - fechaMatricula.getDate();
+  
+  // Ajustar si los meses o días hacen que no se complete el año
+  if (mesesDiferencia < 0 || (mesesDiferencia === 0 && diasDiferencia < 0)) {
+    diferenciaAnios--;
+  }
+  
+  if (diferenciaAnios < 5) {
+    return Swal.fire("Mensaje de Advertencia", "El período entre la fecha de matrícula y la fecha de egreso debe ser de al menos 5 años completos", "warning");
+  }
+
+  // Validar que la fecha de inicio de trámite no sea antes de la fecha de egreso
+  if (fechaInicioTramite < fechaEgreso) {
+    return Swal.fire("Mensaje de Advertencia", "La fecha de inicio de trámite no puede ser antes de la fecha de egreso", "warning");
   }
 
   $.ajax({
     url: "../controller/registro_general/controlador_agregar_diploma.php",
     type: 'POST',
     data: {
-        idexpe, id, fechacu, fechafirma, numreso, fechareso, diplonum, regis, regilibro, regisfolio,
-        tipodiplo, fechainiciotra, nrocred, nrooficio, fechasecre, idusuario, correo, fechacol,nom,ape,mate
+      idexpe, id, fechacu, fechafirma, numreso, fechareso, diplonum, regis, regilibro, regisfolio,
+      tipodiplo, fechainiciotra, nrocred, nrooficio, fechasecre, fechamatri, fechaegre, idusuario, correo, fechacol, nom, ape, mate
     }
-}).done(function (resp) {
-    console.log("Respuesta del servidor:", resp);
-
+  }).done(function(resp) {
     if (resp.status) {
-      var tamaño = 37;
-      var tamaño2 = 89;
-        // Si la respuesta es exitosa, muestra el mensaje
-        Swal.fire("Mensaje de Confirmación", resp.message, "success");
+      contadorFolio++;
+      contadorLibro++;
 
-        // Aquí abres la ventana del modal con la URL construida
-        var url = "../view/MPDF/REPORTE/diploma_bachiller.php?codigo="+id+ "&tamaño=" + encodeURIComponent(tamaño)+  "&tamaño2=" + encodeURIComponent(tamaño2)+"#zoom=100%";
-        tbl_general_bachiller.ajax.reload();
-        $("#modal_registrar_diploma").modal('hide');
-        // Abrir una nueva ventana con la URL construida
-        var newWindow = window.open(url, "DIPLOMA TITULO PROFESIONAL", "scrollbars=NO");
-        if (newWindow) {
-            newWindow.moveTo(0, 0);
-            newWindow.resizeTo(screen.width, screen.height);
-        }
+      localStorage.setItem("contadorFolio", contadorFolio);
+      localStorage.setItem("contadorLibro", contadorLibro);
+
+      console.log(contadorFolio, contadorLibro);
+      Swal.fire("Mensaje de Confirmación", resp.message, "success");
+      var url = "../view/MPDF/REPORTE/diploma_bachiller.php?codigo=" + id + "&tamaño=55&tamaño2=93#zoom=100%";
+      tbl_general_bachiller.ajax.reload();
+      $("#modal_registrar_diploma").modal('hide');
+      var newWindow = window.open(url, "DIPLOMA BACHILLER", "scrollbars=NO");
+      if (newWindow) {
+        newWindow.moveTo(0, 0);
+        newWindow.resizeTo(screen.width, screen.height);
+      }
     } else {
-        // Si la respuesta no es exitosa, muestra el error
-        Swal.fire("Mensaje de Error", resp.message, "error");
+      Swal.fire("Mensaje de Error", resp.message, "error");
     }
-});
+  });
 }
+
+
+
+  function Traernumero() {
+    $.ajax({
+      url: "../controller/registro_general/controlador_traernumero.php",
+      type: 'POST'
+    }).done(function(resp) {
+      var data = JSON.parse(resp);
+      var valor = data.length > 0 ? data[0][0] : "No se encontraron registros";
+      var valor2 = data.length > 0 ? data[0][1] : "No se encontraron registros";
+      var valor3 = data.length > 0 ? data[0][2] : "No se encontraron registros";
+      var valor4 = data.length > 0 ? parseInt(data[0][3]) || 0 : 0; // Convertir a número o establecer 0
+      var valor5 = data.length > 0 ? parseInt(data[0][4]) || 0 : 0; // Convertir a número o establecer 0
+  
+      // Incrementar el folio si el contador ya alcanzó 2
+      if (contadorFolio >= 20) {
+        contadorFolio = 0; // Reiniciar el contador
+        localStorage.setItem("contadorFolio", contadorFolio); // Actualizar localStorage
+        valor5+=2; // Incrementar el folio
+      }
+      if (contadorLibro >= 100) {
+        contadorLibro = 0; // Reiniciar el contador
+        localStorage.setItem("contadorLibro", contadorLibro); // Actualizar localStorage
+        valor4+=1; // Incrementar el folio
+      }
+      // Concatenar el valor5 con su incremento
+      let concatenatedValue = `${valor5}-${valor5 + 1}`;
+      let concatenatedValue2 = `${valor4}`;
+  
+  
+      // Asignar valores a los inputs
+      document.getElementById('txt_nume_resol').value = valor;
+      document.getElementById('txt_diploma_nume').value = valor2;
+      document.getElementById('txt_registro_n°').value = valor3;
+      document.getElementById('txt_registro_libr').value = concatenatedValue2;
+      document.getElementById('txt_registro_folio').value = concatenatedValue;
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+      console.error("Error en la solicitud: " + textStatus, errorThrown);
+      $("#lbl_numero").text("Error al obtener los datos");
+      document.getElementById('txt_dni').value = "Error al obtener los datos";
+    });
+  }
 
 
 //REGISTRAR TITULADO
@@ -818,6 +1303,9 @@ function Registrar_Bachiller(){
   if (ced === '') { // Comprueba si no hay un valor seleccionado
     return Swal.fire("Mensaje de Advertencia", "Seleccione una cede en la segunda pestaña", "warning");
   }
+    if (esc === '') { // Comprueba si no hay un valor seleccionado
+    return Swal.fire("Mensaje de Advertencia", "Seleccione una facultad y programa profesional", "warning");
+  }
     if(validar_email(emaper)){
 
     }else{
@@ -841,7 +1329,7 @@ function Registrar_Bachiller(){
         documentoFinal = doc;
     }
    // Validación general de campos
-if(codigo.length === 0 || nombres.length === 0 || apepa.length === 0 || 
+if(nombres.length === 0 || apepa.length === 0 || 
   apema.length === 0 || sexo.length === 0 || celular.length === 0 || 
   direc.length === 0 || fecha_matr.length === 0 || fecha_egre.length === 0) {
    return Swal.fire("Mensaje de Advertencia", "Tiene campos vacíos, revise por favor", "warning");
@@ -964,6 +1452,20 @@ function limpiarCampos() {
   document.getElementById('txt_fecha_matri_mod').value = "";
   document.getElementById('txt_fecha_inicio_mod').value = "";
   document.getElementById('txt_fecha_fin').value = "";
+      document.getElementById('txt_rector').value = "";
+  document.getElementById('txt_secretario').value = "";
+  document.getElementById('txt_decano').value = "";
+
+    document.getElementById('txt_bachiller').value = "";
+
+        
+              document.getElementById('txt_modalidad').value = "";
+            document.getElementById('select_cede').value = "";
+            document.getElementById('select_sexo').value = "";
+
+
+  Cargar_Select_Facultad();
+
 }
 
 function validar_email(email) {
@@ -1058,7 +1560,7 @@ function Modificar_Bachiller(){
     let extension = arc.split('.').pop();//DOCUMENTO.PPT
     let nombrearchivo="";
     let f = new Date();
-    if(dni.length==0|| codigo.length==0 ||nombres.length==0  || apepa.length==0 ||apema.length==0 || sexo.length==0 ||celular.length==0 || direc.length==0 || fecha_matr.length==0 ||fecha_egre.length==0){
+    if(dni.length==0|| nombres.length==0  || apepa.length==0 ||apema.length==0 || sexo.length==0 ||celular.length==0 || direc.length==0 || fecha_matr.length==0 ||fecha_egre.length==0){
       return Swal.fire("Mensaje de Advertencia","Tiene campos vacios en el registro de estudiantes, revise por favor","warning");
     }
 
@@ -1156,10 +1658,11 @@ function Modificar_Bachiller(){
         if(resp>0){
           if(resp==1){
             Swal.fire("Mensaje de Confirmación","Se actualizo de forma correcta al Titulado con el DNI N°: "+dni ,"success").then((value)=>{
-              tbl_general_bachiller.ajax.reload();
               $("#modal_editar").modal('hide');
-              document.getElementById('txt_archivo_editar').value="";
+                                tbl_general_bachiller.ajax.reload();
 
+              document.getElementById('txt_archivo_editar').value="";
+            
             });
           }else{
             Swal.fire("Mensaje de Advertencia","El registro que intenta actualizar su número de diploma, registro o resolución ya se encuentran registrados en la base de datos,revise por favor","warning");
@@ -1231,7 +1734,6 @@ function imprimir_info() {
     let data = JSON.parse(resp); // Parsear la respuesta JSON
     if (data.length > 0) {
       // Si hay datos, asignar el valor de la posición 1 al input
-      document.getElementById('txt_id_num').value = data[0][0];
 
       document.getElementById('txt_info').value = data[0][1];
     } else {
@@ -1253,62 +1755,105 @@ function imprimir_info2(){
 
 }
 // Función para imprimir informe por escuela
-function Imprimir_informe(){
-  let id = document.getElementById('txt_id_num').value;
+function Imprimir_informe() {
   let numero = document.getElementById('txt_info').value;
+  let grado1 = document.getElementById('txt_gr').value;
+  let facul = document.getElementById('txtfacu').value;
+  let program = document.getElementById('txtes').value;
+  let fedes1 = document.getElementById('fechadesde').value;
+  let fehas1 = document.getElementById('fechahasta').value;
 
+  var infoValue = parseInt(document.getElementById('txt_info').value, 10) || 0;
 
-  var infoValue = parseInt(document.getElementById('txt_info').value, 10) || 0; // Obtener el valor actual de txt_info
-    // Validar que el campo no esté vacío o sea 0
+  // Validación del campo numero
   if (isNaN(infoValue) || infoValue === 0) {
-         return Swal.fire("Mensaje de Advetencia","Por favor ingrese el número del informe es obligatorio","warning");
-
+      return Swal.fire("Mensaje de Advertencia", "Por favor ingrese el número del informe, es obligatorio", "warning");
   }
 
-  var info = infoValue.toString();
-  var grado = document.getElementById('txt_gr').value.toString();
-  var escu = document.getElementById('txtes').value.toString();
-  var fedes = document.getElementById('fechadesde').value.toString();
-  var fehas = document.getElementById('fechahasta').value.toString();
-  
-  var url = "../view/MPDF/REPORTE/informe_por_escuela_bach.php?"
-  + "info=" + encodeURIComponent(info)
-  + "&grado=" + encodeURIComponent(grado)
-  + "&escu=" + encodeURIComponent(escu)
-  + "&fedes=" + encodeURIComponent(fedes)
-  + "&fehas=" + encodeURIComponent(fehas)
-  + "#zoom=100%";
-  
-  var width = screen.width;
-  var height = screen.height;
-  if(numero.length==0||numero.length==0){
-      return Swal.fire("Mensaje de Advertencia","Tiene campos vacios","warning");
+  // Validación de campos vacíos
+  if (numero.length == 0 || grado1.length == 0 || facul.length == 0 || program.length == 0 || fedes1.length == 0 || fehas1.length == 0) {
+      return Swal.fire("Mensaje de Advertencia", "Tiene campos vacíos", "warning");
   }
 
+  // Primero generamos el PDF y obtenemos su ruta
   $.ajax({
-    "url":"../controller/registro_general_bachiller/actualizar_numero_informe.php",
-    type:'POST',
-    data:{
-        id:id,
-        numero:numero
+      url: "../view/MPDF/REPORTE/informe_por_escuela_bach.php",
+      type: 'POST',
+      data: {
+          info: numero,
+          grado: grado1,
+          escu: program,
+          fedes: fedes1,
+          fehas: fehas1,
+          guardarPDF: true
+      },
+      success: function(pdfResponse) {
+          console.log("Respuesta del servidor (PDF): ", pdfResponse);  // Verifica la respuesta del servidor
 
-    }
-  }).done(function(resp){
-    if(resp>0){
-     
-      window.open(url, "Informe por Escuela", "scrollbars=NO,width=" + width + ",height=" + height + ",top=0,left=0");
+          try {
+              // Intentamos parsear la respuesta
+              const pdfResult = typeof pdfResponse === "string" ? JSON.parse(pdfResponse) : pdfResponse;
+              console.log("Respuesta procesada como JSON: ", pdfResult);  // Verifica la respuesta procesada
 
-      // Incrementar el valor de txt_info solo después de generar el informe
-      infoValue++;
-      localStorage.setItem('infoValue', infoValue); // Guardar el nuevo valor en localStorage
-    
-      // Actualizar el valor en el campo de entrada #txt_info
-      document.getElementById('txt_info').value = infoValue;
-    }else{
-      return Swal.fire("Mensaje de Error","No se pudo ejecutar el informe","error");
+              if (pdfResult.success) {
+                  // Si el PDF se generó correctamente, procedemos a registrar en la base de datos
+                  $.ajax({
+                      url: "../controller/registro_general_bachiller/registrar_numero_informe.php",
+                      type: 'POST',
+                      data: {
+                          numero: numero,
+                          grado1: grado1,
+                          program: program,
+                          fedes1: fedes1,
+                          fehas1: fehas1,
+                          ruta_pdf: pdfResult.filepath
+                      },
+                      success: function(resp) {
+                          console.log("Respuesta del servidor (Registro): ", resp); // Verifica la respuesta del servidor
 
-    }
-  })
+                          if (resp == 1) {
+                            tbl_general_bachiller.ajax.reload();
+                            $("#modal_informe").modal('hide');
+                              // El informe se registró correctamente
+                              window.open("https://gradosapp.fun/view" + encodeURIComponent(pdfResult.filepath), 
+                                    "Informe por Escuela", 
+                                    "scrollbars=NO,width=" + screen.width + 
+                                    ",height=" + screen.height + ",top=0,left=0");
+
+
+                              // Incrementar el valor de txt_info
+                              infoValue++;
+                              localStorage.setItem('infoValue', infoValue);  // Guardar el nuevo valor en localStorage
+                              document.getElementById('txt_info').value = infoValue;
+
+                              Swal.fire("Éxito", "Informe generado y registrado correctamente", "success");
+                          } else if (resp == 2) {
+                              // El informe ya existe
+                              Swal.fire("Mensaje de Advertencia", 
+                                  "El informe ya existe en la Base de datos. Por favor, revise el número de informe.", "warning");
+                          } else {
+                              Swal.fire("Mensaje de Advertencia", 
+                                  "No se pudo realizar el registro", "warning");
+                          }
+                      },
+                      error: function(xhr, status, error) {
+                          console.error("Error en la solicitud AJAX de registro: ", status, error);
+                          Swal.fire("Error", "Hubo un error en el registro", "error");
+                      }
+                  });
+              } else {
+                  Swal.fire("Error", "No se pudo generar el PDF: " + pdfResult.message, "error");
+              }
+          } catch (e) {
+              Swal.fire("Error", "Error al procesar la respuesta del servidor al generar el PDF", "error");
+              console.error("Error al procesar JSON: ", e);
+          }
+      },
+      error: function(xhr, status, error) {
+          console.error("Error en la solicitud AJAX de generación de PDF: ", status, error);
+          Swal.fire("Error", "Error en la conexión con el servidor para generar el PDF", "error");
+      }
+  });
 }
 
 
@@ -1380,8 +1925,8 @@ function Imprimir_informe_facul() {
 $('#tabla_registro_general_bachiller').on('click','.diploma',function(){
   var data = tbl_general_bachiller.row($(this).parents('tr')).data();
 
-  var tamaño = 37;
-  var tamaño2 = 89;
+  var tamaño = 55;
+  var tamaño2 = 93;
 
 
   if(tbl_general_bachiller.row(this).child.isShown()){
@@ -1398,7 +1943,6 @@ if (newWindow) {
     newWindow.resizeTo(screen.width, screen.height);
 }
 });
-
 
 $('#tabla_registro_general_bachiller').on('click','.letra',function(){
 
@@ -1518,34 +2062,6 @@ function Total_pregrado(){
   })
 }
 
-function Traernumero() {
-  $.ajax({
-    url: "../controller/registro_general/controlador_traernumero.php",
-    type: 'POST'
-  }).done(function(resp) {
-    var data = JSON.parse(resp);
-    var mensaje = "El siguiente número debe ser: ";
-    var valor = data.length > 0 ? data[0][0] : "No se encontraron registros";
-    var valor2 = data.length > 0 ? data[0][1] : "No se encontraron registros";
-    var valor3 = data.length > 0 ? data[0][2] : "No se encontraron registros";
-    var valor4 = data.length > 0 ? data[0][3] : "No se encontraron registros";
-    var valor5 = data.length > 0 ? data[0][4] : "No se encontraron registros";
-
-    // Actualizar el label
-    
-    // Actualizar el input de texto
-    document.getElementById('txt_nume_resol').value = valor;
-    document.getElementById('txt_diploma_nume').value = valor2;
-    document.getElementById('txt_registro_n°').value = valor3;
-    document.getElementById('txt_registro_libr').value = valor4;
-    document.getElementById('txt_registro_folio').value = valor5;
-
-  }).fail(function(jqXHR, textStatus, errorThrown) {
-    console.error("Error en la solicitud: " + textStatus, errorThrown);
-    $("#lbl_numero").text("Error al obtener los datos");
-    document.getElementById('txt_dni').value = "Error al obtener los datos";
-  });
-}
 
 
 
@@ -1623,8 +2139,8 @@ gapi.load('client:auth2', loadClient);
 
 
 function fetchSheetData() {
-  var spreadsheetId = '14ITvjf_jC-oQ4-sRAXr7x7i9gr6-KdxoWssZ07pp4VE'; // ID de tu hoja de cálculo de Google Sheets
-  var range = 'estudiante!A2:T';  // Rango donde están los datos (sin incluir el encabezado)
+  var spreadsheetId = '1Q3H2bhhS3brQMsrzgJIcHWvGcHRD8YdtbiU2C1uEmyg'; // ID de tu hoja de cálculo de Google Sheets
+  var range = 'Respuestas de formulario 1!A2:BP';  // Rango donde están los datos (sin incluir el encabezado)
 
   var dniIngresado = document.getElementById('txt_dni').value;  // Obtienes el DNI ingresado
   var dniIngresado2 = document.getElementById('txt_dni2').value;  // Obtienes el DNI ingresado
@@ -1642,7 +2158,7 @@ function fetchSheetData() {
           var filaEncontrada = null;
           for (var i = 0; i < data.length; i++) {
               var fila = data[i];
-              if (fila[1] === dniIngresado || fila[1] === dniIngresado2) {  // Suponiendo que el DNI está en la columna 2 (índice 1)
+              if (fila[2] === dniIngresado || fila[2] === dniIngresado2) {  // Suponiendo que el DNI está en la columna 2 (índice 1)
                   filaEncontrada = fila;
                   break;
               }
@@ -1669,35 +2185,30 @@ function fetchSheetData() {
 
 function fillFormWithData(fila) {
   // Llenamos los campos con los datos obtenidos de la fila
-  var tipodoc = fila[0];  // Suponiendo que el DNI está en la columna 2 (índice 1)
-  var dni = fila[1];
-  var dni2 = fila[1];  // Suponiendo que el DNI está en la columna 2 (índice 1)
+  var dni = fila[2];
   var nombre = fila[3];  // Suponiendo que el nombre está en la columna 4 (índice 3)
   var apellidoPaterno = fila[4];  // Suponiendo que el apellido paterno está en la columna 5 (índice 4)
   var apellidoMaterno = fila[5];  // Suponiendo que el apellido materno está en la columna 6 (índice 5)
-  var codigo = fila[2];  // Suponiendo que el código está en la columna 3 (índice 2)
+  //var codigo = fila[2];  // Suponiendo que el código está en la columna 3 (índice 2)
   var sexo = fila[6];  // Suponiendo que el sexo está en la columna 7 (índice 6)
   var celular = fila[7];  // Suponiendo que el celular está en la columna 8 (índice 7)
-  var direccion = fila[8];  // Suponiendo que la dirección está en la columna 9 (índice 8)
-  var email = fila[11];  // Suponiendo que el email está en la columna 10 (índice 9)
-  var emailinsti = fila[12];  // Suponiendo que el email institucional está en la columna 11 (índice 10)
+  var direccion = fila[10];  // Suponiendo que la dirección está en la columna 9 (índice 8)
+  var email = fila[1];  // Suponiendo que el email está en la columna 10 (índice 9)
+  var emailinsti = fila[9];  // Suponiendo que el email institucional está en la columna 11 (índice 10)
+  var sede = fila[24];  // Suponiendo que el email institucional está en la columna 11 (índice 10)
 
   // Llenamos el formulario con los valores encontrados
-  document.getElementById('select_tipo_documento').value = tipodoc;
-  if (tipodoc === 'dni') {
     document.getElementById('txt_dni').value = dni;
-  } else if (tipodoc === 'PASAPORTE' || tipodoc === 'CARNET DE EXTRANJERIA') {
-    document.getElementById('txt_dni2').value = dni2;
-  }
+ 
   document.getElementById('txt_nom').value = nombre;
   document.getElementById('txt_apepa').value = apellidoPaterno;
   document.getElementById('txt_apema').value = apellidoMaterno;
-  document.getElementById('txt_codigo').value = codigo;
+  //document.getElementById('txt_codigo').value = codigo;
 
   // Establecemos el valor de 'sexo'
-  if (sexo === 'M') {
+  if (sexo === 'Masculino') {
     document.getElementById('select_sexo').value = 'M';
-  } else if (sexo === 'F') {
+  } else if (sexo === 'Femenino') {
     document.getElementById('select_sexo').value = 'F';
   }
 
@@ -1705,7 +2216,337 @@ function fillFormWithData(fila) {
   document.getElementById('txt_dire').value = direccion;
   document.getElementById('txt_email_per').value = email;
   document.getElementById('txt_email_insti').value = emailinsti;
+  
+   // Establecemos el valor de 'sexo'
+  if (sede === 'Abancay') {
+    document.getElementById('select_cede').value = '1';
+  } else if (sede === 'Andahuaylas') {
+    document.getElementById('select_cede').value = '2';
+  }else{
+      document.getElementById('select_cede').value = '3';
+
+  }
 
   // Puedes agregar más campos si es necesario
 }
 
+//pasar datos a titulado
+$('#tabla_registro_general_bachiller').on('click','.pasar',function(){
+  var data = tbl_general_bachiller.row($(this).parents('tr')).data();
+
+  if(tbl_general_bachiller.row(this).child.isShown()){
+      var data = tbl_general_bachiller.row(this).data();
+  }
+  $("#modal_pasar_titulado").modal('show');
+  document.getElementById('lb_titulo_datos22').innerHTML="<b>DNI: </b>"+data.Dni;
+  document.getElementById('lb_titulo_datos33').innerHTML="<b>ESTUDIANTE: </b>"+data.Estudiante;
+  document.getElementById('lb_titulo_datos44').innerHTML="<b>FACULTAD - ESCUELA PROFESIONAL: </b>"+data.Facultad+" - "+data.Escuela;
+  document.getElementById('txtidexpe').value=data.Id_expediente;
+  document.getElementById('select_sexo_pasar').value=data.Sexo;
+
+})
+
+
+//SELECT
+function Cargar_Select_Facultad2(){
+  $.ajax({
+    "url":"../controller/carreras/controlador_cargar_select_facultad.php",
+    type:'POST',
+   
+  }).done(function(resp){
+    let data=JSON.parse(resp);
+    var cadena="";
+    if(data.length>0){
+      for(var i=0; i < data.length; i++){
+        cadena+="<option value='"+data[i][0]+"'>"+data[i][1]+"</option>";
+      }
+      $('#select_facultad_pasar').html(cadena);
+
+      var id =$("#select_facultad_pasar").val();
+      Cargar_Select_facul_carrera2(id);
+      
+ 
+
+  }
+  else{
+      cadena+="<option value=''>No se encontraron regitros</option>";
+      $('#select_facultad_pasar').html(cadena);
+
+  }
+  })
+}
+
+
+
+function Traerauto2(id_auto){
+  $.ajax({
+    "url":"../controller/expediente_titulado/controlador_traerautoridad.php",
+    type:'POST',
+        data:{
+          id_auto:id_auto
+        }
+      }).done(function(resp){
+        
+      var data = JSON.parse(resp);
+      var cadena="";
+      if(data.length>0){
+        $("#txtidiautoridad").val(data[0][2]);
+
+
+      }
+      else{
+        cadena+="<option value=''>No se encontraron regitros</option>";
+        $("#txtidiautoridad").val(data[0][2]);
+
+
+
+    }
+  })
+}
+function Cargar_Select_facul_carrera2(id){
+  $.ajax({
+      "url":"../controller/expediente_titulado/controlador_cargar_select_facu_carrera.php",
+      type:'POST',
+      data:{
+        id:id
+      }
+    }).done(function(resp){
+        var data = JSON.parse(resp);
+        var cadena="";
+        if(data.length>0){
+            for(var i=0; i < data.length; i++){
+              cadena+="<option value='"+data[i][0]+"'>"+data[i][1]+"</option>";
+            }
+            $('#select_escuela_pasar').html(cadena);
+
+            var id =$("#select_escuela_pasar").val();
+            Traergrado2(id);
+            var id_auto =$("#select_escuela_pasar").val();
+            Traerauto2(id_auto);
+
+        }
+        else{
+            cadena+="<option value=''>No se encontraron regitros</option>";
+            $('#select_escuela_pasar').html(cadena);
+
+
+        }
+    })
+  }
+
+  function Traergrado2(idgrado) {
+    $.ajax({
+      "url": "../controller/expediente_titulado/controlador_traergrado.php",
+      type: 'POST',
+      data: {
+        id: idgrado
+      }
+    }).done(function (resp) {
+      var data = JSON.parse(resp);
+      if (data.length > 0) {
+        // Obtén el género seleccionado
+        var genero = $("#select_sexo_pasar").val(); // Asume que tienes un select con id "select_sexo"
+    
+        // Obtén el código de la carrera desde el value
+        var carrera = data[0][0]; // Asegúrate de que data[0][0] contenga el código esperado
+    
+        // Determina el título en función del género y la carrera
+        var titulo = "";
+        if (genero === "M") {
+          if (carrera == 1) {
+            titulo = "Ingeniero de Sistemas e Informática";
+          } else if (carrera == 3) {
+            titulo = "Ingeniero Civil";
+          } else if (carrera == 5) {
+            titulo = "Ingeniero Agrónomo";
+          } else if (carrera == 7) {
+            titulo = "Ingeniero Ambiental";
+          } else if (carrera == 9) {
+            titulo = "Abogado";
+          } else if (carrera == 12) {
+            titulo = "Contador Público";
+          } else if (carrera == 13) {
+            titulo = "Licenciado en Turismo, Hotelería y Gastronomía";
+          } else if (carrera == 16) {
+            titulo = "Licenciado en Enfermería";
+          } else if (carrera == 18) {
+            titulo = "Cirujano Dentista";
+          }else if (carrera == 20) {
+            titulo = "Licenciado en Educación - Nivel Inicial";
+          }else if (carrera == 21) {
+            titulo = "Licenciado en Educación – Especialidad Lengua Española y Quechua";
+          }else if (carrera == 22) {
+            titulo = "Licenciado en Educación – Especialidad Matemática e Informática";
+          }
+        } else if (genero === "F") {
+          if (carrera == 1) {
+            titulo = "Ingeniera de Sistemas e Informática";
+          } else if (carrera == 3) {
+            titulo = "Ingeniera Civil";
+          } else if (carrera == 5) {
+            titulo = "Ingeniera Agrónoma";
+          } else if (carrera == 7) {
+            titulo = "Ingeniera Ambiental";
+          } else if (carrera == 9) {
+            titulo = "Abogada";
+          } else if (carrera == 12) {
+            titulo = "Contadora Pública";
+          } else if (carrera == 13) {
+            titulo = "Licenciada en Turismo, Hotelería y Gastronomía";
+          } else if (carrera == 16) {
+            titulo = "Licenciada en Enfermería";
+          } else if (carrera == 18) {
+            titulo = "Cirujano Dentista";
+          }else if (carrera == 20) {
+            titulo = "Licenciada en Educación - Nivel Inicial";
+          }else if (carrera == 21) {
+            titulo = "Licenciada en Educación – Especialidad Lengua Española y Quechua";
+          }else if (carrera == 22) {
+            titulo = "Licenciada en Educación – Especialidad Matemática e Informática";
+          }
+        }
+    
+        // Asigna el título a los inputs
+        $("#txt_titulo_pasar").val(titulo);
+      } else {
+        $('#txt_titulo_pasar').val("No se encontraron registros");
+      }
+    });
+  }
+
+  
+// FUNCIÓN PARA PASAR ESTUDIANTE A BACHILLER
+function Pasar_titulo() {
+  let idexpe = document.getElementById('txtidexpe').value;
+  let idautori = document.getElementById('txtidiautoridad').value;
+  let escue = document.getElementById('select_escuela_pasar').value;
+  let grado = document.getElementById('txt_titulo_pasar').value;
+  let moda = document.getElementById('txt_modalidad_pasar').value;
+
+  if (idexpe.length === 0 || idautori.length === 0 || escue.length === 0 || grado.length === 0 || moda.length === 0) {
+    return Swal.fire("Mensaje de Advertencia", "Tiene campos vacíos", "warning");
+  }
+
+  // Obtener el nombre del estudiante desde un label
+  let nombreEstudiante = document.getElementById('lb_titulo_datos33').textContent || "el estudiante";
+
+  $.ajax({
+    url: "../controller/registro_general_bachiller/controlador_pasar_titulado.php",
+    type: 'POST',
+    data: {
+      idexpe: idexpe,
+      idautori: idautori,
+      escue: escue,
+      grado: grado,
+      moda: moda
+    }
+  }).done(function (resp) {
+    if (resp > 0) {
+      Swal.fire({
+        title: `¿Está seguro de enviar los datos del estudiante ${nombreEstudiante} a los titulados?`,
+        text: "Una vez aceptado, se enviará este registro a titulados y ya no estará visible en esta sección.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, Enviar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          tbl_general_bachiller.ajax.reload();
+          $("#modal_pasar_titulado").modal('hide');
+
+          // Mensaje de satisfacción
+          Swal.fire({
+            title: "Operación Exitosa",
+            text: `El estudiante ${nombreEstudiante} ha sido registrado como titulado exitosamente.`,
+            icon: "success",
+            confirmButtonText: "Aceptar"
+          });
+        }
+      });
+    } else {
+      return Swal.fire("Mensaje de Error", "No se completó la actualización", "error");
+    }
+  });
+}
+
+//ENVIANDO AL BOTON DELETE
+function Validar_Expediente(id, nombre, correo) {
+  $.ajax({
+    url: "../controller/registro_general/controlador_validar_registro_general.php",
+    type: 'POST',
+    data: {
+      id: id,
+      nombre: nombre,
+      correo: correo
+    },
+    dataType: 'json',
+  }).done(function(resp) {
+    if (resp.status) {
+      Swal.fire("Mensaje de Confirmación", resp.message, "success").then(() => {
+        tbl_general_bachiller.ajax.reload();
+      });
+    } else {
+      Swal.fire("Mensaje de Advertencia", resp.message, "warning");
+    }
+  }).fail(function(xhr, status, error) {
+    Swal.fire("Mensaje de Error", "Ocurrió un error en la solicitud: " + error, "error");
+  });
+}
+
+//ENVIANDO AL BOTON DELETE
+$('#tabla_registro_general_bachiller').on('click', '.validar', function() {
+  var data = tbl_general_bachiller.row($(this).parents('tr')).data();
+
+  if (tbl_general_bachiller.row(this).child.isShown()) {
+    data = tbl_general_bachiller.row(this).data();
+  }
+
+  Swal.fire({
+    title: '¿Desea validar el expediente del bachiller: ' + data.Estudiante + '?',
+    html: '<hr> <p style="color:blue">FILIAL: ' + data.cede_nombre + '</p>',
+    text: "Una vez validado se actualizará a la fecha actual y podrá imprimir el informe para Decanatura.",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Sí, Validar'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Pasa el nombre y el correo al controlador
+      Validar_Expediente(data.Id_expediente, data.Estudiante, data.correo_personal);
+    }
+  });
+});
+
+function Imprimir_varios(){
+  $("#modal_imprimir_varios").modal({backdrop:'static',keyboard:false})
+  $("#modal_imprimir_varios").modal('show');
+  listar_autoridad();
+}
+
+function imprimir_varios_diplomas(){
+  var id_colacion = document.getElementById('select_fechacola_varios').value.toString();
+
+  var registro_inicio = document.getElementById('txt_registro_inicio').value.toString();
+  var registro_fin = document.getElementById('txt_registro_fin').value.toString();
+
+
+
+if(id_colacion.length==0||registro_inicio.length==0||registro_fin.length==0){
+  return Swal.fire("Mensaje de Advertencia","todos los campos son obligatorios.","warning");
+}
+else{
+    var url = "../view/MPDF/REPORTE/varios_diplomas.php?"
++ "id_colacion=" + encodeURIComponent(id_colacion)
++ "&registro_inicio=" + encodeURIComponent(registro_inicio)
++ "&registro_fin=" + encodeURIComponent(registro_fin) 
++ "#zoom=100%";
+
+var width = screen.width;
+var height = screen.height;
+
+window.open(url, "DIPLOMAS TITULO PROFESIONAL", "scrollbars=NO,width=" + width + ",height=" + height + ",top=0,left=0");
+
+}
+} 

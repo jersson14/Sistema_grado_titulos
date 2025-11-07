@@ -25,6 +25,9 @@ $fechainiciotra = strtoupper(htmlspecialchars($_POST['fechainiciotra'], ENT_QUOT
 $nrocred = strtoupper(htmlspecialchars($_POST['nrocred'], ENT_QUOTES, 'UTF-8'));
 $nrooficio = strtoupper(htmlspecialchars($_POST['nrooficio'], ENT_QUOTES, 'UTF-8'));
 $fechasecre = strtoupper(htmlspecialchars($_POST['fechasecre'], ENT_QUOTES, 'UTF-8'));
+$fechamatri = strtoupper(htmlspecialchars($_POST['fechamatri'], ENT_QUOTES, 'UTF-8'));
+$fechaegre = strtoupper(htmlspecialchars($_POST['fechaegre'], ENT_QUOTES, 'UTF-8'));
+
 $idusuario = strtoupper(htmlspecialchars($_POST['idusuario'], ENT_QUOTES, 'UTF-8'));
 $correo = strtoupper(htmlspecialchars($_POST['correo'], ENT_QUOTES, 'UTF-8'));
 $fechacol = strtoupper(htmlspecialchars($_POST['fechacol'], ENT_QUOTES, 'UTF-8'));
@@ -33,11 +36,15 @@ $ape = strtoupper(htmlspecialchars($_POST['ape'], ENT_QUOTES, 'UTF-8'));
 $mate = strtoupper(htmlspecialchars($_POST['mate'], ENT_QUOTES, 'UTF-8'));
 
 // Registro en la base de datos
-$consulta = $MRG->Agregar_diploma($idexpe, $id, $fechacu, $fechafirma, $numreso, $fechareso, $diplonum, $regis, $regilibro, $regisfolio, $tipodiplo, $fechainiciotra, $nrocred, $nrooficio, $fechasecre, $idusuario);
+$consulta = $MRG->Agregar_diploma($idexpe, $id, $fechacu, $fechafirma, $numreso, $fechareso, $diplonum, $regis, $regilibro, $regisfolio, $tipodiplo, $fechainiciotra, $nrocred, $nrooficio, $fechasecre,$fechamatri,$fechaegre, $idusuario);
 
 header('Content-Type: application/json');
+$enable_email = false; // Cambia esto a `true` para habilitar el envío de correos
 
 if ($consulta) {
+    if ($enable_email) {
+
+
     try {
         $mail = new PHPMailer(true);
 
@@ -53,7 +60,7 @@ if ($consulta) {
         $mail->Port = $config['smtp_port'];
 
         // Configuración del correo
-        $mail->setFrom('jerssongrados@gradosapp.fun', 'Oficina de Grados y Títulos - Universidad Tecnológica de los Andes');
+        $mail->setFrom('uteaperu@gradosapp.fun', 'Oficina de Grados y Títulos - Universidad Tecnológica de los Andes');
         $mail->addAddress($correo);
         $mail->isHTML(true);
         $mail->CharSet = 'UTF-8';
@@ -97,20 +104,22 @@ if ($consulta) {
         <body>
             <div class="content">
                 <img src="cid:logo_universidad" alt="Logo Universidad Tecnológica de los Andes"/><br><br>
-                <p><b>Estimado(a) egresado(a), '.$nom.' '.$ape.' '.$mate.'.</b></p>
-                <p>Su diploma ha sido registrado exitosamente en el sistema de GRADOS Y TITULOS. Puede hacerle seguimiento en el siguiente enlace:</p>
-                <p><a href="https://gradosapp.fun/seguimiento.php" target="_blank">Hacer seguimiento (Clic)</a></p>
-                <p>Su expediente se encuentra en estado: <b style="color:#0eb34a">LISTO PARA COLACIÓN</b></p>
-                                <p><b style="color:#0eb34a">FECHA DE COLACIÓN: '.$fecha_formateada.'</b></p>
-
-                 <p><b style="color:#0eb34a">LA HORA SE LE INDICARA EN LA PUBLICACIÓN OFICIAL EN LA PAGINA DE FACEBOOK</b></p>
+                <p><b>Estimado(a) Graduado(a), '.$nom.' '.$ape.' '.$mate.'.</b></p>
+                <p>Se comunica a todos los Graduandos y Titulandos que los Diplomas  se vienen  procesando, para mayor información de fecha  y hora de colación ingrese a  transparencia de la Universidad Tecnológica de los Andes. 
+                
                 <div class="note">
-                    <p><strong>Nota importante:</strong> La lista de colación saldrá en la página de Facebook de la Universidad puede visitarlo en el siguiente enlace: https://www.facebook.com/Utea.Abancay.</p>
+                    <p><strong>Nota importante:</strong> La lista de colación saldrá en la página de Facebook de la Universidad puede visitarlo en el siguiente enlace: https://www.facebook.com/Utea.Abancay.
+                    </p>
                 </div>
-                <div class="note">
-                    <p><strong>Nota importante:</strong> Se adjunta a este correo el tutorial en PDF en la parte final, con instrucciones detalladas de cómo realizar el seguimiento de su expediente en nuestro sistema, revíselo cuidadosamente.</p>
-                </div>
-                <p>Gracias por utilizar nuestros servicios.</p>
+              
+             <p>Le agradecemos por su paciencia y compromiso.</p>
+    
+                <p>Atentamente,<br>
+                Oficina de Grados y Títulos<br>
+                Universidad Tecnológica de los Andes</p><br>
+                <p>Contacto en la Sede Central de Abancay: <b>970 639 067</b> (Unidad de Grados y Títulos)</p>
+                <p>Contacto en la Filial de Andahuaylas: <b>957 306 881</b> (Unidad de Grados y Títulos)</p>
+                <p>Contacto en la Filial de Cusco: <b>970 639 067</b> (Unidad de Grados y Títulos)</p>
             </div>
             <div class="footer">
                 <p>Universidad Tecnológica de los Andes | Todos los derechos reservados</p>
@@ -123,8 +132,6 @@ if ($consulta) {
         $rutaPDF = '../../manual_usuario.pdf';
         if (file_exists($rutaPDF)) {
             $mail->addAttachment($rutaPDF, 'Tutorial_Seguimiento_Expediente.pdf');
-        } else {
-            throw new Exception('No se pudo encontrar el archivo del tutorial');
         }
 
         $mail->send();
@@ -132,12 +139,13 @@ if ($consulta) {
         echo json_encode(["status" => false, "message" => "Error en el envío del correo: " . $mail->ErrorInfo]);
         exit;
     }
+}
 
-    echo json_encode([
-        "status" => true, 
-        "message" => "El Diploma ha sido agregado correctamente.", 
-        "id" => $consulta
-    ]);
+echo json_encode([
+    "status" => true, 
+    "message" => "El Diploma ha sido agregado correctamente.", 
+    "id" => $consulta
+]);
 } else {
-    echo json_encode(["status" => false, "message" => "Error al agregar el diploma."]);
+echo json_encode(["status" => false, "message" => "Error al agregar el diploma."]);
 }

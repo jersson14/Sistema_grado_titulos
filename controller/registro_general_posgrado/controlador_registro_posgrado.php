@@ -60,18 +60,21 @@
     
         $consulta = $MRGPG->Registrar_Posgrado($tipodoc,$documentoFinal,$nombres,$apepa,$apema,$codigo,$sexo,$celular,$direc,$emaper,$emainsti,$fecha_matr,$fecha_egre,$observa,$ced,$pro,$den,$moda,$idauto,$fecha,$acad,$acu,$res,$exped,$lib,$fol,$reg,$ruta,$mod_estu,$tra_inv,$turn,$porc,$cent,$meta,$proce_pais,$proce_univ,$proce_grado,$fecha_matri,$fecha_inici,$fecha_fin,$mod_sustenta,$idusuario);
  
+ 
+ $config = include('../../config/config.php');
+$enable_email = $config['enable_email']; // Leer de la configuración
+
 if ($consulta) {
     if ($nombrearchivo != "") {
         move_uploaded_file($_FILES['achivoobj']['tmp_name'], "documentos/" . $nombrearchivo);
     }
+    if ($enable_email) { // Solo envía si está habilitado en la configuración
 
     try {
         $mail = new PHPMailer(true);
 
         // Configuración del servidor SMTP
         $mail->isSMTP();
-        $config = include('../../config/config.php');
-
         $mail->Host = $config['smtp_host'];
         $mail->SMTPAuth = true;
         $mail->Username = $config['smtp_username'];
@@ -119,7 +122,7 @@ if ($consulta) {
     
                 <p>Previo un cordial saludo, se comunica que su expediente se encuentra en la Oficina de Grados y Títulos para continuar con el proceso correspondiente. Usted podrá hacer seguimiento de su expediente a través del siguiente enlace:</p>
     
-                <p><a href="http://localhost/gradito/seguimiento_posgrado.php" target="_blank">Hacer seguimiento (Clic)</a></p>
+                <p><a href="https://gradosapp.fun/seguimiento_posgrado.php" target="_blank">Hacer seguimiento (Clic)</a></p>
 
                 <p>Su expediente se encuentra en estado: <b style="color:#c9b701">PENDIENTE DE REVISIÓN</b></p>
     
@@ -143,14 +146,9 @@ if ($consulta) {
         $mail->addEmbeddedImage('../../img/utea.png', 'logo_universidad', 'logo.png');
 
         // Adjuntar el PDF del tutorial
-        $rutaPDF = '../../manual_usuario.pdf'; // Ajusta esta ruta según donde tengas el PDF
-        if (file_exists($rutaPDF)) {
-            $mail->addAttachment($rutaPDF, 'Tutorial_Seguimiento_Expediente.pdf');
-        } else {
-            throw new Exception('No se pudo encontrar el archivo del tutorial');
-        }
+      
 
-        $mail->send();
+            $mail->send();
         
         $response = array(
             'status' => true,
@@ -164,6 +162,9 @@ if ($consulta) {
             'code' => 1
         );
     }
+    } else {
+        $response = ['status' => true, 'message' => 'Registro exitoso pero el envío de correo está deshabilitado', 'code' => 1];
+    }
 } else {
     $response = array(
         'status' => false,
@@ -176,5 +177,5 @@ if ($consulta) {
 header('Content-Type: application/json');
 echo json_encode($response);
 exit;
-?>
+
 ?>

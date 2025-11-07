@@ -39,8 +39,8 @@
               </div>
                 <div class="table-responsive" style="text-align:left">
                   <div class="card-body">
-                  <div class="row">
-                <div class="col-12 col-md-4" role="document">
+                  <div class="row" style="border: 1px solid #ccc; padding: 15px; border-radius: 8px;">
+                  <div class="col-12 col-md-3" role="document">
                     <div class="form-group">
                     <label for="txtfechainicio">Fecha Desde:</label>
                         <div class="input-group mb-2">
@@ -55,7 +55,7 @@
                     </div>
                 </div>
                 
-                <div class="col-12 col-md-4" role="document">
+                <div class="col-12 col-md-3" role="document">
                     <div class="form-group">
                     <label for="txtfechafin">Fecha Hasta:</label>
                         <div class="input-group mb-2">
@@ -69,26 +69,63 @@
                     </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-4" role="document">
+                <div class="col-12 col-md-3" role="document">
                     <label for="">&nbsp;</label><br>
-                    <button onclick="listar_fechas_busqueda()" class="btn btn-danger mr-2" style="width:100%" onclick><i class="fas fa-search mr-1"></i>Buscar Documentos</button>
+                    <button onclick="listar_fechas_busqueda()" class="btn btn-danger mr-2" style="width:100%" onclick><i class="fas fa-search mr-1"></i>Buscar expedientes</button>
+                </div>
+                <div class="col-12 col-md-3" role="document">
+                    <label for="">&nbsp;</label><br>
+                    <button onclick="listar_expedientes_bachiller()" class="btn btn-success mr-2" style="width:100%" onclick><i class="fas fa-search mr-1"></i>Buscar todos</button>
                 </div>
                 </div>
                 </div>
+                        <div class="table-responsive" style="text-align:left">
+                            <div class="card-body">
+                                <div class="row" style="border: 1px solid #ccc; padding: 15px; border-radius: 8px;">
+                                    <div class="col-12 col-md-3">
+                                        <div class="form-group">
+                                            <label for="txtfechainicio">Fecha de colación:</label>
+                                            <div class="input-group mb-2">
+                                                <select class="js-example-basic-single" id="select_fechacola" style="width:100%"></select>
+                                                <div class="valid-input invalid-feedback"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-3">
+                                        <label for="">&nbsp;</label><br>
+                                        <button onclick="listar_colacion()" class="btn btn-danger mr-2" style="width:100%">
+                                            <i class="fas fa-search mr-1"></i>Buscar por colación
+                                        </button>
+                                    </div>
+
+                                    <!-- BOTÓN NUEVO DIFERENTE Y A LA DERECHA -->
+                                    <div class="col-12 col-md-3 ml-auto text-right">
+                                        <label for="">&nbsp;</label><br>
+                                        <button onclick="Imprimir_varios()" class="btn btn-outline-primary" style="width:100%; font-weight:bold;">
+                                            <i class="fas fa-print mr-1"></i>Imprimir grupo de diplomas
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                 <input type="text" id="dni" autocomplete="off" name="dni" hidden>
                 <div class="table-responsive" style="text-align:center">
                   <div class="card-body">
                     <table id="tabla_registro_general_bachiller" class="table table-striped table-bordered" style="width:100%">
                         <thead style="background-color:#0A5D86;color:#FFFFFF; ">
                             <tr>
-                                <th style="text-align:center">N°</th>
+                                <th style="text-align:center">N° Diploma</th>
+                                <th style="text-align:center">N° Informe</th>
                                 <th style="text-align:center">Tipo Documento</th>
                                 <th style="text-align:center">N° Documento</th>
                                 <th style="text-align:center">Estudiante</th>
                                 <th style="text-align:center">Facultad</th>
                                 <th style="text-align:center">Programa</th>
                                 <th style="text-align:center">Modalidad</th>
+                                <th style="text-align:center">Fecha de Registro</th>
                                 <th style="text-align:center">Sede</th>
+                                <th style="text-align:center">Validar Sede</th>
                                 <th style="text-align:center">Estado</th>
                                 <th style="text-align:center">Trabajo de Investigación</th>
                                 <th style="text-align:center">Expediente</th>
@@ -262,8 +299,8 @@
                             <div class="col-3 form-group">
                                 <label for="" style="font-size:small;">Modalidad<b style="color:red">(*)</b>:</label>
                                 <select name="" id="txt_modalidad" class="form-control">
-                                    <option value="BACHILLER AUTOMATICO">BACHILLER AUTOMATICO</option>
-                                    <option value="CURSO (TRABAJO DE INVESTIGACIÓN)">CURSO "TRABAJO DE INVESTIGACIÓN"</option>
+                                    <option value='CURSO "TRABAJO DE INVESTIGACIÓN"'>CURSO "TRABAJO DE INVESTIGACIÓN"</option>
+                                <option value="BACHILLER AUTOMATICO">BACHILLER AUTOMATICO</option>
                                 </select>                           
                             </div>
                             <div class="col-3 form-group">
@@ -550,8 +587,8 @@
                             <div class="col-3 form-group">
                                 <label for="" style="font-size:small;">Modalidad<b style="color:red">(*)</b>:</label>
                                 <select name="" id="txt_modalidad_editar" class="form-control">
-                                    <option value="BACHILLER AUTOMATICO">BACHILLER AUTOMATICO</option>
-                                    <option value="CURSO (TRABAJO DE INVESTIGACIÓN)">CURSO "TRABAJO DE INVESTIGACIÓN"</option>
+                                <option value="CURSO &QUOT;TRABAJO DE INVESTIGACIÓN&QUOT;">CURSO "TRABAJO DE INVESTIGACIÓN"</option>
+                                <option value="BACHILLER AUTOMATICO">BACHILLER AUTOMATICO</option>
                                 </select>                           
                             </div>
                             <div class="col-3 form-group">
@@ -857,7 +894,14 @@
                 <label for="" style="font-size:small;">Nro. Oficio<b style="color:red">(*)</b>:</label>
                 <input type="text" class="form-control" id="txt_nro_oficio">                           
             </div>
-           
+            <div class="col-6 form-group">
+                <label for="" style="font-size:small;">Fecha de matricula:<b style="color:red">(*)</b>:</label>
+                <input type="date" class="form-control" id="txt_fecha_matricula">                           
+            </div>
+            <div class="col-6 form-group">
+                <label for="" style="font-size:small;">Fecha de Egreso<b style="color:red">(*)</b>:</label>
+                <input type="date" class="form-control" id="txt_fecha_egreso" >                           
+            </div>
        </div>
        </div>
 
@@ -1329,11 +1373,15 @@
             <div class="col-12 form-group">
             <input type="text" id="txt_id_expediente" hidden>
                 <label for="">Tamaño de letra:</label>
-                <input class="form-control" type="number" id="txt_tamaño" value="37">
+                <input class="form-control" type="number" id="txt_tamaño" value="55">
               </div>
               <div class="col-12 form-group">
               <label for="">Posición:</label>
-                <input class="form-control" type="number" id="txt_posición" value="89">
+                <input class="form-control" type="number" id="txt_posición" value="93">
+              </div>
+              <div class="col-12 form-group">
+              <label for="">VER VIDEO TUTORIAL:</label>
+              <a href="https://drive.google.com/file/d/1YIznm_UnFm-jAM-UX2xIcQL0pS6A2IqW/view?usp=sharing" target="_blank">Ver Video</a>
               </div>
             </div>
           </div>
@@ -1344,17 +1392,121 @@
         </div>
       </div>
     </div>
+    <div class="modal fade" id="modal_imprimir_varios" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#1FA0E0;">
+                <h5 class="modal-title" id="exampleModalLabel" style="color:white; text-align:center"><b>IMPRESIÓN EN CONJUNTO DE DIPLOMAS</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-warning alert-dismissible" style="text-align:justify">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h5><i class="icon fas fa-exclamation-triangle"></i> ¡Aviso Importante!</h5>
+                    <b>NOTA:</b> Este formulario se utiliza para imprimir diplomas en conjunta, recuerda colocar correctamente todo los campos para que salga correctamente todo los diplomas.
+                </div>
+                <div class="row">
+                    <div class="col-12 form-group" style="color:red">
+                        <h7><b>Campos Obligatorios (*)</b></h7>
+                    </div>
+                    <div class="col-12 form-group">
+                        <input type="text" id="txt_id_expediente" hidden>
+                        <label for="">Colación<b style="color:red">(*)</b>:</label>
+                        <div class="input-group mb-2">
+                            <select class="js-example-basic-single" id="select_fechacola_varios" style="width:100%"></select>
+                            <div class="valid-input invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="col-6 form-group">
+                        <label for="">Nro de registro de inicio<b style="color:red">(*)</b>:</label>
+                        <input class="form-control" type="number" id="txt_registro_inicio">
+                    </div>
+                    <div class="col-6 form-group">
+                        <label for="">Nro de registro final<b style="color:red">(*)</b>:</label>
+                        <input class="form-control" type="number" id="txt_registro_fin">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times ml-1"></i> Cerrar</button>
+                <button type="button" class="btn btn-success" onclick="imprimir_varios_diplomas()"><i class="fas fa-print"></i> Imprimir Diplomas</button>
+            </div>
+        </div>
+    </div>
+</div>
+    
+    <div class="modal fade" id="modal_pasar_titulado" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header" style="background-color:#1FA0E0">
+        <div class="col-12 form-group" style="color:white; margin-bottom: 0;">
+            <h5 class="modal-title" id="lb_titulo_datos" style="color:white; margin-bottom: 0;"></h5>
+            <h5 class="" id="lb_titulo_datos22" style="color:white; margin-bottom: 0;"></h5>
+            <h5 class="" id="lb_titulo_datos33" style="color:white; margin-bottom: 0;"></h5>
+            <h5 class="" id="lb_titulo_datos44" style="color:white; margin-bottom: 0;"></h5>
+        </div>
+    </div>
+        <div class="modal-body">
+        
+        <div class="row">
+        <div class="col-12 form-group" style="color:red">
+            <h7><b>Nota:</b> Este formulario es para enviar todo los datos a titulados una vez modificado este registro lo podra ver en <b>Registro de Titulo</b></h7>
+        </div>
+        <div class="col-12 form-group">
+            <div class="col-12 form-group">
+                <input type="text" id="txtidexpe" hidden>
+                <input type="text" id="txtidiautoridad" hidden>
+                <input type="text" id="select_sexo_pasar" hidden>
+
+                <label for="" style="font-size:small;">Facultad<b style="color:red">(*)</b>:</label>
+                <select class="form-control" id="select_facultad_pasar" style="width:100%"></select>
+            </div>
+            <div class="col-12 form-group">
+                <label for="" style="font-size:small;">Programa<b style="color:red">(*)</b>:</label>
+                <select class="form-control" id="select_escuela_pasar" style="width:100%"></select>
+            </div>
+            <div class="col-12 form-group">
+                <label for="" style="font-size:small;">Titulo de<b style="color:red">(*)</b>:</label>
+                <input type="text" class="form-control" id="txt_titulo_pasar">                           
+            </div>
+            <div class="col-12 form-group">
+                <label for="" style="font-size:small;">Modalidad<b style="color:red">(*)</b>:</label>
+                <select name="" id="txt_modalidad_pasar" class="form-control">
+                    <option value="TESIS">TESIS</option>
+                    <option value="TRABAJO DE SUFICIENCIA PROFESIONAL">TRABAJO DE SUFICIENCIA PROFESIONAL</option>
+                    <option value="EXAMEN DE TITULACIÓN">EXAMEN DE TITULACIÓN</option>
+                </select>                           
+            </div>
+        </div>
+        </div>
+
+        <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times ml-1"></i> Cerrar</button>
+        <button type="button" class="btn btn-success" onclick="Pasar_titulo()"><i class="fas fa-file"></i> Enviar a Titulados</button>
+        </div>
+    </div>
+    </div>
+</div>    
+
 <script>
 
 $(document).ready(function () {
-    listar_fechas_busqueda();
+    listar_expedientes_alfabetico();
 
   $('.js-example-basic-single').select2();
         Cargar_Select_Facultad();
         Cargar_Select_Carrera_editar();
         Cargar_Select_Cede();
         Cargar_Select_facul_carrera();
+        Cargar_Select_Facultad2();
+        Cargar_Select_Colacion();
+
+        Cargar_Select_facul_carrera2();
         Cargar_Select_Cede_editar();
+
+
 });
 //registrar
     $("#select_facultad").change(function(){
@@ -1375,11 +1527,30 @@ $(document).ready(function () {
         var id=$("#txtfacu_filial").val();
         Cargar_Select_facul_carrera(id);
         });
+  $("#txt_escuela_editar").change(function(){
+        var id=$("#txt_escuela_editar").val();
+        Traergrado(id);
+        });
 
 
     $("#txtfacu").change(function(){
         var id=$("#txtfacu").val();
         Cargar_Select_facul_carrera(id);
+        });
+        
+          //pasar datos a bachiller
+          $("#select_facultad_pasar").change(function(){
+        var id_auto=$("#select_facultad_pasar").val();
+        Traerauto2(id_auto);
+        });
+        $("#select_facultad_pasar").change(function(){
+        var id=$("#select_facultad_pasar").val();
+        Cargar_Select_facul_carrera2(id);
+        });
+
+        $("#select_escuela_pasar").change(function(){
+        var id=$("#select_escuela_pasar").val();
+        Traergrado2(id);
         });
     var input=  document.getElementById('txt_dni');
     input.addEventListener('input',function(){
@@ -1466,30 +1637,9 @@ $('input[type="file"]').on('change', function(){
     });
 
 
-    var n = new Date();
-var y = n.getFullYear();
-var m = n.getMonth() + 1;
 
-// Formatear el mes con un cero inicial si es necesario
-if (m < 10) {
-    m = '0' + m;
-}
 
-// Establecer el primer día del mes
-var firstDay = y + "-" + m + "-01";
 
-// Calcular el último día del mes actual
-var lastDay = new Date(y, n.getMonth() + 1, 0).getDate();
-
-// Formatear el último día del mes con un cero inicial si es necesario
-if (lastDay < 10) {
-    lastDay = '0' + lastDay;
-}
-
-var lastDayFormatted = y + "-" + m + "-" + lastDay;
-
-document.getElementById('txtfechainicio').value = firstDay;
-document.getElementById('txtfechafin').value = lastDayFormatted;
 var n = new Date();
 var y= n.getFullYear();
 var m= n.getMonth()+1;
@@ -1504,7 +1654,8 @@ if(m<10){
 
 
 
-
+document.getElementById('txtfechainicio').value = y + "-" + m + "-" + d;
+document.getElementById('txtfechafin').value = y + "-" + m + "-" + d;
 
 document.getElementById('txt_fecha_matri').value = y + "-" + m + "-" + d;
 document.getElementById('txt_fecha_egres').value = y + "-" + m + "-" + d;
@@ -1514,7 +1665,6 @@ document.getElementById('txt_fecha_cu').value = y + "-" + m + "-" + d;
 document.getElementById('txt_fecha_firma').value = y + "-" + m + "-" + d;
 document.getElementById('txt_fecha_reso').value = y + "-" + m + "-" + d;
 
-document.getElementById('txt_fecha_inicio_tra').value = y + "-" + m + "-" + d;
 document.getElementById('txt_fecha_secre').value = y + "-" + m + "-" + d;
 
 
@@ -1545,12 +1695,56 @@ var currentDateTime = y + '-' + m + '-' + d + 'T' + h + ':' + min;
 
 // Set this value to the datetime-local input
 document.getElementById('txt_fecha_reg').value = currentDateTime;
-document.getElementById('fechadesde').value = currentDateTime;
 
-document.getElementById('fechahasta').value = currentDateTime;
-document.getElementById('fechadesde_filial').value = currentDateTime;
 
-document.getElementById('fechahasta_filial').value = currentDateTime;
+
+var n = new Date();
+var y = n.getFullYear();
+var m = n.getMonth() + 1;
+var d = n.getDate();
+var h = n.getHours();
+var min = n.getMinutes();
+
+// Add leading zeros if necessary
+if (d < 10) {
+    d = '0' + d;
+}
+if (m < 10) {
+    m = '0' + m;
+}
+if (h < 10) {
+    h = '0' + h;
+}
+if (min < 10) {
+    min = '0' + min;
+}
+
+// Format the date and time
+var currentDateTime = y + '-' + m + '-' + d + 'T' + h + ':' + min;
+
+// Determine the time range and set fechadesde and fechahasta accordingly
+var fechaDesde, fechaHasta;
+
+if (h >= 8 && h < 13) {
+    // If current time is between 8 AM and 1 PM
+    fechaDesde = y + '-' + m + '-' + d + 'T07:30';
+    fechaHasta = y + '-' + m + '-' + d + 'T13:00';
+} else if (h >= 13 && h < 16) {
+    // If current time is between 1 PM and 4 PM
+    fechaDesde = y + '-' + m + '-' + d + 'T13:00';
+    fechaHasta = y + '-' + m + '-' + d + 'T16:00';
+} else {
+    // If current time is outside these ranges, default to current time
+    fechaDesde = currentDateTime;
+    fechaHasta = currentDateTime;
+}
+
+// Set the values for the input fields
+document.getElementById('fechadesde').value = fechaDesde;
+document.getElementById('fechahasta').value = fechaHasta;
+document.getElementById('fechadesde_filial').value = fechaDesde;
+document.getElementById('fechahasta_filial').value = fechaHasta;
+
 var input = document.getElementById("txt_dni");
   input.addEventListener("keyup", function(event) {
   if (event.keyCode === 13) {
@@ -1651,9 +1845,10 @@ $.ajax({
         else{
             console.log(data);
           
-            document.getElementById("txt_nom").value = data.nombres
-            document.getElementById("txt_apepa").value = data.apellidoPaterno
-            document.getElementById("txt_apema").value = data.apellidoMaterno
+            document.getElementById("txt_nom").value = data.first_name
+            document.getElementById("txt_apepa").value = data.first_last_name
+            document.getElementById("txt_apema").value = data.second_last_name
+
 
          
         }

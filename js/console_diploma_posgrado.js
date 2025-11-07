@@ -350,10 +350,14 @@ $('#tabla_diploma_posgrado').on('click','.mostrar',function(){
 $('#tabla_diploma_posgrado').on('click','.diploma',function(){
   var data = tbl_general_posgrado.row($(this).parents('tr')).data();
 
+  var tamaño = 37;
+  var tamaño2 = 97;
+
+
   if(tbl_general_posgrado.row(this).child.isShown()){
       var data = tbl_general_posgrado.row(this).data();
   }
-  var url = "../view/MPDF/REPORTE/maestria.php?codigo=" + encodeURIComponent(data.Id_Diploma) + "#zoom=100%";
+  var url = "../view/MPDF/REPORTE/maestria.php?codigo=" + encodeURIComponent(data.Id_Diploma) + "&tamaño=" + encodeURIComponent(tamaño)+  "&tamaño2=" + encodeURIComponent(tamaño2)+"#zoom=100%";
 
 // Abrir una nueva ventana con la URL construida
 var newWindow = window.open(url, "DIPLOMA MAESTRIA", "scrollbars=NO");

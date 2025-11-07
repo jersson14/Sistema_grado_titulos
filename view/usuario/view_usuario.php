@@ -178,10 +178,17 @@
           <div class="col-12 form-group" style="color:red">
               <h6><b>Campos Obligatorios <b style="color:red">(*)</b></b></h6>
           </div>
-          <div class="col-12">
+         <div class="col-12">
             <input type="text" id="txt_idusuario_contra" hidden>
-            <label for="">Contraseña Nueva<b style="color:red">(*)</b>:</label>
-            <input type="password" class="form-control" id="txt_contra_nueva">
+            <label for="">Contraseña Nueva <b style="color:red">(*)</b>:</label>
+            <div class="input-group">
+              <input type="password" class="form-control" id="txt_contra_nueva" placeholder="Ingrese su nueva contraseña">
+              <div class="input-group-append">
+                <button type="button" class="btn btn-light btn-sm" id="togglePasswordNueva" title="Mostrar/Ocultar contraseña">
+                  <i class="fas fa-eye" id="toggleIconNueva"></i>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -210,5 +217,17 @@
     $('#modal_contra').on('shown.bs.modal', function () {
       $('#txt_contra_nueva').trigger('focus')
     })
-    
+    document.getElementById("togglePasswordNueva").addEventListener("click", function () {
+  const passwordField = document.getElementById("txt_contra_nueva");
+  const toggleIcon = document.getElementById("toggleIconNueva");
+  const isPassword = passwordField.getAttribute("type") === "password";
+
+  // Cambia el tipo del input
+  passwordField.setAttribute("type", isPassword ? "text" : "password");
+
+  // Cambia el ícono
+  toggleIcon.classList.toggle("fa-eye");
+  toggleIcon.classList.toggle("fa-eye-slash");
+});
+
     </script>

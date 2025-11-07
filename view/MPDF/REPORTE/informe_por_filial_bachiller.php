@@ -121,7 +121,7 @@ INNER JOIN diploma ON modalidad.Id_modalidad = diploma.id_modalidad
 INNER JOIN autoridades ON facultad.Cod_autoridad = autoridades.Cod_autoridad
 INNER JOIN empresa ON autoridades.Id_empresa = empresa.empresa_id
 WHERE Grado_academico = '$grado' and escuela_profesional.Id_escuela='$escu' AND expediente.created_at BETWEEN '$fedes' AND '$fehas' AND expediente.Id_cede = '$fil'
-ORDER BY diploma.estado, diploma.updated_at  desc";
+ORDER BY estudiante.Apellido_paterno  ASC";
 //CONVERSIÓN DE FECHA
 date_default_timezone_set('America/Lima'); // Configura la zona horaria a Lima/Perú
 setlocale(LC_TIME, 'es_ES.UTF-8', 'es_ES.utf8', 'es_ES', 'spanish'); // Configura el locale para español
@@ -346,7 +346,7 @@ FROM
 	ON 
 		facultad.Cod_autoridad = autoridades.Cod_autoridad
 WHERE Grado_academico = '$grado' and escuela_profesional.Id_escuela='$escu' AND expediente.created_at BETWEEN '$fedes' AND '$fehas' and expediente.Id_cede = '$fil'
-ORDER BY diploma.estado, diploma.updated_at  desc";
+ORDER BY estudiante.Apellido_paterno  ASC";
 $resultado2 = $mysqli ->query($query2);
 $contador=0;
 

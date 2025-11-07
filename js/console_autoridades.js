@@ -122,10 +122,14 @@ $('#tabla_autoridad').on('click','.editar',function(){
     document.getElementById('txt_id_autoridad').value=data.Cod_autoridad;
     document.getElementById('txt_autoridad1_editar').value=data.Autoridad_1;
     document.getElementById('select_rol1_editar').value=data.Cargo_auto1;
+    document.getElementById('select_genero1_editar').value=data.genero1;
+
     document.getElementById('txt_autoridad2_editar').value=data.Autoridad_2;
     document.getElementById('select_rol2_editar').value=data.Cargo_auto2;
+    document.getElementById('select_genero2_editar').value=data.genero2;
     document.getElementById('txt_autoridad3_editar').value=data.Autoridad_3;
     document.getElementById('select_rol3_editar').value=data.Cargo_auto3;
+    document.getElementById('select_genero3_editar').value=data.genero3;
     document.getElementById('select_estado').value=data.estado;
 
 })
@@ -138,11 +142,17 @@ function AbrirRegistro(){
 function Registrar_Autoridad(){
     let autoridad1 = document.getElementById('txt_autoridad1').value;
     let cargo1 = document.getElementById('select_rol1').value;
+    let genero1 = document.getElementById('select_genero1').value;
+
     let autoridad2 = document.getElementById('txt_autoridad2').value;
     let cargo2 = document.getElementById('select_rol2').value;
+    let genero2 = document.getElementById('select_genero2').value;
+
     let autoridad3 = document.getElementById('txt_autoridad3').value;
     let cargo3 = document.getElementById('select_rol3').value;
-    if(autoridad1.length==0 ||cargo1.length==0  || autoridad2.length==0 ||cargo2.length==0 || autoridad3.length==0 ||cargo3.length==0 ){
+    let genero3 = document.getElementById('select_genero3').value;
+
+    if(autoridad1.length==0 ||cargo1.length==0  || autoridad2.length==0 ||cargo2.length==0 || autoridad3.length==0 ||cargo3.length==0||genero1.length==0||genero2.length==0||genero3.length==0 ){
         return Swal.fire("Mensaje de Advertencia","Tiene campos vacios revise por favor","warning");
     }
     $.ajax({
@@ -151,10 +161,13 @@ function Registrar_Autoridad(){
       data:{
         autoridad1:autoridad1,
         cargo1:cargo1,
+        genero1:genero1,
         autoridad2:autoridad2,
         cargo2:cargo2,
+        genero2:genero2,
         autoridad3:autoridad3,
         cargo3:cargo3,
+        genero3:genero3
       }
     }).done(function(resp){
       if(resp>0){
@@ -181,13 +194,19 @@ function Registrar_Autoridad(){
     let id = document.getElementById('txt_id_autoridad').value;
     let autoridad1 = document.getElementById('txt_autoridad1_editar').value;
     let cargo1 = document.getElementById('select_rol1_editar').value;
+    let genero1 = document.getElementById('select_genero1_editar').value;
+
     let autoridad2 = document.getElementById('txt_autoridad2_editar').value;
     let cargo2 = document.getElementById('select_rol2_editar').value;
+    let genero2 = document.getElementById('select_genero2_editar').value;
+
     let autoridad3 = document.getElementById('txt_autoridad3_editar').value;
     let cargo3 = document.getElementById('select_rol3_editar').value;
+    let genero3 = document.getElementById('select_genero3_editar').value;
+
     let esta = document.getElementById('select_estado').value;
 
-    if(autoridad1.length==0 ||cargo1.length==0  || autoridad2.length==0 ||cargo2.length==0 || autoridad3.length==0 ||cargo3.length==0){
+    if(autoridad1.length==0 ||cargo1.length==0||genero1.length==0  || autoridad2.length==0 ||cargo2.length==0||genero2.length==0 || autoridad3.length==0 ||cargo3.length==0||genero3.length==0){
         return Swal.fire("Mensaje de Advertencia","Tiene campos vacios","warning");
     }
     $.ajax({
@@ -197,10 +216,13 @@ function Registrar_Autoridad(){
         id:id,
         autoridad1:autoridad1,
         cargo1:cargo1,
+        genero1:genero1,
         autoridad2:autoridad2,
         cargo2:cargo2,
+        genero2:genero2,
         autoridad3:autoridad3,
         cargo3:cargo3,
+        genero3:genero3,
         esta:esta,
 
       }

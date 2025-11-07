@@ -195,9 +195,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times ml-1"></i> Cerrar</button>
-        <button type="button" class="btn btn-primary" onclick="Imprimir_colacion()"><i class="fas fa-print"></i> Imprimir colación</button>
-
-
+        <button type="button" class="btn btn-primary" onclick="AbrirPDFColacion()"><i class="fas fa-print"></i> Imprimir colación</button>
+        <button type="button" class="btn btn-success" onclick="EnviarCorreosColacion()"><i class="fas fa-envelope"></i> Enviar correos</button>
       </div>
     </div>
   </div>

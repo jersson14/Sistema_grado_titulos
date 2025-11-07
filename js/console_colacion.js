@@ -278,3 +278,102 @@ function Imprimir_colacion() {
   
   window.open(url, "COLACION PREGRADO", "scrollbars=NO,width=" + width + ",height=" + height + ",top=0,left=0");
 }
+
+
+
+
+function AbrirPDFColacion() {
+  // Obtener elementos del DOM
+  var sede = document.getElementById('txt_sede');
+  var fecha1 = document.getElementById('fechacola');
+  var hora = document.getElementById('txt_hora');
+  var fechaaper = document.getElementById('txt_aper');
+
+  // Verificar si los elementos existen
+  if (!sede || !fecha1 || !hora || !fechaaper) {
+    alert("Faltan campos requeridos.");
+    return; // Detener ejecución si algún campo no se encuentra
+  }
+
+  // Convertir valores a cadenas
+  sede = sede.value.toString();
+  fecha1 = fecha1.value.toString();
+  hora = hora.value.toString();
+  fechaaper = fechaaper.value.toString();
+
+  // Construir URL para PDF
+  var url_pdf = "../view/MPDF/REPORTE/colacion.php?"
+    + "sede=" + encodeURIComponent(sede)
+    + "&fecha1=" + encodeURIComponent(fecha1)
+    + "&hora=" + encodeURIComponent(hora)
+    + "&fechaaper=" + encodeURIComponent(fechaaper)
+    + "#zoom=100%";
+
+  // Abrir ventana de PDF
+  var width = screen.width;
+  var height = screen.height;
+  window.open(url_pdf, "COLACION PREGRADO", "scrollbars=NO,width=" + width + ",height=" + height + ",top=0,left=0");
+}
+
+
+
+
+function EnviarCorreosColacion() {
+  // Obtener elementos del DOM
+  var sede = document.getElementById('txt_sede');
+  var fecha1 = document.getElementById('fechacola');
+  var hora = document.getElementById('txt_hora');
+  var fechaaper = document.getElementById('txt_aper');
+
+  // Verificar si los elementos existen
+  if (!sede || !fecha1 || !hora || !fechaaper) {
+    alert("Faltan campos requeridos.");
+    return; // Detener ejecución si algún campo no se encuentra
+  }
+
+  // Convertir valores a cadenas
+  sede = sede.value.toString();
+  fecha1 = fecha1.value.toString();
+  hora = hora.value.toString();
+  fechaaper = fechaaper.value.toString();
+
+  // Obtener correos por AJAX
+  $.ajax({
+    url: '../controller/colacion/obtener_correos.php',
+    method: 'GET',
+    dataType: 'json',
+    data: {
+      sede: sede, // Asegúrate de pasar correctamente el parámetro "sede"
+      fecha1:fecha1
+    },
+    success: function(emails) {
+      // Verificar si los correos fueron recibidos
+      if (!emails || emails.length === 0) {
+        alert('No se han encontrado correos para enviar.');
+        return;
+      }
+
+      // Enviar correos a través de otro script PHP
+      $.ajax({
+        url: '../controller/colacion/enviar_correos.php',
+        method: 'POST',
+        data: {
+          emails: emails,
+          sede: sede,
+          fecha1: fecha1,
+          hora: hora,
+          fechaaper: fechaaper
+        },
+        success: function(response) {
+          alert('Correos enviados exitosamente');
+        },
+        error: function(xhr, status, error) {
+          alert('Error al enviar correos: ' + error);
+        }
+      });
+    },
+    error: function(xhr, status, error) {
+      alert('Error al obtener correos: ' + error);
+    }
+  });
+}

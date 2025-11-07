@@ -1,9 +1,11 @@
 <?php
 return [
     'smtp_host' => 'smtp.hostinger.com',
-    'smtp_username' => 'jerssongrados@gradosapp.fun',
-    'smtp_password' => 'MirandaCarrasco1407.',
-    'smtp_port' => 465
+    'smtp_username' => 'uteaperu@gradosapp.fun',
+    'smtp_password' => 'Miranda1407.',
+    'smtp_port' => 465,
+    'enable_email' => false // Cambia a false para deshabilitar el envío de correos
+
 ];
 
 ?>

@@ -18,6 +18,20 @@
             return $arreglo;
             conexionBD::cerrar_conexion();
         }
+          public function Listar_Registro_Alfabetico(){
+            $c = conexionBD::conexionPDO();
+            $sql = "CALL SP_LISTA_GENERAL_BACHILLER_ALFABETICO()";
+            $arreglo = array();
+
+            $query  = $c->prepare($sql);
+            $query->execute();
+            $resultado = $query->fetchAll(PDO::FETCH_ASSOC);
+            foreach($resultado as $resp){
+                $arreglo["data"][]=$resp;
+            }
+            return $arreglo;
+            conexionBD::cerrar_conexion();
+        }
         public function Listar_Registro_General_Secre($sede){
             $c = conexionBD::conexionPDO();
             $sql = "CALL SP_LISTA_GENERAL_BACHILLER_SECRE(?)";
@@ -41,6 +55,20 @@
             $query  = $c->prepare($sql);
             $query->bindParam(1,$fechainicio);
             $query->bindParam(2,$fechafin);
+            $query->execute();
+            $resultado = $query->fetchAll(PDO::FETCH_ASSOC);
+            foreach($resultado as $resp){
+                $arreglo["data"][]=$resp;
+            }
+            return $arreglo;
+            conexionBD::cerrar_conexion();
+        }
+         public function Listar_General_Ba_Colacion($fechacol){
+            $c = conexionBD::conexionPDO();
+            $sql = "CALL SP_LISTAR_GENERAL_BACHI_COLA(?)";
+            $arreglo = array();
+            $query  = $c->prepare($sql);
+            $query->bindParam(1,$fechacol);
             $query->execute();
             $resultado = $query->fetchAll(PDO::FETCH_ASSOC);
             foreach($resultado as $resp){
@@ -229,20 +257,25 @@
             }
             conexionBD::cerrar_conexion();
         }
-        public function Modificar_informe($id,$numero){
+        public function Registrar_informe($numero, $grado1, $program, $fedes1, $fehas1, $ruta_pdf) {
             $c = conexionBD::conexionPDO();
-            $sql = "CALL SP_MODIFICAR_INFORME(?,?)";
-            $query  = $c->prepare($sql);
-            $query ->bindParam(1,$id);
-            $query ->bindParam(2,$numero);
-          
-            $resul = $query->execute();
-            if($resul){
-                return 1;
-            }else{
-                return 0;
-            }
-            conexionBD::cerrar_conexion();
+            $sql = "CALL SP_REGISTRAR_INFORME(?,?,?,?,?,?)";
+            $query = $c->prepare($sql);
+            $query->bindParam(1, $numero);
+            $query->bindParam(2, $grado1);
+            $query->bindParam(3, $program);
+            $query->bindParam(4, $fedes1);
+            $query->bindParam(5, $fehas1);
+            $query->bindParam(6, $ruta_pdf);
+        
+            // Ejecutar el procedimiento almacenado
+            $query->execute();
+        
+            // Capturar el valor de retorno (1 o 2)
+            $result = $query->fetchColumn();
+            
+            // Retornar el resultado (1 o 2)
+            return $result;
         }
         public function listar_total_diplo_bachiller(){
             $c = conexionBD::conexionPDO();
@@ -280,6 +313,25 @@
                 $arreglo[]=$resp;
             }
             return $arreglo;
+            conexionBD::cerrar_conexion();
+        }
+         public function Pasar_titulado($idexpe,$idautori,$escue,$grado,$moda){
+            $c = conexionBD::conexionPDO();
+            $sql = "CALL SP_PASAR_TITULADO(?,?,?,?,?)";
+            $arreglo = array();
+            $query  = $c->prepare($sql);
+            $query ->bindParam(1,$idexpe);
+            $query ->bindParam(2,$idautori);
+            $query ->bindParam(3,$escue);
+            $query ->bindParam(4,$grado);
+            $query ->bindParam(5,$moda);
+
+            $resul = $query->execute();
+            if($resul){
+                return 1;
+            }else{
+                return 0;
+            }
             conexionBD::cerrar_conexion();
         }
     }

@@ -93,7 +93,7 @@
                                 <th style="text-align:center">Escuela</th>
                                 <th style="text-align:center">Titulo de</th>
                                 <th style="text-align:center">Modalidad</th>
-                                <th style="text-align:center">Cede</th>
+                                <th style="text-align:center">Sede</th>
                                 <th style="text-align:center">Estado</th>
                             </tr>
                         </thead>
@@ -186,7 +186,7 @@
                                 <th style="text-align:center">Escuela</th>
                                 <th style="text-align:center">Grado de bachiller en</th>
                                 <th style="text-align:center">Modalidad</th>
-                                <th style="text-align:center">Cede</th>
+                                <th style="text-align:center">Sede</th>
                                 <th style="text-align:center">Estado</th>
                             </tr>
                         </thead>

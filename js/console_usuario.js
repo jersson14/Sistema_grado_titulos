@@ -556,12 +556,7 @@ function Traer_Datos_Seguimiento() {
 
     if (data.length > 0) {
       document.getElementById("div_buscador").style.display = "block";
-      document.getElementById("lbl_titulo").innerHTML =
-        "<b style='color:white'>Seguimiento de graduando con DNI N°: " +
-        data[0][0] +
-        " - Nombres y Apellidos: " +
-        data[0][4] +
-        "</b>";
+    
 
       // Eliminar la tabla de estados si existe
       let existingTable = document.querySelector(
@@ -808,12 +803,7 @@ function Traer_Datos_Seguimiento_posgrado() {
 
     if (data.length > 0) {
       document.getElementById("div_buscador").style.display = "block";
-      document.getElementById("lbl_titulo").innerHTML =
-        "<b style='color:white'>Seguimiento de graduando con DNI N°: " +
-        data[0][0] +
-        " - Nombres y Apellidos: " +
-        data[0][4] +
-        "</b>";
+    
 
       // Eliminar la tabla de estados si existe
       let existingTable = document.querySelector(

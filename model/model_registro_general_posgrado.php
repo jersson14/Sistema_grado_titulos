@@ -18,6 +18,20 @@
             return $arreglo;
             conexionBD::cerrar_conexion();
         }
+        public function Listar_Registro_General_Posgrado_Alfabeto(){
+            $c = conexionBD::conexionPDO();
+            $sql = "CALL SP_LISTA_GENERAL_POSGRADO_ALFABETO()";
+            $arreglo = array();
+
+            $query  = $c->prepare($sql);
+            $query->execute();
+            $resultado = $query->fetchAll(PDO::FETCH_ASSOC);
+            foreach($resultado as $resp){
+                $arreglo["data"][]=$resp;
+            }
+            return $arreglo;
+            conexionBD::cerrar_conexion();
+        }
         public function Listar_General_Pos_Fechas($fechainicio,$fechafin){
             $c = conexionBD::conexionPDO();
             $sql = "CALL SP_LISTAR_GENERAL_POSGRADO_FECHAS(?,?)";

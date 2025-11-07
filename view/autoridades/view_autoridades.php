@@ -58,10 +58,10 @@
     <!-- /.content -->
     <!-- Modal -->
 <div class="modal fade" id="modal_registro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header" style="background-color:#1FA0E0;">
-        <h5 class="modal-title" id="exampleModalLabel" style="color:white; text-align:center"><b>REGISTRO DE FACULTAD</b></h5>
+        <h5 class="modal-title" id="exampleModalLabel" style="color:white; text-align:center"><b>REGISTRO DE AUTORIDAD</b></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -75,7 +75,7 @@
             <label for="">Autoridad 1<b style="color:red">(*)</b>:</label>
             <input type="text" autocomplete="on" class="form-control" id="txt_autoridad1" onkeypress="return sololetras(event)">
           </div>
-          <div class="col-6 form-group">
+          <div class="col-3 form-group">
             <label for="">Cargo 1<b style="color:red">(*)</b>:</label>
               <select class="form-control" id="select_rol1" style="width:100%">
                 <option value="RECTOR">RECTOR</option>
@@ -83,11 +83,18 @@
                 <option value="DECANO">DECANO</option>
               </select>          
           </div>
+          <div class="col-3 form-group">
+            <label for="">Genero 1<b style="color:red">(*)</b>:</label>
+              <select class="form-control" id="select_genero1" style="width:100%">
+                <option value="FEMENINO">FEMENINO</option>
+                <option value="MASCULINO">MASCULINO</option>
+              </select>          
+          </div>
           <div class="col-6 form-group">
             <label for="">Autoridad 2<b style="color:red">(*)</b>:</label>
             <input type="text" autocomplete="on" class="form-control" id="txt_autoridad2" onkeypress="return sololetras(event)">
           </div>
-          <div class="col-6 form-group">
+          <div class="col-3 form-group">
             <label for="">Cargo 2<b style="color:red">(*)</b>:</label>
               <select class="form-control" id="select_rol2" style="width:100%">
                 <option value="SECRETARIA GENERAL">SECRETARIA GENERAL</option>
@@ -95,17 +102,31 @@
                 <option value="DECANO">DECANO</option>
               </select>          
           </div>
+          <div class="col-3 form-group">
+            <label for="">Genero 2<b style="color:red">(*)</b>:</label>
+              <select class="form-control" id="select_genero2" style="width:100%">
+                <option value="FEMENINO">FEMENINO</option>
+                <option value="MASCULINO">MASCULINO</option>
+              </select>          
+          </div>
           <div class="col-6 form-group">
             <label for="">Autoridad 3<b style="color:red">(*)</b>:</label>
             <input type="text" autocomplete="on" class="form-control" id="txt_autoridad3" onkeypress="return sololetras(event)">
           </div>
-          <div class="col-6 form-group">
+          <div class="col-3 form-group">
             <label for="">Cargo 3<b style="color:red">(*)</b>:</label>
               <select class="form-control" id="select_rol3" style="width:100%">
                 <option value="DECANO">DECANO</option>
                 <option value="RECTOR">RECTOR</option>
                 <option value="SECRETARIA GENERAL">SECRETARIA GENERAL</option>
                 <option value="DIRECTOR">DIRECTOR POSGRADO</option>
+              </select>          
+          </div>
+          <div class="col-3 form-group">
+            <label for="">Genero 3<b style="color:red">(*)</b>:</label>
+              <select class="form-control" id="select_genero3" style="width:100%">
+                <option value="FEMENINO">FEMENINO</option>
+                <option value="MASCULINO">MASCULINO</option>
               </select>          
           </div>
         </div>
@@ -118,10 +139,10 @@
   </div>
 </div>
 <div class="modal fade" id="modal_editar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header" style="background-color:#1FA0E0;">
-        <h5 class="modal-title" id="exampleModalLabel" style="color:white; text-align:center"><b>EDITAR DATOS DEL ÁREA</b></h5>
+        <h5 class="modal-title" id="exampleModalLabel" style="color:white; text-align:center"><b>EDITAR DATOS DE LA AUTORIDAD</b></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -136,7 +157,7 @@
             <input type="text" autocomplete="on" class="form-control" id="txt_id_autoridad" onkeypress="return sololetras(event)" hidden>
             <input type="text" autocomplete="on" class="form-control" id="txt_autoridad1_editar" onkeypress="return sololetras(event)">
           </div>
-          <div class="col-6 form-group">
+          <div class="col-3 form-group">
             <label for="">Cargo 1<b style="color:red">(*)</b>:</label>
               <select class="form-control" id="select_rol1_editar" style="width:100%">
                 <option value="RECTOR">RECTOR</option>
@@ -144,11 +165,18 @@
                 <option value="DECANO">DECANO</option>
               </select>          
           </div>
+          <div class="col-3 form-group">
+            <label for="">Genero 1<b style="color:red">(*)</b>:</label>
+              <select class="form-control" id="select_genero1_editar" style="width:100%">
+                <option value="FEMENINO">FEMENINO</option>
+                <option value="MASCULINO">MASCULINO</option>
+              </select>          
+          </div>
           <div class="col-6 form-group">
             <label for="">Autoridad 2<b style="color:red">(*)</b>:</label>
             <input type="text" autocomplete="on" class="form-control" id="txt_autoridad2_editar" onkeypress="return sololetras(event)">
           </div>
-          <div class="col-6 form-group">
+          <div class="col-3 form-group">
             <label for="">Cargo 2<b style="color:red">(*)</b>:</label>
               <select class="form-control" id="select_rol2_editar" style="width:100%">
                 <option value="SECRETARIA GENERAL">SECRETARIA GENERAL</option>
@@ -156,17 +184,31 @@
                 <option value="DECANO">DECANO</option>
               </select>          
           </div>
+          <div class="col-3 form-group">
+            <label for="">Genero 2<b style="color:red">(*)</b>:</label>
+              <select class="form-control" id="select_genero2_editar" style="width:100%">
+                <option value="FEMENINO">FEMENINO</option>
+                <option value="MASCULINO">MASCULINO</option>
+              </select>          
+          </div>
           <div class="col-6 form-group">
             <label for="">Autoridad 3<b style="color:red">(*)</b>:</label>
             <input type="text" autocomplete="on" class="form-control" id="txt_autoridad3_editar" onkeypress="return sololetras(event)">
           </div>
-          <div class="col-6 form-group">
+          <div class="col-3 form-group">
             <label for="">Cargo 3<b style="color:red">(*)</b>:</label>
               <select class="form-control" id="select_rol3_editar" style="width:100%">
                 <option value="DECANO">DECANO</option>
                 <option value="RECTOR">RECTOR</option>
                 <option value="SECRETARIA GENERAL">SECRETARIA GENERAL</option>
                 <option value="DIRECTOR">DIRECTOR POSGRADO</option>
+              </select>          
+          </div>
+          <div class="col-3 form-group">
+            <label for="">Genero 3<b style="color:red">(*)</b>:</label>
+              <select class="form-control" id="select_genero3_editar" style="width:100%">
+                <option value="FEMENINO">FEMENINO</option>
+                <option value="MASCULINO">MASCULINO</option>
               </select>          
           </div>
           <div class="col-12 form-group">

@@ -59,19 +59,22 @@ use PHPMailer\PHPMailer\Exception;
         $ruta='controller/registro_general_bachiller/documentos/'.$nombrearchivo;
     
         $consulta = $MRGB->Registrar_Bachiller($tipodoc,$documentoFinal,$nombres,$apepa,$apema,$codigo,$sexo,$celular,$direc,$emaper,$emainsti,$fecha_matr,$fecha_egre,$observa,$ced,$esc,$bach,$moda,$idauto,$fecha,$acu,$res,$exped,$lib,$fol,$reg,$ruta,$mod_estu,$tra_inv,$turn,$porc,$cent,$meta,$proce_bach,$proce_insti,$proce_titu,$fecha_matri,$fecha_inici,$fecha_fin,$mod_sustenta,$idusuario);
+        
+    $config = include('../../config/config.php');
+$enable_email = $config['enable_email']; // Leer de la configuración
+
    
 if ($consulta) {
     if ($nombrearchivo != "") {
         move_uploaded_file($_FILES['achivoobj']['tmp_name'], "documentos/" . $nombrearchivo);
     }
+    if ($enable_email) { // Solo envía si está habilitado en la configuración
 
     try {
         $mail = new PHPMailer(true);
 
         // Configuración del servidor SMTP
         $mail->isSMTP();
-        $config = include('../../config/config.php');
-
         $mail->Host = $config['smtp_host'];
         $mail->SMTPAuth = true;
         $mail->Username = $config['smtp_username'];
@@ -80,7 +83,7 @@ if ($consulta) {
         $mail->Port = $config['smtp_port'];
 
         // Configuración del correo
-        $mail->setFrom('jerssongrados@gradosapp.fun', 'Oficina de Grados y Títulos - Universidad Tecnológica de los Andes');
+        $mail->setFrom('uteaperu@gradosapp.fun', 'Oficina de Grados y Títulos - Universidad Tecnológica de los Andes');
         $mail->addAddress($emaper); // Correo del estudiante
         $mail->isHTML(true);
         $mail->CharSet = 'UTF-8';
@@ -115,23 +118,21 @@ if ($consulta) {
             <div class="content">
                 <img src="cid:logo_universidad" alt="Logo Universidad Tecnológica de los Andes" class="university-logo"/><br><br>
     
-                <p><b>Estimado(a) Estudiante, '.$nombres.' '.$apepa.' '.$apema.'.</b></p>
+                <p><b>Estimado(a) Graduado(a):, '.$nombres.' '.$apepa.' '.$apema.'.</b></p>
     
-                <p>Previo un cordial saludo, se comunica que su expediente se encuentra en la Oficina de Grados y Títulos para continuar con el proceso correspondiente. Usted podrá hacer seguimiento de su expediente a través del siguiente enlace:</p>
-    
-                <p><a href="https://gradosapp.fun/seguimiento.php" target="_blank">Hacer seguimiento (Clic)</a></p>
-
-                <p>Su expediente se encuentra en estado: <b style="color:#c9b701">PENDIENTE DE REVISIÓN</b></p>
-    
-                <div class="note">
-                    <p><strong>Nota importante:</strong> Se adjunta a este correo el tutorial en PDF en la parte final, con instrucciones detalladas de cómo realizar el seguimiento de su expediente en nuestro sistema, revíselo cuidadosamente.</p>
-                </div>
+                <p>Previo un cordial saludo, se comunica a todo los Bachilleres y Titulandos que su  expediente fue aprobado y se remitió a su Decanatura. 
 
                 <p>Le agradecemos por su paciencia y compromiso.</p>
     
                 <p>Atentamente,<br>
                 Oficina de Grados y Títulos<br>
-                Universidad Tecnológica de los Andes</p>
+                Universidad Tecnológica de los Andes</p><br>
+
+            
+                <p>Contacto en la Sede Central de Abancay: <b>970 639 067</b> (Unidad de Grados y Títulos)</p>
+                <p>Contacto en la Filial de Andahuaylas: <b>957 306 881</b> (Unidad de Grados y Títulos)</p>
+                <p>Contacto en la Filial de Cusco: <b>970 639 067</b> (Unidad de Grados y Títulos)</p>
+                
             </div>
             <div class="footer">
                 <p>Universidad Tecnológica de los Andes | Todos los derechos reservados</p>
@@ -142,13 +143,7 @@ if ($consulta) {
         // Adjuntar el logo como una imagen incrustada
         $mail->addEmbeddedImage('../../img/utea.png', 'logo_universidad', 'logo.png');
 
-        // Adjuntar el PDF del tutorial
-        $rutaPDF = '../../manual_usuario.pdf'; // Ajusta esta ruta según donde tengas el PDF
-        if (file_exists($rutaPDF)) {
-            $mail->addAttachment($rutaPDF, 'Tutorial_Seguimiento_Expediente.pdf');
-        } else {
-            throw new Exception('No se pudo encontrar el archivo del tutorial');
-        }
+       
 
         $mail->send();
         
@@ -164,6 +159,10 @@ if ($consulta) {
             'code' => 1
         );
     }
+    } else {
+        $response = ['status' => true, 'message' => 'Registro exitoso pero el envío de correo está deshabilitado', 'code' => 1];
+    }
+
 } else {
     $response = array(
         'status' => false,

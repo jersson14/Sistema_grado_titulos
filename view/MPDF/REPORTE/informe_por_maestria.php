@@ -170,8 +170,7 @@ WHERE
 	Grado_academico = '$grado' AND expediente_posgrado.created_at BETWEEN '$fedes' AND '$fehas'
 	
 ORDER BY
-	diploma_posgrado.estado ASC, 
-	diploma_posgrado.updated_at DESC";
+	estudiante_posgrado.Apellido_paterno ASC";
 //CONVERSIÓN DE FECHA
 date_default_timezone_set('America/Lima'); // Configura la zona horaria a Lima/Perú
 setlocale(LC_TIME, 'es_ES.UTF-8', 'es_ES.utf8', 'es_ES', 'spanish'); // Configura el locale para español
@@ -427,8 +426,7 @@ WHERE
 	Grado_academico = '$grado' AND expediente_posgrado.created_at BETWEEN '$fedes' AND '$fehas'
 	
 ORDER BY
-	diploma_posgrado.estado ASC, 
-	diploma_posgrado.updated_at DESC";
+	estudiante_posgrado.Apellido_paterno";
 $resultado2 = $mysqli ->query($query2);
 $contador=0;
 

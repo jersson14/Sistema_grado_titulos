@@ -5,7 +5,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0"><b>REPORTE DE GRADUADOS POR ESCUELAS</b></h1>
+            <h1 class="m-0"><b>REPORTE DE GRADUADOS POR PROGRAMA / ESCUELAS PROFESIONALES</b></h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -25,7 +25,7 @@
           <div class="col-lg-12">
             <div class="card">
               <div class="card-header">
-              <h3 class="card-title"><i class="fas fa-file-signature"></i>&nbsp;&nbsp;<b>Listado de Titulados por ESCUELAS</b></h3>
+              <h3 class="card-title"><i class="fas fa-file-signature"></i>&nbsp;&nbsp;<b>Listado de Titulados por programa / escuela profesional</b></h3>
               </div>
                 <div class="table-responsive" style="text-align:left">
                   <div class="card-body">
@@ -61,7 +61,7 @@
                 </div>
                 <div class="col-12 col-md-3" role="document">
                     <div class="form-group">
-                    <label for="txtfechafin">Programa:</label>
+                    <label for="txtfechafin">Programa / Escuela profesional:</label>
                         <div class="input-group mb-2">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
@@ -93,7 +93,7 @@
                                 <th style="text-align:center">Escuela</th>
                                 <th style="text-align:center">Titulo de</th>
                                 <th style="text-align:center">Modalidad</th>
-                                <th style="text-align:center">Cede</th>
+                                <th style="text-align:center">Sede</th>
                                 <th style="text-align:center">Estado</th>
                             </tr>
                         </thead>
@@ -118,7 +118,7 @@
           <div class="col-lg-12">
             <div class="card">
               <div class="card-header">
-              <h3 class="card-title"><i class="fas fa-file-signature"></i>&nbsp;&nbsp;<b>Listado de Bachilleres por ESCUELAS</b></h3>
+              <h3 class="card-title"><i class="fas fa-file-signature"></i>&nbsp;&nbsp;<b>Listado de Bachilleres por programa / escuela profesional</b></h3>
               </div>
                 <div class="table-responsive" style="text-align:left">
                   <div class="card-body">
@@ -154,7 +154,7 @@
                 </div>
                 <div class="col-12 col-md-3" role="document">
                     <div class="form-group">
-                    <label for="txtfechafin">Programa:</label>
+                    <label for="txtfechafin">Programa / Escuela profesional:</label>
                         <div class="input-group mb-2">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
@@ -186,7 +186,7 @@
                                 <th style="text-align:center">Escuela</th>
                                 <th style="text-align:center">Grado de bachiller en</th>
                                 <th style="text-align:center">Modalidad</th>
-                                <th style="text-align:center">Cede</th>
+                                <th style="text-align:center">Sede</th>
                                 <th style="text-align:center">Estado</th>
                             </tr>
                         </thead>
@@ -203,14 +203,6 @@
       </div><!-- /.container-fluid -->
     <!-- /.content -->
     </div>
-
-
-
-
-
-
-
-
 <script>
 $(document).ready(function () {
   

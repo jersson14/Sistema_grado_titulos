@@ -135,9 +135,7 @@
             </div>
             <div class="col-lg-12" id="div_buscador" style="display:none">
               <div class="card">
-                <div class="card-header bg-primary">
-                  <h5 class="card-title m-0" id="lbl_titulo"><b>Seguimiento</b></h5>
-                </div>
+               
                 <div class="card-body">
                   <div class="table-responsive">
                     <table id="tabla_registro_general" class="table table-striped table-bordered table-sm" style="width:100%; font-size: 0.85rem;">

@@ -33,7 +33,7 @@
               </div>
                 <div class="table-responsive" style="text-align:left">
                   <div class="card-body">
-                  <div class="row">
+                  <div class="row" style="border: 1px solid #ccc; padding: 15px; border-radius: 8px;">
                 <div class="col-12 col-md-4" role="document">
                     <div class="form-group">
                     <label for="txtfechainicio">Fecha Desde:</label>
@@ -69,6 +69,28 @@
                 </div>
                 </div>
                 </div>
+                  <div class="table-responsive" style="text-align:left">
+                    <div class="card-body" >
+                        <div class="row" style="border: 1px solid #ccc; padding: 15px; border-radius: 8px;">
+                        <div class="col-12 col-md-3" role="document" >
+                            <div class="form-group">
+                            <label for="txtfechainicio">Fecha de colación:</label>
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                </div>
+                                <select class="js-example-basic-single" id="select_fechacola" style="width:100%"></select>
+                                <div class="valid-input invalid-feedback"></div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-3" role="document">
+                            <label for="">&nbsp;</label><br>
+                            <button onclick="listar_colacion()" class="btn btn-danger mr-2" style="width:100%"><i class="fas fa-search mr-1"></i>Buscar por colación</button>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
                 <input type="text" id="dni" autocomplete="off" name="dni" hidden>
                 <div class="table-responsive" style="text-align:center">
                   <div class="card-body">
@@ -83,7 +105,6 @@
                                 <th style="text-align:center">Escuela</th>
                                 <th style="text-align:center">Modalidad</th>
                                 <th style="text-align:center">Estado</th>
-                                <th style="text-align:center">Diploma</th>
                                 <th style="text-align:center">Tiene Diploma Escaneado</th>
                                 <th style="text-align:center">Ver diploma escaneado</th>
                                 <th style="text-align:center">Acci&oacute;n</th>
@@ -231,6 +252,9 @@
 
 $(document).ready(function () {
   listar_expedientes_bachiller();
+  $('.js-example-basic-single').select2();
+
+  Cargar_Select_Colacion();
 });
 var n = new Date();
 var y= n.getFullYear();

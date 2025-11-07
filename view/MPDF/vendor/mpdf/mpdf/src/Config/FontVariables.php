@@ -218,6 +218,18 @@ class FontVariables
 					'R' => "KhmerOS.ttf",
 					'useOTL' => 0xFF,
 				],
+				"mtcorsva" => [/* Khmer */
+					'R' => "Mtcorsva.ttf",
+				],
+				"eduardian" => [/* Khmer */
+					'R' => "Eduardian.ttf",
+				],
+				"timesnewroman" => [/* Khmer */
+					'R' => "Timesnewroman.ttf",
+				],
+				"tempting" => [/* Khmer */
+					'R' => "Tempting.ttf",
+				],
 				"dhyana" => [/* Lao fonts */
 					'R' => "Dhyana-Regular.ttf",
 					'B' => "Dhyana-Bold.ttf",

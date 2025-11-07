@@ -48,6 +48,20 @@
             return $arreglo;
             conexionBD::cerrar_conexion();
         }
+         public function Listar_General_Pre_colacion($fechacol){
+            $c = conexionBD::conexionPDO();
+            $sql = "CALL SP_LISTAR_GENERAL_PREGRADO_COLACION(?)";
+            $arreglo = array();
+            $query  = $c->prepare($sql);
+            $query->bindParam(1,$fechacol);
+            $query->execute();
+            $resultado = $query->fetchAll(PDO::FETCH_ASSOC);
+            foreach($resultado as $resp){
+                $arreglo["data"][]=$resp;
+            }
+            return $arreglo;
+            conexionBD::cerrar_conexion();
+        }
         public function Listar_General_Pos_Fechas_cede($fechainicio,$fechafin,$cede){
             $c = conexionBD::conexionPDO();
             $sql = "CALL SP_LISTAR_GENERAL_POSGRADO_FECHAS_CEDE(?,?,?)";

@@ -69,6 +69,12 @@ Table({
       ],
       "columns":[
         {"data":"Diploma_numero"},
+        {
+          "data": "number_informe",
+          render: function(data, type, row) {
+            return `<span style="font-weight: bold; font-size: 1.2em;">${data}</span>`;
+          }
+        },
         {"data":"tipo_documento",
           render: function(data,type,row){
               if(data=='DNI'){
@@ -95,14 +101,8 @@ Table({
         },
         {"data":"Escuela"},
         {"data":"Modo_obtencion"},
-        {"data":"tiempotrancurrido",
-             render: function(data,type,row){
-            if(data==data){
-                return '<span class="badge bg-dark">'+data+'</span>';
-            }
-         } 
-        
-        },
+        {"data":"fecha_registro1"},
+
         {"data":"cede_nombre"},
 
         {"data":"estado",
@@ -140,7 +140,7 @@ Table({
               if(data=='SIN DIPLOMA'){
                 return "<button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>";             
               }else if(data=='CON DIPLOMA'){
-                  return "<button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>";             
+                  return "<button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' hidden style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>";             
               }
             }
           },
@@ -231,6 +231,12 @@ function listar_fechas_busqueda(){
       ],
       "columns":[
           {"data":"Diploma_numero"},
+          {
+          "data": "number_informe",
+          render: function(data, type, row) {
+            return `<span style="font-weight: bold; font-size: 1.2em;">${data}</span>`;
+          }
+        },
           {"data":"tipo_documento",
             render: function(data,type,row){
                 if(data=='DNI'){
@@ -257,14 +263,8 @@ function listar_fechas_busqueda(){
             },
           {"data":"Escuela"},
           {"data":"Modo_obtencion"},
-  {"data":"tiempotrancurrido",
-             render: function(data,type,row){
-            if(data==data){
-                return '<span class="badge bg-dark">'+data+'</span>';
-            }
-         } 
-        
-        },
+          {"data":"fecha_registro1"},
+
         {"data":"cede_nombre"},
 
           {"data":"estado",
@@ -299,7 +299,7 @@ function listar_fechas_busqueda(){
               if(data=='SIN DIPLOMA'){
                 return "<button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>";             
               }else if(data=='CON DIPLOMA'){
-                  return "<button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>";             
+                  return "<button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' hidden style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>";             
               }
             }
           },
@@ -525,8 +525,7 @@ document.getElementById('mate').value=data.Apellido_materno;
       } else {
         cadena += "<option value=''>No hay cedes en la base de datos</option>";
       }
-      document.getElementById('select_cede').innerHTML = cadena;
-      document.getElementById('txt_cede_editar').innerHTML = cadena;
+
       document.getElementById('txtfilial').innerHTML = cadena;
     });
   }
@@ -539,7 +538,7 @@ function Cargar_Select_Carrera_editar(){
   }).done(function(resp){
     let data=JSON.parse(resp);
     if(data.length>0){
-      let cadena ="";
+      let cadena = "<option value=''>Seleccione</option>"; // Agrega la opción "Seleccione" al inicio
       for (let i = 0; i < data.length; i++) {
         cadena+="<option value='"+data[i][0]+"'>FACULTAD: "+data[i][1]+" - ESCUELA: "+data[i][2]+"</option>";    
       }
@@ -569,7 +568,7 @@ function Cargar_Select_Facultad(){
    
   }).done(function(resp){
     let data=JSON.parse(resp);
-    var cadena="";
+      let cadena = "<option value=''>Seleccione</option>"; // Agrega la opción "Seleccione" al inicio
     if(data.length>0){
       for(var i=0; i < data.length; i++){
         cadena+="<option value='"+data[i][0]+"'>"+data[i][1]+"</option>";
@@ -639,86 +638,134 @@ function Traerauto(id_auto){
 //TRAER TODO LAS CARRERAS
 function Cargar_Select_facul_carrera(id){
   $.ajax({
-      "url":"../controller/expediente_titulado/controlador_cargar_select_facu_carrera.php",
-      type:'POST',
-      data:{
-        id:id
+    "url":"../controller/expediente_titulado/controlador_cargar_select_facu_carrera.php",
+    type:'POST',
+    data:{
+      id:id
+    }
+  }).done(function(resp){
+    var data = JSON.parse(resp);
+    var cadena="<option value=''>Seleccione</option>";
+    if(data.length > 0){
+      for(var i=0; i < data.length; i++){
+        cadena += "<option value='"+data[i][0]+"'>"+data[i][1]+"</option>";
       }
-    }).done(function(resp){
-        var data = JSON.parse(resp);
-        var cadena="";
-        if(data.length>0){
-            for(var i=0; i < data.length; i++){
-              cadena+="<option value='"+data[i][0]+"'>"+data[i][1]+"</option>";
-            }
-            $('#select_escuela').html(cadena);
-              $('#txtes').html(cadena);
-              $('#txtes_filial').html(cadena);
+      $('#select_escuela').html(cadena);
+      $('#txtes').html(cadena);
+      $('#txtes_filial').html(cadena);
 
-            var id =$("#select_escuela").val();
-            Traergrado(id);
-            var id_auto =$("#select_escuela").val();
-            Traerauto(id_auto);
-
+      // Esperar a que el usuario seleccione un valor antes de llamar a Traerauto
+      $('#select_escuela').on('change', function() {
+        var idSeleccionado = $(this).val();
+        if (idSeleccionado) {
+          Traergrado(idSeleccionado);
+          Traerauto(idSeleccionado);
         }
-        else{
-            cadena+="<option value=''>No se encontraron regitros</option>";
-            $('#select_escuela').html(cadena);
-            $('#txtes').html(cadena);
-            $('#txtes_filial').html(cadena);
+      });
 
+    } else {
+      cadena += "<option value=''>No se encontraron registros</option>";
+      $('#select_escuela').html(cadena);
+      $('#txtes').html(cadena);
+      $('#txtes_filial').html(cadena);
+    }
+  });
+}
 
+function Traergrado(idgrado) {
+  console.log("Ejecutando Traergrado con ID:", idgrado); // Log para depurar el ID
+
+  $.ajax({
+    "url": "../controller/expediente_titulado/controlador_traergrado.php",
+    type: 'POST',
+    data: { id: idgrado }
+  }).done(function(resp) {
+    console.log("Respuesta de Traergrado:", resp); // Depura la respuesta del servidor
+    var data = JSON.parse(resp);
+
+    if (data.length > 0) {
+      // Obtén el género seleccionado
+      var genero = $("#select_sexo").val(); // Asume que tienes un select con id "select_sexo"
+      var genero2 = $("#select_sexo_editar").val(); // Asume que tienes un select con id "select_sexo"
+
+      // Obtén el código de la carrera desde el value
+      var carrera = data[0][0]; // Asegúrate de que data[0][0] contenga el código esperado
+  
+      // Determina el título en función del género y la carrera
+      var titulo = "";
+      if (genero === "M" || genero2 === "M") {
+        if (carrera == 1) {
+          titulo = "Ingeniero de Sistemas e Informática";
+        } else if (carrera == 3) {
+          titulo = "Ingeniero Civil";
+        } else if (carrera == 5) {
+          titulo = "Ingeniero Agrónomo";
+        } else if (carrera == 7) {
+          titulo = "Ingeniero Ambiental";
+        } else if (carrera == 9) {
+          titulo = "Abogado";
+        } else if (carrera == 12) {
+          titulo = "Contador Público";
+        } else if (carrera == 13) {
+          titulo = "Licenciado en Turismo, Hotelería y Gastronomía";
+        } else if (carrera == 16) {
+          titulo = "Licenciado en Enfermería";
+        } else if (carrera == 18) {
+          titulo = "Cirujano Dentista";
+        }else if (carrera == 20) {
+          titulo = "Licenciado en Educación - Nivel Inicial";
+        }else if (carrera == 21) {
+          titulo = "Licenciado en Educación – Especialidad Lengua Española y Quechua";
+        }else if (carrera == 22) {
+          titulo = "Licenciado en Educación – Especialidad Matemática e Informática";
+        }else if (carrera == 23) {
+          titulo = "Licenciado en Educación – Nivel Primaria";
         }
-    })
-  }
-
-  function Traergrado(idgrado){
-    $.ajax({
-      "url":"../controller/expediente_titulado/controlador_traergrado.php",
-      type:'POST',
-          data:{
-            id:idgrado
-          }
-        }).done(function(resp){
-          
-        var data = JSON.parse(resp);
-        var cadena="";
-        if(data.length>0){
-          $("#txt_titulo").val(data[0][1]);
-          $("#txt_titulo_editar").val(data[0][1]);
-
+      } else if (genero === "F" || genero2 === "F") {
+        if (carrera == 1) {
+          titulo = "Ingeniera de Sistemas e Informática";
+        } else if (carrera == 3) {
+          titulo = "Ingeniera Civil";
+        } else if (carrera == 5) {
+          titulo = "Ingeniera Agrónoma";
+        } else if (carrera == 7) {
+          titulo = "Ingeniera Ambiental";
+        } else if (carrera == 9) {
+          titulo = "Abogada";
+        } else if (carrera == 12) {
+          titulo = "Contadora Pública";
+        } else if (carrera == 13) {
+          titulo = "Licenciada en Turismo, Hotelería y Gastronomía";
+        } else if (carrera == 16) {
+          titulo = "Licenciada en Enfermería";
+        } else if (carrera == 18) {
+          titulo = "Cirujano Dentista";
+        }else if (carrera == 20) {
+          titulo = "Licenciada en Educación - Nivel Inicial";
+        }else if (carrera == 21) {
+          titulo = "Licenciada en Educación – Especialidad Lengua Española y Quechua";
+        }else if (carrera == 22) {
+          titulo = "Licenciada en Educación – Especialidad Matemática e Informática";
+        }else if (carrera == 23) {
+          titulo = "Licenciada en Educación – Nivel Primaria";
         }
-        else{
-          cadena+="<option value=''>No se encontraron regitros</option>";
-          $('#txt_titulo').html(cadena);
-          $("#txt_titulo_editar").val(data[0][1]);
-
       }
-    })
-  }
-//EDICION
+  
+      console.log("Título determinado:", titulo);
 
-  function Traergrado2(idgrado){
-    $.ajax({
-      "url":"../controller/expediente_bachiller/controlador_traergrado.php",
-      type:'POST',
-          data:{
-            id:idgrado
-          }
-        }).done(function(resp){
-          
-        var data = JSON.parse(resp);
-        var cadena="";
-        if(data.length>0){
-          $("#txt_titulo_editar").val(data[0][1]);
+      $("#txt_titulo").val(titulo);
+      $("#txt_titulo_editar").val(titulo);
+    } else {
+      console.log("No se encontraron registros.");
+      $('#txt_titulo').val("No se encontraron registros");
+      $('#txt_titulo_editar').val("No se encontraron registros");
+    }
+  }).fail(function(xhr, status, error) {
+    console.log("Error en la solicitud AJAX de Traergrado:", status, error);
+  });
+}
+  
 
-        }
-        else{
-          cadena+="<option value=''>No se encontraron regitros</option>";
-          $('#txt_titulo_editar').html(cadena);
-      }
-    })
-  }
 
 function AbrirModal(){
   $("#modal_registro").modal({backdrop:'static',keyboard:false})
@@ -740,9 +787,12 @@ function Agregar_diploma() {
   let regisfolio = document.getElementById('txt_registro_folio').value;
   let tipodiplo = document.getElementById('select_tipo_diplo').value;
   let fechainiciotra = document.getElementById('txt_fecha_inicio_tra').value;
-  let nrocred = document.getElementById('txt_nro_credi').value;
+  let nrocred = parseInt(document.getElementById('txt_nro_credi').value);
   let nrooficio = document.getElementById('txt_nro_oficio').value;
   let fechasecre = document.getElementById('txt_fecha_secre').value;
+  let fechamatri = document.getElementById('txt_fecha_matricula').value;
+  let fechaegre = document.getElementById('txt_fecha_egreso').value;
+
   let idusuario = document.getElementById('txtprincipalid').value;
   let correo = document.getElementById('txt_correo').value;
   let fechacol = document.getElementById('txt_fecha_cola').value;
@@ -751,44 +801,117 @@ function Agregar_diploma() {
   let ape = document.getElementById('ape').value;
   let mate = document.getElementById('mate').value;
 
+  // Validar campos vacíos
   if (
     fechacu.length === 0 || fechafirma.length === 0 || numreso.length === 0 || fechareso.length === 0 ||
     tipodiplo.length === 0 || diplonum.length === 0 || regis.length === 0 || regilibro.length === 0 ||
-    regisfolio.length === 0 || fechainiciotra.length === 0 || nrocred.length === 0 || nrooficio.length === 0 ||
-    fechasecre.length === 0
+    regisfolio.length === 0 || fechainiciotra.length === 0 || isNaN(nrocred) || nrooficio.length === 0 ||
+    fechasecre.length === 0 
   ) {
     return Swal.fire("Mensaje de Advertencia", "Tiene campos vacíos", "warning");
   }
+  
+  if (fechamatri.length === 0 || fechaegre.length === 0) {
+    return Swal.fire("Mensaje de Advertencia", "La fecha de matrícula y fecha de egreso son importantes", "warning");
+  }
+
+  // Función para validar si una fecha es válida
+  function esFechaValida(fechaString) {
+    let fecha = new Date(fechaString);
+    return fecha instanceof Date && !isNaN(fecha) && fechaString.match(/^\d{4}-\d{2}-\d{2}$/);
+  }
+
+  // Validar que todas las fechas sean válidas
+  let fechasAValidar = [
+    { valor: fechacu, nombre: "fecha de culminación" },
+    { valor: fechafirma, nombre: "fecha de firma" },
+    { valor: fechareso, nombre: "fecha de resolución" },
+    { valor: fechainiciotra, nombre: "fecha de inicio de trámite" },
+    { valor: fechasecre, nombre: "fecha de secretaría" },
+    { valor: fechamatri, nombre: "fecha de matrícula" },
+    { valor: fechaegre, nombre: "fecha de egreso" },
+    { valor: fechacol, nombre: "fecha de colegiatura" }
+  ];
+
+  for (let i = 0; i < fechasAValidar.length; i++) {
+    if (!esFechaValida(fechasAValidar[i].valor)) {
+      return Swal.fire("Mensaje de Advertencia", `La ${fechasAValidar[i].nombre} no es válida. Use el formato AAAA-MM-DD`, "warning");
+    }
+  }
+
+  // Validar que nrocred no sea menor a 210
+  if (nrocred < 210) {
+    return Swal.fire("Mensaje de Advertencia", "El número de créditos no puede ser menor a 210", "warning");
+  }
+
+  let fechaMatricula = new Date(fechamatri);
+  let fechaEgreso = new Date(fechaegre);
+  let fechaInicioTramite = new Date(fechainiciotra);
+  let añoActual = new Date().getFullYear();
+
+  // Validar que la fecha de inicio de trámite sea del año actual
+  if (fechaInicioTramite.getFullYear() !== añoActual) {
+    return Swal.fire("Mensaje de Advertencia", `La fecha de inicio de trámite debe ser del año actual (${añoActual})`, "warning");
+  }
+
+  // Validar que fecha de matrícula no sea mayor a fecha de egreso
+  if (fechaMatricula > fechaEgreso) {
+    return Swal.fire("Mensaje de Advertencia", "La fecha de matrícula no puede ser mayor a la fecha de egreso", "warning");
+  }
+
+  // Validar que la fecha de egreso no sea menor a la fecha de matrícula
+  if (fechaEgreso < fechaMatricula) {
+    return Swal.fire("Mensaje de Advertencia", "La fecha de egreso no puede ser menor a la fecha de matrícula", "warning");
+  }
+
+  // Validar que la diferencia entre matrícula y egreso sea >= 5 años (CORREGIDO)
+  let diferenciaAnios = fechaEgreso.getFullYear() - fechaMatricula.getFullYear();
+  let mesesDiferencia = fechaEgreso.getMonth() - fechaMatricula.getMonth();
+  let diasDiferencia = fechaEgreso.getDate() - fechaMatricula.getDate();
+  
+  // Ajustar si los meses o días hacen que no se complete el año
+  if (mesesDiferencia < 0 || (mesesDiferencia === 0 && diasDiferencia < 0)) {
+    diferenciaAnios--;
+  }
+  
+  if (diferenciaAnios < 5) {
+    return Swal.fire("Mensaje de Advertencia", "El período entre la fecha de matrícula y la fecha de egreso debe ser de al menos 5 años completos", "warning");
+  }
+
+  // Validar que la fecha de inicio de trámite no sea antes de la fecha de egreso
+  if (fechaInicioTramite < fechaEgreso) {
+    return Swal.fire("Mensaje de Advertencia", "La fecha de inicio de trámite no puede ser antes de la fecha de egreso", "warning");
+  }
 
   $.ajax({
-    url: "../controller/registro_general/controlador_agregar_diploma.php",
+    url: "../controller/registro_general/controlador_agregar_diploma_titulo.php",
     type: 'POST',
     data: {
-        idexpe, id, fechacu, fechafirma, numreso, fechareso, diplonum, regis, regilibro, regisfolio,
-        tipodiplo, fechainiciotra, nrocred, nrooficio, fechasecre, idusuario, correo, fechacol,nom,ape,mate
+      idexpe, id, fechacu, fechafirma, numreso, fechareso, diplonum, regis, regilibro, regisfolio,
+      tipodiplo, fechainiciotra, nrocred, nrooficio, fechasecre, fechamatri, fechaegre, idusuario, correo, fechacol, nom, ape, mate
     }
-}).done(function (resp) {
-    console.log("Respuesta del servidor:", resp);
-
+  }).done(function(resp) {
     if (resp.status) {
-        // Si la respuesta es exitosa, muestra el mensaje
-        Swal.fire("Mensaje de Confirmación", resp.message, "success");
+      contadorFolio++;
+      contadorLibro++;
 
-        // Aquí abres la ventana del modal con la URL construida
-        var url = "../view/MPDF/REPORTE/diploma.php?codigo="+id+"#zoom=100%";
-        tbl_general_titulo.ajax.reload();
-        $("#modal_registrar_diploma").modal('hide');
-        // Abrir una nueva ventana con la URL construida
-        var newWindow = window.open(url, "DIPLOMA TITULO PROFESIONAL", "scrollbars=NO");
-        if (newWindow) {
-            newWindow.moveTo(0, 0);
-            newWindow.resizeTo(screen.width, screen.height);
-        }
+      localStorage.setItem("contadorFolio", contadorFolio);
+      localStorage.setItem("contadorLibro", contadorLibro);
+
+      console.log(contadorFolio, contadorLibro);
+      Swal.fire("Mensaje de Confirmación", resp.message, "success");
+      var url = "../view/MPDF/REPORTE/diploma.php?codigo=" + id + "&tamaño=55&tamaño2=93&tamaño3=83&tamaño4=41#zoom=100%";
+      tbl_general_titulo.ajax.reload();
+      $("#modal_registrar_diploma").modal('hide');
+      var newWindow = window.open(url, "DIPLOMA TITULO PROFESIONAL", "scrollbars=NO");
+      if (newWindow) {
+        newWindow.moveTo(0, 0);
+        newWindow.resizeTo(screen.width, screen.height);
+      }
     } else {
-        // Si la respuesta no es exitosa, muestra el error
-        Swal.fire("Mensaje de Error", resp.message, "error");
+      Swal.fire("Mensaje de Error", resp.message, "error");
     }
-});
+  });
 }
 
 
@@ -846,7 +969,9 @@ function Registrar_Titulado(){
   if (ced === '') { // Comprueba si no hay un valor seleccionado
     return Swal.fire("Mensaje de Advertencia", "Seleccione una cede en la segunda pestaña", "warning");
   }
-  
+        if (esc === '') { // Comprueba si no hay un valor seleccionado
+    return Swal.fire("Mensaje de Advertencia", "Seleccione una facultad y programa profesional", "warning");
+  }
     if(validar_email(emaper)){
 
     }else{
@@ -870,7 +995,7 @@ function Registrar_Titulado(){
         documentoFinal = doc;
     }
    // Validación general de campos
-if(codigo.length === 0 || nombres.length === 0 || apepa.length === 0 || 
+if( nombres.length === 0 || apepa.length === 0 || 
   apema.length === 0 || sexo.length === 0 || celular.length === 0 || 
   direc.length === 0 || fecha_matr.length === 0 || fecha_egre.length === 0) {
    return Swal.fire("Mensaje de Advertencia", "Tiene campos vacíos, revise por favor", "warning");
@@ -940,26 +1065,28 @@ if(codigo.length === 0 || nombres.length === 0 || apepa.length === 0 ||
     formData.append("idusuario",idusuario);
 
     $.ajax({
-      url: "../controller/registro_general/controlador_registro_titulado.php",
+      url: "../controller/registro_general/controlador_registro_titulado_secre.php",
       type: 'POST',
       data: formData,
       contentType: false,
       processData: false,
-      dataType: 'json', // Especificamos que esperamos JSON
-      success: function(resp) {
-          if (resp.status) {
-              Swal.fire("Mensaje de Confirmación", resp.message, "success").then((value) => {
-                  tbl_general_titulo.ajax.reload();
-                  $("#modal_registro").modal('hide');
-                  // Limpieza de campos
-                  limpiarCampos();
-              });
-          } else {
-              Swal.fire("Mensaje de Advertencia", resp.message, "warning");
+      success:function(resp){
+        if(resp>0){
+          if(resp==1){
+            Swal.fire("Mensaje de Confirmación","Se actualizo de forma correcta al Titulado con el DNI N°: "+dni ,"success").then((value)=>{
+              $("#modal_registro").modal('hide');
+                limpiarCampos();
+              tbl_general_titulo.ajax.reload();
+              document.getElementById('txt_archivo_editar').value="";
+
+            });
+          }else{
+            Swal.fire("Mensaje de Advertencia","El registro que intenta insertar, ya existe en la BD, revise por favor","warning");
           }
-      },
-      error: function(xhr, status, error) {
-          Swal.fire("Error", "Ocurrió un error en la solicitud: " + error, "error");
+        }else{
+          Swal.fire("Mensaje de Advertencia","No se pudo realizar el registro verifique por favor","warning");
+    
+        }
       }
   });
   return false;
@@ -994,6 +1121,17 @@ function limpiarCampos() {
   document.getElementById('txt_fecha_matri_mod').value = "";
   document.getElementById('txt_fecha_inicio_mod').value = "";
   document.getElementById('txt_fecha_fin').value = "";
+        document.getElementById('txt_rector').value = "";
+  document.getElementById('txt_secretario').value = "";
+  document.getElementById('txt_decano').value = "";
+
+    document.getElementById('txt_titulo').value = "";
+    
+        document.getElementById('select_facultad').value = "";
+        document.getElementById('select_facultad').innerHTML = "";
+                document.getElementById('select_escuela').value = "";
+        document.getElementById('select_escuela').innerHTML = "";
+
 }
 function validar_email(email) {
   var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -1088,7 +1226,7 @@ function Modificar_Titulado(){
     let extension = arc.split('.').pop();//DOCUMENTO.PPT
     let nombrearchivo="";
     let f = new Date();
-    if(dni.length==0|| codigo.length==0 ||nombres.length==0  || apepa.length==0 ||apema.length==0 || sexo.length==0 ||celular.length==0 || direc.length==0 || fecha_matr.length==0 ||fecha_egre.length==0){
+    if(dni.length==0|| nombres.length==0  || apepa.length==0 ||apema.length==0 || sexo.length==0 ||celular.length==0 || direc.length==0 || fecha_matr.length==0 ||fecha_egre.length==0){
       return Swal.fire("Mensaje de Advertencia","Tiene campos vacios en el registro de estudiantes, revise por favor","warning");
     }
 
@@ -1457,8 +1595,8 @@ gapi.load('client:auth2', loadClient);
 
 
 function fetchSheetData() {
-  var spreadsheetId = '14ITvjf_jC-oQ4-sRAXr7x7i9gr6-KdxoWssZ07pp4VE'; // ID de tu hoja de cálculo de Google Sheets
-  var range = 'estudiante!A2:T';  // Rango donde están los datos (sin incluir el encabezado)
+  var spreadsheetId = '1Q3H2bhhS3brQMsrzgJIcHWvGcHRD8YdtbiU2C1uEmyg'; // ID de tu hoja de cálculo de Google Sheets
+  var range = 'Respuestas de formulario 1!A2:BP';  // Rango donde están los datos (sin incluir el encabezado)
 
   var dniIngresado = document.getElementById('txt_dni').value;  // Obtienes el DNI ingresado
   var dniIngresado2 = document.getElementById('txt_dni2').value;  // Obtienes el DNI ingresado
@@ -1476,7 +1614,7 @@ function fetchSheetData() {
           var filaEncontrada = null;
           for (var i = 0; i < data.length; i++) {
               var fila = data[i];
-              if (fila[1] === dniIngresado || fila[1] === dniIngresado2) {  // Suponiendo que el DNI está en la columna 2 (índice 1)
+              if (fila[2] === dniIngresado || fila[2] === dniIngresado2) {  // Suponiendo que el DNI está en la columna 2 (índice 1)
                   filaEncontrada = fila;
                   break;
               }
@@ -1503,35 +1641,30 @@ function fetchSheetData() {
 
 function fillFormWithData(fila) {
   // Llenamos los campos con los datos obtenidos de la fila
-  var tipodoc = fila[0];  // Suponiendo que el DNI está en la columna 2 (índice 1)
-  var dni = fila[1];
-  var dni2 = fila[1];  // Suponiendo que el DNI está en la columna 2 (índice 1)
+  var dni = fila[2];
   var nombre = fila[3];  // Suponiendo que el nombre está en la columna 4 (índice 3)
   var apellidoPaterno = fila[4];  // Suponiendo que el apellido paterno está en la columna 5 (índice 4)
   var apellidoMaterno = fila[5];  // Suponiendo que el apellido materno está en la columna 6 (índice 5)
-  var codigo = fila[2];  // Suponiendo que el código está en la columna 3 (índice 2)
+  //var codigo = fila[2];  // Suponiendo que el código está en la columna 3 (índice 2)
   var sexo = fila[6];  // Suponiendo que el sexo está en la columna 7 (índice 6)
   var celular = fila[7];  // Suponiendo que el celular está en la columna 8 (índice 7)
-  var direccion = fila[8];  // Suponiendo que la dirección está en la columna 9 (índice 8)
-  var email = fila[11];  // Suponiendo que el email está en la columna 10 (índice 9)
-  var emailinsti = fila[12];  // Suponiendo que el email institucional está en la columna 11 (índice 10)
+  var direccion = fila[10];  // Suponiendo que la dirección está en la columna 9 (índice 8)
+  var email = fila[1];  // Suponiendo que el email está en la columna 10 (índice 9)
+  var emailinsti = fila[9];  // Suponiendo que el email institucional está en la columna 11 (índice 10)
+  var sede = fila[24];  // Suponiendo que el email institucional está en la columna 11 (índice 10)
 
   // Llenamos el formulario con los valores encontrados
-  document.getElementById('select_tipo_documento').value = tipodoc;
-  if (tipodoc === 'dni') {
     document.getElementById('txt_dni').value = dni;
-  } else if (tipodoc === 'PASAPORTE' || tipodoc === 'CARNET DE EXTRANJERIA') {
-    document.getElementById('txt_dni2').value = dni2;
-  }
+ 
   document.getElementById('txt_nom').value = nombre;
   document.getElementById('txt_apepa').value = apellidoPaterno;
   document.getElementById('txt_apema').value = apellidoMaterno;
-  document.getElementById('txt_codigo').value = codigo;
+  //document.getElementById('txt_codigo').value = codigo;
 
   // Establecemos el valor de 'sexo'
-  if (sexo === 'M') {
+  if (sexo === 'Masculino') {
     document.getElementById('select_sexo').value = 'M';
-  } else if (sexo === 'F') {
+  } else if (sexo === 'Femenino') {
     document.getElementById('select_sexo').value = 'F';
   }
 
@@ -1539,7 +1672,92 @@ function fillFormWithData(fila) {
   document.getElementById('txt_dire').value = direccion;
   document.getElementById('txt_email_per').value = email;
   document.getElementById('txt_email_insti').value = emailinsti;
+  
+   // Establecemos el valor de 'sexo'
+  if (sede === 'Abancay') {
+    document.getElementById('select_cede').value = '1';
+  } else if (sede === 'Andahuaylas') {
+    document.getElementById('select_cede').value = '2';
+  }else{
+      document.getElementById('select_cede').value = '3';
+
+  }
 
   // Puedes agregar más campos si es necesario
 }
 
+async function buscarBachiller() {
+  const tipo = document.getElementById("select_tipo_documento").value;
+  const dni = document.getElementById("txt_dni").value.trim();
+  const otroDoc = document.getElementById("txt_dni2").value.trim();
+
+  let numero_documento = "";
+
+  if (tipo === "DNI" && dni !== "") {
+    numero_documento = dni;
+  } else if (tipo !== "DNI" && otroDoc !== "") {
+    numero_documento = otroDoc;
+  } else {
+    Swal.fire("Advertencia", "Debe ingresar un número de documento válido.", "warning");
+    return;
+  }
+
+  try {
+    const resp = await $.ajax({
+      url: "../controller/registro_general/controlador_buscar_persona_por_documento.php",
+      type: "POST",
+      data: { numero_documento },
+      dataType: "json"
+    });
+
+    if (resp.data && resp.data.length > 0) {
+      const d = resp.data[0];
+
+      // Rellenar campos
+      $("#txt_nom").val(d.Nombres);
+      $("#txt_apepa").val(d.Apellido_paterno);
+      $("#txt_apema").val(d.Apellido_materno);
+      $("#txt_codigo").val(d.Codigo);
+      $("#select_sexo").val(d.Sexo);
+      $("#txt_movil").val(d.Celular);
+      $("#txt_dire").val(d.Direccion);
+      $("#txt_email_per").val(d.correo_personal);
+      $("#txt_email_insti").val(d.correo_institucional);
+      $("#txt_fecha_matri").val(d.Fecha_matricula);
+      $("#txt_fecha_egres").val(d.Fecha_egreso);
+      $("#txt_oberva").val(d.Observaciones);
+
+      // // Carga secuencial de ubicaciones
+      // await cargarRegionesYSeleccionar(d.id_region);
+      // await cargarProvinciasYSeleccionar(d.id_region, d.id_provincia);
+      // await cargarDistritosYSeleccionar(d.id_provincia, d.id_distrito);
+
+      // Alerta informativa después de cargar los datos
+      await Swal.fire({
+        icon: 'info',
+        title: 'Datos Cargados Exitosamente',
+        html: `
+          <div style="text-align: left; padding: 10px;">
+            <p><strong>📚 Información Importante:</strong></p>
+            <p>• Se requiere <strong>seleccionar nuevamente la carrera</strong> para este graduado, ya que el termino en titulo es distinto.</p>
+            <p>• También debe <strong>confirmar la modalidad de estudio</strong></p>
+            <p>• Estos campos son <strong>obligatorios</strong> para completar el registro</p>
+          </div>
+        `,
+        confirmButtonText: 'Entendido',
+        confirmButtonColor: '#3085d6',
+        allowOutsideClick: false,
+        allowEscapeKey: false
+      });
+
+      // Opcional: Enfocar automáticamente en el campo de carrera después de cerrar la alerta
+      // $("#select_carrera").focus();
+
+    } else {
+      Swal.fire("No encontrado", "No se encontró ningún bachiller con ese Nro. de Documento", "warning");
+    }
+  } catch (error) {
+    console.error("❌ Error en AJAX:", error);
+    Swal.fire("Error", "No se pudo hacer la búsqueda.", "error");
+  }
+}

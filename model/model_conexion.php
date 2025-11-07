@@ -6,9 +6,10 @@ class conexionBD{
         $host       = "localhost";
         $usuario    = "root";
         $contrasena = "";
-        $bdName     = "grados_y_titulo";
+        $bdName     = "grados_titulos";
+        $port       = "3307"; // Ajusta el puerto aquí
         try {
-            $this->pdo = new PDO("mysql:host=$host;dbname=$bdName", $usuario, $contrasena);
+            $this->pdo = new PDO("mysql:host=$host;port=$port;dbname=$bdName", $usuario, $contrasena);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->pdo->exec("set names utf8");
             return $this->pdo;

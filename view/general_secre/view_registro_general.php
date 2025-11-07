@@ -84,13 +84,14 @@
                         <thead style="background-color:#0A5D86;color:#FFFFFF; ">
                             <tr>
                                 <th style="text-align:center">N°</th>
+                                <th style="text-align:center">N° Informe</th>
                                 <th style="text-align:center">Tipo Documento</th>
                                 <th style="text-align:center">N° Documento</th>                                
                                 <th style="text-align:center">Estudiante</th>
                                 <th style="text-align:center">Facultad</th>
                                 <th style="text-align:center">Programa</th>
                                 <th style="text-align:center">Modalidad</th>
-                                <th style="text-align:center">Tiempo de estudios</th>
+                                <th style="text-align:center">Fecha de Registro</th>
                                 <th style="text-align:center">Sede</th>
                                 <th style="text-align:center">Estado</th>
                                 <th style="text-align:center">Trabajo de Investigación</th>
@@ -164,27 +165,31 @@
                             </select>
                         </div>
 
-                        <div id="dni_section" class="col-4 form-group">
+                        <div id="dni_section" class="col-5 form-group">
                             <label for="" style="font-size:small;">N° Documento<b style="color:red">(*)</b>:</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="txt_dni">
                                 <div class="input-group-append">
-                                    <button onclick="" class="btn btn-success" id="umil" hidden><i class="fa fa-search"></i><b> UMIL</b></button>
-                                    <button onclick="" class="btn btn-primary" id="prueba" ><i class="fa fa-search" ></i><b> Reniec</b></button>
+                                    <button onclick="" class="btn btn-success" id="umil"><i class="fa fa-search"></i><b> UMIL</b></button>
+                                    <button onclick="" class="btn btn-primary" id="prueba"><i class="fa fa-search"></i><b> Reniec</b></button>
+                                    <button onclick="buscarBachiller()" class="btn btn-warning" id="bach"><i class="fa fa-search"></i><b> Bach</b></button>
                                 </div>
                             </div>
                         </div>
-                        <div id="otros_documentos_section" class="col-4 form-group" style="display: none;">
+                        <div id="otros_documentos_section" class="col-5 form-group" style="display: none;">
                         <label for="" style="font-size:small;">N° Documento<b style="color:red">(*)</b>:</label>
                         <div class="input-group">
                                 <input type="text" class="form-control" id="txt_dni2">
                                 <div class="input-group-append">
-                                    <button onclick="" class="btn btn-success" id="umil2" hidden><i class="fa fa-search" ></i><b> UMIL</b></button>
+                                    <button onclick="" class="btn btn-success" id="umil2"><i class="fa fa-search"></i><b> UMIL</b></button>
+                                    <button onclick="buscarBachiller()" class="btn btn-warning" id="bach"><i class="fa fa-search"></i><b> Bach</b></button>
+
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-3 form-group">
+
+                        <div class="col-5 form-group">
                             <label for="" style="font-size:small;">Nombres<b style="color:red">(*)</b>:</label>
                             <input type="text" class="form-control" id="txt_nom">
                         </div>
@@ -232,7 +237,7 @@
                             <label for="" style="font-size:small;">Fecha de egreso<b style="color:red">(*)</b>:</label>
                             <input type="date" class="form-control" id="txt_fecha_egres">
                         </div>
-                        <div class="col-6 form-group">
+                        <div class="col-3 form-group">
                             <label for="" style="font-size:small;">Observaciones (Opcional):</label>
                             <textarea class="form-control" id="txt_oberva"  rows="2" style="resize:none"></textarea>
                         </div>
@@ -1529,13 +1534,54 @@ var currentDateTime = y + '-' + m + '-' + d + 'T' + h + ':' + min;
 
 // Set this value to the datetime-local input
 document.getElementById('txt_fecha_reg').value = currentDateTime;
-document.getElementById('fechadesde').value = currentDateTime;
 
-document.getElementById('fechahasta').value = currentDateTime;
-document.getElementById('fechadesde_filial').value = currentDateTime;
 
-document.getElementById('fechahasta_filial').value = currentDateTime;
+var n = new Date();
+var y = n.getFullYear();
+var m = n.getMonth() + 1;
+var d = n.getDate();
+var h = n.getHours();
+var min = n.getMinutes();
 
+// Add leading zeros if necessary
+if (d < 10) {
+    d = '0' + d;
+}
+if (m < 10) {
+    m = '0' + m;
+}
+if (h < 10) {
+    h = '0' + h;
+}
+if (min < 10) {
+    min = '0' + min;
+}
+
+// Format the date and time
+var currentDateTime = y + '-' + m + '-' + d + 'T' + h + ':' + min;
+
+// Determine the time range and set fechadesde and fechahasta accordingly
+var fechaDesde, fechaHasta;
+
+if (h >= 8 && h < 13) {
+    // If current time is between 8 AM and 1 PM
+    fechaDesde = y + '-' + m + '-' + d + 'T07:30';
+    fechaHasta = y + '-' + m + '-' + d + 'T13:00';
+} else if (h >= 13 && h < 16) {
+    // If current time is between 1 PM and 4 PM
+    fechaDesde = y + '-' + m + '-' + d + 'T13:00';
+    fechaHasta = y + '-' + m + '-' + d + 'T16:00';
+} else {
+    // If current time is outside these ranges, default to current time
+    fechaDesde = currentDateTime;
+    fechaHasta = currentDateTime;
+}
+
+// Set the values for the input fields
+document.getElementById('fechadesde').value = fechaDesde;
+document.getElementById('fechahasta').value = fechaHasta;
+document.getElementById('fechadesde_filial').value = fechaDesde;
+document.getElementById('fechahasta_filial').value = fechaHasta;
 
 
 var input = document.getElementById("txt_dni");
@@ -1633,9 +1679,10 @@ $.ajax({
         else{
             console.log(data);
           
-            document.getElementById("txt_nom").value = data.nombres
-            document.getElementById("txt_apepa").value = data.apellidoPaterno
-            document.getElementById("txt_apema").value = data.apellidoMaterno
+            document.getElementById("txt_nom").value = data.first_name
+            document.getElementById("txt_apepa").value = data.first_last_name
+            document.getElementById("txt_apema").value = data.second_last_name
+
 
          
         }

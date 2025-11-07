@@ -1,15 +1,21 @@
 <?php
-setlocale(LC_TIME, 'es_ES.UTF-8'); // Establecer la configuración local para español
+setlocale(LC_TIME, 'es_ES.UTF-8');
 $current_year = date('Y');
 
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once '../conexion.php';
+
+// Determinar si estamos guardando el PDF o mostrándolo
+$guardarPDF = isset($_POST['guardarPDF']) && $_POST['guardarPDF'];
+
+// Obtener los parámetros (ahora compatible con GET y POST)
+$params = $guardarPDF ? $_POST : $_GET;
+$info = $mysqli->real_escape_string($params['info']);
+$grado = $mysqli->real_escape_string($params['grado']);
+$escu = $mysqli->real_escape_string($params['escu']);
+$fedes = $mysqli->real_escape_string($params['fedes']);
+$fehas = $mysqli->real_escape_string($params['fehas']);
 $html = '';
-$info = $mysqli->real_escape_string($_GET['info']);
-$grado = $mysqli->real_escape_string($_GET['grado']);
-$escu = $mysqli->real_escape_string($_GET['escu']);
-$fedes = $mysqli->real_escape_string($_GET['fedes']);
-$fehas = $mysqli->real_escape_string($_GET['fehas']);
 
 $query="SELECT
 expediente.Id_expediente,
@@ -106,6 +112,8 @@ autoridades.Autoridad_2,
 autoridades.Cargo_auto2,
 autoridades.Autoridad_3,
 autoridades.Cargo_auto3,
+autoridades.genero3,
+
 empresa.emp_logo
 FROM
 expediente
@@ -118,8 +126,8 @@ INNER JOIN diploma ON modalidad.Id_modalidad = diploma.id_modalidad
 INNER JOIN autoridades ON facultad.Cod_autoridad = autoridades.Cod_autoridad
 INNER JOIN empresa ON autoridades.Id_empresa = empresa.empresa_id
 
-WHERE Grado_academico = '$grado' and escuela_profesional.Id_escuela='$escu' AND expediente.created_at BETWEEN '$fedes' AND '$fehas'
-ORDER BY diploma.estado, diploma.updated_at  desc";
+WHERE Grado_academico = '$grado' and escuela_profesional.Id_escuela='$escu' AND expediente.created_at BETWEEN '$fedes' AND '$fehas' AND expediente.aumento=1
+ORDER BY estudiante.Apellido_paterno ASC";
 //CONVERSIÓN DE FECHA
 date_default_timezone_set('America/Lima'); // Configura la zona horaria a Lima/Perú
 setlocale(LC_TIME, 'es_ES.UTF-8', 'es_ES.utf8', 'es_ES', 'spanish'); // Configura el locale para español
@@ -129,6 +137,19 @@ $fecha_actual_minusculas = mb_strtolower($fecha_actual, 'UTF-8');
 $resultado = $mysqli ->query($query);
 while($row1 =$resultado->fetch_assoc()){
     	$tituloMayuscula = strtoupper($row1['Grado_bachiller_de']);
+
+     $titulo = '';  // Inicialización de la variable
+
+$autoridad3 = ucwords(strtolower($row1['Autoridad_3']));
+$genero3 = $row1['genero3']; // Aseguramos que sea minúscula
+
+if ($genero3 === 'FEMENINO') {
+    $titulo = 'Decana (e)';
+} else if ($genero3 === 'MASCULINO') {
+    $titulo = 'Decano (e)';
+} else {
+    $titulo = ''; // o algún valor por defecto si el género no está definido
+}
 
 // Definir el contenido HTML para la primera página
 $html.= '
@@ -179,7 +200,8 @@ $html.= '
         <tr>
             <td style="padding-right: 40px;font-family: \'Times New Roman\', Times, serif;"><b>A</b></td>
 			<td style="padding-right: 0px;font-family: \'Times New Roman\', Times, serif;"><b>:</b></td>
-            <td style="font-family: \'Times New Roman\', Times, serif;font-size: 12px;"><b>'.$row1['Autoridad_3'].'<br></b><b>Decano (e) de la Facultad de '.$row1['Facultad'].'</b></td>
+			
+            <td style="font-family: \'Times New Roman\', Times, serif;font-size: 12px;"><b>'.$row1['Autoridad_3'].'<br></b><b>'.$titulo.' de la Facultad de '.$row1['Facultad'].'</b></td>
         </tr>
         <tr>
             <td style="padding-right: 40px;font-family: \'Times New Roman\', Times, serif;font-size: 12px;"><b>ASUNTO</b></td>
@@ -342,8 +364,8 @@ FROM
 	autoridades
 	ON 
 		facultad.Cod_autoridad = autoridades.Cod_autoridad
-WHERE Grado_academico = '$grado' and escuela_profesional.Id_escuela='$escu' AND expediente.created_at BETWEEN '$fedes' AND '$fehas'
-ORDER BY diploma.estado, diploma.updated_at  desc";
+WHERE Grado_academico = '$grado' and escuela_profesional.Id_escuela='$escu' AND expediente.created_at BETWEEN '$fedes' AND '$fehas' AND expediente.aumento=1
+ORDER BY estudiante.Apellido_paterno  ASC";
 $resultado2 = $mysqli ->query($query2);
 $contador=0;
 
@@ -383,27 +405,68 @@ $html .= '
     <</html>';
 }
 // Crear una instancia de mPDF con márgenes de 4 cm a la izquierda y derecha
-$mpdf = new \Mpdf\Mpdf([
-    'mode' => 'utf-8',
-    'format' => 'A4', // A4 landscape
-    'margin_left' => 32, // 4 cm
-    'margin_right' => 32 // 4 cm
-]);
+try {
+    // Crear una instancia de mPDF con márgenes de 4 cm a la izquierda y derecha
+    $mpdf = new \Mpdf\Mpdf([
+        'mode' => 'utf-8',
+        'format' => 'A4',
+        'margin_left' => 32,
+        'margin_right' => 32
+    ]);
 
-// Establecer el pie de página
-$mpdf->SetHTMLFooter('
-<div class="" style="text-align:center;font-family: Arial, Helvetica, sans-serif;font-size: 8px;">
+    // Establecer el pie de página
+    $mpdf->SetHTMLFooter('
+    <div class="" style="text-align:center;font-family: Arial, Helvetica, sans-serif;font-size: 8px;">
         <p style="text-align:center;"><b>UNIVERSIDAD TECNOLÓGICA DE LOS ANDES</b></p>
         <p style="text-align:center;">Ciudad Universitaria Av Perú N° 7OO, Abancay, Central Telefónica 051 (083) 321559</p>
         <p style="text-align:center;">Filial Cusco Av Grau N° 516, Teléfono (084) 251565</p>
         <p style="text-align:center;">Filial Andahuaylas, san Jerónimo Jr. catalay N° 1OO Teléfono (083) 421752</p>
         <p style="text-align:center;">www.utea.edu.pe</p>
-
     </div>
-');
+    ');
 
-// Escribir el contenido HTML de la primera página en el PDF
-$mpdf->WriteHTML($html);
 
-// Generar el archivo PDF y mostrarlo en el navegador
-$mpdf->Output();
+    // Escribir el HTML en el PDF
+    $mpdf->WriteHTML($html);
+
+    if ($guardarPDF) {
+        // Generar nombre único para el archivo
+        $timestamp = date('Y-m-d_H-i-s');
+        $filename = "informe_{$info}_{$timestamp}.pdf";
+        
+        // Directorio para guardar los PDFs
+        $uploadDir = __DIR__ . '/../../storage/pdfs/';
+        
+        // Crear el directorio si no existe
+        if (!file_exists($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+        
+        // Ruta completa del archivo
+        $filepath = $uploadDir . $filename;
+        
+        // Guardar el PDF en el servidor
+        $mpdf->Output($filepath, 'F');
+        
+        // Devolver respuesta JSON
+        header('Content-Type: application/json');
+        echo json_encode([
+            'success' => true,
+            'filepath' => '/storage/pdfs/' . $filename,
+            'message' => 'PDF generado y guardado correctamente'
+        ]);
+    } else {
+        // Mostrar el PDF directamente en el navegador (comportamiento original)
+        $mpdf->Output();
+    }
+} catch (\Exception $e) {
+    if ($guardarPDF) {
+        header('Content-Type: application/json');
+        echo json_encode([
+            'success' => false,
+            'message' => $e->getMessage()
+        ]);
+    } else {
+        echo "Error al generar el PDF: " . $e->getMessage();
+    }
+}

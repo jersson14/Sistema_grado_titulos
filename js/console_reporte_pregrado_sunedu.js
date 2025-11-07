@@ -27,49 +27,48 @@ function listar_expedientes_pregrado_fecha(){
             }
         },
         dom: 'Bfrtip', 
-        buttons: [
-            {
-                extend: 'excelHtml5',
-                text: '<i class="fas fa-file-excel"></i> ',
-                titleAttr: 'Exportar a Excel',
-                filename: function() {
-                    return  "LISTA GENERAL DE PREGRADO";
-                },
-                exportOptions: {
-                    columns: ':hidden',
-                    rows: function ( idx, data, node ) {
-                        return idx < 1000; // Limita a 1000 filas, ajusta según necesites
-                    }
-                }
-            },
-            
-            {
-                extend: 'pdfHtml5',
-                text: '<i class="fas fa-file-pdf"></i> ',
-                titleAttr: 'Exportar a PDF',
-                orientation: 'landscape', // Exportar en formato horizontal
-                filename: function() {
-                    return  "LISTA GENERAL DE PREGRADO";
-                },
-                title: function() {
-                    return  "LISTA GENERAL DE PREGRADO";
-                },
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 9] // Especifica las columnas a exportar hasta "estado"
-                }
-            },
-            {
-                extend: 'print',
-                text: '<i class="fa fa-print"></i> ',
-                titleAttr: 'Imprimir',
-                title: function() {
-                    return  "LISTA GENERAL DE PREGRADO";
-                },
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 9] // Especifica las columnas a exportar hasta "estado"
-                }
+      buttons: [
+    {
+        extend: 'excelHtml5',
+        text: '<i class="fas fa-file-excel"></i> Excel',
+        titleAttr: 'Exportar a Excel',
+        filename: function() {
+            return "LISTA GENERAL DE PREGRADO";
+        },
+        exportOptions: {
+            columns: ':hidden',
+            rows: function (idx, data, node) {
+                return idx < 1000; // Limita a 1000 filas, ajusta según necesites
             }
-        ],
+        }
+    },
+    {
+        extend: 'pdfHtml5',
+        text: '<i class="fas fa-file-pdf"></i> PDF',
+        titleAttr: 'Exportar a PDF',
+        orientation: 'landscape', // Exportar en formato horizontal
+        filename: function() {
+            return "LISTA GENERAL DE PREGRADO";
+        },
+        title: function() {
+            return "LISTA GENERAL DE PREGRADO";
+        },
+        exportOptions: {
+            columns: [0, 1, 2, 3, 4, 5, 9] // Especifica las columnas a exportar hasta "estado"
+        }
+    },
+    {
+        extend: 'print',
+        text: '<i class="fa fa-print"></i> Imprimir',
+        titleAttr: 'Imprimir',
+        title: function() {
+            return "LISTA GENERAL DE PREGRADO";
+        },
+        exportOptions: {
+            columns: [0, 1, 2, 3, 4, 5, 9] // Especifica las columnas a exportar hasta "estado"
+        }
+    }
+],
         "columns":[
             {"data":"Diploma_numero"}, // 0
             {"data":"tipo_documento",
@@ -115,17 +114,17 @@ function listar_expedientes_pregrado_fecha(){
             }, 
             {"data":"Archivo", // 7
                 render: function(data,type,row){
-                    if(data=='controller/registro_general_posgrado/documentos/' || data==''){
-                        return "<a href=''  target='_blank'><button disabled style='font-size:13px;' type='button' class='control btn btn-danger btn-sm' title='Ver Trabajo de investigación'><i class='fas fa-file-download'></i> Expediente</button></a>";                 
+                    if(data=='controller/registro_general/documentos/' || data=='controller/registro_general_bachiller/documentos/'){
+                        return "<a href=''  target='_blank'><button disabled style='font-size:13px;' type='button' class='control btn btn-danger btn-sm' title='Ver Trabajo de investigación'><i class='fas fa-file-download'></i> Sin Expediente</button></a>";                 
                     }
                     return "<a href='../"+data+"' target='_blank'><button style='font-size:13px;' type='button' class='control btn btn-primary btn-sm' title='Ver Trabajo de investigación'><i class='fas fa-file-download'></i> Expediente</button></a>";
                 }   
             },
-            {"defaultContent":"<button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button>"}, // 8
+           {"defaultContent":"<button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button>"}, // 8
             // Añadimos las demás columnas según el orden de la consulta SQL y las ocultamos
             {"data":"emp_cod", "visible": false}, // 9
             {"data":"emp_razon", "visible": false}, // 10
-            {"data":"ESCUELA", "visible": false}, // 10
+            {"data":"FACULTAD", "visible": false}, // 10
             {"data": null, "defaultContent": "", "visible": false}, // Columna vacía
             {"data":"Apellido_paterno", "visible": false}, // 12
             {"data":"Apellido_materno", "visible": false}, // 13
@@ -136,18 +135,23 @@ function listar_expedientes_pregrado_fecha(){
             {"data":"Fecha_matricula", "visible": false}, // 15
             {"data":"Fecha_egreso", "visible": false}, // 16
             {"data":"Abreviatura_grado", "visible": false}, // 17
-            {"data":"Denominación_grado", "visible": false}, // 18
+            {"data":"ESCUELA", "visible": false}, // 18
 
-            {"data":"GRADO", "visible": false}, // 18
-            {"data": null, "defaultContent": "", "visible": false}, // Columna vacía
+                {
+                    "data": function (row) {
+                        return row.Abreviatura_grado === 'B' ? 'Bachiller en '+row.Grado_bachiller_de : 'Titulo Profesional de '+row.Titulo_de;
+                    },
+                    "visible": false
+                },            
+        {"data": null, "defaultContent": "", "visible": false}, // Columna vacía
             {"data": null, "defaultContent": "", "visible": false}, // Columna vacía
             {"data": null, "defaultContent": "", "visible": false}, // Columna vacía
             {"data": null, "defaultContent": "", "visible": false}, // Columna vacía
 
             {"data":"Programa_estudio", "visible": false}, // 19
-            {"data":"Numero_creditos", "visible": false}, // 20
+            {"data":"Nro_creditos", "visible": false}, // 20
             {"data":"Modalidad", "visible": false}, // 21
-            {"data":"Modo_estudio", "visible": false}, // 22
+            {"data":"Abreviatura_modo_estudio", "visible": false}, // 22
             {"data":"Reglamento_metadado", "visible": false}, // 23
             {"data":"Trabajo_investigacion", "visible": false}, // 23
             {"data": null, "defaultContent": "SI", "visible": false}, // Columna vacía
@@ -157,13 +161,25 @@ function listar_expedientes_pregrado_fecha(){
             {"data":"Fecha_inicio_tramite", "visible": false}, // 24
             {"data":"Turnitin", "visible": false, "visible": false}, // 25
             {"data":"Porcentaje", "visible": false, "visible": false}, // 26
-            {"data":"Centro_investigacion", "visible": false}, // 27
+            {
+                "data": function (row) {
+        return row.Abreviatura_grado === 'B' ? '' : 'CENTRO DE INVESTIGACIÓN DE LA CARRERA PROFESIONAL DE ' + row.ESCUELA.toUpperCase();
+                },
+                "visible": false
+            },
+
             {"data": null, "defaultContent": "", "visible": false}, // Columna vacía
             {"data": null, "defaultContent": "", "visible": false}, // Columna vacía
             {"data": null, "defaultContent": "", "visible": false}, // Columna vacía
             {"data": null, "defaultContent": "", "visible": false}, // Columna vacía
-            {"data":"Resolucion_numero", "visible": false}, // 28
-            {"data":"fecha_registro2", "visible": false}, // 28
+         {
+            "data": function (row) {
+                let year = new Date().getFullYear(); // Obtener el año actual
+                let resolucion = row.Resolucion_numero.toString().padStart(3, '0'); // Asegurar 3 dígitos
+                return `${resolucion} - ${year}-UTEA-CU`;
+            },
+            "visible": false
+        },            {"data":"fecha_registro2", "visible": false}, // 28
             {"data": null, "defaultContent": "", "visible": false}, // Columna vacía
             {"data": null, "defaultContent": "", "visible": false}, // Columna vacía
             {"data":"fecha_registro3", "visible": false}, // 29
@@ -173,20 +189,46 @@ function listar_expedientes_pregrado_fecha(){
             {"data":"Registro_libro", "visible": false}, // 31
             {"data":"Registro_folio", "visible": false}, // 31
             {"data":"Registro_numero", "visible": false}, // 32
-            {"data":"Cargo_auto1", "visible": false}, // 33
+             {
+                "data": function (row) {
+        return row.genero1 === 'MASCULINO' ? 'RECTOR' : 'RECTORA';
+                },
+                "visible": false
+            },
             {"data":"Autoridad_1", "visible": false}, // 34
-            {"data":"Cargo_auto2", "visible": false}, // 35
+               {
+                "data": function (row) {
+        return row.genero2 === 'MASCULINO' ? 'SECRETARIO GENERAL' : 'SECREATARIA GENERAL';
+                },
+                "visible": false
+            },
             {"data":"Autoridad_2", "visible": false}, // 36
-            {"data":"Cargo_auto3", "visible": false}, // 37
+               {
+                "data": function (row) {
+        return row.genero3 === 'MASCULINO' ? 'DECANO' : 'DECANA';
+                },
+                "visible": false
+            },
             {"data":"Autoridad_3", "visible": false}, // 38
             {"data": null, "defaultContent": "", "visible": false}, // Columna vacía
             {"data": null, "defaultContent": "", "visible": false}, // Columna vacía
             {"data": null, "defaultContent": "", "visible": false}, // Columna vacía
-            {"data":"Nro_oficio", "visible": false}, // 42
-            {"data":"Fecha_matricula_modalidad", "visible": false}, // 43
+ {
+                        "data": function (row) {
+                            return `Oficio N° ${row.Nro_oficio}`;
+                        },
+                        "visible": false
+                    },               {"data":"Fecha_matricula_modalidad", "visible": false}, // 43
             {"data":"Fecha_inicio_modalidad", "visible": false}, // 44
             {"data":"Fecha_fin_modalidad", "visible": false}, // 45
-            {"data":"Modo_sustentacion", "visible": false} // 46
+            
+             {
+                "data": function (row) {
+                    return row.Abreviatura_grado === 'B' ? '' : 'PRESENCIAL';
+                },
+                "visible": false
+            }
+    
         ],
         "language":idioma_espanol,
         select: true
@@ -199,7 +241,259 @@ function listar_expedientes_pregrado_fecha(){
         });
     });
 }
+function listar_colacion(){
+    let fechacol = document.getElementById('select_fechacola').value;
 
+    tbl_general_pregrado = $("#tabla_registro_general_pregrado").DataTable({
+        "ordering":false,   
+        "bLengthChange":true,
+        "searching": { "regex": false },
+        "lengthMenu": [ [10, 25, 50, 100, -1], [10, 25, 50, 100, "All"] ],
+        "pageLength": 10,
+        "destroy":true,
+        "pagingType": 'full_numbers',
+        "scrollCollapse": true,
+        "responsive": true,
+        "async": false ,
+        "processing": true,
+        "ajax":{
+            "url":"../controller/reportes/controlador_listar_registro_general_pregrado_colacion.php",
+            type:'POST',
+            data:{
+                fechacol:fechacol
+                 }
+        },
+        dom: 'Bfrtip', 
+             buttons: [
+    {
+        extend: 'excelHtml5',
+        text: '<i class="fas fa-file-excel"></i> Excel',
+        titleAttr: 'Exportar a Excel',
+        filename: function() {
+            return "LISTA GENERAL DE PREGRADO";
+        },
+        exportOptions: {
+            columns: ':hidden',
+            rows: function (idx, data, node) {
+                return idx < 1000; // Limita a 1000 filas, ajusta según necesites
+            }
+        }
+    },
+    {
+        extend: 'pdfHtml5',
+        text: '<i class="fas fa-file-pdf"></i> PDF',
+        titleAttr: 'Exportar a PDF',
+        orientation: 'landscape', // Exportar en formato horizontal
+        filename: function() {
+            return "LISTA GENERAL DE PREGRADO";
+        },
+        title: function() {
+            return "LISTA GENERAL DE PREGRADO";
+        },
+        exportOptions: {
+            columns: [0, 1, 2, 3, 4, 5, 9] // Especifica las columnas a exportar hasta "estado"
+        }
+    },
+    {
+        extend: 'print',
+        text: '<i class="fa fa-print"></i> Imprimir',
+        titleAttr: 'Imprimir',
+        title: function() {
+            return "LISTA GENERAL DE PREGRADO";
+        },
+        exportOptions: {
+            columns: [0, 1, 2, 3, 4, 5, 9] // Especifica las columnas a exportar hasta "estado"
+        }
+    }
+],
+        "columns":[
+            {"data":"Diploma_numero"}, // 0
+            {"data":"tipo_documento",
+                render: function(data,type,row){
+                    if(data=='DNI'){
+                        return '<span class="badge bg-success">DNI</span>';
+                    }else if(data=='PASAPORTE'){
+                        return '<span class="badge bg-primary">PASAPORTE</span>';
+                    }else{
+                        return '<span class="badge bg-warning">CARNET DE EXTRANJERIA</span>';
+                    }
+                 } 
+                },
+            {"data":"Dni"}, // 1
+            {"data":"Estudiante"}, // 2
+            {"data":"GRADO", // 3
+                render: function(data,type,row){
+                    if(data=='BACHILLER'){
+                        return '<span class="badge bg-warning">BACHILLER</span>';
+                    }else if(data=='TITULO'){
+                        return '<span class="badge bg-primary">TITULO</span>';
+                    }
+                } 
+            },
+            {"data":"FACULTAD"}, // 4
+            {"data":"ESCUELA"}, // 4
+            {"data":"ESTADO", // 5
+                render: function(data,type,row){
+                    if(data=='SIN DIPLOMA'){
+                        return '<span class="badge bg-danger">SIN DIPLOMA</span>';
+                    }else if(data=='CON DIPLOMA'){
+                        return '<span class="badge bg-success">CON DIPLOMA</span>';
+                    }
+                } 
+            },
+            {"data":"Reglamento_metadado", // 6
+                render: function (datae, type, row ) {
+                    if(datae==''){
+                        return "<a href="+datae+"  target='_blank'><button disabled style='font-size:13px;' type='button' class='control btn btn-danger btn-sm' title='Ver Trabajo de investigación'><i class='fas fa-eye'></i> Ver</button></a>";                 
+                    }
+                    return "<a href="+datae+" target='_blank'><button style='font-size:13px;' type='button' class='control btn btn-warning btn-sm' title='Ver Trabajo de investigación'><i class='fas fa-eye'></i> Ver tesis</button></a>";
+                }
+            }, 
+            {"data":"Archivo", // 7
+                render: function(data,type,row){
+                    if(data=='controller/registro_general/documentos/' || data=='controller/registro_general_bachiller/documentos/'){
+                        return "<a href=''  target='_blank'><button disabled style='font-size:13px;' type='button' class='control btn btn-danger btn-sm' title='Ver Trabajo de investigación'><i class='fas fa-file-download'></i> Sin Expediente</button></a>";                 
+                    }
+                    return "<a href='../"+data+"' target='_blank'><button style='font-size:13px;' type='button' class='control btn btn-primary btn-sm' title='Ver Trabajo de investigación'><i class='fas fa-file-download'></i> Expediente</button></a>";
+                }   
+            },
+            {"defaultContent":"<button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button>"}, // 8
+            // Añadimos las demás columnas según el orden de la consulta SQL y las ocultamos
+            {"data":"emp_cod", "visible": false}, // 9
+            {"data":"emp_razon", "visible": false}, // 10
+            {"data":"FACULTAD", "visible": false}, // 10
+            {"data": null, "defaultContent": "", "visible": false}, // Columna vacía
+            {"data":"Apellido_paterno", "visible": false}, // 12
+            {"data":"Apellido_materno", "visible": false}, // 13
+            {"data":"Nombres", "visible": false}, // 11
+            {"data":"Sexo", "visible": false}, // 14
+            {"data":"tipo_documento","visible": false}, // Columna vacía
+            {"data":"Dni", "visible": false}, // 14
+            {"data":"Fecha_matricula", "visible": false}, // 15
+            {"data":"Fecha_egreso", "visible": false}, // 16
+            {"data":"Abreviatura_grado", "visible": false}, // 17
+            {"data":"ESCUELA", "visible": false}, // 18
+            
+            {
+                    "data": function (row) {
+                        return row.Abreviatura_grado === 'B' ? 'Bachiller en '+row.Grado_bachiller_de : 'Titulo Profesional de '+row.Titulo_de;
+                    },
+                    "visible": false
+                },        
+            {"data": null, "defaultContent": "", "visible": false}, // Columna vacía
+            {"data": null, "defaultContent": "", "visible": false}, // Columna vacía
+            {"data": null, "defaultContent": "", "visible": false}, // Columna vacía
+            {"data": null, "defaultContent": "", "visible": false}, // Columna vacía
+
+            {"data":"Programa_estudio", "visible": false}, // 19
+            {"data":"Nro_creditos", "visible": false}, // 20
+            {"data":"Modalidad", "visible": false}, // 21
+            {"data":"Abreviatura_modo_estudio", "visible": false}, // 22
+            {"data":"Reglamento_metadado", "visible": false}, // 23
+            {"data":"Trabajo_investigacion", "visible": false}, // 23
+            {"data": null, "defaultContent": "SI", "visible": false}, // Columna vacía
+            {"data": null, "defaultContent": "", "visible": false}, // Columna vacía
+            {"data": null, "defaultContent": "", "visible": false}, // Columna vacía
+            {"data": null, "defaultContent": "", "visible": false}, // Columna vacía
+            {"data":"Fecha_inicio_tramite", "visible": false}, // 24
+            {"data":"Turnitin", "visible": false, "visible": false}, // 25
+            {"data":"Porcentaje", "visible": false, "visible": false}, // 26
+            {
+                "data": function (row) {
+        return row.Abreviatura_grado === 'B' ? '' : 'CENTRO DE INVESTIGACIÓN DE LA CARRERA PROFESIONAL DE ' + row.ESCUELA.toUpperCase();
+                },
+                "visible": false
+            },
+            {"data": null, "defaultContent": "", "visible": false}, // Columna vacía
+            {"data": null, "defaultContent": "", "visible": false}, // Columna vacía
+            {"data": null, "defaultContent": "", "visible": false}, // Columna vacía
+            {"data": null, "defaultContent": "", "visible": false}, // Columna vacía
+            {
+            "data": function (row) {
+                let year = new Date().getFullYear(); // Obtener el año actual
+                let resolucion = row.Resolucion_numero.toString().padStart(3, '0'); // Asegurar 3 dígitos
+                return `${resolucion} - ${year}-UTEA-CU`;
+            },
+            "visible": false
+        },
+            {"data":"fecha_registro2", "visible": false}, // 28
+            {"data": null, "defaultContent": "", "visible": false}, // Columna vacía
+            {"data": null, "defaultContent": "", "visible": false}, // Columna vacía
+            {"data":"fecha_registro3", "visible": false}, // 29
+            {"data": null, "defaultContent": "", "visible": false}, // Columna vacía
+            {"data":"Diploma_numero", "visible": false}, // 31
+            {"data":"Diploma_tipo_emitido", "visible": false}, // 31
+            {"data":"Registro_libro", "visible": false}, // 31
+            {"data":"Registro_folio", "visible": false}, // 31
+            {"data":"Registro_numero", "visible": false}, // 32
+             {
+                "data": function (row) {
+        return row.genero1 === 'MASCULINO' ? 'RECTOR' : 'RECTORA';
+                },
+                "visible": false
+            },
+            {"data":"Autoridad_1", "visible": false}, // 34
+               {
+                "data": function (row) {
+        return row.genero2 === 'MASCULINO' ? 'SECRETARIO GENERAL' : 'SECREATARIA GENERAL';
+                },
+                "visible": false
+            },
+            {"data":"Autoridad_2", "visible": false}, // 36
+               {
+                "data": function (row) {
+        return row.genero3 === 'MASCULINO' ? 'DECANO' : 'DECANA';
+                },
+                "visible": false
+            },
+            {"data":"Autoridad_3", "visible": false}, // 38
+            {"data": null, "defaultContent": "", "visible": false}, // Columna vacía
+            {"data": null, "defaultContent": "", "visible": false}, // Columna vacía
+            {"data": null, "defaultContent": "", "visible": false}, // Columna vacía
+             {
+                        "data": function (row) {
+                            return `Oficio N° ${row.Nro_oficio}`;
+                        },
+                        "visible": false
+                    },            
+                    {"data":"Fecha_matricula_modalidad", "visible": false}, // 43
+            {"data":"Fecha_inicio_modalidad", "visible": false}, // 44
+            {"data":"Fecha_fin_modalidad", "visible": false}, // 45
+     {
+                "data": function (row) {
+                    return row.Abreviatura_grado === 'B' ? '' : 'PRESENCIAL';
+                },
+                "visible": false
+            }        ],
+        "language":idioma_espanol,
+        select: true
+    });
+
+    tbl_general_pregrado.on('draw.td', function(){
+        var PageInfo = $("#tabla_registro_general_pregrado").DataTable().page.info();
+        tbl_general_pregrado.column(0, {page: 'current'}).nodes().each(function(cell, i){
+            cell.innerHTML = i + 1 + PageInfo.start;
+        });
+    });
+}
+function Cargar_Select_Colacion(){
+    $.ajax({
+      url: "../controller/registro_general/controlador_cargar_select_colacion.php",
+      type: 'POST',
+    }).done(function(resp){
+      let data = JSON.parse(resp);
+      let cadena = "<option value=''>Seleccione</option>"; // Agrega la opción "Seleccione" al inicio
+      if(data.length > 0){
+        for (let i = 0; i < data.length; i++) {
+          cadena += "<option value='" + data[i][0] + "'>" + data[i][1] + "</option>";    
+        }
+      } else {
+        cadena += "<option value=''>No hay cedes en la base de datos</option>";
+      }
+      document.getElementById('select_fechacola').innerHTML = cadena;
+    });
+  }
+  
 
 $('#tabla_registro_general_pregrado').on('click','.mostrar',function(){
   var data = tbl_general_pregrado.row($(this).parents('tr')).data();

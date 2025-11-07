@@ -39,7 +39,7 @@
                 <div class="table-responsive" style="text-align:left">
                   <div class="card-body">
                   <div class="row">
-                <div class="col-12 col-md-4" role="document">
+                <div class="col-12 col-md-3" role="document">
                     <div class="form-group">
                     <label for="txtfechainicio">Fecha Desde:</label>
                         <div class="input-group mb-2">
@@ -54,7 +54,7 @@
                     </div>
                 </div>
                 
-                <div class="col-12 col-md-4" role="document">
+                <div class="col-12 col-md-3" role="document">
                     <div class="form-group">
                     <label for="txtfechafin">Fecha Hasta:</label>
                         <div class="input-group mb-2">
@@ -68,9 +68,13 @@
                     </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-4" role="document">
+                <div class="col-12 col-md-3" role="document">
                     <label for="">&nbsp;</label><br>
-                    <button onclick="listar_fechas_busqueda()" class="btn btn-danger mr-2" style="width:100%" onclick><i class="fas fa-search mr-1"></i>Buscar Documentos</button>
+                    <button onclick="listar_fechas_busqueda()" class="btn btn-danger mr-2" style="width:100%" onclick><i class="fas fa-search mr-1"></i>Buscar expedientes</button>
+                </div>
+                <div class="col-12 col-md-3" role="document">
+                    <label for="">&nbsp;</label><br>
+                    <button onclick="listar_expedientes_posgrado()" class="btn btn-success mr-2" style="width:100%" onclick><i class="fas fa-search mr-1"></i>Buscar todos</button>
                 </div>
                 </div>
                 </div>
@@ -1260,6 +1264,10 @@
               <label for="">Posición:</label>
                 <input class="form-control" type="number" id="txt_posición" value="97">
               </div>
+              <div class="col-12 form-group">
+              <label for="">VER VIDEO TUTORIAL:</label>
+              <a href="https://drive.google.com/file/d/1YIznm_UnFm-jAM-UX2xIcQL0pS6A2IqW/view?usp=sharing" target="_blank">Ver Video</a>
+              </div>
             </div>
           </div>
           <div class="modal-footer">
@@ -1272,7 +1280,7 @@
 <script>
 
 $(document).ready(function () {
-    listar_fechas_busqueda();
+    listar_expedientes_posgrado_Alfa();
 
   $('.js-example-basic-single').select2();
         Cargar_Select_Carrera_editar();
@@ -1471,10 +1479,52 @@ var currentDateTime = y + '-' + m + '-' + d + 'T' + h + ':' + min;
 
 // Set this value to the datetime-local input
 document.getElementById('txt_fecha_reg').value = currentDateTime;
-document.getElementById('fechadesde').value = currentDateTime;
 
-document.getElementById('fechahasta').value = currentDateTime;
 
+var n = new Date();
+var y = n.getFullYear();
+var m = n.getMonth() + 1;
+var d = n.getDate();
+var h = n.getHours();
+var min = n.getMinutes();
+
+// Add leading zeros if necessary
+if (d < 10) {
+    d = '0' + d;
+}
+if (m < 10) {
+    m = '0' + m;
+}
+if (h < 10) {
+    h = '0' + h;
+}
+if (min < 10) {
+    min = '0' + min;
+}
+
+// Format the date and time
+var currentDateTime = y + '-' + m + '-' + d + 'T' + h + ':' + min;
+
+// Determine the time range and set fechadesde and fechahasta accordingly
+var fechaDesde, fechaHasta;
+
+if (h >= 8 && h < 13) {
+    // If current time is between 8 AM and 1 PM
+    fechaDesde = y + '-' + m + '-' + d + 'T07:30';
+    fechaHasta = y + '-' + m + '-' + d + 'T13:00';
+} else if (h >= 13 && h < 16) {
+    // If current time is between 1 PM and 4 PM
+    fechaDesde = y + '-' + m + '-' + d + 'T13:00';
+    fechaHasta = y + '-' + m + '-' + d + 'T16:00';
+} else {
+    // If current time is outside these ranges, default to current time
+    fechaDesde = currentDateTime;
+    fechaHasta = currentDateTime;
+}
+
+// Set the values for the input fields
+document.getElementById('fechadesde').value = fechaDesde;
+document.getElementById('fechahasta').value = fechaHasta;
 
 var input = document.getElementById("txt_dni");
   input.addEventListener("keyup", function(event) {
@@ -1540,9 +1590,10 @@ $.ajax({
         else{
             console.log(data);
           
-            document.getElementById("txt_nom").value = data.nombres
-            document.getElementById("txt_apepa").value = data.apellidoPaterno
-            document.getElementById("txt_apema").value = data.apellidoMaterno
+            document.getElementById("txt_nom").value = data.first_name
+            document.getElementById("txt_apepa").value = data.first_last_name
+            document.getElementById("txt_apema").value = data.second_last_name
+
 
          
         }

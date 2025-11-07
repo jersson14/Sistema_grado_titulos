@@ -59,6 +59,7 @@ modalidad.Abreviatura_modo_estudio,
 modalidad.Modo_estudio,
 modalidad.Id_usuario,
 modalidad.Id_expediente,
+modalidad.ciclo_tesis,
 modalidad.created_at,
 modalidad.updated_at,
 modalidad.Id_modalidad,
@@ -364,7 +365,7 @@ $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 13px;margin-left: -225
         }else if($modalidad=="CURSO &QUOT;TRABAJO DE INVESTIGACIÓN&QUOT;"){
 
             $mpdf->SetXY(0, 60.5);
-            $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 10.5px;margin-left: 585px;font-family: timesnewroman;">CURSO "TRABAJO DE INVESTIGACIÓN"</h1>');
+            $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 9px;margin-left: 585px;font-family: timesnewroman;">CURSO "TRABAJO DE INVESTIGACIÓN" (Ciclo '.$row1['ciclo_tesis'].')</h1>');
         }else{
             $mpdf->SetXY(0, 60.5);
             $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 10.5px;margin-left: 585px;font-family: timesnewroman;">' . $modalidad . '</h1>');

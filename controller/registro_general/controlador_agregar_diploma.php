@@ -27,6 +27,7 @@ $nrooficio = strtoupper(htmlspecialchars($_POST['nrooficio'], ENT_QUOTES, 'UTF-8
 $fechasecre = strtoupper(htmlspecialchars($_POST['fechasecre'], ENT_QUOTES, 'UTF-8'));
 $fechamatri = strtoupper(htmlspecialchars($_POST['fechamatri'], ENT_QUOTES, 'UTF-8'));
 $fechaegre = strtoupper(htmlspecialchars($_POST['fechaegre'], ENT_QUOTES, 'UTF-8'));
+$ciclo_inves = strtoupper(htmlspecialchars($_POST['ciclo_inves'], ENT_QUOTES, 'UTF-8'));
 
 $idusuario = strtoupper(htmlspecialchars($_POST['idusuario'], ENT_QUOTES, 'UTF-8'));
 $correo = strtoupper(htmlspecialchars($_POST['correo'], ENT_QUOTES, 'UTF-8'));
@@ -36,7 +37,7 @@ $ape = strtoupper(htmlspecialchars($_POST['ape'], ENT_QUOTES, 'UTF-8'));
 $mate = strtoupper(htmlspecialchars($_POST['mate'], ENT_QUOTES, 'UTF-8'));
 
 // Registro en la base de datos
-$consulta = $MRG->Agregar_diploma($idexpe, $id, $fechacu, $fechafirma, $numreso, $fechareso, $diplonum, $regis, $regilibro, $regisfolio, $tipodiplo, $fechainiciotra, $nrocred, $nrooficio, $fechasecre,$fechamatri,$fechaegre, $idusuario);
+$consulta = $MRG->Agregar_diploma($idexpe, $id, $fechacu, $fechafirma, $numreso, $fechareso, $diplonum, $regis, $regilibro, $regisfolio, $tipodiplo, $fechainiciotra, $nrocred, $nrooficio, $fechasecre,$fechamatri,$fechaegre,$ciclo_inves, $idusuario);
 
 header('Content-Type: application/json');
 $enable_email = false; // Cambia esto a `true` para habilitar el envío de correos

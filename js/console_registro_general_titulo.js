@@ -115,6 +115,8 @@ function listar_expedientes_titulado(){
         }
       }
       ,
+              {"data":"fecha_vali"},
+
         {"data":"estado",
             render: function(data,type,row){
                 if(data=='SIN DIPLOMA'){
@@ -279,6 +281,8 @@ function listar_expedientes_alfabetico(){
               }
             }
             ,
+                          {"data":"fecha_vali"},
+
               {"data":"estado",
                   render: function(data,type,row){
                       if(data=='SIN DIPLOMA'){
@@ -448,6 +452,8 @@ function listar_fechas_busqueda(){
               }
             }
             ,
+                          {"data":"fecha_vali"},
+
               {"data":"estado",
                   render: function(data,type,row){
                       if(data=='SIN DIPLOMA'){
@@ -612,6 +618,8 @@ function listar_colacion(){
               }
             }
             ,
+                          {"data":"fecha_vali"},
+
               {"data":"estadiplo",
                   render: function(data,type,row){
                       if(data=='SIN DIPLOMA'){

@@ -83,7 +83,7 @@ if ($consulta) {
         $mail->Port = $config['smtp_port'];
 
         // Configuración del correo
-        $mail->setFrom('jerssongrados@gradosapp.fun', 'Oficina de Grados y Títulos - Universidad Tecnológica de los Andes');
+        $mail->setFrom('uteaperu@gradosapp.fun', 'Oficina de Grados y Títulos - Universidad Tecnológica de los Andes');
         $mail->addAddress($emaper); // Correo del estudiante
         $mail->isHTML(true);
         $mail->CharSet = 'UTF-8';
@@ -91,56 +91,244 @@ if ($consulta) {
         $mail->Subject = 'Confirmación de Registro - Oficina de Grados y Títulos';
         
         // Cuerpo del mensaje con el logo de la universidad
-        $mail->Body = '
-        <html>
-        <head>
-            <meta charset="UTF-8">
-            <style>
-                .content {
-                    font-family: Arial, sans-serif;
-                    color: #333;
-                }
-                .footer {
-                    font-size: 12px;
-                    color: #888;
-                    margin-top: 20px;
-                }
+      $mail->Body = '
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    background:#f5f7fa;
+    padding:20px
+}
+.email-container{
+    max-width:600px;
+    margin:auto;
+    background:#fff;
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 4px 20px rgba(0,0,0,.08)
+}
+.header{
+    background:linear-gradient(135deg,#0065B2,#00a8ff);
+    padding:30px;
+    text-align:center
+}
+.university-logo{max-width:180px;margin-bottom:15px}
+.header-title{color:#fff;font-size:18px;font-weight:600}
+.content{padding:40px 35px;color:#333;line-height:1.7}
+.greeting{font-size:18px;font-weight:600;color:#0065B2;margin-bottom:20px}
 
-                .note {
-                    background-color: #f8f9fa;
-                    padding: 15px;
-                    border-left: 4px solid #c9b701;
-                    margin: 20px 0;
-                }
-            </style>
-        </head>
-        <body>
-            <div class="content">
-                <img src="cid:logo_universidad" alt="Logo Universidad Tecnológica de los Andes" class="university-logo"/><br><br>
-    
-                <p><b>Estimado(a) Posgraduado(a), '.$nombres.' '.$apepa.' '.$apema.'.</b></p>
-    
-                <p>Previo un cordial saludo, se comunica que su expediente se encuentra en la Oficina de Grados y Títulos para continuar con el proceso correspondiente. Usted podrá hacer seguimiento de su expediente a través del siguiente enlace:</p>
-    
-                <p><a href="https://gradosapp.fun/seguimiento_posgrado.php" target="_blank">Hacer seguimiento (Clic)</a></p>
+.main-message{
+    background:linear-gradient(135deg,#f0f9ff,#e0f2fe);
+    padding:20px;
+    border-radius:12px;
+    border-left:4px solid #0065B2;
+    font-size:15px;
+    margin-bottom:25px
+}
 
-                <p>Su expediente se encuentra en estado: <b style="color:#c9b701">PENDIENTE DE REVISIÓN</b></p>
-    
-                <div class="note">
-                    <p><strong>Nota importante:</strong> Se adjunta a este correo el tutorial en PDF en la parte final, con instrucciones detalladas de cómo realizar el seguimiento de su expediente en nuestro sistema, revíselo cuidadosamente.</p>
-                </div>
+.status-badge{
+    display:inline-block;
+    background:linear-gradient(135deg,#f59e0b,#d97706);
+    color:#fff;
+    padding:10px 22px;
+    border-radius:25px;
+    font-weight:600;
+    font-size:14px;
+    margin:15px 0
+}
 
-                <p>Le agradecemos por su paciencia y compromiso.</p>
-    
-                <p>Atentamente,<br>
-                Oficina de Grados y Títulos<br>
-                Universidad Tecnológica de los Andes</p>
-            </div>
-            <div class="footer">
-                <p>Universidad Tecnológica de los Andes | Todos los derechos reservados</p>
-            </div>
-        </body>
-        </html>';
+.divider{
+    height:1px;
+    background:linear-gradient(90deg,transparent,#e2e8f0,transparent);
+    margin:22px 0
+}
+
+/* ALERTA DATOS */
+.alert-datos{
+    background:linear-gradient(135deg,#e0f2fe,#bae6fd);
+    border-left:6px solid #0065B2;
+    padding:22px;
+    border-radius:12px;
+    margin:25px 0
+}
+.alert-datos strong{
+    color:#003f7f;
+    font-size:15px
+}
+
+/* BOTÓN */
+.cta-wrapper{text-align:center;margin:35px 0}
+.cta-button{
+    display:inline-block;
+    background:linear-gradient(135deg,#003f7f,#0065B2,#00a8ff);
+    color:#fff!important;
+    text-decoration:none;
+    padding:20px 48px;
+    border-radius:50px;
+    font-weight:800;
+    font-size:17px;
+    box-shadow:0 12px 28px rgba(0,101,178,.45);
+    border:2px solid #fff
+}
+
+.info-card{
+    background:#f8fafc;
+    padding:22px;
+    border-radius:12px;
+    margin:25px 0;
+    border:1px solid #e2e8f0
+}
+.info-card-title{
+    font-weight:600;
+    color:#0065B2;
+    margin-bottom:12px;
+    font-size:15px
+}
+
+.steps-list{list-style:none;margin-top:10px}
+.steps-list li{
+    padding:10px 0;
+    border-bottom:1px solid #e2e8f0;
+    font-size:14px;
+    color:#475569
+}
+.steps-list li:last-child{border-bottom:none}
+.steps-list li:before{
+    content:"✓";
+    color:#10b981;
+    font-weight:bold;
+    margin-right:10px
+}
+
+.contact-section{
+    background:linear-gradient(135deg,#f1f5f9,#e2e8f0);
+    padding:25px;
+    border-radius:12px;
+    margin:25px 0
+}
+.contact-title{font-weight:600;color:#0065B2;font-size:16px;margin-bottom:15px}
+.contact-item{display:flex;justify-content:space-between;padding:8px 0;font-size:14px}
+.contact-phone{color:#0065B2;font-weight:600}
+
+.signature{
+    border-top:2px solid #e2e8f0;
+    padding-top:20px;
+    margin-top:30px
+}
+.signature-name{font-weight:600;font-size:15px;color:#1e293b}
+.signature-title{font-size:14px;color:#64748b;margin-top:4px}
+
+.footer{
+    background:#1e293b;
+    color:#94a3b8;
+    text-align:center;
+    padding:25px;
+    font-size:13px
+}
+.footer-link{color:#60a5fa;text-decoration:none}
+
+@media(max-width:600px){
+    .content{padding:30px 20px}
+    .cta-button{width:100%;text-align:center}
+    .contact-item{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+
+<body>
+<div class="email-container">
+
+<!-- HEADER -->
+<div class="header">
+    <img src="cid:logo_universidad" alt="Logo UTEA" class="university-logo">
+    <p class="header-title">Universidad Tecnológica de los Andes</p>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+<p class="greeting">
+    Estimado(a) Posgraduado(a) '.$nombres.' '.$apepa.' '.$apema.',
+</p>
+
+<p style="margin-bottom:20px">
+    Reciba un cordial saludo de la Oficina de Grados y Títulos de la Universidad Tecnológica de los Andes.
+</p>
+
+<div class="main-message">
+    <strong>📋 Notificación de Expediente de Posgrado</strong>
+    <p style="margin-top:12px">
+        Su expediente de posgrado se encuentra actualmente en la <strong>Oficina de Grados y Títulos</strong>
+        para su revisión y validación académica correspondiente.
+    </p>
+</div>
+
+<div style="text-align:center">
+    <span class="status-badge">⏳ PENDIENTE DE REVISIÓN</span>
+</div>
+
+<div class="divider"></div>
+
+<div class="info-card">
+    <div class="info-card-title">🔍 Seguimiento en Línea</div>
+    <p style="font-size:14px;color:#64748b">
+        Puede consultar el estado actualizado de su expediente en el sistema de seguimiento de posgrado.
+    </p>
+</div>
+
+<!-- ALERTA DATOS -->
+<div class="alert-datos">
+    <strong>
+        ⚠️ OBLIGATORIO: Revise cuidadosamente que TODOS SUS DATOS PERSONALES
+        estén correctos en el portal de seguimiento. Cualquier observación
+        deberá realizarla antes de continuar con el proceso de colación.
+    </strong>
+</div>
+
+<!-- BOTÓN -->
+<div class="cta-wrapper">
+    <a href="https://gradosapp.fun/seguimiento_posgrado.php" class="cta-button">
+        🔍 REVISAR Y CONFIRMAR MIS DATOS DE POSGRADO
+    </a>
+</div>
+
+<div class="divider"></div>
+
+<!-- CONTACTO -->
+<div class="contact-section">
+    <div class="contact-title">📞 Consultas Posgrado</div>
+
+  <div class="contact-item">
+    <span class="contact-location">📍 Sede Abancay:</span>
+    <span class="contact-phone">970 639 067</span>
+    </div>
+       
+</div>
+
+<div class="signature">
+    <p class="signature-name">Atentamente,</p>
+    <p class="signature-title">Oficina de Grados y Títulos</p>
+    <p class="signature-title">Universidad Tecnológica de los Andes</p>
+</div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    <p><strong>Universidad Tecnológica de los Andes</strong></p>
+    <p>
+        <a href="https://www.utea.edu.pe" class="footer-link">www.utea.edu.pe</a> |
+        <a href="https://gradosapp.fun/seguimiento_posgrado.php" class="footer-link">Seguimiento Posgrado</a>
+    </p>
+    <p>© 2025</p>
+</div>
+
+</div>
+</body>
+</html>';
         
         // Adjuntar el logo como una imagen incrustada
         $mail->addEmbeddedImage('../../img/utea.png', 'logo_universidad', 'logo.png');

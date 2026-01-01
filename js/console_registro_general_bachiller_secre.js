@@ -349,6 +349,11 @@ $('#tabla_registro_general_bachiller').on('click','.mostrar',function(){
   document.getElementById('txt_rector_mas').value=data.Autoridad_1;
   document.getElementById('txt_secretario_mas').value=data.Autoridad_2;
   document.getElementById('txt_decano_mas').value=data.Autoridad_3;
+      // LENGUAS
+  document.getElementById('txt_auto_etnica_mas').value=data.DET_ETNICA;
+  document.getElementById('txt_pueblo_indigena_mas').value=data.COD_ETNIA;
+  document.getElementById('txt_lengua_indigena_mas').value=data.DET_LENGUA;
+  document.getElementById('txt_lengua_detalle_mas').value=data.COD_LENGUA;
   document.getElementById('txt_fecha_reg_mas').value=data.expe;
   document.getElementById('txt_acuerdo_mas').value=data.Acuerdo;
   document.getElementById('txt_Resolucion_mas').value=data.Resolucion_rectoral_N;
@@ -429,6 +434,11 @@ document.getElementById('txt_id_expediente').value=data.Id_expediente;
   document.getElementById('txt_rector_editar').value=data.Autoridad_1;
   document.getElementById('txt_secretario_editar').value=data.Autoridad_2;
   document.getElementById('txt_decano_editar').value=data.Autoridad_3;
+        // LENGUAS
+  document.getElementById('txt_auto_etnica_editar').value=data.DET_ETNICA;
+  document.getElementById('txt_pueblo_indigena_editar').value=data.COD_ETNIA;
+  document.getElementById('txt_lengua_indigena_editar').value=data.DET_LENGUA;
+  document.getElementById('txt_lengua_detalle_editar').value=data.COD_LENGUA;
   document.getElementById('txt_fecha_reg_editar').value=data.expe;
   document.getElementById('txt_acuerdo_editar').value=data.Acuerdo;
   document.getElementById('txt_Resolucion_editar').value=data.Resolucion_rectoral_N;
@@ -868,6 +878,12 @@ function Registrar_Bachiller(){
   let mod_sustenta = document.getElementById('select_modo_sustenta').value;
   let idusuario = document.getElementById('txtprincipalid').value;
 
+      // LENGUAS
+  let auto_etnica = document.getElementById('txt_auto_etnica').value;
+  let pueblo_indi = document.getElementById('txt_pueblo_indigena').value;
+  let lengua_indi = document.getElementById('txt_lengua_indigena').value;
+  let lengua_detalle = document.getElementById('txt_lengua_detalle').value;
+
   if (ced === '') { // Comprueba si no hay un valor seleccionado
     return Swal.fire("Mensaje de Advertencia", "Seleccione una cede en la segunda pestaña", "warning");
   }
@@ -964,6 +980,12 @@ if( nombres.length === 0 || apepa.length === 0 ||
     formData.append("fecha_fin",fecha_fin);
     formData.append("mod_sustenta",mod_sustenta);
     formData.append("idusuario",idusuario);
+
+    
+  formData.append("auto_etnica",auto_etnica);
+  formData.append("pueblo_indi",pueblo_indi);
+  formData.append("lengua_indi",lengua_indi);
+  formData.append("lengua_detalle",lengua_detalle);
 
     $.ajax({
       url:"../controller/registro_general_bachiller/controlador_registro_bachiller_secre.php",
@@ -1113,6 +1135,12 @@ function Modificar_Bachiller(){
   let fechasecre = document.getElementById('txt_fecha_secre_editar').value;
   let idusuario = document.getElementById('txtprincipalid').value;
 
+      // LENGUAS
+  let auto_etnica = document.getElementById('txt_auto_etnica_editar').value;
+  let pueblo_indi = document.getElementById('txt_pueblo_indigena_editar').value;
+  let lengua_indi = document.getElementById('txt_lengua_indigena_editar').value;
+  let lengua_detalle = document.getElementById('txt_lengua_detalle_editar').value;
+
     // if(arc.length==0){
     //   return Swal.fire("Mensaje de Advertencia","Seleccione algún tipo de documento","warning")
     // }
@@ -1212,6 +1240,12 @@ function Modificar_Bachiller(){
     formData.append("nrooficio",nrooficio);
     formData.append("fechasecre",fechasecre);
     formData.append("idusuario",idusuario);
+
+          formData.append("auto_etnica",auto_etnica);
+    formData.append("pueblo_indi",pueblo_indi);
+    formData.append("lengua_indi",lengua_indi);
+    formData.append("lengua_detalle",lengua_detalle);
+
 
 
     $.ajax({

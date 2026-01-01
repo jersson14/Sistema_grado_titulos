@@ -37,7 +37,9 @@
                       <th style="text-align:center">Nro.</th>
                       <th style="text-align:center">Colación</th>
                       <th style="text-align:center">Año</th>
-                      <th style="text-align:center">Fecha Colación</th>
+                      <th style="text-align:center">Fecha Colación - Central</th>
+                      <th style="text-align:center">Fecha Colación - Cusco</th>
+                      <th style="text-align:center">Fecha Colación - Andahuaylas</th>
                       <th style="text-align:center">Fecha Consejo Uni.</th>
                       <th style="text-align:center">Fecha Firma Cons.</th>
                       <th style="text-align:center">Fecha Resolución</th>
@@ -78,8 +80,16 @@
             <input type="text" class="form-control" id="txt_nombre_colacion" placeholder="Ingrese el nombre de la colación">
           </div>
           <div class="col-6 form-group">
-            <label for="">Fecha Colación<b style="color:red">(*)</b>:</label>
+            <label for="">Fecha Colación - Central<b style="color:red">(*)</b>:</label>
             <input type="date" class="form-control" id="txt_fecha_cola" >
+          </div>
+          <div class="col-6 form-group">
+            <label for="">Fecha Colación - Cusco<b style="color:red">(*)</b>:</label>
+            <input type="date" class="form-control" id="txt_fecha_cola_cusco" >
+          </div>
+          <div class="col-6 form-group">
+            <label for="">Fecha Colación - Andah.<b style="color:red">(*)</b>:</label>
+            <input type="date" class="form-control" id="txt_fecha_cola_andahuylas" >
           </div>
           <div class="col-6 form-group">
             <label for="">Fecha Consejo Universitario<b style="color:red">(*)</b>:</label>
@@ -127,8 +137,16 @@
             <input type="text" class="form-control" id="txt_nombre_colacion_editar" placeholder="Ingrese el nombre de la colación">
           </div>
           <div class="col-6 form-group">
-            <label for="">Fecha Colación<b style="color:red">(*)</b>:</label>
+            <label for="">Fecha Colación - Central<b style="color:red">(*)</b>:</label>
             <input type="date" class="form-control" id="txt_fecha_cola_editar" >
+          </div>
+          <div class="col-6 form-group">
+            <label for="">Fecha Colación - Cusco<b style="color:red">(*)</b>:</label>
+            <input type="date" class="form-control" id="txt_fecha_cola_cusco_editar" >
+          </div>
+          <div class="col-6 form-group">
+            <label for="">Fecha Colación - Andah.<b style="color:red">(*)</b>:</label>
+            <input type="date" class="form-control" id="txt_fecha_cola_andahuylas_editar" >
           </div>
           <div class="col-6 form-group">
             <label for="">Fecha Consejo Universitario<b style="color:red">(*)</b>:</label>
@@ -223,6 +241,9 @@ if(m<10){
 }
 
 document.getElementById('txt_fecha_cola').value = y + "-" + m + "-" + d;
+document.getElementById('txt_fecha_cola_cusco').value = y + "-" + m + "-" + d;
+document.getElementById('txt_fecha_cola_andahuylas').value = y + "-" + m + "-" + d;
+
 document.getElementById('txt_fecha_consejo').value = y + "-" + m + "-" + d;
 document.getElementById('txt_fecha_firma_con').value = y + "-" + m + "-" + d;
 document.getElementById('txt_fecha_resol').value = y + "-" + m + "-" + d;

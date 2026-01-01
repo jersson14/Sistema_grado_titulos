@@ -150,7 +150,13 @@ function listar_expedientes_pregrado_fecha(){
 
             {"data":"Programa_estudio", "visible": false}, // 19
             {"data":"Nro_creditos", "visible": false}, // 20
-            {"data":"Modalidad", "visible": false}, // 21
+            {
+                data: null, 
+                visible: false, // si deseas ocultarlo
+                render: function (data, type, row) {
+                    return row.Modalidad + " Ciclo (" + row.ciclo_tesis + ")";
+                }
+                },
             {"data":"Abreviatura_modo_estudio", "visible": false}, // 22
             {"data":"Reglamento_metadado", "visible": false}, // 23
             {"data":"Trabajo_investigacion", "visible": false}, // 23
@@ -227,7 +233,13 @@ function listar_expedientes_pregrado_fecha(){
                     return row.Abreviatura_grado === 'B' ? '' : 'PRESENCIAL';
                 },
                 "visible": false
-            }
+            },
+            // LENGUA OCULTA EXTRA
+            {"data":"DET_ETNICA", "visible": false}, // 45
+            {"data":"COD_ETNIA", "visible": false}, // 45
+            {"data":"DET_LENGUA", "visible": false}, // 45
+            {"data":"COD_LENGUA", "visible": false}, // 45
+
     
         ],
         "language":idioma_espanol,
@@ -387,7 +399,13 @@ function listar_colacion(){
 
             {"data":"Programa_estudio", "visible": false}, // 19
             {"data":"Nro_creditos", "visible": false}, // 20
-            {"data":"Modalidad", "visible": false}, // 21
+            {
+                data: null, 
+                visible: false, // si deseas ocultarlo
+                render: function (data, type, row) {
+                    return row.Modalidad + " Ciclo (" + row.ciclo_tesis + ")";
+                }
+                },
             {"data":"Abreviatura_modo_estudio", "visible": false}, // 22
             {"data":"Reglamento_metadado", "visible": false}, // 23
             {"data":"Trabajo_investigacion", "visible": false}, // 23
@@ -464,7 +482,13 @@ function listar_colacion(){
                     return row.Abreviatura_grado === 'B' ? '' : 'PRESENCIAL';
                 },
                 "visible": false
-            }        ],
+            },
+                    // LENGUA OCULTA EXTRA
+            {"data":"DET_ETNICA", "visible": false}, // 46
+            {"data":"COD_ETNIA", "visible": false}, // 47
+            {"data":"DET_LENGUA", "visible": false}, // 48
+            {"data":"COD_LENGUA", "visible": false}, // 49
+        ],
         "language":idioma_espanol,
         select: true
     });

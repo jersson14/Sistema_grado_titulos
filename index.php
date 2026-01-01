@@ -21,8 +21,8 @@
 
   <title>Portal Académico UTEA - Acceso</title>
 
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Google Font: Poppins -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="plantilla/plugins/fontawesome-free/css/all.min.css">
   <!-- icheck bootstrap -->
@@ -31,155 +31,446 @@
   <link rel="stylesheet" href="plantilla/dist/css/adminlte.min.css">
   <link rel="icon" href="https://i0.wp.com/utea.edu.pe/wp-content/uploads/2021/12/logo-utea2022.png?w=485&ssl=1" type="image/jpg">
   
-  <style>
-    /* Estilos mejorados con esquinas redondeadas solo para la tarjeta */
-    .card {
-      border-radius: 20px !important;
+<style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-image: url('img/sede.jpg');
+      background-size: 100% 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      position: relative;
       overflow: hidden;
-      border: none;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     }
     
-    .login-card-body {
-      border-radius: 20px !important;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-      padding-bottom: 30px;
+    /* Overlay con el mismo color del sidebar #024383 */ body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(2, 67, 131, 0.45) 0%, rgba(1, 42, 82, 0.55) 100%);
+      z-index: 0;
+      backdrop-filter: blur(1px);
     }
     
-    .title-banner {
-      background: linear-gradient(45deg, #005bea, #00c6fb);
+    /* Capa adicional de brillo sutil */
+    body::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(79, 195, 247, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(2, 67, 131, 0.20) 0%, transparent 50%);
+      animation: float 8s ease-in-out infinite;
+      z-index: 0;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(30px, -30px) scale(1.1); }
+    }
+    
+    .login-wrapper {
+      display: flex;
+      width: 900px;
+      max-width: 95%;
+      background: white;
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+      position: relative;
+      z-index: 1;
+      animation: slideIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+    
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: scale(0.8) translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+    
+    /* Left side con los mismos colores del sidebar */
+    .left-side {
+      flex: 1;
+      background: linear-gradient(135deg, #024383 0%, #012a52 100%);
+      padding: 60px 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       color: white;
-      padding: 15px;
-      margin: -10px -10px 20px -10px;
-      border-radius: 20px 20px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .left-side::before {
+      content: '';
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: rgba(79, 195, 247, 0.15);
+      border-radius: 50%;
+      top: -100px;
+      left: -100px;
+      animation: pulse 4s ease-in-out infinite;
+    }
+    
+    .left-side::after {
+      content: '';
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: rgba(79, 195, 247, 0.15);
+      border-radius: 50%;
+      bottom: -50px;
+      right: -50px;
+      animation: pulse 3s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.3; }
+      50% { transform: scale(1.2); opacity: 0.5; }
+    }
+    
+    .left-content {
+      position: relative;
+      z-index: 2;
       text-align: center;
-      font-weight: bold;
-      font-size: 22px;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
     }
     
-    .btn-primary {
-      background-color: #005bea;
-      border-color: #005bea;
-      transition: all 0.3s;
-      /* Mantenemos el botón con bordes normales */
+    .left-side h1 {
+      font-size: 42px;
+      font-weight: 800;
+      margin-bottom: 20px;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
     
-    .btn-primary:hover {
-      background-color: #0046b5;
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0, 91, 234, 0.3);
+    .left-side .subtitle {
+      font-size: 18px;
+      font-weight: 300;
+      margin-bottom: 40px;
+      opacity: 0.95;
     }
     
-    .input-group-text {
-      background-color: #f8f9fa;
+    .illustration {
+      width: 100%;
+      max-width: 300px;
+      margin-top: 30px;
     }
     
-    .toggle-password-button {
+    .illustration i {
+      font-size: 180px;
+      opacity: 0.2;
+      animation: rotate 20s linear infinite;
+    }
+    
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    .right-side {
+      flex: 1;
+      padding: 60px 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    .logo-section {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .logo-section img {
+      max-width: 280px;
+      height: auto;
+      margin-bottom: 20px;
+    }
+    
+    .welcome-text {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    .welcome-text h2 {
+      font-size: 32px;
+      font-weight: 700;
+      color: #024383;
+      margin-bottom: 10px;
+    }
+    
+    .welcome-text p {
+      font-size: 15px;
+      color: #718096;
+    }
+    
+    .form-group {
+      margin-bottom: 25px;
+      position: relative;
+    }
+    
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 10px;
+    }
+    
+    .input-container {
+      position: relative;
+    }
+    
+    .input-container input {
+      width: 100%;
+      padding: 15px 20px 15px 50px;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 15px;
+      transition: all 0.3s ease;
+      background: #f7fafc;
+    }
+    
+    .input-container input:focus {
+      outline: none;
+      border-color: #024383;
+      background: white;
+      box-shadow: 0 0 0 4px rgba(2, 67, 131, 0.1);
+    }
+    
+    .input-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #a0aec0;
+      font-size: 18px;
+      transition: color 0.3s;
+    }
+    
+    .input-container input:focus ~ .input-icon {
+      color: #024383;
+    }
+    
+    .toggle-password {
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
       background: none;
       border: none;
-      padding: 0;
+      color: #a0aec0;
       cursor: pointer;
-      color: #6c757d;
+      padding: 5px;
+      transition: color 0.3s;
     }
     
-    /* Quitamos los estilos personalizados de border-radius para los form-control */
-    .form-control:focus {
-      border-color: #005bea;
-      box-shadow: 0 0 0 0.2rem rgba(0, 91, 234, 0.25);
+    .toggle-password:hover {
+      color: #024383;
     }
     
-    .logo-container {
+    .form-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    
+    .remember-me {
+      display: flex;
+      align-items: center;
+    }
+    
+    .remember-me input {
+      margin-right: 8px;
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: #024383;
+    }
+    
+    .remember-me label {
+      font-size: 14px;
+      color: #4a5568;
+      cursor: pointer;
+      margin: 0;
+    }
+    
+    /* Botón con los mismos colores del sidebar */
+    .btn-login {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #024383 0%, #012a52 100%);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 20px rgba(2, 67, 131, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn-login::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(79, 195, 247, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+    
+    .btn-login:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+    
+    .btn-login:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(2, 67, 131, 0.5);
+    }
+    
+    .btn-login:active {
+      transform: translateY(0);
+    }
+    
+    .btn-content {
+      position: relative;
+      z-index: 1;
+    }
+    
+    .footer-text {
       text-align: center;
-      margin-bottom: 15px;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #e2e8f0;
+      font-size: 13px;
+      color: #a0aec0;
     }
     
-    .login-box {
-      margin-top: -30px;
-    }
-    
-    /* Animación suave al cargar la página */
-    .card {
-      animation: fadeIn 0.8s ease;
-    }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    /* Responsive */
+    @media (max-width: 768px) {
+      .login-wrapper {
+        flex-direction: column;
+        width: 90%;
+      }
+      
+      .left-side {
+        padding: 40px 30px;
+      }
+      
+      .left-side h1 {
+        font-size: 32px;
+      }
+      
+      .left-side .subtitle {
+        font-size: 16px;
+      }
+      
+      .illustration i {
+        font-size: 120px;
+      }
+      
+      .right-side {
+        padding: 40px 30px;
+      }
+      
+      .welcome-text h2 {
+        font-size: 26px;
+      }
     }
   </style>
 </head>
-<body class="hold-transition login-page" style="background-image: url('img/img1.jpg'); background-size: cover; background-position: center;">
-<div class="login-box">
-  <form id="loginForm" method="POST" onsubmit="return false;">
-    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
-        
-    <!-- /.login-logo -->
-    <div class="card">
-      <div class="card-body login-card-body">
-        <div class="title-banner">
-          <i class="fas fa-user-graduate mr-2"></i>GRADOS Y TÍTULOS - UTEA
-        </div>
-        
-        <div class="logo-container">
-          <img src="img/utea.png" alt="UTEA Logo" width="280" height="auto">
-        </div>
-        
-        <p class="text-center mb-4" style="font-size:20px; color:#555;">
-          <b>Accede a tu cuenta</b>
-        </p>
-        
-        <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="Usuario o correo electrónico" id="txt_usuario">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-user"></span>
-            </div>
-          </div>
-        </div>
-        
-        <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Contraseña" id="txt_contra">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <button type="button" class="toggle-password-button" id="togglePassword" title="Mostrar/Ocultar contraseña">
-                <i class="fas fa-eye" id="toggleIcon"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-        
-        <div class="row mb-3">
-          <div class="col-7">
-            <div class="icheck-primary">
-              <input type="checkbox" id="remember">
-              <label for="remember">
-                Recuerdarme
-              </label>
-            </div>
-          </div>
-
-        </div>
-        
-        <div class="row">
-          <div class="col-12">
-            <button class="btn btn-primary btn-block py-2" id="entrar" type="button" onclick="Iniciar_Sesion()">
-              <i class="fas fa-sign-in-alt mr-2"></i><b>INGRESAR</b>
-            </button>
-          </div>
-        </div>
-      </form>
-      
-    
-      
-      <div class="text-center mt-3">
-        <p class="text-muted">© <?php echo date('Y'); ?> Universidad Tecnológica de los Andes</p>
+<body>
+<div class="login-wrapper">
+  <!-- Left Side - Branding -->
+  <div class="left-side">
+    <div class="left-content">
+      <h1>UTEA</h1>
+      <p class="subtitle">Sistema de Grados y Títulos</p>
+      <div class="illustration">
+        <i class="fas fa-graduation-cap"></i>
       </div>
     </div>
-    <!-- /.login-card-body -->
+  </div>
+  
+  <!-- Right Side - Login Form -->
+  <div class="right-side">
+    <div class="logo-section">
+      <img src="img/utea.png" alt="UTEA Logo">
+    </div>
+    
+    <div class="welcome-text">
+      <h2>Bienvenido</h2>
+      <p>Ingresa tus credenciales para acceder</p>
+    </div>
+    
+    <form id="loginForm" method="POST" onsubmit="return false;">
+      <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+      
+      <div class="form-group">
+        <label>Usuario o Correo Electrónico</label>
+        <div class="input-container">
+          <input type="text" id="txt_usuario" placeholder="Ingresa tu usuario">
+          <i class="fas fa-user input-icon"></i>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>Contraseña</label>
+        <div class="input-container">
+          <input type="password" id="txt_contra" placeholder="Ingresa tu contraseña">
+          <i class="fas fa-lock input-icon"></i>
+          <button type="button" class="toggle-password" id="togglePassword">
+            <i class="fas fa-eye" id="toggleIcon"></i>
+          </button>
+        </div>
+      </div>
+      
+      <div class="form-options">
+        <div class="remember-me">
+          <input type="checkbox" id="remember">
+          <label for="remember">Recuérdame</label>
+        </div>
+      </div>
+      
+      <button type="button" class="btn-login" id="entrar" onclick="Iniciar_Sesion()">
+        <span class="btn-content">
+          <i class="fas fa-sign-in-alt"></i> INGRESAR
+        </span>
+      </button>
+      
+      <div class="footer-text">
+        © <?php echo date('Y'); ?> Universidad Tecnológica de los Andes
+      </div>
+    </form>
   </div>
 </div>
-<!-- /.login-box -->
 
 <!-- jQuery -->
 <script src="plantilla/plugins/jquery/jquery.min.js"></script>

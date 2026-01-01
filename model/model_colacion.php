@@ -17,33 +17,37 @@
             return $arreglo;
             conexionBD::cerrar_conexion();
         }
-        public function Registrar_Colacion($cola,$fecha_cola,$fecha_conse,$fecha_firma,$fecha_resol,$oficio){
+        public function Registrar_Colacion($cola,$fecha_cola,$fecha_cola_cusco,$fecha_cola_andahuylas,$fecha_conse,$fecha_firma,$fecha_resol,$oficio){
             $c = conexionBD::conexionPDO();
-            $sql = "CALL SP_REGISTRAR_COLACION(?,?,?,?,?,?)";
+            $sql = "CALL SP_REGISTRAR_COLACION(?,?,?,?,?,?,?,?)";
             $query  = $c->prepare($sql);
             $query ->bindParam(1,$cola);
             $query ->bindParam(2,$fecha_cola);
-            $query ->bindParam(3,$fecha_conse);
-            $query ->bindParam(4,$fecha_firma);
-            $query ->bindParam(5,$fecha_resol);
-            $query ->bindParam(6,$oficio);
+            $query ->bindParam(3,$fecha_cola_cusco);
+            $query ->bindParam(4,$fecha_cola_andahuylas);
+            $query ->bindParam(5,$fecha_conse);
+            $query ->bindParam(6,$fecha_firma);
+            $query ->bindParam(7,$fecha_resol);
+            $query ->bindParam(8,$oficio);
             $resultado = $query->execute();
             if($row = $query->fetchColumn()){
                 return $row;
             }
             conexionBD::cerrar_conexion();
         }
-        public function Modificar_Colacion($id,$cola,$fecha_cola,$fecha_conse,$fecha_firma,$fecha_resol,$oficio){
+        public function Modificar_Colacion($id,$cola,$fecha_cola,$fecha_cola_cusco,$fecha_cola_andahuylas,$fecha_conse,$fecha_firma,$fecha_resol,$oficio){
             $c = conexionBD::conexionPDO();
-            $sql = "CALL SP_MODIFICAR_COLACION(?,?,?,?,?,?,?)";
+            $sql = "CALL SP_MODIFICAR_COLACION(?,?,?,?,?,?,?,?,?)";
             $query  = $c->prepare($sql);
             $query ->bindParam(1,$id);
             $query ->bindParam(2,$cola);
             $query ->bindParam(3,$fecha_cola);
-            $query ->bindParam(4,$fecha_conse);
-            $query ->bindParam(5,$fecha_firma);
-            $query ->bindParam(6,$fecha_resol);
-            $query ->bindParam(7,$oficio);
+            $query ->bindParam(4,$fecha_cola_cusco);
+            $query ->bindParam(5,$fecha_cola_andahuylas);
+            $query ->bindParam(6,$fecha_conse);
+            $query ->bindParam(7,$fecha_firma);
+            $query ->bindParam(8,$fecha_resol);
+            $query ->bindParam(9,$oficio);
             $resultado = $query->execute();
             if($row = $query->fetchColumn()){
                 return $row;

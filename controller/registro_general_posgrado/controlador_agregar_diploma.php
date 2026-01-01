@@ -34,7 +34,7 @@
 
     if ($consulta) {
         try {
-            $mail = new PHPMailer(false);
+            $mail = new PHPMailer(true);
     
             // Configuración del servidor SMTP
             $mail->isSMTP();
@@ -48,7 +48,7 @@
             $mail->Port = $config['smtp_port'];
     
             // Configuración del correo
-            $mail->setFrom('jerssongrados@gradosapp.fun', 'Oficina de Grados y Títulos - Universidad Tecnológica de los Andes');
+            $mail->setFrom('uteaperu@gradosapp.fun', 'Oficina de Grados y Títulos - Universidad Tecnológica de los Andes');
             $mail->addAddress($correo);
             $mail->isHTML(true);
             $mail->CharSet = 'UTF-8';
@@ -67,51 +67,228 @@
             $fecha_formateada = formatearFechaCompleta($fechacol);
     
             // Cuerpo del mensaje
-            $mail->Body = '
-            <html>
-            <head>
-                <meta charset="UTF-8">
-                <style>
-                    .content {
-                        font-family: Arial, sans-serif;
-                        color: #333;
-                    }
-                    .footer {
-                        font-size: 12px;
-                        color: #888;
-                        margin-top: 20px;
-                    }
-                        .note {
-                        background-color: #f8f9fa;
-                        padding: 15px;
-                        border-left: 4px solid #c9b701;
-                        margin: 20px 0;
-                    }
-                </style>
-            </head>
-            <body>
-                <div class="content">
-                    <img src="cid:logo_universidad" alt="Logo Universidad Tecnológica de los Andes"/><br><br>
-                    <p><b>Estimado(a) Posgraduado(a), '.$nom.' '.$ape.' '.$mate.'.</b></p>
-                    <p>Su diploma ha sido registrado exitosamente en el sistema de GRADOS Y TITULOS. Puede hacerle seguimiento en el siguiente enlace:</p>
-                    <p><a href="https://gradosapp.fun/seguimiento_posgrado.php" target="_blank">Hacer seguimiento (Clic)</a></p>
-                    <p>Su expediente se encuentra en estado: <b style="color:#0eb34a">LISTO PARA COLACIÓN</b></p>
-                    <p><b style="color:#0eb34a">FECHA DE COLACIÓN: '.$fecha_formateada.'</b></p>
-    
-                     <p><b style="color:#0eb34a">LA HORA SE LE INDICARA EN LA PUBLICACIÓN OFICIAL EN LA PAGINA DE FACEBOOK</b></p>
-                    <div class="note">
-                        <p><strong>Nota importante:</strong> La lista de colación saldrá en la página de Facebook de la Universidad puede visitarlo en el siguiente enlace: https://www.facebook.com/Utea.Abancay.</p>
-                    </div>
-                    <div class="note">
-                        <p><strong>Nota importante:</strong> Se adjunta a este correo el tutorial en PDF en la parte final, con instrucciones detalladas de cómo realizar el seguimiento de su expediente en nuestro sistema, revíselo cuidadosamente.</p>
-                    </div>
-                    <p>Gracias por utilizar nuestros servicios.</p>
-                </div>
-                <div class="footer">
-                    <p>Universidad Tecnológica de los Andes | Todos los derechos reservados</p>
-                </div>
-            </body>
-            </html>';
+           $mail->Body = '
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    background:#f5f7fa;
+    padding:20px
+}
+.email-container{
+    max-width:560px;
+    margin:auto;
+    background:#fff;
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 4px 20px rgba(0,0,0,.08)
+}
+.header{
+    background:linear-gradient(135deg,#f59e0b,#d97706);
+    padding:30px;
+    text-align:center
+}
+.university-logo{max-width:160px;margin-bottom:10px}
+.header-title{color:#fff;font-size:17px;font-weight:600}
+.header-subtitle{color:rgba(255,255,255,.9);font-size:13px}
+.content{padding:35px 30px;color:#333;line-height:1.7}
+.greeting{font-size:16px;font-weight:600;color:#f59e0b;margin-bottom:18px}
+.celebration-card{
+    background:linear-gradient(135deg,#fef3c7,#fde68a);
+    padding:22px;
+    border-radius:12px;
+    text-align:center;
+    border:2px solid #f59e0b;
+    margin-bottom:20px
+}
+.celebration-icon{font-size:36px}
+.celebration-title{font-size:20px;font-weight:700;color:#92400e}
+.celebration-text{font-size:13px;color:#78350f}
+.status-badge{
+    display:inline-block;
+    background:linear-gradient(135deg,#10b981,#059669);
+    color:#fff;
+    padding:10px 22px;
+    border-radius:25px;
+    font-size:13px;
+    font-weight:600;
+    margin-bottom:20px
+}
+.divider{
+    height:1px;
+    background:linear-gradient(90deg,transparent,#e2e8f0,transparent);
+    margin:20px 0
+}
+.main-message{
+    background:linear-gradient(135deg,#fffbeb,#fef3c7);
+    padding:18px;
+    border-radius:10px;
+    border-left:4px solid #f59e0b;
+    font-size:14px;
+    margin-bottom:20px
+}
+.alert-box{
+    background:linear-gradient(135deg,#fef3c7,#fde68a);
+    border-left:4px solid #f59e0b;
+    padding:18px;
+    border-radius:10px;
+    margin-bottom:20px
+}
+.alert-title{font-weight:600;color:#92400e;font-size:14px}
+.alert-text{font-size:13px;color:#78350f;margin-top:8px}
+.cta-buttons{
+    display:flex;
+    gap:12px;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-bottom:25px
+}
+.cta-button{
+    color:#fff!important;
+    text-decoration:none;
+    padding:12px 24px;
+    border-radius:50px;
+    font-size:13px;
+    font-weight:600;
+    min-width:170px;
+    text-align:center
+}
+.cta-button-primary{
+    background:linear-gradient(135deg,#f59e0b,#d97706)
+}
+.cta-button-secondary{
+    background:linear-gradient(135deg,#0ea5e9,#0284c7)
+}
+.contact-section{
+    background:#f8fafc;
+    padding:20px;
+    border-radius:10px;
+    margin-bottom:20px
+}
+.contact-title{
+    font-weight:600;
+    color:#f59e0b;
+    margin-bottom:12px;
+    font-size:14px
+}
+.contact-item{
+    display:flex;
+    justify-content:space-between;
+    font-size:13px;
+    padding:6px 0
+}
+.contact-phone{color:#f59e0b;font-weight:600}
+.signature{
+    border-top:2px solid #e2e8f0;
+    padding-top:18px;
+    font-size:13px
+}
+.footer{
+    background:#1e293b;
+    color:#94a3b8;
+    text-align:center;
+    padding:20px;
+    font-size:12px
+}
+.footer-link{color:#60a5fa;text-decoration:none}
+@media(max-width:600px){
+    .content{padding:25px 20px}
+    .cta-buttons{flex-direction:column}
+}
+</style>
+</head>
+
+<body>
+<div class="email-container">
+
+<!-- HEADER -->
+<div class="header">
+    <img src="cid:logo_universidad" class="university-logo" alt="UTEA">
+    <p class="header-title">Universidad Tecnológica de los Andes</p>
+    <p class="header-subtitle">Ceremonia de Colación de Grados</p>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+<p class="greeting">Estimado(a) '.$nom.' '.$ape.' '.$mate.',</p>
+
+<div class="celebration-card">
+    <div class="celebration-icon">🎉🎓✨</div>
+    <div class="celebration-title">¡Felicitaciones!</div>
+    <div class="celebration-text">
+        Su diploma se encuentra en proceso para la ceremonia de colación
+    </div>
+</div>
+
+<div style="text-align:center">
+    <span class="status-badge">✓ LISTO PARA COLACIÓN</span>
+</div>
+
+<div class="divider"></div>
+
+<div class="main-message">
+    <strong>📋 Notificación Importante</strong>
+    <p>
+        Su diploma está siendo elaborado y será entregado durante la próxima
+        ceremonia de colación, culminando su formación académica.
+    </p>
+</div>
+
+<div class="alert-box">
+    <div class="alert-title">📅 Fecha y Hora</div>
+    <div class="alert-text">
+        La fecha y hora oficial serán publicadas en la página de Facebook de la UTEA.
+    </div>
+</div>
+
+<div class="cta-buttons">
+    <a href="https://www.facebook.com/Utea.Abancay" class="cta-button cta-button-primary">
+        📱 Facebook UTEA
+    </a>
+    <a href="https://gradosapp.fun/seguimiento_posgrado.php" class="cta-button cta-button-secondary">
+        🔍 Seguimiento
+    </a>
+</div>
+
+<div class="contact-section">
+    <div class="contact-title">📞 Consultas</div>
+    <div class="contact-item">
+        <span>📍 Abancay</span><span class="contact-phone">970 639 067</span>
+    </div>
+    <div class="contact-item">
+        <span>📍 Andahuaylas</span><span class="contact-phone">957 306 881</span>
+    </div>
+    <div class="contact-item">
+        <span>📍 Cusco</span><span class="contact-phone">970 639 067</span>
+    </div>
+</div>
+
+<div class="signature">
+    <strong>Oficina de Grados y Títulos</strong><br>
+    Universidad Tecnológica de los Andes
+</div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    <p><strong>Universidad Tecnológica de los Andes</strong></p>
+    <p>Formando profesionales de excelencia</p>
+    <p>
+        <a href="https://www.utea.edu.pe" class="footer-link">www.utea.edu.pe</a> |
+        <a href="https://www.facebook.com/Utea.Abancay" class="footer-link">Facebook</a>
+    </p>
+    <p>© 2025</p>
+</div>
+
+</div>
+</body>
+</html>';
             $mail->addEmbeddedImage('../../img/utea.png', 'logo_universidad', 'logo.png');
     
             // Adjuntar PDF

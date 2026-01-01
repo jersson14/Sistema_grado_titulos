@@ -65,9 +65,14 @@
     $nrocre = strtoupper(htmlspecialchars($_POST['nrocre'],ENT_QUOTES,'UTF-8'));
     $nrooficio = strtoupper(htmlspecialchars($_POST['nrooficio'],ENT_QUOTES,'UTF-8'));
     $fechasecre = strtoupper(htmlspecialchars($_POST['fechasecre'],ENT_QUOTES,'UTF-8'));
-    $ciclo_tra = strtoupper(htmlspecialchars($_POST['ciclo_tra'],ENT_QUOTES,'UTF-8'));
 
     $idusuario = strtoupper(htmlspecialchars($_POST['idusuario'],ENT_QUOTES,'UTF-8'));
+
+    $auto_etnica = strtoupper(htmlspecialchars($_POST['auto_etnica'],ENT_QUOTES,'UTF-8'));
+    $pueblo_indi = strtoupper(htmlspecialchars($_POST['pueblo_indi'],ENT_QUOTES,'UTF-8'));
+    $lengua_indi = strtoupper(htmlspecialchars($_POST['lengua_indi'],ENT_QUOTES,'UTF-8'));
+    $lengua_detalle = strtoupper(htmlspecialchars($_POST['lengua_detalle'],ENT_QUOTES,'UTF-8'));
+
 
     if (empty($nombrearchivo)) {
         $ruta = $archivoactual;
@@ -88,7 +93,7 @@
     }
     
 
-    $consulta = $MRGB->Modificar_Bachiller($dni,$nombres,$apepa,$apema,$codigo,$sexo,$celular,$direc,$emaper,$emainsti,$fecha_matr,$fecha_egre,$observa,$idexpe,$ced,$esc,$bach,$moda,$idauto,$fecha,$acu,$res,$exped,$lib,$fol,$reg,$ruta,$idmoda,$mod_estu,$tra_inv,$turn,$porc,$cent,$meta,$proce_bach,$proce_insti,$proce_titu,$fecha_matri,$fecha_inici,$fecha_fin,$mod_sustenta,$iddiploma,$fechacu,$fechafirma,$resol,$fechareso,$numdiplo,$numregis,$libroregi,$regisfolio,$tipodiplo,$fechaini,$nrocre,$nrooficio,$fechasecre,$ciclo_tra,$idusuario);
+    $consulta = $MRGB->Modificar_Bachiller($dni,$nombres,$apepa,$apema,$codigo,$sexo,$celular,$direc,$emaper,$emainsti,$fecha_matr,$fecha_egre,$observa,$idexpe,$ced,$esc,$bach,$moda,$idauto,$fecha,$acu,$res,$exped,$lib,$fol,$reg,$ruta,$idmoda,$mod_estu,$tra_inv,$turn,$porc,$cent,$meta,$proce_bach,$proce_insti,$proce_titu,$fecha_matri,$fecha_inici,$fecha_fin,$mod_sustenta,$iddiploma,$fechacu,$fechafirma,$resol,$fechareso,$numdiplo,$numregis,$libroregi,$regisfolio,$tipodiplo,$fechaini,$nrocre,$nrooficio,$fechasecre,$ciclo_tra,$idusuario, $auto_etnica, $pueblo_indi, $lengua_indi, $lengua_detalle);
     echo $consulta;
     
 ?>

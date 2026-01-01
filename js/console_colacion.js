@@ -64,6 +64,8 @@ function listar_colacion() {
             { "data": "nombre_colacion" },
             { "data": "año" },
             { "data": "fechacolacion" },
+            { "data": "fechacusco" },
+            { "data": "fechaandahuaylas" },
             { "data": "fechaconsejouni" },
             { "data": "fechafirmaconsejo" },
             { "data": "fecharesolucion" },
@@ -83,9 +85,9 @@ function listar_colacion() {
                 "data": "estado",
                 render: function(data, type, row) {
                     if (data == 'VIGENTE') {
-                        return "<button class='editar btn btn-primary  btn-sm' title='Editar datos de especialidad'><i class='fa fa-edit'></i> Editar</button>&nbsp;&nbsp; <button class='imprimir btn btn-warning  btn-sm' title='Imprimir Colación'><i class='fa fa-print'></i> Imprimir colación</button>";
+                        return "<button class='editar btn btn-primary  btn-sm' title='Editar datos de especialidad'><i class='fa fa-edit'></i> Editar</button>&nbsp;&nbsp; <button class='imprimir btn btn-warning  btn-sm' hidden title='Imprimir Colación'><i class='fa fa-print'></i> Imprimir colación</button>";
                     } else {
-                        return "<button hidden class='editar btn btn-primary  btn-sm' title='Editar datos de especialidad'><i class='fa fa-edit'></i> Editar</button>&nbsp;&nbsp; <button class='imprimir btn btn-warning  btn-sm' title='Imprimir Colación'><i class='fa fa-print'></i> Imprimir colación</button>";
+                        return "<button hidden class='editar btn btn-primary  btn-sm' title='Editar datos de especialidad'><i class='fa fa-edit'></i> Editar</button>&nbsp;&nbsp; <button class='imprimir btn btn-warning  btn-sm' hidden title='Imprimir Colación'><i class='fa fa-print'></i> Imprimir colación</button>";
                     }
                 }
             },
@@ -128,6 +130,8 @@ $('#tabla_colacion').on('click', '.editar', function() {
     document.getElementById('txt_id_colacion').value = data.id_colacion;
     document.getElementById('txt_nombre_colacion_editar').value = data.nombre_colacion;
     document.getElementById('txt_fecha_cola_editar').value = data.fecha_colación;
+    document.getElementById('txt_fecha_cola_cusco_editar').value = data.fecha_cusco;
+    document.getElementById('txt_fecha_cola_andahuylas_editar').value = data.fecha_andahuaylas;
     document.getElementById('txt_fecha_consejo_editar').value = data.fecha_consejo_uni;
     document.getElementById('txt_fecha_firma_con_editar').value = data.fecha_firma_consejo;
     document.getElementById('txt_fecha_resol_editar').value = data.fecha_resolucion;
@@ -145,6 +149,8 @@ function AbrirRegistro(){
 function Registrar_colacion(){
   let cola = document.getElementById('txt_nombre_colacion').value;
   let fecha_cola = document.getElementById('txt_fecha_cola').value;
+  let fecha_cola_cusco = document.getElementById('txt_fecha_cola_cusco').value;
+  let fecha_cola_andahuylas = document.getElementById('txt_fecha_cola_andahuylas').value;
   let fecha_conse = document.getElementById('txt_fecha_consejo').value;
   let fecha_firma = document.getElementById('txt_fecha_firma_con').value;
   let fecha_resol = document.getElementById('txt_fecha_resol').value;
@@ -160,6 +166,8 @@ function Registrar_colacion(){
     data:{
         cola:cola,
         fecha_cola:fecha_cola,
+        fecha_cola_cusco:fecha_cola_cusco,
+        fecha_cola_andahuylas:fecha_cola_andahuylas,
         fecha_conse:fecha_conse,
         fecha_firma:fecha_firma,
         fecha_resol:fecha_resol,
@@ -189,6 +197,8 @@ function Modificar_Colacion(){
     let id = document.getElementById('txt_id_colacion').value;
     let cola = document.getElementById('txt_nombre_colacion_editar').value;
     let fecha_cola = document.getElementById('txt_fecha_cola_editar').value;
+    let fecha_cola_cusco = document.getElementById('txt_fecha_cola_cusco_editar').value;
+    let fecha_cola_andahuylas = document.getElementById('txt_fecha_cola_andahuylas_editar').value;
     let fecha_conse = document.getElementById('txt_fecha_consejo_editar').value;
     let fecha_firma = document.getElementById('txt_fecha_firma_con_editar').value;
     let fecha_resol = document.getElementById('txt_fecha_resol_editar').value;
@@ -205,6 +215,8 @@ function Modificar_Colacion(){
           id:id,
           cola:cola,
           fecha_cola:fecha_cola,
+          fecha_cola_cusco:fecha_cola_cusco,
+          fecha_cola_andahuylas:fecha_cola_andahuylas,
           fecha_conse:fecha_conse,
           fecha_firma:fecha_firma,
           fecha_resol:fecha_resol,

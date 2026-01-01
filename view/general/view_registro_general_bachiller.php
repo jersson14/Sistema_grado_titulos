@@ -316,6 +316,22 @@
                                                 <label for="" style="font-size:small;">Decano<b style="color:red">(*)</b>:</label>
                                                 <input type="text" class="form-control" id="txt_decano">
                                             </div>
+                                            <div class="col-3 form-group">
+                                                <label for="" style="font-size:small;">Autoidentificación étnica (Opcional):</label>
+                                                <input type="text" class="form-control" id="txt_auto_etnica">
+                                            </div>
+                                            <div class="col-3 form-group">
+                                                <label for="" style="font-size:small;">Pueblo indígena u originario (Opcional):</label>
+                                                <input type="text" class="form-control" id="txt_pueblo_indigena">
+                                            </div>
+                                            <div class="col-3 form-group">
+                                                <label for="" style="font-size:small;">Lengua indígena u originaria (Opcional):</label>
+                                                <input type="text" class="form-control" id="txt_lengua_indigena">
+                                            </div>
+                                               <div class="col-3 form-group">
+                                                <label for="" style="font-size:small;">Lengua indígena (detalle)(Opcional):</label>
+                                                <input type="text" class="form-control" id="txt_lengua_detalle">
+                                            </div>
                                             <div class="col-12 form-group">
                                                 <label for="" style="font-size:small;">Adjuntar Expediente<b style="color:red">(*)</b>:</label>
                                                 <input class="form-control" type="file" id="txt_archivo"><br>
@@ -603,6 +619,22 @@
                                             <div class="col-3 form-group">
                                                 <label for="" style="font-size:small;">Decano<b style="color:red">(*)</b>:</label>
                                                 <input type="text" class="form-control" id="txt_decano_editar" readonly>
+                                            </div>
+                                               <div class="col-3 form-group">
+                                                <label for="" style="font-size:small;">Autoidentificación étnica (Opcional):</label>
+                                                <input type="text" class="form-control" id="txt_auto_etnica_editar">
+                                            </div>
+                                            <div class="col-3 form-group">
+                                                <label for="" style="font-size:small;">Pueblo indígena u originario (Opcional):</label>
+                                                <input type="text" class="form-control" id="txt_pueblo_indigena_editar">
+                                            </div>
+                                            <div class="col-3 form-group">
+                                                <label for="" style="font-size:small;">Lengua indígena u originaria (Opcional):</label>
+                                                <input type="text" class="form-control" id="txt_lengua_indigena_editar">
+                                            </div>
+                                               <div class="col-3 form-group">
+                                                <label for="" style="font-size:small;">Lengua indígena (detalle)(Opcional):</label>
+                                                <input type="text" class="form-control" id="txt_lengua_detalle_editar">
                                             </div>
                                             <div class="col-12 form-group">
                                                 <label for="" style="font-size:small;">Adjuntar Expediente<b style="color:red">(*)</b>:</label>
@@ -1117,7 +1149,22 @@
                                                 <label for="" style="font-size:small;">Decano<b style="color:red">(*)</b>:</label>
                                                 <input type="text" class="form-control" id="txt_decano_mas" readonly>
                                             </div>
-
+                                            <div class="col-3 form-group">
+                                                <label for="" style="font-size:small;">Autoidentificación étnica (Opcional):</label>
+                                                <input type="text" class="form-control" id="txt_auto_etnica_mas" readonly>
+                                            </div>
+                                            <div class="col-3 form-group">
+                                                <label for="" style="font-size:small;">Pueblo indígena u originario (Opcional):</label>
+                                                <input type="text" class="form-control" id="txt_pueblo_indigena_mas" readonly>
+                                            </div>
+                                            <div class="col-3 form-group">
+                                                <label for="" style="font-size:small;">Lengua indígena u originaria (Opcional):</label>
+                                                <input type="text" class="form-control" id="txt_lengua_indigena_mas" readonly>
+                                            </div>
+                                               <div class="col-3 form-group">
+                                                <label for="" style="font-size:small;">Lengua indígena (detalle)(Opcional):</label>
+                                                <input type="text" class="form-control" id="txt_lengua_detalle_mas" readonly>
+                                            </div>
                                             <div class="col-12 form-group" style="border: 1px solid #ccc; padding: 10px;" id="datos_antiguos">
                                                 <label for="" style="color:red">*Estos campos deben ser llenados si el expediente hace referencia a la versión anterior o es de fecha pasada.</label>
                                                 <div class="row">

@@ -143,10 +143,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </a>
             </li>
             <br>
+            <li class="header text-center" style="color:#FFFFFF; background-color:#023D77; border-radius: 10px;">
+              <b>GESTIÓN DE EXPEDIENTES</b>
+            </li>
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
             <?php if ($_SESSION['S_ROL'] == "Super Administrador") {
             ?>
+            
               <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-address-card"></i>
@@ -392,6 +396,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </li>
                 </ul>
               </li>
+            <li class="header text-center" style="color:#FFFFFF; background-color:#023D77; border-radius: 10px;">
+              <b>REPORTES Y AUDITORIAS</b>
+            </li>
               <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-file-pdf"></i>
@@ -461,6 +468,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 
                 </ul>
               </li>
+              <li class="header text-center" style="color:#FFFFFF; background-color:#023D77; border-radius: 10px;">
+              <b>GESTIÓN DE CONFIGURACIÓN</b>
+            </li>
               <li class="nav-item">
                 <a href="#" class="nav-link" onclick="cargar_contenido('contenido_principal','usuario/view_usuario.php')">
                   <i class="nav-icon fas fa-user"></i>
@@ -491,6 +501,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             ?>
             <?php if ($_SESSION['S_ROL'] == "Administrador") {
             ?>
+
               <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-address-card"></i>
@@ -677,6 +688,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </li>
                 </ul>
               </li>
+            <li class="header text-center" style="color:#FFFFFF; background-color:#023D77; border-radius: 10px;">
+              <b>REPORTES Y AUDITORIAS</b>
+            </li>
               <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-file-pdf"></i>
@@ -751,6 +765,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             }
             ?>
             <?php if ($_SESSION['S_ROL'] == "Secretario (a)") { ?>
+
               <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-address-card"></i>
@@ -1400,6 +1415,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </div>
                   <div class="card-body" style="background-color:white">
                    <img src="../img/utea.png" alt="">
+                    <img src="../img/sede.jpg" alt="">
+
                   </div>
                 </div>
 
@@ -1419,19 +1436,68 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <!-- /.control-sidebar -->
 
+<style>
+/* Footer moderno */
+.main-footer {
+    background: linear-gradient(135deg, #024383 0%, #012a52 100%) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    border-top: 3px solid #4fc3f7;
+    padding: 15px 20px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+}
+
+.main-footer strong {
+    color: white !important;
+    font-weight: 600;
+}
+
+.main-footer a {
+    color: #4fc3f7 !important;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.main-footer a:hover {
+    color: #81d4fa !important;
+    text-decoration: underline;
+}
+
+.main-footer .float-right {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.main-footer em {
+    font-style: normal;
+    letter-spacing: 0.5px;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+    .main-footer {
+        text-align: center;
+        padding: 12px 15px;
+    }
+    
+    .main-footer .float-right {
+        float: none !important;
+        display: block;
+        margin-top: 5px;
+    }
+}
+</style>
+
 <!-- Main Footer -->
 <footer class="main-footer">
   <!-- To the right -->
   <div class="float-right d-none d-sm-inline">
     <em>Versión 1.0.0</em>
-
   </div>
 
   <!-- Default to the left -->
-  <strong>Copyright &copy; 2024 <a href="https://web.facebook.com/jerzhitho.cm/" target="_blank"><em>DESARROLLADO POR JCM</em></a></strong>
-
+  <strong>Copyright &copy; 2026 <a href="https://web.facebook.com/jerzhitho.cm/" target="_blank"><em>DESARROLLADO POR JCM</em></a></strong>
 </footer>
-
 
 <!-- ./wrapper -->
 <!-- MODAL EDITAR HORARIO -->
@@ -1595,3 +1661,96 @@ console.log(contadorLibro);
 
 
 </script>
+<style>
+/* Sidebar con color celeste #024383 */
+.main-sidebar {
+    background: linear-gradient(180deg, #024383 0%, #012a52 100%) !important;
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Logo area */
+.brand-link {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Panel de usuario */
+.user-panel {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Headers de sección */
+.nav-header,
+.header {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent) !important;
+    color: #4fc3f7 !important;
+}
+
+/* Links de navegación - Solo menú principal */
+.nav-sidebar > .nav-item > .nav-link {
+    color: rgba(255, 255, 255, 0.85) !important;
+    position: relative;
+}
+
+.nav-sidebar > .nav-item > .nav-link:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+}
+
+.nav-sidebar > .nav-item > .nav-link.active {
+    background: rgba(79, 195, 247, 0.2) !important;
+    border-left: 4px solid #4fc3f7 !important;
+}
+
+/* Efecto hover con línea izquierda - SOLO menú principal */
+.nav-sidebar > .nav-item > .nav-link::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 4px;
+    background: #4fc3f7;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+.nav-sidebar > .nav-item > .nav-link:hover::before {
+    transform: translateX(0);
+}
+
+/* SUBMENÚS - Sin líneas laterales */
+.nav-treeview .nav-link {
+    color: rgba(255, 255, 255, 0.85) !important;
+    position: relative;
+}
+
+.nav-treeview .nav-link::before {
+    display: none !important;
+}
+
+.nav-treeview .nav-link:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: white !important;
+}
+
+.nav-treeview .nav-link.active {
+    background: rgba(79, 195, 247, 0.15) !important;
+    border-left: none !important;
+}
+
+/* Scrollbar del sidebar */
+.main-sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.main-sidebar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.main-sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+}
+</style>

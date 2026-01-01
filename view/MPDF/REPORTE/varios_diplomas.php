@@ -72,6 +72,7 @@ modalidad.Proce_titulo_peda,
 modalidad.Proce_bachiller,
 modalidad.Trabajo_investigacion,
 modalidad.Turnitin,
+modalidad.ciclo_tesis,
 modalidad.Porcentaje,
 modalidad.Centro_investigacion,
 modalidad.Reglamento_metadado,
@@ -184,17 +185,30 @@ while($row1 = $resultado->fetch_assoc()) {
         
         $mpdf->SetXY(50, 67.5);
         $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 26px;margin-left: 320px;font-family: eduardian;">' . $year . '</h1>');
-        $mpdf->SetXY(0, 83);
-        $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 41px;margin-left: -70px;font-family: mtcorsva;">'.$row1['Denominación_grado'].'</h1>');
-   if (!function_exists('mb_ucwords')) {
-    function mb_ucwords($string, $encoding = 'UTF-8') {
-        $words = explode(' ', mb_strtolower($string, $encoding)); 
-        $capitalizedWords = array_map(function($word) use ($encoding) {
-            return mb_strtoupper(mb_substr($word, 0, 1, $encoding), $encoding) . mb_substr($word, 1, null, $encoding);
-        }, $words);
-        return implode(' ', $capitalizedWords);
-    }
-}
+         $mpdf->SetXY(0, 83);
+        
+                if ($row1['Grado_academico'] === 'BACHILLER') {
+                    $mpdf->WriteHTML(
+                        '<h1 style="text-align:center;font-size:41px;margin-left:-70px;font-family:mtcorsva;">' .
+                        $row1['Denominación_grado'] .
+                        '</h1>'
+                    );
+                } elseif ($row1['Grado_academico'] === 'TITULO') {
+                    $mpdf->WriteHTML(
+                        '<h1 style="text-align:center;font-size:41px;margin-left:-70px;font-family:mtcorsva;">' .
+                        $row1['Titulo_de'] .
+                        '</h1>'
+                    );
+                }
+           if (!function_exists('mb_ucwords')) {
+            function mb_ucwords($string, $encoding = 'UTF-8') {
+                $words = explode(' ', mb_strtolower($string, $encoding)); 
+                $capitalizedWords = array_map(function($word) use ($encoding) {
+                    return mb_strtoupper(mb_substr($word, 0, 1, $encoding), $encoding) . mb_substr($word, 1, null, $encoding);
+                }, $words);
+                return implode(' ', $capitalizedWords);
+            }
+        }
 
 
 // Usamos la función personalizada
@@ -360,7 +374,7 @@ $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 13px;margin-left: -225
         }else if($modalidad=="CURSO &QUOT;TRABAJO DE INVESTIGACIÓN&QUOT;"){
 
             $mpdf->SetXY(0, 60.5);
-            $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 10.5px;margin-left: 585px;font-family: timesnewroman;">CURSO "TRABAJO DE INVESTIGACIÓN"</h1>');
+            $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 9px;margin-left: 585px;font-family: timesnewroman;">CURSO "TRABAJO DE INVESTIGACIÓN" (Ciclo '.$row1['ciclo_tesis'].')</h1>');
         }else{
             $mpdf->SetXY(0, 60.5);
             $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 10.5px;margin-left: 585px;font-family: timesnewroman;">' . $modalidad . '</h1>');

@@ -93,9 +93,9 @@
             return $arreglo;
             conexionBD::cerrar_conexion();
         }
-        public function Registrar_Bachiller($tipodoc,$dni,$nombres,$apepa,$apema,$codigo,$sexo,$celular,$direc,$emaper,$emainsti,$fecha_matr,$fecha_egre,$observa,$ced,$esc,$bach,$moda,$idauto,$fecha,$acu,$res,$exped,$lib,$fol,$reg,$ruta,$mod_estu,$tra_inv,$turn,$porc,$cent,$meta,$proce_bach,$proce_insti,$proce_titu,$fecha_matri,$fecha_inici,$fecha_fin,$mod_sustenta,$idusuario){
+        public function Registrar_Bachiller($tipodoc,$dni,$nombres,$apepa,$apema,$codigo,$sexo,$celular,$direc,$emaper,$emainsti,$fecha_matr,$fecha_egre,$observa,$ced,$esc,$bach,$moda,$idauto,$fecha,$acu,$res,$exped,$lib,$fol,$reg,$ruta,$mod_estu,$tra_inv,$turn,$porc,$cent,$meta,$proce_bach,$proce_insti,$proce_titu,$fecha_matri,$fecha_inici,$fecha_fin,$mod_sustenta,$idusuario, $auto_etnica, $pueblo_indi, $lengua_indi, $lengua_detalle){
             $c = conexionBD::conexionPDO();
-            $sql = "CALL SP_REGISTRAR_BACHILLER(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            $sql = "CALL SP_REGISTRAR_BACHILLER(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             $arreglo = array();
             $query  = $c->prepare($sql);
             $query ->bindParam(1,$tipodoc);
@@ -139,6 +139,10 @@
             $query ->bindParam(39,$fecha_fin);
             $query ->bindParam(40,$mod_sustenta);
             $query ->bindParam(41,$idusuario);
+            $query ->bindParam(42,$auto_etnica);
+            $query ->bindParam(43,$pueblo_indi);
+            $query ->bindParam(44,$lengua_indi);
+            $query ->bindParam(45,$lengua_detalle);
             $query->execute();
             if($row = $query->fetchColumn()){
                 return $row;
@@ -173,9 +177,9 @@
             conexionBD::cerrar_conexion();
         }
 
-        public function Modificar_Bachiller($dni,$nombres,$apepa,$apema,$codigo,$sexo,$celular,$direc,$emaper,$emainsti,$fecha_matr,$fecha_egre,$observa,$idexpe,$ced,$esc,$bach,$moda,$idauto,$fecha,$acu,$res,$exped,$lib,$fol,$reg,$ruta,$idmoda,$mod_estu,$tra_inv,$turn,$porc,$cent,$meta,$proce_bach,$proce_insti,$proce_titu,$fecha_matri,$fecha_inici,$fecha_fin,$mod_sustenta,$iddiploma,$fechacu,$fechafirma,$resol,$fechareso,$numdiplo,$numregis,$libroregi,$regisfolio,$tipodiplo,$fechaini,$nrocre,$nrooficio,$fechasecre,$ciclo_tra,$idusuario){
+        public function Modificar_Bachiller($dni,$nombres,$apepa,$apema,$codigo,$sexo,$celular,$direc,$emaper,$emainsti,$fecha_matr,$fecha_egre,$observa,$idexpe,$ced,$esc,$bach,$moda,$idauto,$fecha,$acu,$res,$exped,$lib,$fol,$reg,$ruta,$idmoda,$mod_estu,$tra_inv,$turn,$porc,$cent,$meta,$proce_bach,$proce_insti,$proce_titu,$fecha_matri,$fecha_inici,$fecha_fin,$mod_sustenta,$iddiploma,$fechacu,$fechafirma,$resol,$fechareso,$numdiplo,$numregis,$libroregi,$regisfolio,$tipodiplo,$fechaini,$nrocre,$nrooficio,$fechasecre,$ciclo_tra,$idusuario, $auto_etnica, $pueblo_indi, $lengua_indi, $lengua_detalle){
             $c = conexionBD::conexionPDO();
-            $sql = "CALL SP_MODIFICAR_BACHILLER(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            $sql = "CALL SP_MODIFICAR_BACHILLER(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             $arreglo = array();
             $query  = $c->prepare($sql);
             $query ->bindParam(1,$dni);
@@ -237,6 +241,10 @@
             $query ->bindParam(56,$ciclo_tra);
 
             $query ->bindParam(57,$idusuario);
+            $query ->bindParam(58,$auto_etnica);
+            $query ->bindParam(59,$pueblo_indi);
+            $query ->bindParam(60,$lengua_indi);
+            $query ->bindParam(61,$lengua_detalle);
             $query->execute();
             if($row = $query->fetchColumn()){
                 return $row;

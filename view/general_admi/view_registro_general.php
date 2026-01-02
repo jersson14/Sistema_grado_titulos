@@ -325,7 +325,7 @@
                                                 <label for="" style="font-size:small;">Decano<b style="color:red">(*)</b>:</label>
                                                 <input type="text" class="form-control" id="txt_decano">
                                             </div>
-                                           <div class="col-3 form-group">
+                                            <div class="col-3 form-group">
                                                 <label for="" style="font-size:small;">Autoidentificación étnica (Opcional):</label>
                                                 <input type="text" class="form-control" id="txt_auto_etnica">
                                             </div>
@@ -337,7 +337,7 @@
                                                 <label for="" style="font-size:small;">Lengua indígena u originaria (Opcional):</label>
                                                 <input type="text" class="form-control" id="txt_lengua_indigena">
                                             </div>
-                                               <div class="col-3 form-group">
+                                            <div class="col-3 form-group">
                                                 <label for="" style="font-size:small;">Lengua indígena (detalle)(Opcional):</label>
                                                 <input type="text" class="form-control" id="txt_lengua_detalle">
                                             </div>
@@ -646,7 +646,7 @@
                                                 <label for="" style="font-size:small;">Lengua indígena u originaria (Opcional):</label>
                                                 <input type="text" class="form-control" id="txt_lengua_indigena_editar">
                                             </div>
-                                               <div class="col-3 form-group">
+                                            <div class="col-3 form-group">
                                                 <label for="" style="font-size:small;">Lengua indígena (detalle)(Opcional):</label>
                                                 <input type="text" class="form-control" id="txt_lengua_detalle_editar">
                                             </div>
@@ -1115,7 +1115,7 @@
                                                 <label for="" style="font-size:small;">Lengua indígena u originaria (Opcional):</label>
                                                 <input type="text" class="form-control" id="txt_lengua_indigena_mas" readonly>
                                             </div>
-                                               <div class="col-3 form-group">
+                                            <div class="col-3 form-group">
                                                 <label for="" style="font-size:small;">Lengua indígena (detalle)(Opcional):</label>
                                                 <input type="text" class="form-control" id="txt_lengua_detalle_mas" readonly>
                                             </div>

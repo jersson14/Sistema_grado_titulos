@@ -1,5 +1,6 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -176,6 +177,7 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
+      flex-wrap: wrap;
     }
     
     .badge-posgrado {
@@ -232,18 +234,13 @@
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
     }
     
-    .nav-btn.login {
-      background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
-      color: white;
-    }
-    
     .nav-btn.pregrado {
       background: linear-gradient(135deg, #0065B2 0%, #00a8ff 100%);
       color: white;
     }
     
     .nav-btn.manual {
-      background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+      background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
       color: white;
     }
     
@@ -265,41 +262,31 @@
       margin-bottom: 30px;
       color: #333;
       line-height: 1.8;
-      position: relative;
     }
     
-    .info-banner::before {
-      content: '📚';
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      font-size: 40px;
-      opacity: 0.3;
+    .decorative-line {
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #7e22ce, transparent);
+      margin: 25px 0;
+      border-radius: 2px;
     }
     
     .search-section {
       background: linear-gradient(135deg, #1e3c72 0%, #7e22ce 100%);
       color: white;
-      padding: 35px;
+      padding: 30px;
       border-radius: 16px;
       margin-bottom: 30px;
       box-shadow: 0 8px 32px rgba(126, 34, 206, 0.4);
     }
     
     .search-title {
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 700;
       margin-bottom: 25px;
       display: flex;
       align-items: center;
-      gap: 12px;
-    }
-    
-    .search-title i {
-      background: rgba(255, 255, 255, 0.2);
-      padding: 10px;
-      border-radius: 12px;
-      font-size: 20px;
+      gap: 10px;
     }
     
     .search-form {
@@ -309,115 +296,58 @@
       align-items: end;
     }
     
-    @media (max-width: 768px) {
-      .search-form {
-        grid-template-columns: 1fr;
-      }
-      
-      body {
-        padding: 10px;
-      }
-      
-      .main-card {
-        padding: 25px;
-      }
-      
-      .header-section {
-        padding: 20px;
-      }
-    }
-    
     .form-group {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
     
     .form-label {
       font-weight: 600;
-      font-size: 15px;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      font-size: 14px;
     }
     
     .form-control {
-      padding: 16px 20px;
+      padding: 14px 18px;
       border: 2px solid rgba(255, 255, 255, 0.3);
       border-radius: 12px;
       font-size: 16px;
       background: rgba(255, 255, 255, 0.95);
       transition: all 0.3s ease;
       color: #333;
-      font-weight: 500;
     }
     
     .form-control:focus {
       outline: none;
       border-color: white;
       background: white;
-      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
-      transform: translateY(-2px);
-    }
-    
-    .form-control::placeholder {
-      color: #999;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
     
     .btn-search {
-      padding: 16px 32px;
+      padding: 14px 32px;
       background: white;
       color: #7e22ce;
       border: none;
       border-radius: 12px;
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 700;
       cursor: pointer;
       transition: all 0.3s ease;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 12px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .btn-search::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      border-radius: 50%;
-      background: rgba(126, 34, 206, 0.1);
-      transform: translate(-50%, -50%);
-      transition: width 0.6s, height 0.6s;
-    }
-    
-    .btn-search:hover::before {
-      width: 300px;
-      height: 300px;
+      gap: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
     
     .btn-search:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-      background: linear-gradient(135deg, #ffffff 0%, #f3e8ff 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
     }
     
     .btn-search:active {
-      transform: translateY(-1px);
-    }
-    
-    .btn-search i {
-      font-size: 18px;
-      position: relative;
-      z-index: 1;
-    }
-    
-    .btn-search span {
-      position: relative;
-      z-index: 1;
+      transform: translateY(0);
     }
     
     /* Tabla mejorada */
@@ -432,6 +362,7 @@
     
     .table-responsive {
       overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
     
     #tabla_registro_general {
@@ -447,29 +378,22 @@
     }
     
     #tabla_registro_general thead th {
-      padding: 18px;
+      padding: 16px;
       font-weight: 600;
       text-align: center;
       font-size: 14px;
       border: none;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
     
     #tabla_registro_general tbody td {
       padding: 14px;
       text-align: center;
       border-bottom: 1px solid #e0e0e0;
-      transition: all 0.2s ease;
-    }
-    
-    #tabla_registro_general tbody tr {
-      transition: all 0.3s ease;
+      transition: background 0.2s ease;
     }
     
     #tabla_registro_general tbody tr:hover {
-      background: linear-gradient(135deg, rgba(126, 34, 206, 0.05) 0%, rgba(168, 85, 247, 0.05) 100%);
-      transform: scale(1.01);
-      box-shadow: 0 4px 12px rgba(126, 34, 206, 0.1);
+      background: #f8f9fa;
     }
     
     /* Footer moderno */
@@ -495,21 +419,15 @@
     }
     
     .required {
-      color: #dc2626;
+      color: #e74c3c;
       font-weight: bold;
-      animation: pulse 2s ease-in-out infinite;
-    }
-    
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.6; }
     }
     
     /* Animaciones sutiles */
     @keyframes fadeIn {
       from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(20px);
       }
       to {
         opacity: 1;
@@ -517,12 +435,9 @@
       }
     }
     
-    .main-card, .table-container {
+    .main-card,
+    .table-container {
       animation: fadeIn 0.6s ease;
-    }
-    
-    .header-section {
-      animation: fadeIn 0.4s ease;
     }
     
     /* Ocultar elementos */
@@ -530,38 +445,391 @@
       display: none;
     }
     
-    /* Decoración adicional */
-    .decorative-line {
-      height: 3px;
-      background: linear-gradient(90deg, transparent, #7e22ce, transparent);
-      margin: 25px 0;
-      border-radius: 2px;
+    /* ========== RESPONSIVE DESIGN ========== */
+    
+    /* Tablets y dispositivos medianos */
+    @media (max-width: 992px) {
+      body {
+        padding: 15px;
+      }
+
+      .header-title {
+        font-size: 24px;
+      }
+
+      .header-subtitle {
+        font-size: 16px;
+      }
+
+      .logo-container img {
+        max-width: 160px;
+      }
+
+      .main-card {
+        padding: 30px;
+      }
+
+      .search-section {
+        padding: 25px;
+      }
+
+      .table-container {
+        padding: 20px;
+      }
+    }
+
+    /* Móviles y tablets pequeñas */
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+
+      .header-section {
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 15px;
+      }
+
+      .logo-container {
+        margin-bottom: 15px;
+      }
+
+      .logo-container img {
+        max-width: 140px;
+      }
+
+      .header-title {
+        font-size: 20px;
+        line-height: 1.3;
+      }
+
+      .header-subtitle {
+        font-size: 14px;
+      }
+
+      .badge-posgrado {
+        font-size: 12px;
+        padding: 5px 12px;
+      }
+
+      .nav-links {
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .nav-btn {
+        padding: 10px 18px;
+        font-size: 13px;
+        gap: 6px;
+      }
+
+      .main-card {
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 15px;
+      }
+
+      .info-banner {
+        padding: 15px;
+        font-size: 14px;
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+
+      .decorative-line {
+        margin: 20px 0;
+      }
+
+      .search-section {
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 12px;
+      }
+
+      .search-title {
+        font-size: 18px;
+        margin-bottom: 20px;
+      }
+
+      .search-form {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+
+      .form-label {
+        font-size: 13px;
+      }
+
+      .form-control {
+        padding: 12px 16px;
+        font-size: 15px;
+      }
+
+      .btn-search {
+        padding: 12px 24px;
+        font-size: 15px;
+        width: 100%;
+      }
+
+      .table-container {
+        padding: 15px;
+        border-radius: 15px;
+      }
+
+      #tabla_registro_general {
+        font-size: 11px;
+      }
+
+      #tabla_registro_general thead th {
+        padding: 10px 6px;
+        font-size: 11px;
+      }
+
+      #tabla_registro_general tbody td {
+        padding: 8px 4px;
+        font-size: 11px;
+      }
+
+      .footer {
+        padding: 20px;
+        font-size: 13px;
+        border-radius: 15px;
+      }
+
+      /* Elementos flotantes más pequeños en móvil */
+      .graduation-cap {
+        font-size: 30px;
+      }
+
+      .book {
+        font-size: 25px;
+      }
+
+      .diploma {
+        font-size: 22px;
+      }
+    }
+
+    /* Móviles pequeños */
+    @media (max-width: 480px) {
+      body {
+        padding: 8px;
+      }
+
+      .header-section {
+        padding: 15px;
+        margin-bottom: 15px;
+      }
+
+      .logo-container img {
+        max-width: 120px;
+      }
+
+      .header-title {
+        font-size: 18px;
+      }
+
+      .header-subtitle {
+        font-size: 13px;
+      }
+
+      .badge-posgrado {
+        font-size: 11px;
+        padding: 4px 10px;
+      }
+
+      .nav-btn {
+        padding: 8px 14px;
+        font-size: 12px;
+        border-radius: 30px;
+      }
+
+      .nav-btn i {
+        font-size: 12px;
+      }
+
+      .main-card {
+        padding: 15px;
+      }
+
+      .info-banner {
+        padding: 12px;
+        font-size: 13px;
+      }
+
+      .decorative-line {
+        margin: 15px 0;
+      }
+
+      .search-section {
+        padding: 15px;
+      }
+
+      .search-title {
+        font-size: 16px;
+        margin-bottom: 15px;
+      }
+
+      .form-label {
+        font-size: 12px;
+      }
+
+      .form-control {
+        padding: 10px 14px;
+        font-size: 14px;
+        border-radius: 10px;
+      }
+
+      .btn-search {
+        padding: 11px 20px;
+        font-size: 14px;
+        border-radius: 10px;
+      }
+
+      .table-container {
+        padding: 12px;
+      }
+
+      #tabla_registro_general {
+        font-size: 10px;
+      }
+
+      #tabla_registro_general thead th {
+        padding: 8px 4px;
+        font-size: 10px;
+      }
+
+      #tabla_registro_general tbody td {
+        padding: 6px 3px;
+        font-size: 10px;
+      }
+
+      .footer {
+        padding: 15px;
+        font-size: 12px;
+      }
+
+      /* Ajustes para badges y botones en móvil pequeño */
+      .badge {
+        font-size: 9px !important;
+        padding: 3px 7px !important;
+      }
+
+      /* Ocultar algunos elementos decorativos en móviles muy pequeños */
+      .academic-circle {
+        display: none;
+      }
+    }
+
+    /* Móviles muy pequeños */
+    @media (max-width: 360px) {
+      .header-title {
+        font-size: 16px;
+      }
+
+      .search-title {
+        font-size: 15px;
+      }
+
+      .form-control {
+        font-size: 13px;
+      }
+
+      .btn-search {
+        font-size: 13px;
+      }
+    }
+
+    /* Landscape en móviles */
+    @media (max-height: 600px) and (orientation: landscape) {
+      .header-section {
+        padding: 15px;
+        margin-bottom: 15px;
+      }
+
+      .logo-container {
+        margin-bottom: 10px;
+      }
+
+      .logo-container img {
+        max-width: 100px;
+      }
+
+      .header-title {
+        font-size: 16px;
+      }
+
+      .header-subtitle {
+        font-size: 12px;
+      }
+
+      .badge-posgrado {
+        font-size: 10px;
+        padding: 3px 8px;
+      }
+
+      .nav-links {
+        margin-top: 10px;
+        gap: 8px;
+      }
+
+      .main-card {
+        padding: 15px;
+      }
+
+      .info-banner {
+        padding: 10px;
+        margin-bottom: 15px;
+      }
+
+      .search-section {
+        padding: 15px;
+      }
+
+      .graduation-cap,
+      .book,
+      .diploma {
+        display: none;
+      }
+    }
+
+    /* DataTables responsive customization */
+    @media (max-width: 768px) {
+      .dt-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-bottom: 10px !important;
+      }
+
+      .dt-buttons button {
+        flex: 1;
+        min-width: 80px;
+        font-size: 11px !important;
+        padding: 6px 10px !important;
+      }
     }
   </style>
 </head>
 
 <body>
-  <!-- Fondo animado académico - IGUAL QUE EN PREGRADO -->
+  <!-- Fondo animado académico -->
   <div class="animated-background">
-    <!-- Birretes flotantes -->
     <div class="graduation-cap" style="top: 10%; left: 15%; animation-delay: 0s;">🎓</div>
     <div class="graduation-cap" style="top: 60%; left: 80%; animation-delay: 3s;">🎓</div>
     <div class="graduation-cap" style="top: 30%; left: 70%; animation-delay: 7s;">🎓</div>
     <div class="graduation-cap" style="top: 80%; left: 20%; animation-delay: 5s;">🎓</div>
     <div class="graduation-cap" style="top: 45%; left: 40%; animation-delay: 9s;">🎓</div>
-    
-    <!-- Libros flotantes -->
+
     <div class="book" style="top: 20%; left: 50%; animation-delay: 2s;">📚</div>
     <div class="book" style="top: 70%; left: 60%; animation-delay: 6s;">📚</div>
     <div class="book" style="top: 40%; left: 10%; animation-delay: 4s;">📚</div>
     <div class="book" style="top: 85%; left: 75%; animation-delay: 8s;">📚</div>
-    
-    <!-- Diplomas flotantes -->
+
     <div class="diploma" style="top: 15%; left: 85%; animation-delay: 1s;">📜</div>
     <div class="diploma" style="top: 55%; left: 25%; animation-delay: 5s;">📜</div>
     <div class="diploma" style="top: 75%; left: 45%; animation-delay: 7s;">📜</div>
-    
-    <!-- Círculos decorativos -->
+
     <div class="academic-circle" style="top: 10%; left: 5%; width: 150px; height: 150px; animation-delay: 0s;"></div>
     <div class="academic-circle" style="top: 50%; right: 10%; width: 200px; height: 200px; animation-delay: 3s;"></div>
     <div class="academic-circle" style="bottom: 15%; left: 30%; width: 120px; height: 120px; animation-delay: 6s;"></div>
@@ -1033,6 +1301,8 @@ function crearTablaExpedientes(datadetalle) {
       <h4 style="color: #0065B2; font-weight: 700; margin-bottom: 18px; display: flex; align-items: center; gap: 8px; font-size: 16px;">
         <i class="fas fa-list-alt"></i> Detalle de Expedientes
       </h4>
+                    <p><b>Si esta en celular desplace horizontalmente o hacia la derecha para ver la fecha de colación.</b></p>
+
       <div class="table-responsive">
         <table id="tabla_registro_general" class="table table-striped table-bordered" style="width:100%; font-size: 12px;">
           <thead style="background: linear-gradient(135deg, #0065B2, #00a8ff); color: white;">

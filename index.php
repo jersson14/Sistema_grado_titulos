@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="csrf-token" content="<?php echo $_SESSION['csrf_token']; ?>">
 
-  <title>Portal Académico UTEA - Acceso</title>
+  <title>UTEA | PERÚ</title>
 
   <!-- Google Font: Poppins -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap">
@@ -45,15 +45,17 @@
       align-items: center;
       justify-content: center;
       background-image: url('img/sede.jpg');
-      background-size: 100% 100%;
+      background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
       background-attachment: fixed;
       position: relative;
       overflow: hidden;
+      padding: 20px;
     }
     
-    /* Overlay con el mismo color del sidebar #024383 */ body::before {
+    /* Overlay con el mismo color del sidebar #024383 */
+    body::before {
       content: '';
       position: absolute;
       top: 0;
@@ -202,6 +204,7 @@
     
     .logo-section img {
       max-width: 280px;
+      width: 100%;
       height: auto;
       margin-bottom: 20px;
     }
@@ -373,35 +376,353 @@
       color: #a0aec0;
     }
     
-    /* Responsive */
-    @media (max-width: 768px) {
+    /* ========== RESPONSIVE MEJORADO ========== */
+    
+    /* Tablets grandes y pantallas medianas */
+    @media (max-width: 992px) {
       .login-wrapper {
-        flex-direction: column;
-        width: 90%;
+        width: 85%;
       }
       
       .left-side {
-        padding: 40px 30px;
+        padding: 50px 40px;
+      }
+      
+      .right-side {
+        padding: 50px 40px;
+      }
+      
+      .left-side h1 {
+        font-size: 38px;
+      }
+      
+      .illustration i {
+        font-size: 150px;
+      }
+    }
+    
+    /* Tablets y dispositivos medianos */
+    @media (max-width: 768px) {
+      body {
+        padding: 15px;
+        background-size: cover;
+        align-items: flex-start;
+        padding-top: 30px;
+      }
+      
+      .login-wrapper {
+        flex-direction: column;
+        width: 100%;
+        max-width: 500px;
+        border-radius: 20px;
+      }
+      
+      .left-side {
+        padding: 35px 25px;
+        min-height: auto;
       }
       
       .left-side h1 {
         font-size: 32px;
+        margin-bottom: 10px;
       }
       
       .left-side .subtitle {
         font-size: 16px;
+        margin-bottom: 20px;
+      }
+      
+      .illustration {
+        margin-top: 15px;
       }
       
       .illustration i {
-        font-size: 120px;
+        font-size: 100px;
       }
       
       .right-side {
-        padding: 40px 30px;
+        padding: 35px 25px;
+      }
+      
+      .logo-section {
+        margin-bottom: 25px;
+      }
+      
+      .logo-section img {
+        max-width: 220px;
+        margin-bottom: 15px;
+      }
+      
+      .welcome-text {
+        margin-bottom: 30px;
       }
       
       .welcome-text h2 {
         font-size: 26px;
+      }
+      
+      .welcome-text p {
+        font-size: 14px;
+      }
+      
+      .form-group {
+        margin-bottom: 20px;
+      }
+      
+      .input-container input {
+        padding: 14px 18px 14px 45px;
+        font-size: 14px;
+      }
+      
+      .input-icon {
+        left: 15px;
+        font-size: 16px;
+      }
+      
+      .toggle-password {
+        right: 15px;
+      }
+      
+      .btn-login {
+        padding: 14px;
+        font-size: 15px;
+      }
+      
+      .footer-text {
+        margin-top: 25px;
+        padding-top: 15px;
+        font-size: 12px;
+      }
+    }
+    
+    /* Móviles pequeños */
+    @media (max-width: 480px) {
+      body {
+        padding: 10px;
+        padding-top: 20px;
+      }
+      
+      .login-wrapper {
+        border-radius: 16px;
+        max-width: 100%;
+      }
+      
+      .left-side {
+        padding: 25px 20px;
+      }
+      
+      .left-side h1 {
+        font-size: 28px;
+        margin-bottom: 8px;
+      }
+      
+      .left-side .subtitle {
+        font-size: 14px;
+        margin-bottom: 15px;
+      }
+      
+      .illustration i {
+        font-size: 80px;
+      }
+      
+      .right-side {
+        padding: 25px 20px;
+      }
+      
+      .logo-section {
+        margin-bottom: 20px;
+      }
+      
+      .logo-section img {
+        max-width: 180px;
+        margin-bottom: 10px;
+      }
+      
+      .welcome-text {
+        margin-bottom: 25px;
+      }
+      
+      .welcome-text h2 {
+        font-size: 22px;
+        margin-bottom: 8px;
+      }
+      
+      .welcome-text p {
+        font-size: 13px;
+      }
+      
+      .form-group {
+        margin-bottom: 18px;
+      }
+      
+      .form-group label {
+        font-size: 13px;
+        margin-bottom: 8px;
+      }
+      
+      .input-container input {
+        padding: 12px 16px 12px 42px;
+        font-size: 14px;
+        border-radius: 10px;
+      }
+      
+      .input-icon {
+        left: 14px;
+        font-size: 15px;
+      }
+      
+      .toggle-password {
+        right: 14px;
+      }
+      
+      .form-options {
+        margin-bottom: 25px;
+      }
+      
+      .remember-me input {
+        width: 16px;
+        height: 16px;
+        margin-right: 6px;
+      }
+      
+      .remember-me label {
+        font-size: 13px;
+      }
+      
+      .btn-login {
+        padding: 13px;
+        font-size: 14px;
+        border-radius: 10px;
+      }
+      
+      .footer-text {
+        margin-top: 20px;
+        padding-top: 12px;
+        font-size: 11px;
+      }
+    }
+    
+    /* Móviles muy pequeños (320px - 375px) */
+    @media (max-width: 375px) {
+      .left-side h1 {
+        font-size: 24px;
+      }
+      
+      .left-side .subtitle {
+        font-size: 13px;
+      }
+      
+      .illustration i {
+        font-size: 70px;
+      }
+      
+      .logo-section img {
+        max-width: 160px;
+      }
+      
+      .welcome-text h2 {
+        font-size: 20px;
+      }
+      
+      .input-container input {
+        padding: 11px 14px 11px 40px;
+        font-size: 13px;
+      }
+      
+      .btn-login {
+        padding: 12px;
+        font-size: 13px;
+      }
+    }
+    
+    /* Ajustes para modo landscape en móviles */
+    @media (max-height: 600px) and (orientation: landscape) {
+      body {
+        padding: 10px;
+        align-items: center;
+      }
+      
+      .login-wrapper {
+        flex-direction: row;
+        max-width: 90%;
+      }
+      
+      .left-side {
+        padding: 20px 15px;
+        display: flex;
+      }
+      
+      .left-side h1 {
+        font-size: 24px;
+        margin-bottom: 5px;
+      }
+      
+      .left-side .subtitle {
+        font-size: 12px;
+        margin-bottom: 10px;
+      }
+      
+      .illustration {
+        margin-top: 10px;
+      }
+      
+      .illustration i {
+        font-size: 60px;
+      }
+      
+      .right-side {
+        padding: 20px 15px;
+      }
+      
+      .logo-section {
+        margin-bottom: 15px;
+      }
+      
+      .logo-section img {
+        max-width: 120px;
+        margin-bottom: 10px;
+      }
+      
+      .welcome-text {
+        margin-bottom: 15px;
+      }
+      
+      .welcome-text h2 {
+        font-size: 18px;
+        margin-bottom: 5px;
+      }
+      
+      .welcome-text p {
+        font-size: 12px;
+      }
+      
+      .form-group {
+        margin-bottom: 12px;
+      }
+      
+      .form-group label {
+        margin-bottom: 5px;
+        font-size: 12px;
+      }
+      
+      .input-container input {
+        padding: 10px 14px 10px 38px;
+        font-size: 13px;
+      }
+      
+      .form-options {
+        margin-bottom: 15px;
+      }
+      
+      .btn-login {
+        padding: 10px;
+        font-size: 13px;
+      }
+      
+      .footer-text {
+        margin-top: 15px;
+        padding-top: 10px;
+        font-size: 11px;
       }
     }
   </style>

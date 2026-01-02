@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -48,13 +47,10 @@
     }
 
     @keyframes float {
-
-      0%,
-      100% {
+      0%, 100% {
         transform: translateY(0) rotate(0deg);
         opacity: 0.15;
       }
-
       50% {
         transform: translateY(-100px) rotate(180deg);
         opacity: 0.25;
@@ -70,13 +66,10 @@
     }
 
     @keyframes drift {
-
-      0%,
-      100% {
+      0%, 100% {
         transform: translate(0, 0) rotate(0deg);
         opacity: 0.12;
       }
-
       50% {
         transform: translate(50px, -80px) rotate(90deg);
         opacity: 0.22;
@@ -92,13 +85,10 @@
     }
 
     @keyframes sway {
-
-      0%,
-      100% {
+      0%, 100% {
         transform: translateX(0) rotate(-10deg);
         opacity: 0.1;
       }
-
       50% {
         transform: translateX(-60px) rotate(10deg);
         opacity: 0.2;
@@ -113,13 +103,10 @@
     }
 
     @keyframes pulse-circle {
-
-      0%,
-      100% {
+      0%, 100% {
         transform: scale(1);
         opacity: 0.3;
       }
-
       50% {
         transform: scale(1.2);
         opacity: 0.1;
@@ -207,11 +194,6 @@
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
     }
 
-    .nav-btn.login {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-    }
-
     .nav-btn.posgrado {
       background: linear-gradient(135deg, #0065B2 0%, #00a8ff 100%);
       color: white;
@@ -265,12 +247,6 @@
       grid-template-columns: 1fr 1fr;
       gap: 20px;
       align-items: end;
-    }
-
-    @media (max-width: 768px) {
-      .search-form {
-        grid-template-columns: 1fr;
-      }
     }
 
     .form-group {
@@ -339,6 +315,7 @@
 
     .table-responsive {
       overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     #tabla_registro_general {
@@ -405,7 +382,6 @@
         opacity: 0;
         transform: translateY(20px);
       }
-
       to {
         opacity: 1;
         transform: translateY(0);
@@ -421,31 +397,369 @@
     .hidden {
       display: none;
     }
+
+    /* ========== RESPONSIVE DESIGN ========== */
+    
+    /* Tablets y dispositivos medianos */
+    @media (max-width: 992px) {
+      body {
+        padding: 15px;
+      }
+
+      .header-title {
+        font-size: 24px;
+      }
+
+      .header-subtitle {
+        font-size: 14px;
+      }
+
+      .logo-container img {
+        max-width: 160px;
+      }
+
+      .main-card {
+        padding: 30px;
+      }
+
+      .search-section {
+        padding: 25px;
+      }
+
+      .table-container {
+        padding: 20px;
+      }
+    }
+
+    /* Móviles y tablets pequeñas */
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+
+      .header-section {
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 15px;
+      }
+
+      .logo-container {
+        margin-bottom: 15px;
+      }
+
+      .logo-container img {
+        max-width: 140px;
+      }
+
+      .header-title {
+        font-size: 20px;
+        line-height: 1.3;
+      }
+
+      .header-subtitle {
+        font-size: 13px;
+      }
+
+      .nav-links {
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .nav-btn {
+        padding: 10px 18px;
+        font-size: 13px;
+        gap: 6px;
+      }
+
+      .main-card {
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 15px;
+      }
+
+      .info-banner {
+        padding: 15px;
+        font-size: 14px;
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+
+      .search-section {
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 12px;
+      }
+
+      .search-title {
+        font-size: 18px;
+        margin-bottom: 20px;
+      }
+
+      .search-form {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+
+      .form-label {
+        font-size: 13px;
+      }
+
+      .form-control {
+        padding: 12px 16px;
+        font-size: 15px;
+      }
+
+      .btn-search {
+        padding: 12px 24px;
+        font-size: 15px;
+        width: 100%;
+      }
+
+      .table-container {
+        padding: 15px;
+        border-radius: 15px;
+      }
+
+      #tabla_registro_general {
+        font-size: 11px;
+      }
+
+      #tabla_registro_general thead th {
+        padding: 10px 6px;
+        font-size: 11px;
+      }
+
+      #tabla_registro_general tbody td {
+        padding: 8px 4px;
+        font-size: 11px;
+      }
+
+      .footer {
+        padding: 20px;
+        font-size: 13px;
+        border-radius: 15px;
+      }
+
+      /* Elementos flotantes más pequeños en móvil */
+      .graduation-cap {
+        font-size: 30px;
+      }
+
+      .book {
+        font-size: 25px;
+      }
+
+      .diploma {
+        font-size: 22px;
+      }
+    }
+
+    /* Móviles pequeños */
+    @media (max-width: 480px) {
+      body {
+        padding: 8px;
+      }
+
+      .header-section {
+        padding: 15px;
+        margin-bottom: 15px;
+      }
+
+      .logo-container img {
+        max-width: 120px;
+      }
+
+      .header-title {
+        font-size: 18px;
+      }
+
+      .header-subtitle {
+        font-size: 12px;
+      }
+
+      .nav-btn {
+        padding: 8px 14px;
+        font-size: 12px;
+        border-radius: 30px;
+      }
+
+      .nav-btn i {
+        font-size: 12px;
+      }
+
+      .main-card {
+        padding: 15px;
+      }
+
+      .info-banner {
+        padding: 12px;
+        font-size: 13px;
+      }
+
+      .search-section {
+        padding: 15px;
+      }
+
+      .search-title {
+        font-size: 16px;
+        margin-bottom: 15px;
+      }
+
+      .form-label {
+        font-size: 12px;
+      }
+
+      .form-control {
+        padding: 10px 14px;
+        font-size: 14px;
+        border-radius: 10px;
+      }
+
+      .btn-search {
+        padding: 11px 20px;
+        font-size: 14px;
+        border-radius: 10px;
+      }
+
+      .table-container {
+        padding: 12px;
+      }
+
+      #tabla_registro_general {
+        font-size: 10px;
+      }
+
+      #tabla_registro_general thead th {
+        padding: 8px 4px;
+        font-size: 10px;
+      }
+
+      #tabla_registro_general tbody td {
+        padding: 6px 3px;
+        font-size: 10px;
+      }
+
+      .footer {
+        padding: 15px;
+        font-size: 12px;
+      }
+
+      /* Ajustes para badges y botones en móvil pequeño */
+      .badge {
+        font-size: 9px !important;
+        padding: 3px 7px !important;
+      }
+
+      /* Ocultar algunos elementos decorativos en móviles muy pequeños */
+      .academic-circle {
+        display: none;
+      }
+    }
+
+    /* Móviles muy pequeños */
+    @media (max-width: 360px) {
+      .header-title {
+        font-size: 16px;
+      }
+
+      .search-title {
+        font-size: 15px;
+      }
+
+      .form-control {
+        font-size: 13px;
+      }
+
+      .btn-search {
+        font-size: 13px;
+      }
+    }
+
+    /* Landscape en móviles */
+    @media (max-height: 600px) and (orientation: landscape) {
+      .header-section {
+        padding: 15px;
+        margin-bottom: 15px;
+      }
+
+      .logo-container {
+        margin-bottom: 10px;
+      }
+
+      .logo-container img {
+        max-width: 100px;
+      }
+
+      .header-title {
+        font-size: 16px;
+      }
+
+      .header-subtitle {
+        font-size: 11px;
+      }
+
+      .nav-links {
+        margin-top: 10px;
+        gap: 8px;
+      }
+
+      .main-card {
+        padding: 15px;
+      }
+
+      .info-banner {
+        padding: 10px;
+        margin-bottom: 15px;
+      }
+
+      .search-section {
+        padding: 15px;
+      }
+
+      .graduation-cap,
+      .book,
+      .diploma {
+        display: none;
+      }
+    }
+
+    /* DataTables responsive customization */
+    @media (max-width: 768px) {
+      .dt-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-bottom: 10px !important;
+      }
+
+      .dt-buttons button {
+        flex: 1;
+        min-width: 80px;
+        font-size: 11px !important;
+        padding: 6px 10px !important;
+      }
+    }
   </style>
 </head>
 
 <body>
   <!-- Fondo animado académico -->
   <div class="animated-background">
-    <!-- Birretes flotantes -->
     <div class="graduation-cap" style="top: 10%; left: 15%; animation-delay: 0s;">🎓</div>
     <div class="graduation-cap" style="top: 60%; left: 80%; animation-delay: 3s;">🎓</div>
     <div class="graduation-cap" style="top: 30%; left: 70%; animation-delay: 7s;">🎓</div>
     <div class="graduation-cap" style="top: 80%; left: 20%; animation-delay: 5s;">🎓</div>
     <div class="graduation-cap" style="top: 45%; left: 40%; animation-delay: 9s;">🎓</div>
 
-    <!-- Libros flotantes -->
     <div class="book" style="top: 20%; left: 50%; animation-delay: 2s;">📚</div>
     <div class="book" style="top: 70%; left: 60%; animation-delay: 6s;">📚</div>
     <div class="book" style="top: 40%; left: 10%; animation-delay: 4s;">📚</div>
     <div class="book" style="top: 85%; left: 75%; animation-delay: 8s;">📚</div>
 
-    <!-- Diplomas flotantes -->
     <div class="diploma" style="top: 15%; left: 85%; animation-delay: 1s;">📜</div>
     <div class="diploma" style="top: 55%; left: 25%; animation-delay: 5s;">📜</div>
     <div class="diploma" style="top: 75%; left: 45%; animation-delay: 7s;">📜</div>
 
-    <!-- Círculos decorativos -->
     <div class="academic-circle" style="top: 10%; left: 5%; width: 150px; height: 150px; animation-delay: 0s;"></div>
     <div class="academic-circle" style="top: 50%; right: 10%; width: 200px; height: 200px; animation-delay: 3s;"></div>
     <div class="academic-circle" style="bottom: 15%; left: 30%; width: 120px; height: 120px; animation-delay: 6s;"></div>
@@ -461,7 +775,6 @@
       <p class="header-subtitle">Seguimiento de Expediente Pregrado</p>
 
       <div class="nav-links">
-
         <a href="seguimiento_posgrado.php" class="nav-btn posgrado">
           <i class="fa fa-graduation-cap"></i>
           <span>Seguimiento Posgrado</span>
@@ -923,7 +1236,10 @@
     <div style="margin: 25px 10px 20px 10px;">
       <h4 style="color: #0065B2; font-weight: 700; margin-bottom: 18px; display: flex; align-items: center; gap: 8px; font-size: 16px;">
         <i class="fas fa-list-alt"></i> Detalle de Expedientes
+        
       </h4>
+              <p><b>Si esta en celular desplace horizontalmente o hacia la derecha para ver la fecha de colación.</b></p>
+
       <div class="table-responsive">
         <table id="tabla_registro_general" class="table table-striped table-bordered" style="width:100%; font-size: 12px;">
           <thead style="background: linear-gradient(135deg, #0065B2, #00a8ff); color: white;">

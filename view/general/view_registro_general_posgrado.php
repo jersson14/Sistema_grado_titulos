@@ -862,6 +862,14 @@
                 <label for="" style="font-size:small;">Nro. Oficio<b style="color:red">(*)</b>:</label>
                 <input type="text" class="form-control" id="txt_nro_oficio">                           
             </div>
+             <div class="col-6 form-group">
+                <label for="" style="font-size:small;">Fecha de matricula:<b style="color:red">(*)</b>:</label>
+                <input type="date" class="form-control" id="txt_fecha_matricula">
+            </div>
+            <div class="col-6 form-group">
+                <label for="" style="font-size:small;">Fecha de Egreso<b style="color:red">(*)</b>:</label>
+                <input type="date" class="form-control" id="txt_fecha_egreso">
+            </div>
            
        </div>
        </div>

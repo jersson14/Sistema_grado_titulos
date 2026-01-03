@@ -22,13 +22,15 @@
     $nrocred = strtoupper(htmlspecialchars($_POST['nrocred'],ENT_QUOTES,'UTF-8'));
     $nrooficio = strtoupper(htmlspecialchars($_POST['nrooficio'],ENT_QUOTES,'UTF-8'));
     $fechasecre = strtoupper(htmlspecialchars($_POST['fechasecre'],ENT_QUOTES,'UTF-8'));
+    $fechamatri = strtoupper(htmlspecialchars($_POST['fechamatri'], ENT_QUOTES, 'UTF-8'));
+    $fechaegre = strtoupper(htmlspecialchars($_POST['fechaegre'], ENT_QUOTES, 'UTF-8'));
     $idusuario = strtoupper(htmlspecialchars($_POST['idusuario'],ENT_QUOTES,'UTF-8'));
     $correo = strtoupper(htmlspecialchars($_POST['correo'], ENT_QUOTES, 'UTF-8'));
     $fechacol = strtoupper(htmlspecialchars($_POST['fechacol'], ENT_QUOTES, 'UTF-8'));
     $nom = strtoupper(htmlspecialchars($_POST['nom'], ENT_QUOTES, 'UTF-8'));
     $ape = strtoupper(htmlspecialchars($_POST['ape'], ENT_QUOTES, 'UTF-8'));
     $mate = strtoupper(htmlspecialchars($_POST['mate'], ENT_QUOTES, 'UTF-8'));
-    $consulta = $MRGPG->Agregar_diploma($idexpe,$id,$fechacu,$fechafirma,$numreso,$fechareso,$diplonum,$regis,$regilibro,$regisfolio,$tipodiplo,$fechainiciotra,$nrocred,$nrooficio,$fechasecre,$idusuario);
+    $consulta = $MRGPG->Agregar_diploma($idexpe,$id,$fechacu,$fechafirma,$numreso,$fechareso,$diplonum,$regis,$regilibro,$regisfolio,$tipodiplo,$fechainiciotra,$nrocred,$nrooficio,$fechasecre,$fechamatri,$fechaegre,$idusuario);
 
     header('Content-Type: application/json');
 

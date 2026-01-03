@@ -629,20 +629,26 @@ function Cargar_Select_Cede(){
     type: 'POST',
   }).done(function(resp){
     let data = JSON.parse(resp);
-    let cadena = "<option value=''>Seleccione</option>"; // Agrega la opción "Seleccione" al inicio
+    let cadena = "";
+    
     if(data.length > 0){
       for (let i = 0; i < data.length; i++) {
-        cadena += "<option value='" + data[i][0] + "'>" + data[i][1] + "</option>";    
+        // ✅ La primera opción (i === 0) se marca como selected
+        if(i === 0) {
+          cadena += "<option value='" + data[i][0] + "' selected>" + data[i][1] + "</option>";
+        } else {
+          cadena += "<option value='" + data[i][0] + "'>" + data[i][1] + "</option>";    
+        }
       }
     } else {
       cadena += "<option value=''>No hay cedes en la base de datos</option>";
     }
+    
     document.getElementById('select_cede').innerHTML = cadena;
     document.getElementById('txt_cede_editar').innerHTML = cadena;
     document.getElementById('txtfilial').innerHTML = cadena;
   });
 }
-
 
 
 //TRAER TODO LAS CARRERAS
@@ -767,6 +773,9 @@ function AbrirModal(){
     let fechainiciotra = document.getElementById('txt_fecha_inicio_tra').value;
     let nrocred = document.getElementById('txt_nro_credi').value;
     let nrooficio = document.getElementById('txt_nro_oficio').value;
+    let fechamatri = document.getElementById('txt_fecha_matricula').value;
+    let fechaegre = document.getElementById('txt_fecha_egreso').value;
+
     let fechasecre = document.getElementById('txt_fecha_secre').value;
     let idusuario = document.getElementById('txtprincipalid').value;
     let correo = document.getElementById('txt_correo').value;
@@ -784,13 +793,79 @@ function AbrirModal(){
     ) {
       return Swal.fire("Mensaje de Advertencia", "Tiene campos vacíos", "warning");
     }
+  if (fechamatri.length === 0 || fechaegre.length === 0) {
+    return Swal.fire("Mensaje de Advertencia", "La fecha de matrícula y fecha de egreso son importantes", "warning");
+  }
+
+   // Función para validar si una fecha es válida
+  function esFechaValida(fechaString) {
+    let fecha = new Date(fechaString);
+    return fecha instanceof Date && !isNaN(fecha) && fechaString.match(/^\d{4}-\d{2}-\d{2}$/);
+  }
+
+  // Validar que todas las fechas sean válidas
+  let fechasAValidar = [
+    { valor: fechacu, nombre: "fecha de culminación" },
+    { valor: fechafirma, nombre: "fecha de firma" },
+    { valor: fechareso, nombre: "fecha de resolución" },
+    { valor: fechainiciotra, nombre: "fecha de inicio de trámite" },
+    { valor: fechasecre, nombre: "fecha de secretaría" },
+    { valor: fechamatri, nombre: "fecha de matrícula" },
+    { valor: fechaegre, nombre: "fecha de egreso" },
+    { valor: fechacol, nombre: "fecha de colegiatura" }
+  ];
+
+  for (let i = 0; i < fechasAValidar.length; i++) {
+    if (!esFechaValida(fechasAValidar[i].valor)) {
+      return Swal.fire("Mensaje de Advertencia", `La ${fechasAValidar[i].nombre} no es válida. Use el formato AAAA-MM-DD`, "warning");
+    }
+  }
+    // Validar que nrocred no sea menor a 210
+  if (nrocred < 48) {
+    return Swal.fire("Mensaje de Advertencia", "El número de créditos no puede ser menor a 48 creditos", "warning");
+  }
+   let fechaMatricula = new Date(fechamatri);
+  let fechaEgreso = new Date(fechaegre);
+  let fechaInicioTramite = new Date(fechainiciotra);
+  let añoActual = new Date().getFullYear();
+
+
+
+  // Validar que fecha de matrícula no sea mayor a fecha de egreso
+  if (fechaMatricula > fechaEgreso) {
+    return Swal.fire("Mensaje de Advertencia", "La fecha de matrícula no puede ser mayor a la fecha de egreso", "warning");
+  }
+
+  // Validar que la fecha de egreso no sea menor a la fecha de matrícula
+  if (fechaEgreso < fechaMatricula) {
+    return Swal.fire("Mensaje de Advertencia", "La fecha de egreso no puede ser menor a la fecha de matrícula", "warning");
+  }
+
+  // Validar que la diferencia entre matrícula y egreso sea >= 5 años (CORREGIDO)
+  let diferenciaAnios = fechaEgreso.getFullYear() - fechaMatricula.getFullYear();
+  let mesesDiferencia = fechaEgreso.getMonth() - fechaMatricula.getMonth();
+  let diasDiferencia = fechaEgreso.getDate() - fechaMatricula.getDate();
+  
+  // Ajustar si los meses o días hacen que no se complete el año
+  if (mesesDiferencia < 0 || (mesesDiferencia === 0 && diasDiferencia < 0)) {
+    diferenciaAnios--;
+  }
+  
+  if (diferenciaAnios < 1) {
+    return Swal.fire("Mensaje de Advertencia", "El período entre la fecha de matrícula y la fecha de egreso debe ser de al menos 5 años completos", "warning");
+  }
+
+  // Validar que la fecha de inicio de trámite no sea antes de la fecha de egreso
+  if (fechaInicioTramite < fechaEgreso) {
+    return Swal.fire("Mensaje de Advertencia", "La fecha de inicio de trámite no puede ser antes de la fecha de egreso", "warning");
+  }
 
     $.ajax({
       url: "../controller/registro_general_posgrado/controlador_agregar_diploma.php",
       type: 'POST',
       data: {
           idexpe, id, fechacu, fechafirma, numreso, fechareso, diplonum, regis, regilibro, regisfolio,
-          tipodiplo, fechainiciotra, nrocred, nrooficio, fechasecre, idusuario, correo, fechacol, nom, ape, mate
+          tipodiplo, fechainiciotra, nrocred, nrooficio, fechasecre,fechamatri, fechaegre, idusuario, correo, fechacol, nom, ape, mate
       }
     }).done(function(resp) {
       if (resp.status) {
@@ -802,10 +877,10 @@ function AbrirModal(){
 
         console.log(contadorFolio3,contadorLibro3);
         Swal.fire("Mensaje de Confirmación", resp.message, "success");
-        var url = "../view/MPDF/REPORTE/maestria.php?codigo=" + id + "&tamaño=37&tamaño2=97#zoom=100%";
+        var url = "../view/MPDF/REPORTE/maestria.php?codigo=" + id + "&tamaño=45&tamaño2=97#zoom=100%";
         tbl_general_posgrado.ajax.reload();
         $("#modal_registrar_diploma").modal('hide');
-        var newWindow = window.open(url, "DIPLOMA TITULO PROFESIONAL", "scrollbars=NO");
+        var newWindow = window.open(url, "DIPLOMA POSGRADO", "scrollbars=NO");
         if (newWindow) {
           newWindow.moveTo(0, 0);
           newWindow.resizeTo(screen.width, screen.height);
@@ -1418,7 +1493,7 @@ $('#tabla_registro_general_posgrado').on('click','.diploma',function(){
   var url = "../view/MPDF/REPORTE/maestria.php?codigo=" + encodeURIComponent(data.Id_Diploma) + "&tamaño=" + encodeURIComponent(tamaño)+  "&tamaño2=" + encodeURIComponent(tamaño2)+"#zoom=100%";
 
 // Abrir una nueva ventana con la URL construida
-var newWindow = window.open(url, "DIPLOMA MAESTRIA", "scrollbars=NO");
+var newWindow = window.open(url, "DIPLOMA POSGRADO", "scrollbars=NO");
 
 // Asegurarse de que la ventana se abre en tamaño máximo
 if (newWindow) {

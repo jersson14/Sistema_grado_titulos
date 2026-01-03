@@ -140,9 +140,9 @@
             }
             conexionBD::cerrar_conexion();
         }
-        public function Agregar_diploma($idexpe,$id,$fechacu,$fechafirma,$numreso,$fechareso,$diplonum,$regis,$regilibro,$regisfolio,$tipodiplo,$fechainiciotra,$nrocred,$nrooficio,$fechasecre,$idusuario){
+        public function Agregar_diploma($idexpe,$id,$fechacu,$fechafirma,$numreso,$fechareso,$diplonum,$regis,$regilibro,$regisfolio,$tipodiplo,$fechainiciotra,$nrocred,$nrooficio,$fechasecre,$fechamatri,$fechaegre,$idusuario){
             $c = conexionBD::conexionPDO();
-            $sql = "CALL SP_AGREGAR_DIPLOMA_POSGRADO(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            $sql = "CALL SP_AGREGAR_DIPLOMA_POSGRADO(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             $arreglo = array();
             $query  = $c->prepare($sql);
             $query ->bindParam(1,$idexpe);
@@ -160,7 +160,9 @@
             $query ->bindParam(13,$nrocred);
             $query ->bindParam(14,$nrooficio);
             $query ->bindParam(15,$fechasecre);
-            $query ->bindParam(16,$idusuario);
+            $query ->bindParam(16,$fechamatri);
+            $query ->bindParam(17,$fechaegre);
+            $query ->bindParam(18,$idusuario);
             $query->execute();
             if($row = $query->fetchColumn()){
                 return $row;

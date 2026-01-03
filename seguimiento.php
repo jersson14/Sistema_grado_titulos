@@ -986,7 +986,6 @@
             console.log("Datos detalle:", datadetalle);
 
             if (datadetalle.length > 0) {
-              datadetalle.sort((a, b) => new Date(b.expe) - new Date(a.expe));
 
               let ultimoEstado = datadetalle[0].estadoexpediente;
               let ultimaSede = datadetalle[0].Id_cede;

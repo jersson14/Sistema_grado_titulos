@@ -65,6 +65,7 @@
     $nrocre = strtoupper(htmlspecialchars($_POST['nrocre'],ENT_QUOTES,'UTF-8'));
     $nrooficio = strtoupper(htmlspecialchars($_POST['nrooficio'],ENT_QUOTES,'UTF-8'));
     $fechasecre = strtoupper(htmlspecialchars($_POST['fechasecre'],ENT_QUOTES,'UTF-8'));
+    $ciclo_tra = strtoupper(htmlspecialchars($_POST['ciclo_tra'],ENT_QUOTES,'UTF-8'));
 
     $idusuario = strtoupper(htmlspecialchars($_POST['idusuario'],ENT_QUOTES,'UTF-8'));
 

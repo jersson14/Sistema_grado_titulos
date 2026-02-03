@@ -877,7 +877,7 @@ function AbrirModal(){
 
         console.log(contadorFolio3,contadorLibro3);
         Swal.fire("Mensaje de Confirmación", resp.message, "success");
-        var url = "../view/MPDF/REPORTE/maestria.php?codigo=" + id + "&tamaño=45&tamaño2=97#zoom=100%";
+        var url = "../view/MPDF/REPORTE/maestria.php?codigo=" + id + "&tamaño=45&tamaño2=100#zoom=100%";
         tbl_general_posgrado.ajax.reload();
         $("#modal_registrar_diploma").modal('hide');
         var newWindow = window.open(url, "DIPLOMA POSGRADO", "scrollbars=NO");
@@ -1484,7 +1484,7 @@ $('#tabla_registro_general_posgrado').on('click','.diploma',function(){
   var data = tbl_general_posgrado.row($(this).parents('tr')).data();
 
   var tamaño = 45;
-  var tamaño2 = 97;
+  var tamaño2 = 100;
 
 
   if(tbl_general_posgrado.row(this).child.isShown()){

@@ -367,11 +367,8 @@ $mpdf->WriteHTML('<h1 style="text-align:center; font-size: '.$tamaño.'px;margin
         $mpdf->SetXY(0, 67.5);
         $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 14.67px;margin-left: -525px;font-family: timesnewroman;">'.$row1['Registro_numero'].'</h1>');
 
-        $mpdf->SetXY(0, 68);
-        $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 14.67px;margin-left: 300px;font-family: timesnewroman;">'.$row1['Abreviatura_modo_estudio'].'</h1>');
-
-        $mpdf->SetXY(0, 68);
-        $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 14.67px;margin-left: 680px;font-family: timesnewroman;">'.$row1['Diploma_tipo_emitido'].'</h1>');
+     $mpdf->SetXY(0, 68);
+        $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 14.67px;margin-left: 480px;font-family: timesnewroman;">'.$row1['Diploma_tipo_emitido'].'</h1>');
      
         $mpdf->SetXY(0, 118);
         $mpdf->WriteHTML('<h1 style="text-align:center; font-size: 14.67px; margin-left: -680px; font-style: italic;">' . $autoridad2 . '</h1>');

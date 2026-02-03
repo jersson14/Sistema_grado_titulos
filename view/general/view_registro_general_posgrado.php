@@ -1270,11 +1270,11 @@
             <div class="col-12 form-group">
             <input type="text" id="txt_id_expediente" hidden>
                 <label for="">Tamaño de letra:</label>
-                <input class="form-control" type="number" id="txt_tamaño" value="37">
+                <input class="form-control" type="number" id="txt_tamaño" value="45">
               </div>
               <div class="col-12 form-group">
               <label for="">Posición:</label>
-                <input class="form-control" type="number" id="txt_posición" value="97">
+                <input class="form-control" type="number" id="txt_posición" value="100">
               </div>
               <div class="col-12 form-group">
               <label for="">VER VIDEO TUTORIAL:</label>

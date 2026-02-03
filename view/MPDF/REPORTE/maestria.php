@@ -68,10 +68,10 @@ $query="SELECT
 	modalidad_posgrado.created_at, 
 	modalidad_posgrado.updated_at, 
 	diploma_posgrado.Id_Diploma, 
-	diploma_posgrado.fecha_consejo_uni, 
-	diploma_posgrado.fecha_firma, 
+	diploma_posgrado.fecha_consejo_uni AS FECHA_CONSEJO, 
+	diploma_posgrado.fecha_firma AS FECHAFIRMA, 
 	diploma_posgrado.Resolucion_numero, 
-	diploma_posgrado.fecha_resolucion, 
+	diploma_posgrado.fecha_resolucion as FECHA_RESO, 
 	diploma_posgrado.Diploma_numero, 
 	diploma_posgrado.Registro_numero, 
 	diploma_posgrado.Registro_libro, 
@@ -84,8 +84,8 @@ $query="SELECT
 	diploma_posgrado.dia_trand, 
 	CONCAT_WS( ' ', diploma_posgrado.años_trans, ' años', diploma_posgrado.mes_trans, ' meses y', diploma_posgrado.dia_trand, ' días' ) AS tiempotrancurrido, 
 	diploma_posgrado.Nro_creditos, 
-	diploma_posgrado.Nro_oficio, 
-	diploma_posgrado.fecha_secreatria_general, 
+	diploma_posgrado.Nro_oficio AS OFICIO, 
+	diploma_posgrado.fecha_secreatria_general AS FECHA_SECRE, 
 	diploma_posgrado.id_usuario, 
 	diploma_posgrado.id_modalidad, 
 	diploma_posgrado.id_colacion, 
@@ -170,7 +170,7 @@ FROM
 WHERE
 	diploma_posgrado.Id_Diploma = '$codigo'";
 // Ruta al archivo PDF existente que deseas modificar
-$archivoPdf = 'maestria.pdf';
+$archivoPdf = 'maestria2.pdf';
 $fontDir = __DIR__ . '/../vendor/mpdf/mpdf/ttfonts/';
 
 // Crear una instancia de mPDF con orientación paisaje
@@ -206,7 +206,7 @@ for ($i = 1; $i <= $pagecount; $i++) {
     // Contenido específico para la primera página
     if ($i == 1) {
 
-        $fecha_consejo_uni = $row1['fecha_consejo_uni'];
+        $fecha_consejo_uni = $row1['FECHA_CONSEJO'];
         // Crear una instancia de DateTime a partir de la fecha proporcionada
         $date = new DateTime($fecha_consejo_uni);
                 // Obtener el día, mes y año por separado
@@ -222,18 +222,23 @@ for ($i = 1; $i <= $pagecount; $i++) {
         $month = $months[(int)$monthNum];
         
         // Utilizar las variables para insertar en el PDF
-        $mpdf->SetXY(10, 68);
+        $mpdf->SetXY(10, 64);
         $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 23.94px;margin-left: -475px;font-family: mtcorsva;">' . $day . '</h1>');
         
-        $mpdf->SetXY(50, 70);
+        $mpdf->SetXY(50, 66);
         $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 29.26px;margin-left: -185px;font-family: mtcorsva;">' . $month . '</h1>');
         
-        $mpdf->SetXY(50, 71);
+        $mpdf->SetXY(50, 67.5);
         $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 26px;margin-left: 170px;font-family: eduardian;">' . $year . '</h1>');
-        $mpdf->SetXY(0, 84.5);
+        $mpdf->SetXY(0, 85);
         $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 41px;margin-left: -150px;font-family: mtcorsva;">'.$row1['posgrado'].'</h1>');
 
-        $estudiante = ucwords(mb_strtolower($row1['Estudiante'], 'UTF-8'));
+        $estudiante = mb_convert_case(
+    mb_strtolower($row1['Estudiante'], 'UTF-8'),
+    MB_CASE_TITLE,
+    'UTF-8'
+);
+
         $mpdf->SetXY(0, $tamaño2);
         $mpdf->WriteHTML('<h1 style="text-align:center;font-size: '.$tamaño.'px;margin-left: -150px;font-family: mtcorsva;">'.$estudiante.'</h1>');
 
@@ -242,7 +247,7 @@ for ($i = 1; $i <= $pagecount; $i++) {
 
 
 
-        $fecha_firma = $row1['fecha_firma'];
+        $fecha_firma = $row1['FECHAFIRMA'];
         // Crear una instancia de DateTime a partir de la fecha proporcionada
         $date = new DateTime($fecha_firma);
                 // Obtener el día, mes y año por separado
@@ -256,13 +261,13 @@ for ($i = 1; $i <= $pagecount; $i++) {
             9 => 'septiembre', 10 => 'octubre', 11 => 'noviembre', 12 => 'diciembre'
         ];
         $month = $months[(int)$monthNum];
-        $mpdf->SetXY(0, 130);
+        $mpdf->SetXY(0, 134);
         $mpdf->WriteHTML('<h1 style="font-size: 23.94px;margin-left: 190px;font-family: mtcorsva;">'.$day.'</h1>');
 
-        $mpdf->SetXY(0, 128);
+        $mpdf->SetXY(0, 131.5);
         $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 29.26px;margin-left: -210px;font-family: mtcorsva;">'.$month.'</h1>');
 
-        $mpdf->SetXY(0, 129);
+        $mpdf->SetXY(0, 132.5);
         $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 26px;margin-left: 180px;font-family: eduardian;">'.$year.'</h1>');
 
             $autoridad1 = mb_convert_case($row1['Autoridad_1'], MB_CASE_TITLE, "UTF-8");
@@ -299,14 +304,22 @@ for ($i = 1; $i <= $pagecount; $i++) {
             $titulo = 'Director de la Escuela de Posgrado';
         } 
         
-        $autoridad3 = str_replace(['Del', 'De La', 'La'], ['del', 'de la', 'la'], $autoridad3);
-
-        // Generar el contenido en el PDF
-        $mpdf->SetXY(0, 160);
-        $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 12px;margin-left: 460px;">'. $autoridad3 .'</h1>');
+// Normalizar a minúsculas
+        $autoridad3 = mb_strtolower($autoridad3, 'UTF-8');
         
-        $mpdf->SetXY(0, 162);
-        $mpdf->WriteHTML('<p style="text-align:center;font-size: 17px;margin-left: 440px;font-family: tempting;">' . $titulo . '</p>');
+        // Reemplazar palabras específicas con minúsculas exactas
+        $autoridad3 = str_replace(['del', 'de la', 'la'], ['del', 'de la', 'la'], $autoridad3);
+        
+        // Poner solo iniciales en mayúscula
+        $autoridad3 = mb_convert_case($autoridad3, MB_CASE_TITLE, 'UTF-8');
+        
+        // Generar el contenido en el PDF
+        $mpdf->SetXY(0, 173);
+        $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 12px;margin-left: 460px;">' . $autoridad3 . '</h1>');
+
+        
+        $mpdf->SetXY(0, 174);
+        $mpdf->WriteHTML('<p style="text-align:center;font-size: 17px;margin-left: 455px;font-family: tempting;">' . $titulo . '</p>');
 
 
         $autoridad2 = str_replace(['Del', 'De La', 'La'], ['del', 'de la', 'la'], $autoridad2);
@@ -317,19 +330,19 @@ for ($i = 1; $i <= $pagecount; $i++) {
         // Convertir a título con iniciales en mayúscula y resto en minúscula, manteniendo caracteres acentuados correctamente
         $autoridad2 = mb_convert_case($autoridad2, MB_CASE_TITLE, "UTF-8");
         
-        $mpdf->SetXY(0, 170);
-        $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 12px;margin-left: -150px;">'. $autoridad2 .'</h1>');
+        $mpdf->SetXY(0, 174);
+        $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 12px;margin-left: -180px;">'. $autoridad2 .'</h1>');
 
-        $mpdf->SetXY(0, 172);
-        $mpdf->WriteHTML('<p style="text-align:center;font-size: 17px;margin-left: -155px;font-family: tempting;">' . $titulo2 . '</p>');
+        $mpdf->SetXY(0, 176);
+        $mpdf->WriteHTML('<p style="text-align:center;font-size: 17px;margin-left: -180px;font-family: tempting;">' . $titulo2 . '</p>');
         
 
-        $mpdf->SetXY(0,170);
-        $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 12px;margin-left: -705px;">' . $autoridad1. '</h1>');
+        $mpdf->SetXY(0,174);
+        $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 12px;margin-left: -778px;">' . $autoridad1. '</h1>');
         
         
-        $mpdf->SetXY(0, 172);
-        $mpdf->WriteHTML('<p style="text-align:center;font-size: 17px;margin-left: -685px;font-family: tempting;">' . $titulo1. '</p>');
+        $mpdf->SetXY(0, 174);
+        $mpdf->WriteHTML('<p style="text-align:center;font-size: 17px;margin-left: -770px;font-family: tempting;">' . $titulo1. '</p>');
     } elseif ($i == 2) {
         // Contenido específico para la segunda página
         $mpdf->SetXY(10, 42.5);
@@ -339,63 +352,61 @@ for ($i = 1; $i <= $pagecount; $i++) {
         $mpdf->WriteHTML('<h1 style="font-size: 14.67px;margin-left: 680px;font-family: timesnewroman;">0'.$row1['emp_cod'].'</h1>');
 
 
-        $mpdf->SetXY(0, 49.5);
+        $mpdf->SetXY(0, 51);
         $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 14.67px;margin-left: -665px;font-family: timesnewroman;">C.U.</h1>');
 
   $resolucionNumero = $row1['Resolucion_numero'];
         $formattedResolucion = str_pad($resolucionNumero, 4, '0', STR_PAD_LEFT);
-        $mpdf->SetXY(0, 49.5);
+        $mpdf->SetXY(0, 51);
         $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 14.67px;margin-left: -510px;font-family: timesnewroman;">'.$formattedResolucion.'</h1>');
 
        // Asumiendo que $row1['fecha_resolucion'] contiene una fecha en formato 'Y-m-d' (por ejemplo, '2024-07-13')
-        $fecha_resolucion = $row1['fecha_resolucion'];
+        $fecha_resolucion = $row1['FECHA_RESO'];
         // Dividir la fecha en componentes (año, mes, día)
         list($year, $month, $day) = explode('-', $fecha_resolucion);
         // Formatear la fecha en el formato deseado 'día-mes-año'
         $formattedDate = $day . '-' . $month . '-' . $year;
-        $mpdf->SetXY(0, 49.5);
+        $mpdf->SetXY(0, 51);
         $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 13px;margin-left: -225px;font-family: timesnewroman;">' . $formattedDate . '</h1>');
 
 
-        $mpdf->SetXY(0, 49.5);
+        $mpdf->SetXY(0, 51);
         $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 14.67px;margin-left: 185px;font-family: timesnewroman;">D.N.I</h1>');
 
-        $mpdf->SetXY(0, 49.5);
+        $mpdf->SetXY(0, 51);
         $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 14.67px;margin-left: 600px;font-family: timesnewroman;">'.$row1['Dni'].'</h1>');
 
 
-        $mpdf->SetXY(0, 57);
+        $mpdf->SetXY(0, 59);
 $registro = str_pad($row1['Registro_libro'], 3, '0', STR_PAD_LEFT);
 $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 14.67px;margin-left: -630px;font-family: timesnewroman;">'.$registro.'</h1>');
 
         
-        $mpdf->SetXY(0, 57);
+        $mpdf->SetXY(0, 59);
         $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 14.67px;margin-left: -260px;font-family: timesnewroman;">'.$row1['Registro_folio'].'</h1>');
 
-        $mpdf->SetXY(0, 57);
+        $mpdf->SetXY(0, 59);
         $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 14.67px;margin-left: 165px;font-family: timesnewroman;">'.$row1['Abreviatura_grado'].'</h1>');
 
         $modalidad = ucwords(strtolower($row1['Modalidad']));
 
-        $mpdf->SetXY(0, 57);
+        $mpdf->SetXY(0, 59);
         $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 14.67px;margin-left: 585px;font-family: timesnewroman;">'.$modalidad.'</h1>');
 
-        $mpdf->SetXY(0, 64);
+        $mpdf->SetXY(0, 67.5);
         $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 14.67px;margin-left: -525px;font-family: timesnewroman;">'.$row1['Registro_numero'].'</h1>');
 
-        $mpdf->SetXY(0, 64);
-        $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 14.67px;margin-left: 300px;font-family: timesnewroman;">'.$row1['Abreviatura_modo_estudio'].'</h1>');
-
-        $mpdf->SetXY(0, 64);
-        $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 14.67px;margin-left: 680px;font-family: timesnewroman;">'.$row1['Diploma_tipo_emitido'].'</h1>');
+   
+        $mpdf->SetXY(0, 68);
+        $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 14.67px;margin-left: 480px;font-family: timesnewroman;">'.$row1['Diploma_tipo_emitido'].'</h1>');
      
-        $mpdf->SetXY(0, 112);
+        $mpdf->SetXY(0, 118);
         $mpdf->WriteHTML('<h1 style="text-align:center; font-size: 14.67px; margin-left: -680px; font-style: italic;">'. $autoridad2 .'</h1>');
-        $mpdf->SetXY(0, 115);
+        $mpdf->SetXY(0, 120);
         $mpdf->WriteHTML('<p style="text-align:center;font-size: 17px;margin-left: -680px;font-family: tempting;">' . $titulo2 . '</p>');
 
 
-        $fecha_secretaria = $row1['fecha_secreatria_general'];
+        $fecha_secretaria = $row1['FECHA_SECRE'];
         // Crear una instancia de DateTime a partir de la fecha proporcionada
         $date = new DateTime($fecha_secretaria);
                 // Obtener el día, mes y año por separado
@@ -409,13 +420,13 @@ $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 14.67px;margin-left: -
             9 => 'septiembre', 10 => 'octubre', 11 => 'noviembre', 12 => 'diciembre'
         ];
         $month = $months[(int)$monthNum];
-        $mpdf->SetXY(0, 78);
+        $mpdf->SetXY(0, 84.5);
         $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 14.67px;margin-left: -850px;font-family: timesnewroman;">'.$day.'</h1>');
 
-        $mpdf->SetXY(0, 78);
+        $mpdf->SetXY(0, 84.5);
         $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 14.67px;margin-left: -580px;font-family: timesnewroman;">'.$month.'</h1>');
 
-        $mpdf->SetXY(0, 78);
+        $mpdf->SetXY(0, 84.5);
         $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 14.67px;margin-left: -275px;font-family: timesnewroman;">'.$year.'</h1>');
 
 

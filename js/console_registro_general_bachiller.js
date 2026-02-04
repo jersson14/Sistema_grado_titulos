@@ -103,6 +103,9 @@ function listar_expedientes_bachiller() {
         render: function (data, type, row) {
           // Concatenamos Modo_obtencion con ciclo_tesis
           let ciclo = row.ciclo_tesis ? row.ciclo_tesis : "";
+          if(!ciclo || ciclo == "0"){
+              return data;
+          }
           return `${data} - (Ciclo ${ciclo})`;
         },
       },
@@ -300,6 +303,9 @@ function listar_expedientes_alfabetico() {
         render: function (data, type, row) {
           // Concatenamos Modo_obtencion con ciclo_tesis
           let ciclo = row.ciclo_tesis ? row.ciclo_tesis : "";
+          if(!ciclo || ciclo == "0"){
+              return data;
+          }
           return `${data} - (Ciclo ${ciclo})`;
         },
       },
@@ -505,6 +511,9 @@ function listar_fechas_busqueda() {
         render: function (data, type, row) {
           // Concatenamos Modo_obtencion con ciclo_tesis
           let ciclo = row.ciclo_tesis ? row.ciclo_tesis : "";
+          if(!ciclo || ciclo == "0"){
+              return data;
+          }
           return `${data} - (Ciclo ${ciclo})`;
         },
       },
@@ -705,6 +714,9 @@ function listar_colacion() {
         render: function (data, type, row) {
           // Concatenamos Modo_obtencion con ciclo_tesis
           let ciclo = row.ciclo_tesis ? row.ciclo_tesis : "";
+          if(!ciclo || ciclo == "0"){
+              return data;
+          }
           return `${data} - (Ciclo ${ciclo})`;
         },
       },

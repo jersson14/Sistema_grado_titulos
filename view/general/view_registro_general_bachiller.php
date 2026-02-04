@@ -818,6 +818,7 @@
                                                                 <label for="" style="font-size:small;">Ciclo de Investigación<b style="color:red">(*)</b>:</label>
                                                                 <select class="form-control" id="select_ciclo_investigacion_editar" style="width:100%">
                                                                     <option value="">-- Seleccione --</option>
+                                                                    <option value="">Ninguno</option>
                                                                     <option value="XII">XII</option>
                                                                     <option value="XI">XI</option>
                                                                     <option value="X">X</option>
@@ -978,6 +979,7 @@
                         <label for="" style="font-size:small;">Ciclo de Investigación<b style="color:red">(*)</b>:</label>
                         <select class="form-control" id="select_ciclo_investigacion" style="width:100%">
                             <option value="">-- Seleccione --</option>
+                            <option value="">Ninguno</option>
                             <option value="XII">XII</option>
                             <option value="XI">XI</option>
                             <option value="X">X</option>

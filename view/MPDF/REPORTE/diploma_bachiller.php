@@ -365,7 +365,11 @@ $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 13px;margin-left: -225
         }else if($modalidad=="CURSO &QUOT;TRABAJO DE INVESTIGACIÓN&QUOT;"){
 
             $mpdf->SetXY(0, 60.5);
-            $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 9px;margin-left: 585px;font-family: timesnewroman;">CURSO "TRABAJO DE INVESTIGACIÓN" (Ciclo '.$row1['ciclo_tesis'].')</h1>');
+            $texto_modalidad = 'CURSO "TRABAJO DE INVESTIGACIÓN"';
+            if (!empty($row1['ciclo_tesis']) && $row1['ciclo_tesis'] != '0') {
+                $texto_modalidad .= ' (Ciclo ' . $row1['ciclo_tesis'] . ')';
+            }
+            $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 9px;margin-left: 585px;font-family: timesnewroman;">' . $texto_modalidad . '</h1>');
         }else{
             $mpdf->SetXY(0, 60.5);
             $mpdf->WriteHTML('<h1 style="text-align:center;font-size: 10.5px;margin-left: 585px;font-family: timesnewroman;">' . $modalidad . '</h1>');

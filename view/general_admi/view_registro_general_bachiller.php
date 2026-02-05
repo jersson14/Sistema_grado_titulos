@@ -1,5 +1,6 @@
 <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
 <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
+<script src="../js/ciclo_investigacion_auto.js?rev=<?php echo time(); ?>"></script>
 <script src="../js/console_registro_general_bachiller.js?rev=<?php echo time(); ?>"></script>
 <link rel="stylesheet" href="../plantilla/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
 

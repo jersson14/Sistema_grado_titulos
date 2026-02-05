@@ -1,3 +1,52 @@
+// ============================================
+// AUTO-SELECCIÓN DE CICLO DE INVESTIGACIÓN
+// ============================================
+/**
+ * Función para establecer el ciclo de investigación automáticamente
+ * según el ID de la escuela (programa académico)
+ */
+function establecerCicloInvestigacion(idEscuela, selectId) {
+  const ciclosPorEscuela = {
+    2: "X",
+    4: "X",
+    6: "VIII",
+    8: "X",
+    10: "XI",
+    11: "X",
+    14: "IX",
+    15: "VIII",
+    17: "IX",
+    19: "X",
+    24: "X",
+    25: "X"
+  };
+
+  const selectCiclo = document.getElementById(selectId);
+  
+  if (!selectCiclo) {
+    console.warn(`No se encontró el elemento con ID: ${selectId}`);
+    return;
+  }
+
+  // Obtener el ciclo correspondiente a la escuela
+  const cicloAsignado = ciclosPorEscuela[parseInt(idEscuela)];
+
+  if (cicloAsignado) {
+    // Establecer el valor del select
+    selectCiclo.value = cicloAsignado;
+    
+    // Disparar evento change para que otros listeners se enteren
+    const event = new Event('change', { bubbles: true });
+    selectCiclo.dispatchEvent(event);
+    
+    console.log(`✅ Ciclo ${cicloAsignado} asignado automáticamente para escuela ID ${idEscuela}`);
+  } else {
+    // Si no hay ciclo definido para esta escuela, limpiar el select
+    selectCiclo.value = "";
+    console.log(`⚠️ No hay ciclo predefinido para escuela ID ${idEscuela}`);
+  }
+}
+
 var tbl_general_bachiller;
 //LISTADO SOLO SIN FILTRO
 function listar_expedientes_bachiller() {
@@ -956,7 +1005,6 @@ $("#tabla_registro_general_bachiller").on("click", ".editar", function () {
   document.getElementById("txt_folio_editar").value = data.Folio;
   document.getElementById("txt_registro_editar").value = data.Registro;
   document.getElementById("txt_archivo_actual").value = data.Archivo;
-
   //DATOS DE LA MODALIDAD Y DIPLOMA
   document.getElementById("txt_id_modalidad").value = data.Id_modalidad;
   document.getElementById("txt_modo_estu_editar").value = data.Modo_estudio;
@@ -1008,6 +1056,30 @@ $("#tabla_registro_general_bachiller").on("click", ".editar", function () {
     data.fecha_secreatria_general;
   document.getElementById("select_ciclo_investigacion_editar").value =
     data.ciclo_tesis;
+  
+  // AUTO-SELECCIÓN DE CICLO DE INVESTIGACIÓN (si no hay ciclo guardado)
+  if ((!data.ciclo_tesis || data.ciclo_tesis === "") && typeof establecerCicloInvestigacion === 'function') {
+    var idExpediente = data.Id_expediente;
+    if (idExpediente) {
+      $.ajax({
+        url: "../controller/registro_general_bachiller/controlador_obtener_id_escuela.php",
+        type: "POST",
+        data: { id_expediente: idExpediente },
+        dataType: "json"
+      })
+      .done(function(response) {
+        if (response.success && response.Id_escuela) {
+          console.log("Id_escuela obtenido para edición:", response.Id_escuela);
+          establecerCicloInvestigacion(response.Id_escuela, 'select_ciclo_investigacion_editar');
+        } else {
+          console.warn("No se pudo obtener Id_escuela para edición:", response.message);
+        }
+      })
+      .fail(function(jqXHR, textStatus, errorThrown) {
+        console.error("Error al obtener Id_escuela para edición:", textStatus, errorThrown);
+      });
+    }
+  }
 });
 
 //AGREGAR DIPLOMA
@@ -1045,6 +1117,44 @@ $("#tabla_registro_general_bachiller").on("click", ".agregar", function () {
   document.getElementById("nom").value = data.Nombres;
   document.getElementById("ape").value = data.Apellido_paterno;
   document.getElementById("mate").value = data.Apellido_materno;
+  
+  // AUTO-SELECCIÓN DE CICLO DE INVESTIGACIÓN
+  // Obtener el Id_escuela del expediente mediante AJAX
+  var idExpediente = data.Id_expediente;
+  console.log("=== INICIO AUTO-SELECCIÓN CICLO ===");
+  console.log("Id_expediente:", idExpediente);
+  console.log("Función establecerCicloInvestigacion disponible:", typeof establecerCicloInvestigacion);
+  
+  if (idExpediente && typeof establecerCicloInvestigacion === 'function') {
+    console.log("Haciendo petición AJAX para obtener Id_escuela...");
+    $.ajax({
+      url: "../controller/registro_general_bachiller/controlador_obtener_id_escuela.php",
+      type: "POST",
+      data: { id_expediente: idExpediente },
+      dataType: "json"
+    })
+    .done(function(response) {
+      console.log("Respuesta AJAX recibida:", response);
+      if (response.success && response.Id_escuela) {
+        console.log("Id_escuela obtenido exitosamente:", response.Id_escuela);
+        console.log("Llamando a establecerCicloInvestigacion...");
+        establecerCicloInvestigacion(response.Id_escuela, 'select_ciclo_investigacion');
+      } else {
+        console.warn("No se pudo obtener Id_escuela:", response.message);
+      }
+    })
+    .fail(function(jqXHR, textStatus, errorThrown) {
+      console.error("=== ERROR EN AJAX ===");
+      console.error("Status:", textStatus);
+      console.error("Error:", errorThrown);
+      console.error("Response:", jqXHR.responseText);
+    });
+  } else {
+    console.warn("Condiciones no cumplidas para auto-selección");
+    console.warn("idExpediente:", idExpediente);
+    console.warn("establecerCicloInvestigacion:", typeof establecerCicloInvestigacion);
+  }
+  
   Traernumero();
 });
 

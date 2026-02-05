@@ -345,6 +345,17 @@ public function Registrar_Bachiller($tipodoc,$dni,$nombres,$apepa,$apema,$codigo
             }
             conexionBD::cerrar_conexion();
         }
+        
+        public function Obtener_Id_Escuela_Por_Expediente($id_expediente){
+            $c = conexionBD::conexionPDO();
+            $sql = "SELECT Id_escuela FROM expediente WHERE Id_expediente = ?";
+            $query = $c->prepare($sql);
+            $query->bindParam(1, $id_expediente);
+            $query->execute();
+            $resultado = $query->fetchColumn();
+            conexionBD::cerrar_conexion();
+            return $resultado;
+        }
     }
 
 ?>

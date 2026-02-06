@@ -1,7 +1,7 @@
 <?php
 
 $dni = $_POST['dni'];
-$token = 'sk_6484.RRP3U7oiRSgcS8VJ2m9sTCKcqaFeVH7e'; // Tu token real
+$token = 'sk_6484.Nc0D8FvCLx5ICODwuQWwWlBS0HBy7MRt'; // Tu token real
 
 if(strlen($dni) != 8){
     echo json_encode(1); // Validación de 8 dígitos
@@ -21,13 +21,15 @@ curl_setopt_array($curl, array(
 ));
 
 $response = curl_exec($curl);
+$http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
 if(curl_errno($curl)){
-    echo json_encode(['error' => curl_error($curl)]);
+    echo json_encode(['error' => 'Curl error: ' . curl_error($curl)]);
     exit;
 }
 
 curl_close($curl);
 
-// Mostrar la respuesta como JSON
+// Si la API devuelve el DNI consultado, es correcto
+// La estructura varía según la API, así que mejor devolvemos todo y procesamos en JS
 echo $response;

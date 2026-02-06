@@ -396,6 +396,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </li>
                 </ul>
               </li>
+              <li class="nav-item">
+                <a href="#" onclick="cargar_contenido('contenido_principal','buzon_digital/view_buzon_digital.php')" class="nav-link">
+                  <i class="nav-icon fas fa-archive"></i>
+                  <p>
+                    Buzón Digital
+                  </p>
+                </a>
+              </li>
               <li class="header text-center" style="color:#FFFFFF; background-color:#023D77; border-radius: 10px;">
                 <b>REPORTES Y AUDITORIAS</b>
               </li>
@@ -687,6 +695,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </a>
                   </li>
                 </ul>
+              </li>
+              <li class="nav-item">
+                <a href="#" onclick="cargar_contenido('contenido_principal','buzon_digital/view_buzon_digital.php')" class="nav-link">
+                  <i class="nav-icon fas fa-archive"></i>
+                  <p>
+                    Buzón Digital
+                  </p>
+                </a>
               </li>
               <li class="header text-center" style="color:#FFFFFF; background-color:#023D77; border-radius: 10px;">
                 <b>REPORTES Y AUDITORIAS</b>

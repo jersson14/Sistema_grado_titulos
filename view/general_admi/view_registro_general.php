@@ -204,19 +204,9 @@
                                                     </div>
 
                                                     <div class="col-9 form-group">
-                                                        <label style="font-size:small; font-weight: 600; color: #444;">Origen de Búsqueda <b style="color:red">(*)</b>:</label>
-                                                        <!-- Segmented Control Estilizado -->
-                                                        <div class="custom-segmented-control">
-                                                            <input type="radio" name="search_origin" id="origin_reniec" value="reniec" checked>
-                                                            <label for="origin_reniec" class="segment-label" id="label_reniec"><i class="fas fa-id-card"></i> Reniec</label>
-                                                            
-                                                            <input type="radio" name="search_origin" id="origin_bachiller" value="bachiller">
-                                                            <label for="origin_bachiller" class="segment-label"><i class="fas fa-graduation-cap"></i> Bachiller</label>
-                                                            
-                                                            <input type="radio" name="search_origin" id="origin_umil" value="umil">
-                                                            <label for="origin_umil" class="segment-label"><i class="fas fa-file-excel"></i> UMIL</label>
-                                                            
-                                                            <div class="segment-glider"></div>
+                                                        <label style="font-size:small; font-weight: 600; color: #444;">Acciones Rápidas:</label>
+                                                        <div class="d-flex align-items-center" style="gap: 10px; height: 45px;">
+                                                            <span class="badge badge-info p-2"><i class="fas fa-info-circle mr-1"></i> Use los botones de búsqueda directa</span>
                                                         </div>
                                                     </div>
 
@@ -228,8 +218,14 @@
                                                             </div>
                                                             <input type="text" class="form-control" id="txt_dni" placeholder="Ingrese DNI para buscar..." style="height: 45px; border: 1px solid #ced4da; border-left: none; font-weight: 600;">
                                                             <div class="input-group-append">
-                                                                <button onclick="ejecutarBusqueda()" class="btn btn-primary" style="min-width: 140px; font-weight: 700; background: linear-gradient(135deg, #007bff 0%, #0056b3 100%); border: none;">
-                                                                    <i class="fas fa-bolt mr-2"></i> BUSCAR
+                                                                <button onclick="ejecutarBusqueda('reniec')" class="btn btn-primary" title="Buscar en Reniec" style="font-weight: 700;">
+                                                                    <i class="fas fa-id-card mr-1"></i> RENIEC
+                                                                </button>
+                                                                <button onclick="ejecutarBusqueda('umil')" class="btn btn-success" title="Buscar en UMIL" style="font-weight: 700;">
+                                                                    <i class="fas fa-file-excel mr-1"></i> UMIL
+                                                                </button>
+                                                                <button onclick="ejecutarBusqueda('bachiller')" class="btn btn-dark" title="Buscar en Bachiller" style="font-weight: 700;">
+                                                                    <i class="fas fa-graduation-cap mr-1"></i> BACHILLER
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -243,8 +239,11 @@
                                                             </div>
                                                             <input type="text" class="form-control" id="txtdni2" placeholder="Ingrese número para buscar..." style="height: 45px; border: 1px solid #ced4da; border-left: none; font-weight: 600;">
                                                             <div class="input-group-append">
-                                                                <button onclick="ejecutarBusqueda()" class="btn btn-secondary" style="min-width: 140px; font-weight: 700;">
-                                                                    <i class="fas fa-search mr-2"></i> BUSCAR
+                                                                <button onclick="ejecutarBusqueda('umil')" class="btn btn-success" title="Buscar en UMIL" style="font-weight: 700;">
+                                                                    <i class="fas fa-file-excel mr-1"></i> UMIL
+                                                                </button>
+                                                                <button onclick="ejecutarBusqueda('bachiller')" class="btn btn-dark" title="Buscar en Bachiller" style="font-weight: 700;">
+                                                                    <i class="fas fa-graduation-cap mr-1"></i> BACHILLER
                                                                 </button>
                                                             </div>
                                                         </div>

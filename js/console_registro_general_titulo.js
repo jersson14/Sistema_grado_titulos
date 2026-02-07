@@ -2523,8 +2523,21 @@ window.open(url, "DIPLOMAS TITULO PROFESIONAL", "scrollbars=NO,width=" + width +
   }
 }
 
-function ejecutarBusqueda() {
-  const origin = document.querySelector('input[name="search_origin"]:checked').value;
+function ejecutarBusqueda(origin) {
+  // Si no se pasa el origen, intentar leerlo o usar reniec por defecto
+  if (!origin) {
+    const radioChecked = document.querySelector('input[name="search_origin"]:checked');
+    origin = radioChecked ? radioChecked.value : 'reniec';
+  }
+
+  const tipoDoc = document.getElementById("select_tipo_documento").value;
+
+  // Validación: Reniec solo funciona con DNI
+  if (origin === 'reniec' && tipoDoc !== 'DNI') {
+    Swal.fire("Acción no permitida", "La búsqueda en Reniec solo es válida para documentos tipo DNI.", "warning");
+    return;
+  }
+
   const dni = ($("#txt_dni").val() || $("#txtdni2").val() || "").trim();
 
   if (dni === "") {

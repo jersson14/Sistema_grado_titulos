@@ -965,6 +965,11 @@ function Cargar_Select_Facultad(){
       $('#txtfacu').html(cadena);
       $('#txtfacu_filial').html(cadena);
 
+      // Listener para cambios manuales o automatizados
+      $('#select_facultad').off('change').on('change', function(e, idToSelect) {
+          Cargar_Select_facul_carrera($(this).val(), idToSelect);
+      });
+
       var id =$("#select_facultad").val();
       Cargar_Select_facul_carrera(id);
       
@@ -1018,7 +1023,7 @@ function Traerauto(id_auto){
   })
 }
 
-function Cargar_Select_facul_carrera(id){
+function Cargar_Select_facul_carrera(id, idToSelect = null){
   $.ajax({
     "url":"../controller/expediente_titulado/controlador_cargar_select_facu_carrera.php",
     type:'POST',
@@ -1036,14 +1041,19 @@ function Cargar_Select_facul_carrera(id){
       $('#txtes').html(cadena);
       $('#txtes_filial').html(cadena);
 
-      // Esperar a que el usuario seleccione un valor antes de llamar a Traerauto
-      $('#select_escuela').on('change', function() {
+      // Primero registramos el listener para cambios
+      $('#select_escuela').off('change').on('change', function() {
         var idSeleccionado = $(this).val();
         if (idSeleccionado) {
           Traergrado(idSeleccionado);
           Traerauto(idSeleccionado);
         }
       });
+
+      // Luego, si se pasó un ID para seleccionar, lo aplicamos y disparamos el evento change
+      if(idToSelect){
+        $('#select_escuela').val(idToSelect).trigger('change');
+      }
 
     } else {
       cadena += "<option value=''>No se encontraron registros</option>";
@@ -1151,6 +1161,7 @@ function Traergrado(idgrado) {
 
 
 function AbrirModal(){
+  limpiarCampos();
   $("#modal_registro").modal({backdrop:'static',keyboard:false})
   $("#modal_registro").modal('show');
   listar_autoridad();
@@ -1411,6 +1422,8 @@ function Registrar_Titulado(){
   
     }
 
+    let doc = document.getElementById('txtdni2').value;
+
     let extension = arc.split('.').pop();//DOCUMENTO.PPT
     let nombrearchivo="";
     let f = new Date();
@@ -1531,7 +1544,9 @@ if(nombres.length === 0 || apepa.length === 0 ||
 
 }
 function limpiarCampos() {
+  $("#select_tipo_documento").val("DNI").trigger('change');
   document.getElementById('txt_dni').value = "";
+  document.getElementById('txtdni2').value = "";
   document.getElementById('txt_nom').value = "";
   document.getElementById('txt_apepa').value = "";
   document.getElementById('txt_apema').value = "";
@@ -2161,7 +2176,7 @@ function fetchSheetData() {
   var range = 'Respuestas de formulario 1!A2:BP';  // Rango donde están los datos (sin incluir el encabezado)
 
   var dniIngresado = document.getElementById('txt_dni').value;  // Obtienes el DNI ingresado
-  var dniIngresado2 = document.getElementById('txt_dni2').value;  // Obtienes el DNI ingresado
+  var dniIngresado2 = document.getElementById('txtdni2').value;  // Obtienes el DNI ingresado
 
   gapi.client.sheets.spreadsheets.values.get({
       spreadsheetId: spreadsheetId,
@@ -2505,24 +2520,83 @@ var width = screen.width;
 var height = screen.height;
 
 window.open(url, "DIPLOMAS TITULO PROFESIONAL", "scrollbars=NO,width=" + width + ",height=" + height + ",top=0,left=0");
-
+  }
 }
-} 
+
+function ejecutarBusqueda() {
+  const origin = document.querySelector('input[name="search_origin"]:checked').value;
+  const dni = ($("#txt_dni").val() || $("#txtdni2").val() || "").trim();
+
+  if (dni === "") {
+    Swal.fire("Advertencia", "Por favor ingrese un número de documento.", "warning");
+    return;
+  }
+
+  // Sincronizar con el campo oculto #dni que usan algunos scripts antiguos
+  $("#dni").val(dni);
+
+  switch (origin) {
+    case 'reniec':
+      console.log("Buscando en Reniec...");
+      // Simular click en el botón de prueba (si existiera) o llamar directamente a la lógica
+      buscarEnReniecLocal(dni);
+      break;
+    case 'bachiller':
+      console.log("Buscando en Bachiller...");
+      buscarBachiller();
+      break;
+    case 'umil':
+      console.log("Buscando en UMIL...");
+      if (typeof fetchSheetData === "function") {
+        fetchSheetData();
+      } else {
+        Swal.fire("Error", "La función de búsqueda en UMIL no está cargada.", "error");
+      }
+      break;
+  }
+}
+
+function buscarEnReniecLocal(dni) {
+  $.ajax({
+    type: "POST",
+    url: "consulta-dni-ajax.php",
+    data: 'dni=' + dni,
+    dataType: 'json',
+    success: function(data) {
+      if (data == 1) {
+        Swal.fire("Atención", "El DNI tiene que tener 8 dígitos", "warning");
+      } else if (data && data.first_name) {
+        document.getElementById("txt_nom").value = data.first_name;
+        document.getElementById("txt_apepa").value = data.first_last_name;
+        document.getElementById("txt_apema").value = data.second_last_name;
+        
+        Swal.fire({
+          icon: 'success',
+          title: 'DNI Encontrado',
+          text: `Se cargaron los datos de ${data.first_name} desde Reniec.`,
+          timer: 1500,
+          showConfirmButton: false
+        });
+      } else {
+        Swal.fire("No encontrado", "No se encontraron datos para ese DNI en Reniec.", "info");
+      }
+    },
+    error: function() {
+      Swal.fire("Error", "Ocurrió un error al consultar con Reniec.", "error");
+    }
+  });
+}
+
 
 
 
 async function buscarBachiller() {
   const tipo = document.getElementById("select_tipo_documento").value;
   const dni = document.getElementById("txt_dni").value.trim();
-  const otroDoc = document.getElementById("txt_dni2").value.trim();
 
-  let numero_documento = "";
+  let numero_documento = dni;
 
-  if (tipo === "DNI" && dni !== "") {
-    numero_documento = dni;
-  } else if (tipo !== "DNI" && otroDoc !== "") {
-    numero_documento = otroDoc;
-  } else {
+  if (numero_documento === "") {
     Swal.fire("Advertencia", "Debe ingresar un número de documento válido.", "warning");
     return;
   }
@@ -2538,7 +2612,7 @@ async function buscarBachiller() {
     if (resp.data && resp.data.length > 0) {
       const d = resp.data[0];
 
-      // Rellenar campos
+      // Rellenar campos de estudiante
       $("#txt_nom").val(d.Nombres);
       $("#txt_apepa").val(d.Apellido_paterno);
       $("#txt_apema").val(d.Apellido_materno);
@@ -2551,23 +2625,50 @@ async function buscarBachiller() {
       $("#txt_fecha_matri").val(d.Fecha_matricula);
       $("#txt_fecha_egres").val(d.Fecha_egreso);
       $("#txt_oberva").val(d.Observaciones);
-      $("#select_cede").val(d.Id_cede);
 
-      // // Carga secuencial de ubicaciones
-      // await cargarRegionesYSeleccionar(d.id_region);
-      // await cargarProvinciasYSeleccionar(d.id_region, d.id_provincia);
-      // await cargarDistritosYSeleccionar(d.id_provincia, d.id_distrito);
+      // Rellenar campos de etnia e idioma
+      $("#txt_auto_etnica").val(d.DET_ETNICA);
+      $("#txt_pueblo_indigena").val(d.COD_ETNIA);
+      $("#txt_lengua_indigena").val(d.DET_LENGUA);
+      $("#txt_lengua_detalle").val(d.COD_LENGUA);
+
+      // Lógica de Mapeo de Escuela (Bachiller -> Título)
+      const mappingEscuela = {
+        "2": "1",   // EPISI
+        "4": "3",   // EPIC
+        "6": "5",   // EPA
+        "8": "7",   // EPIARN
+        "10": "9",  // EPD
+        "11": "12", // EPC
+        "14": "13", // EPTHG
+        "15": "16", // EPE
+        "17": "18", // EPES
+        "19": "20"  // EPED Inicial
+      };
+
+      const idBachillerEscuela = d.Id_escuela;
+      const idTituloEscuela = mappingEscuela[idBachillerEscuela] || "";
+
+      // Seleccionar sede, facultad y cargar programa profesional
+      console.log("Datos recibidos para autocompletado:", d);
+      $("#select_cede").val(d.Id_cede);
+      
+      // Pasar idTituloEscuela como parámetro extra en el trigger para evitar doble llamada
+      if (d.Cod_facultad) {
+        $("#select_facultad").val(d.Cod_facultad).trigger('change', [idTituloEscuela]);
+      } else if (d.Id_facultad) {
+        $("#select_facultad").val(d.Id_facultad).trigger('change', [idTituloEscuela]);
+      }
 
       // Alerta informativa después de cargar los datos
       await Swal.fire({
-        icon: 'info',
-        title: 'Datos Cargados Exitosamente',
+        icon: 'success',
+        title: 'Datos de Bachiller Encontrados',
         html: `
           <div style="text-align: left; padding: 10px;">
-            <p><strong>📚 Información Importante:</strong></p>
-            <p>• Se requiere <strong>seleccionar nuevamente la carrera</strong> para este graduado, ya que el termino en titulo es distinto.</p>
-            <p>• También debe <strong>confirmar la modalidad de estudio</strong></p>
-            <p>• Estos campos son <strong>obligatorios</strong> para completar el registro</p>
+            <p>• Los datos personales, étnicos y de idioma se han cargado.</p>
+            <p>• La <strong>Carrera y Autoridades</strong> se han mapeado y cargado automáticamente.</p>
+            <p>• Por favor, <strong>confirme la modalidad de estudio</strong> para completar el registro.</p>
           </div>
         `,
         confirmButtonText: 'Entendido',
@@ -2575,9 +2676,6 @@ async function buscarBachiller() {
         allowOutsideClick: false,
         allowEscapeKey: false
       });
-
-      // Opcional: Enfocar automáticamente en el campo de carrera después de cerrar la alerta
-      // $("#select_carrera").focus();
 
     } else {
       Swal.fire("No encontrado", "No se encontró ningún bachiller con ese Nro. de Documento", "warning");

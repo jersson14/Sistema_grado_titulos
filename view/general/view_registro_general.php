@@ -194,9 +194,10 @@
                                                     <div class="col-12 form-group" style="color:red">
                                                         <h6><b>Campos Obligatorios (*)</b></h6>
                                                     </div><br>
-                                                    <div class="col-2 form-group">
-                                                        <label for="" style="font-size:small;">Tipo de documento<b style="color:red">(*)</b>:</label>
-                                                        <select class="form-control" id="select_tipo_documento" style="width:100%">
+                                                    <!-- FILA 1: DOCUMENTO Y BÚSQUEDA -->
+                                                    <div class="col-3 form-group">
+                                                        <label style="font-size:small; font-weight: 600; color: #444;">Tipo Documento <b style="color:red">(*)</b>:</label>
+                                                        <select class="form-control" id="select_tipo_documento" style="width:100%; height: 45px; border-radius: 8px; border: 1px solid #ced4da;">
                                                             <option value="" disabled>Seleccione</option>
                                                             <option value="DNI" selected>DNI</option>
                                                             <option value="CARNET DE EXTRANJERIA">CARNET DE EXTRANJERIA</option>
@@ -204,82 +205,160 @@
                                                         </select>
                                                     </div>
 
-                                                    <div id="dni_section" class="col-5 form-group">
-                                                        <label for="" style="font-size:small;">N° Documento<b style="color:red">(*)</b>:</label>
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control" id="txt_dni">
-                                                            <div class="input-group-append">
-                                                                <button onclick="" class="btn btn-success" id="umil"><i class="fa fa-search"></i><b> UMIL</b></button>
-                                                                <button onclick="" class="btn btn-primary" id="prueba"><i class="fa fa-search"></i><b> Reniec</b></button>
-                                                                <button onclick="buscarBachiller()" class="btn btn-warning" id="bach"><i class="fa fa-search"></i><b> Bach</b></button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div id="otros_documentos_section" class="col-5 form-group" style="display: none;">
-                                                        <label for="" style="font-size:small;">N° Documento<b style="color:red">(*)</b>:</label>
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control" id="txt_dni2">
-                                                            <div class="input-group-append">
-                                                                <button onclick="" class="btn btn-success" id="umil2"><i class="fa fa-search"></i><b> UMIL</b></button>
-                                                                <button onclick="buscarBachiller()" class="btn btn-warning" id="bach"><i class="fa fa-search"></i><b> Bach</b></button>
-
-                                                            </div>
+                                                    <div class="col-9 form-group">
+                                                        <label style="font-size:small; font-weight: 600; color: #444;">Origen de Búsqueda <b style="color:red">(*)</b>:</label>
+                                                        <!-- Segmented Control Estilizado -->
+                                                        <div class="custom-segmented-control">
+                                                            <input type="radio" name="search_origin" id="origin_reniec" value="reniec" checked>
+                                                            <label for="origin_reniec" class="segment-label" id="label_reniec"><i class="fas fa-id-card"></i> Reniec</label>
+                                                            
+                                                            <input type="radio" name="search_origin" id="origin_bachiller" value="bachiller">
+                                                            <label for="origin_bachiller" class="segment-label"><i class="fas fa-graduation-cap"></i> Bachiller</label>
+                                                            
+                                                            <input type="radio" name="search_origin" id="origin_umil" value="umil">
+                                                            <label for="origin_umil" class="segment-label"><i class="fas fa-file-excel"></i> UMIL</label>
+                                                            
+                                                            <div class="segment-glider"></div>
                                                         </div>
                                                     </div>
 
+                                                    <div id="dni_section" class="col-12 form-group">
+                                                        <label style="font-size:small; font-weight: 600; color: #444;">N° Documento (DNI) <b style="color:red">(*)</b>:</label>
+                                                        <div class="input-group shadow-sm" style="border-radius: 8px; overflow: hidden;">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text bg-white" style="border: 1px solid #ced4da; border-right: none;"><i class="fas fa-search text-primary"></i></span>
+                                                            </div>
+                                                            <input type="text" class="form-control" id="txt_dni" placeholder="Ingrese DNI para buscar..." style="height: 45px; border: 1px solid #ced4da; border-left: none; font-weight: 600;">
+                                                            <div class="input-group-append">
+                                                                <button onclick="ejecutarBusqueda()" class="btn btn-primary" style="min-width: 140px; font-weight: 700; background: linear-gradient(135deg, #007bff 0%, #0056b3 100%); border: none;">
+                                                                    <i class="fas fa-bolt mr-2"></i> BUSCAR
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
-                                                    <div class="col-5 form-group">
-                                                        <label for="" style="font-size:small;">Nombres<b style="color:red">(*)</b>:</label>
-                                                        <input type="text" class="form-control" id="txt_nom">
+                                                    <div id="otros_documentos_section" class="col-12 form-group" style="display:none;">
+                                                        <label style="font-size:small; font-weight: 600; color: #444;">N° Documento (Otro) <b style="color:red">(*)</b>:</label>
+                                                        <div class="input-group shadow-sm" style="border-radius: 8px; overflow: hidden;">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text bg-white" style="border: 1px solid #ced4da; border-right: none;"><i class="fas fa-search text-secondary"></i></span>
+                                                            </div>
+                                                            <input type="text" class="form-control" id="txtdni2" placeholder="Ingrese número para buscar..." style="height: 45px; border: 1px solid #ced4da; border-left: none; font-weight: 600;">
+                                                            <div class="input-group-append">
+                                                                <button onclick="ejecutarBusqueda()" class="btn btn-secondary" style="min-width: 140px; font-weight: 700;">
+                                                                    <i class="fas fa-search mr-2"></i> BUSCAR
+                                                                </button>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-3 form-group">
-                                                        <label for="" style="font-size:small;">Apellido Paterno<b style="color:red">(*)</b>:</label>
-                                                        <input type="text" class="form-control" id="txt_apepa">
+
+                                                    <!-- FILA 2: NOMBRES Y APELLIDOS (4+4+4) -->
+                                                    <div class="col-4 form-group">
+                                                        <label style="font-size:small; font-weight: 600; color: #444;">Nombres <b style="color:red">(*)</b>:</label>
+                                                        <input type="text" class="form-control" id="txt_nom" placeholder="Nombres" style="height: 40px; border-radius: 8px;">
                                                     </div>
-                                                    <div class="col-3 form-group">
-                                                        <label for="" style="font-size:small;">Apellido Materno<b style="color:red">(*)</b>:</label>
-                                                        <input type="text" class="form-control" id="txt_apema">
+                                                    <div class="col-4 form-group">
+                                                        <label style="font-size:small; font-weight: 600; color: #444;">Apellido Paterno <b style="color:red">(*)</b>:</label>
+                                                        <input type="text" class="form-control" id="txt_apepa" placeholder="Apellido Paterno" style="height: 40px; border-radius: 8px;">
                                                     </div>
-                                                    <div class="col-3 form-group">
-                                                        <label for="" style="font-size:small;">Código<b style="color:red">(*)</b>:</label>
-                                                        <input type="text" class="form-control" id="txt_codigo" maxlenght="14" required>
+                                                    <div class="col-4 form-group">
+                                                        <label style="font-size:small; font-weight: 600; color: #444;">Apellido Materno <b style="color:red">(*)</b>:</label>
+                                                        <input type="text" class="form-control" id="txt_apema" placeholder="Apellido Materno" style="height: 40px; border-radius: 8px;">
                                                     </div>
-                                                    <div class="col-3 form-group">
-                                                        <label for="" style="font-size:small;">Sexo<b style="color:red">(*)</b>:</label>
-                                                        <select class="form-control" id="select_sexo" style="width:100%">
+
+                                                    <!-- FILA 3: CÓDIGO, SEXO, CELULAR (4+4+4) -->
+                                                    <div class="col-4 form-group">
+                                                        <label style="font-size:small; font-weight: 600; color: #444;">Código <b style="color:red">(*)</b>:</label>
+                                                        <input type="text" class="form-control" id="txt_codigo" placeholder="Código Univ." style="height: 40px; border-radius: 8px;">
+                                                    </div>
+                                                    <div class="col-4 form-group">
+                                                        <label style="font-size:small; font-weight: 600; color: #444;">Sexo <b style="color:red">(*)</b>:</label>
+                                                        <select class="form-control" id="select_sexo" style="width:100%; height: 40px; border-radius: 8px;">
                                                             <option value="" disabled selected>Seleccione</option>
                                                             <option value="F">FEMENINO</option>
                                                             <option value="M">MASCULINO</option>
                                                         </select>
                                                     </div>
+                                                    <div class="col-4 form-group">
+                                                        <label style="font-size:small; font-weight: 600; color: #444;">Celular <b style="color:red">(*)</b>:</label>
+                                                        <input type="text" class="form-control" id="txt_movil" placeholder="Celular" style="height: 40px; border-radius: 8px;">
+                                                    </div>
+
+                                                    <!-- FILA 4: DIRECCIÓN Y EMAILS (6+3+3) -->
+                                                    <div class="col-6 form-group">
+                                                        <label style="font-size:small; font-weight: 600; color: #444;">Dirección <b style="color:red">(*)</b>:</label>
+                                                        <input type="text" class="form-control" id="txt_dire" placeholder="Dirección actual" style="height: 40px; border-radius: 8px;">
+                                                    </div>
                                                     <div class="col-3 form-group">
-                                                        <label for="" style="font-size:small;">Celular<b style="color:red">(*)</b>:</label>
-                                                        <input type="text" class="form-control" id="txt_movil" onkeypress="return soloNumeros(event)" maxlenght="9" required>
+                                                        <label style="font-size:small; font-weight: 600; color: #444;">Email personal <b style="color:red">(*)</b>:</label>
+                                                        <input type="email" class="form-control" id="txt_email_per" placeholder="ejemplo@correo.com" style="height: 40px; border-radius: 8px;">
+                                                    </div>
+                                                    <div class="col-3 form-group">
+                                                        <label style="font-size:small; font-weight: 600; color: #444;">Email institucional:</label>
+                                                        <input type="email" class="form-control" id="txt_email_insti" placeholder="inst@utea.edu.pe" style="height: 40px; border-radius: 8px;">
+                                                    </div>
+
+                                                    <!-- FILA 5: FECHAS Y OBSERVACIONES (3+3+6) -->
+                                                    <div class="col-3 form-group">
+                                                        <label style="font-size:small; font-weight: 600; color: #444;">Fecha de matricula <b style="color:red">(*)</b>:</label>
+                                                        <input type="date" class="form-control" id="txt_fecha_matri" style="height: 40px; border-radius: 8px;">
+                                                    </div>
+                                                    <div class="col-3 form-group">
+                                                        <label style="font-size:small; font-weight: 600; color: #444;">Fecha de egreso <b style="color:red">(*)</b>:</label>
+                                                        <input type="date" class="form-control" id="txt_fecha_egres" style="height: 40px; border-radius: 8px;">
                                                     </div>
                                                     <div class="col-6 form-group">
-                                                        <label for="" style="font-size:small;">Dirección<b style="color:red">(*)</b>:</label>
-                                                        <input type="text" class="form-control" id="txt_dire" required>
+                                                        <label style="font-size:small; font-weight: 600; color: #444;">Observaciones:</label>
+                                                        <textarea class="form-control" id="txt_oberva" rows="1" style="resize:none; border-radius: 8px;" placeholder="Opcional"></textarea>
                                                     </div>
-                                                    <div class="col-3 form-group">
-                                                        <label for="" style="font-size:small;">Email personal <b style="color:red">(*)</b>:</label>
-                                                        <input type="email" class="form-control" id="txt_email_per">
-                                                    </div>
-                                                    <div class="col-3 form-group">
-                                                        <label for="" style="font-size:small;">Email institucional (Opcional):</label>
-                                                        <input type="email" class="form-control" id="txt_email_insti">
-                                                    </div>
-                                                    <div class="col-3 form-group">
-                                                        <label for="" style="font-size:small;">Fecha de matricula<b style="color:red">(*)</b>:</label>
-                                                        <input type="date" class="form-control" id="txt_fecha_matri">
-                                                    </div>
-                                                    <div class="col-3 form-group">
-                                                        <label for="" style="font-size:small;">Fecha de egreso<b style="color:red">(*)</b>:</label>
-                                                        <input type="date" class="form-control" id="txt_fecha_egres">
-                                                    </div>
-                                                    <div class="col-3 form-group">
-                                                        <label for="" style="font-size:small;">Observaciones (Opcional):</label>
-                                                        <textarea class="form-control" id="txt_oberva" rows="2" style="resize:none"></textarea>
-                                                    </div>
+
+                                                    <style>
+                                                        .custom-segmented-control {
+                                                            display: flex;
+                                                            position: relative;
+                                                            background-color: #f1f3f5;
+                                                            padding: 4px;
+                                                            border-radius: 12px;
+                                                            width: 320px;
+                                                            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+                                                            border: 1px solid #dee2e6;
+                                                        }
+                                                        .custom-segmented-control input[type="radio"] { display: none; }
+                                                        .segment-label {
+                                                            flex: 1;
+                                                            text-align: center;
+                                                            padding: 6px 0;
+                                                            margin: 0;
+                                                            cursor: pointer;
+                                                            z-index: 5;
+                                                            color: #495057;
+                                                            font-size: 13px;
+                                                            font-weight: 700;
+                                                            transition: color 0.3s ease;
+                                                            display: flex;
+                                                            align-items: center;
+                                                            justify-content: center;
+                                                            gap: 6px;
+                                                        }
+                                                        .segment-glider {
+                                                            position: absolute;
+                                                            height: calc(100% - 8px);
+                                                            width: calc(33.33% - 5.33px);
+                                                            background-color: #fff;
+                                                            border-radius: 9px;
+                                                            top: 4px;
+                                                            left: 4px;
+                                                            transition: transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+                                                            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+                                                            border: 1px solid #007bff30;
+                                                        }
+                                                        #origin_reniec:checked ~ .segment-glider { transform: translateX(0); }
+                                                        #origin_bachiller:checked ~ .segment-glider { transform: translateX(100%); }
+                                                        #origin_umil:checked ~ .segment-glider { transform: translateX(200%); }
+                                                        #origin_reniec:checked + label,
+                                                        #origin_bachiller:checked + label,
+                                                        #origin_umil:checked + label { color: #007bff; }
+                                                    </style>
                                                 </div>
                                             </div>
                                         </div>
@@ -1839,7 +1918,7 @@
         input.addEventListener("keyup", function(event) {
             if (event.keyCode === 13) {
                 event.preventDefault();
-                document.getElementById("prueba").click();
+                ejecutarBusqueda();
             }
         });
     </script>
@@ -1912,29 +1991,7 @@
             })
         })
 
-        $("#prueba").click(function() {
-
-            var dni = $("#dni").val();
-            $.ajax({
-                type: "POST",
-                url: "consulta-dni-ajax.php",
-                data: 'dni=' + dni,
-                dataType: 'json',
-                success: function(data) {
-                    if (data == 1) {
-                        alert('El DNI tiene que tener 8 digitos');
-                    } else {
-                        console.log(data);
-
-                        document.getElementById("txt_nom").value = data.first_name
-                        document.getElementById("txt_apepa").value = data.first_last_name
-                        document.getElementById("txt_apema").value = data.second_last_name
-
-
-                    }
-                }
-            });
-        })
+        // Lógica de búsqueda Reniec centralizada en ejecutarBusqueda() en console_registro_general_titulo.js
         //ESTOS 2 TRAE DATOS DE GOOGLE API
 
         document.getElementById('umil').addEventListener('click', function() {
@@ -1957,13 +2014,8 @@
         // Mostrar la sección correcta al cargar la página
         window.addEventListener('DOMContentLoaded', function() {
             const selectTipoDocumento = document.getElementById('select_tipo_documento');
-            const dniSection = document.getElementById('dni_section');
-            const otrosDocumentosSection = document.getElementById('otros_documentos_section');
-
-            if (selectTipoDocumento.value === 'DNI') {
-                dniSection.style.display = 'block';
-                otrosDocumentosSection.style.display = 'none';
-            }
+            // Disparar el evento change para aplicar la lógica inicial
+            selectTipoDocumento.dispatchEvent(new Event('change'));
         });
 
         // Cambiar la visibilidad según la selección del usuario
@@ -1975,9 +2027,18 @@
             if (selectedValue === 'DNI') {
                 dniSection.style.display = 'block';
                 otrosDocumentosSection.style.display = 'none';
+                document.getElementById('origin_reniec').disabled = false;
+                document.getElementById('label_reniec').style.opacity = '1';
+                document.getElementById('label_reniec').style.pointerEvents = 'auto';
             } else if (selectedValue === 'CARNET DE EXTRANJERIA' || selectedValue === 'PASAPORTE') {
                 dniSection.style.display = 'none';
                 otrosDocumentosSection.style.display = 'block';
+                document.getElementById('origin_reniec').disabled = true;
+                document.getElementById('label_reniec').style.opacity = '0.5';
+                document.getElementById('label_reniec').style.pointerEvents = 'none';
+                if (document.getElementById('origin_reniec').checked) {
+                    document.getElementById('origin_bachiller').checked = true;
+                }
             } else {
                 dniSection.style.display = 'none';
                 otrosDocumentosSection.style.display = 'none';

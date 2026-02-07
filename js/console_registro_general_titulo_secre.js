@@ -630,19 +630,13 @@ function Traerauto(id_auto){
         $("#txt_secretario_editar").val(data[0][4]);
         $("#txt_decano_editar").val(data[0][5]);
 
+      } else {
+        console.log("No se encontraron registros de autoridades para esta escuela.");
+        $("#id_autoridad, #id_autoridad_editar").val("");
+        $("#txt_rector, #txt_rector_editar").val("");
+        $("#txt_secretario, #txt_secretario_editar").val("");
+        $("#txt_decano, #txt_decano_editar").val("");
       }
-      else{
-        cadena+="<option value=''>No se encontraron regitros</option>";
-        $("#id_autoridad").val(data[0][2]);
-        $("#txt_rector").val(data[0][3]);
-        $("#txt_secretario").val(data[0][4]);
-        $("#txt_decano").val(data[0][5]);
-
-        $("#id_autoridad_editar").val(data[0][2]);
-        $("#txt_rector_editar").val(data[0][3]);
-        $("#txt_secretario_editar").val(data[0][4]);
-        $("#txt_decano_editar").val(data[0][5]);
-    }
   })
 }
 //TRAER TODO LAS CARRERAS
@@ -662,12 +656,7 @@ function Cargar_Select_facul_carrera(id, idToSelect){
       $('#txtes').html(cadena);
       $('#txtes_filial').html(cadena);
 
-      // Si se pasó un ID para seleccionar (vía buscarBachiller)
-      if (idToSelect) {
-          $("#select_escuela").val(idToSelect).trigger('change');
-      }
-
-      // Reiniciar listeners de escuela para evitar duplicados
+      // Primero registramos el listener para cambios (cascada)
       $('#select_escuela').off('change').on('change', function() {
         var idSeleccionado = $(this).val();
         if (idSeleccionado) {
@@ -675,6 +664,11 @@ function Cargar_Select_facul_carrera(id, idToSelect){
           Traerauto(idSeleccionado);
         }
       });
+
+      // Luego, si se pasó un ID para seleccionar (vía buscarBachiller), lo aplicamos y disparamos el evento change
+      if (idToSelect) {
+          $("#select_escuela").val(idToSelect).trigger('change');
+      }
 
     } else {
       cadena += "<option value=''>No se encontraron registros</option>";
@@ -1780,7 +1774,6 @@ function buscarEnReniecLocal(dni) {
 }
 
 async function buscarBachiller() {
-  const origin = document.querySelector('input[name="search_origin"]:checked').value;
   const dni = ($("#txt_dni").val() || $("#txtdni2").val() || "").trim();
 
   let numero_documento = dni;

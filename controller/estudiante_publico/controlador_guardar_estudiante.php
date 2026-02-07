@@ -22,6 +22,8 @@ try {
     $apellido_materno = isset($_POST['apellido_materno']) ? strtoupper(trim($_POST['apellido_materno'])) : '';
     $sexo = isset($_POST['sexo']) ? $_POST['sexo'] : '';
     $codigo = isset($_POST['codigo']) ? trim($_POST['codigo']) : '';
+    $facultad = isset($_POST['facultad']) ? trim($_POST['facultad']) : null;
+    $escuela = isset($_POST['escuela']) ? trim($_POST['escuela']) : null;
     
     // Datos opcionales
     $celular = isset($_POST['celular']) ? trim($_POST['celular']) : null;
@@ -67,6 +69,22 @@ try {
         exit;
     }
 
+    if (empty($facultad)) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Facultad es requerida'
+        ]);
+        exit;
+    }
+
+    if (empty($escuela)) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Escuela Profesional es requerida'
+        ]);
+        exit;
+    }
+
     if (empty($celular)) {
         echo json_encode([
             'success' => false,
@@ -106,6 +124,8 @@ try {
         'apellido_materno' => $apellido_materno,
         'sexo' => $sexo,
         'codigo' => $codigo,
+        'facultad' => $facultad,
+        'escuela' => $escuela,
         'celular' => $celular,
         'direccion' => $direccion,
         'correo_personal' => $correo_personal,

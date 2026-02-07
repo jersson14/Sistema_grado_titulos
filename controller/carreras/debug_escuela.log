@@ -1,0 +1,46 @@
+[2026-02-07 21:40:38] Petición recibida. ID Facultad: 1
+[2026-02-07 21:40:38] Respuesta Modelo: []
+[2026-02-07 21:42:17] Petición recibida. ID Facultad: 1
+[2026-02-07 21:42:17] Respuesta Modelo: []
+[2026-02-07 21:48:59] Petición recibida. ID Facultad: 2
+[2026-02-07 21:48:59] Respuesta Modelo: []
+[2026-02-07 21:52:25] Petición recibida. ID Facultad: 1
+[2026-02-07 21:52:25] Respuesta Modelo: [{"Id_escuela":1,"0":1,"Nombre":"Ingenier\u00eda de Sistemas e Inform\u00e1tica","1":"Ingenier\u00eda de Sistemas e Inform\u00e1tica"},{"Id_escuela":2,"0":2,"Nombre":"Ingenier\u00eda de Sistemas e Inform\u00e1tica","1":"Ingenier\u00eda de Sistemas e Inform\u00e1tica"},{"Id_escuela":3,"0":3,"Nombre":"Ingenier\u00eda Civil","1":"Ingenier\u00eda Civil"},{"Id_escuela":4,"0":4,"Nombre":"Ingenier\u00eda Civil","1":"Ingenier\u00eda Civil"},{"Id_escuela":5,"0":5,"Nombre":"Agronom\u00eda","1":"Agronom\u00eda"},{"Id_escuela":6,"0":6,"Nombre":"Agronom\u00eda","1":"Agronom\u00eda"},{"Id_escuela":7,"0":7,"Nombre":"Ingenier\u00eda Ambiental y Recursos Naturales","1":"Ingenier\u00eda Ambiental y Recursos Naturales"},{"Id_escuela":8,"0":8,"Nombre":"Ingenier\u00eda Ambiental y Recursos Naturales","1":"Ingenier\u00eda Ambiental y Recursos Naturales"}]
+[2026-02-07 21:52:28] Petición recibida. ID Facultad: 2
+[2026-02-07 21:52:28] Respuesta Modelo: [{"Id_escuela":15,"0":15,"Nombre":"Enfermer\u00eda","1":"Enfermer\u00eda"},{"Id_escuela":16,"0":16,"Nombre":"Enfermer\u00eda","1":"Enfermer\u00eda"},{"Id_escuela":17,"0":17,"Nombre":"Estomatolog\u00eda","1":"Estomatolog\u00eda"},{"Id_escuela":18,"0":18,"Nombre":"Estomatolog\u00eda","1":"Estomatolog\u00eda"}]
+[2026-02-07 21:52:31] Petición recibida. ID Facultad: 3
+[2026-02-07 21:52:31] Respuesta Modelo: [{"Id_escuela":9,"0":9,"Nombre":"Derecho","1":"Derecho"},{"Id_escuela":10,"0":10,"Nombre":"Derecho","1":"Derecho"},{"Id_escuela":11,"0":11,"Nombre":"Contabilidad","1":"Contabilidad"},{"Id_escuela":12,"0":12,"Nombre":"Contabilidad","1":"Contabilidad"},{"Id_escuela":13,"0":13,"Nombre":"Turismo, Hoteler\u00eda y Gastronom\u00eda","1":"Turismo, Hoteler\u00eda y Gastronom\u00eda"},{"Id_escuela":14,"0":14,"Nombre":"Turismo, Hoteler\u00eda y Gastronom\u00eda","1":"Turismo, Hoteler\u00eda y Gastronom\u00eda"},{"Id_escuela":19,"0":19,"Nombre":"Educaci\u00f3n Nivel Inicial","1":"Educaci\u00f3n Nivel Inicial"},{"Id_escuela":20,"0":20,"Nombre":"Educaci\u00f3n Nivel Inicial","1":"Educaci\u00f3n Nivel Inicial"},{"Id_escuela":21,"0":21,"Nombre":"Educaci\u00f3n \u2013 Especialidad Lengua Espa\u00f1ola y Quechua","1":"Educaci\u00f3n \u2013 Especialidad Lengua Espa\u00f1ola y Quechua"},{"Id_escuela":22,"0":22,"Nombre":"Educaci\u00f3n \u2013 Especialidad Matem\u00e1tica e Inform\u00e1tica","1":"Educaci\u00f3n \u2013 Especialidad Matem\u00e1tica e Inform\u00e1tica"},{"Id_escuela":23,"0":23,"Nombre":"Educaci\u00f3n Nivel Primaria","1":"Educaci\u00f3n Nivel Primaria"},{"Id_escuela":24,"0":24,"Nombre":"Educaci\u00f3n Nivel Secundaria con la Especialidad en : Lengua y Literatura","1":"Educaci\u00f3n Nivel Secundaria con la Especialidad en : Lengua y Literatura"},{"Id_escuela":25,"0":25,"Nombre":"Educaci\u00f3n Nivel Secundaria con la Especialidad en : Lengua Espa\u00f1ola y Quechua","1":"Educaci\u00f3n Nivel Secundaria con la Especialidad en : Lengua Espa\u00f1ola y Quechua"}]
+[2026-02-07 21:53:25] Petición recibida. ID Facultad: 1
+[2026-02-07 21:53:25] Respuesta Modelo: [[5,"Agronom\u00eda"],[7,"Ingenier\u00eda Ambiental y Recursos Naturales"],[3,"Ingenier\u00eda Civil"],[1,"Ingenier\u00eda de Sistemas e Inform\u00e1tica"]]
+[2026-02-07 21:53:28] Petición recibida. ID Facultad: 2
+[2026-02-07 21:53:28] Respuesta Modelo: [[15,"Enfermer\u00eda"],[17,"Estomatolog\u00eda"]]
+[2026-02-07 21:53:30] Petición recibida. ID Facultad: 3
+[2026-02-07 21:53:30] Respuesta Modelo: [[11,"Contabilidad"],[9,"Derecho"],[19,"Educaci\u00f3n Nivel Inicial"],[23,"Educaci\u00f3n Nivel Primaria"],[25,"Educaci\u00f3n Nivel Secundaria con la Especialidad en : Lengua Espa\u00f1ola y Quechua"],[24,"Educaci\u00f3n Nivel Secundaria con la Especialidad en : Lengua y Literatura"],[21,"Educaci\u00f3n \u2013 Especialidad Lengua Espa\u00f1ola y Quechua"],[22,"Educaci\u00f3n \u2013 Especialidad Matem\u00e1tica e Inform\u00e1tica"],[13,"Turismo, Hoteler\u00eda y Gastronom\u00eda"]]
+[2026-02-07 21:53:42] Petición recibida. ID Facultad: 1
+[2026-02-07 21:53:42] Respuesta Modelo: [[5,"Agronom\u00eda"],[7,"Ingenier\u00eda Ambiental y Recursos Naturales"],[3,"Ingenier\u00eda Civil"],[1,"Ingenier\u00eda de Sistemas e Inform\u00e1tica"]]
+[2026-02-07 21:53:44] Petición recibida. ID Facultad: 2
+[2026-02-07 21:53:44] Respuesta Modelo: [[15,"Enfermer\u00eda"],[17,"Estomatolog\u00eda"]]
+[2026-02-07 21:53:46] Petición recibida. ID Facultad: 3
+[2026-02-07 21:53:46] Respuesta Modelo: [[11,"Contabilidad"],[9,"Derecho"],[19,"Educaci\u00f3n Nivel Inicial"],[23,"Educaci\u00f3n Nivel Primaria"],[25,"Educaci\u00f3n Nivel Secundaria con la Especialidad en : Lengua Espa\u00f1ola y Quechua"],[24,"Educaci\u00f3n Nivel Secundaria con la Especialidad en : Lengua y Literatura"],[21,"Educaci\u00f3n \u2013 Especialidad Lengua Espa\u00f1ola y Quechua"],[22,"Educaci\u00f3n \u2013 Especialidad Matem\u00e1tica e Inform\u00e1tica"],[13,"Turismo, Hoteler\u00eda y Gastronom\u00eda"]]
+[2026-02-07 22:18:26] Petición recibida. ID Facultad: 1
+[2026-02-07 22:18:26] Respuesta Modelo: [[5,"Agronom\u00eda"],[7,"Ingenier\u00eda Ambiental y Recursos Naturales"],[3,"Ingenier\u00eda Civil"],[1,"Ingenier\u00eda de Sistemas e Inform\u00e1tica"]]
+[2026-02-07 22:27:34] Petición recibida. ID Facultad: 1
+[2026-02-07 22:27:34] Respuesta Modelo: [[5,"Agronom\u00eda"],[7,"Ingenier\u00eda Ambiental y Recursos Naturales"],[3,"Ingenier\u00eda Civil"],[1,"Ingenier\u00eda de Sistemas e Inform\u00e1tica"]]
+[2026-02-07 22:27:34] Petición recibida. ID Facultad: 2
+[2026-02-07 22:27:34] Respuesta Modelo: [[15,"Enfermer\u00eda"],[17,"Estomatolog\u00eda"]]
+[2026-02-07 22:40:10] Petición recibida. ID Facultad: 1
+[2026-02-07 22:40:10] Respuesta Modelo: [[5,"Agronom\u00eda"],[7,"Ingenier\u00eda Ambiental y Recursos Naturales"],[3,"Ingenier\u00eda Civil"],[1,"Ingenier\u00eda de Sistemas e Inform\u00e1tica"]]
+[2026-02-07 23:03:42] Petición recibida. ID Facultad: 1
+[2026-02-07 23:03:42] Respuesta Modelo: [[5,"Agronom\u00eda"],[7,"Ingenier\u00eda Ambiental y Recursos Naturales"],[3,"Ingenier\u00eda Civil"],[1,"Ingenier\u00eda de Sistemas e Inform\u00e1tica"]]
+[2026-02-07 23:11:34] Petición recibida. ID Facultad: 1
+[2026-02-07 23:11:34] Respuesta Modelo: [[5,"Agronom\u00eda"],[7,"Ingenier\u00eda Ambiental y Recursos Naturales"],[3,"Ingenier\u00eda Civil"],[1,"Ingenier\u00eda de Sistemas e Inform\u00e1tica"]]
+[2026-02-07 23:16:25] Petición recibida. ID Facultad: 1
+[2026-02-07 23:16:25] Respuesta Modelo: [[5,"Agronom\u00eda"],[7,"Ingenier\u00eda Ambiental y Recursos Naturales"],[3,"Ingenier\u00eda Civil"],[1,"Ingenier\u00eda de Sistemas e Inform\u00e1tica"]]
+[2026-02-07 23:18:57] Petición recibida. ID Facultad: 1
+[2026-02-07 23:18:57] Respuesta Modelo: [[5,"Agronom\u00eda"],[7,"Ingenier\u00eda Ambiental y Recursos Naturales"],[3,"Ingenier\u00eda Civil"],[1,"Ingenier\u00eda de Sistemas e Inform\u00e1tica"]]
+[2026-02-07 23:18:58] Petición recibida. ID Facultad: 2
+[2026-02-07 23:18:58] Respuesta Modelo: [[15,"Enfermer\u00eda"],[17,"Estomatolog\u00eda"]]
+[2026-02-07 23:23:10] Petición recibida. ID Facultad: 1
+[2026-02-07 23:23:10] Respuesta Modelo: [[5,"Agronom\u00eda"],[7,"Ingenier\u00eda Ambiental y Recursos Naturales"],[3,"Ingenier\u00eda Civil"],[1,"Ingenier\u00eda de Sistemas e Inform\u00e1tica"]]
+[2026-02-07 23:23:10] Petición recibida. ID Facultad: 2
+[2026-02-07 23:23:10] Respuesta Modelo: [[15,"Enfermer\u00eda"],[17,"Estomatolog\u00eda"]]

@@ -18,80 +18,28 @@
 
     body {
       font-family: 'Source Sans Pro', sans-serif;
-      background: #0f172a;
       min-height: 100vh;
       padding: 20px;
       position: relative;
       overflow-x: hidden;
+      background-image: url('img/sede.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
     }
 
-    /* Fondo animado de graduación académica */
-    .animated-background {
-      position: fixed;
+    /* Overlay con transparencia igual al login */
+    body::before {
+      content: '';
+      position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
+      background: linear-gradient(135deg, rgba(2, 67, 131, 0.45) 0%, rgba(1, 42, 82, 0.55) 100%);
       z-index: 0;
-      overflow: hidden;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    }
-
-    .graduation-cap {
-      position: absolute;
-      font-size: 40px;
-      opacity: 0.15;
-      animation: float 20s infinite ease-in-out;
-      color: white;
-    }
-
-    @keyframes float {
-      0%, 100% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 0.15;
-      }
-      50% {
-        transform: translateY(-100px) rotate(180deg);
-        opacity: 0.25;
-      }
-    }
-
-    .book {
-      position: absolute;
-      font-size: 35px;
-      opacity: 0.12;
-      animation: drift 25s infinite ease-in-out;
-      color: white;
-    }
-
-    @keyframes drift {
-      0%, 100% {
-        transform: translate(0, 0) rotate(0deg);
-        opacity: 0.12;
-      }
-      50% {
-        transform: translate(50px, -80px) rotate(90deg);
-        opacity: 0.22;
-      }
-    }
-
-    .diploma {
-      position: absolute;
-      font-size: 30px;
-      opacity: 0.1;
-      animation: sway 18s infinite ease-in-out;
-      color: white;
-    }
-
-    @keyframes sway {
-      0%, 100% {
-        transform: translateX(0) rotate(-10deg);
-        opacity: 0.1;
-      }
-      50% {
-        transform: translateX(-60px) rotate(10deg);
-        opacity: 0.2;
-      }
+      backdrop-filter: blur(1px);
     }
 
     .container-fluid {
@@ -460,17 +408,6 @@
 </head>
 
 <body>
-  <!-- Fondo animado académico -->
-  <div class="animated-background">
-    <div class="graduation-cap" style="top: 10%; left: 15%; animation-delay: 0s;">🎓</div>
-    <div class="graduation-cap" style="top: 60%; left: 80%; animation-delay: 3s;">🎓</div>
-    <div class="graduation-cap" style="top: 30%; left: 70%; animation-delay: 7s;">🎓</div>
-    <div class="graduation-cap" style="top: 80%; left: 20%; animation-delay: 5s;">🎓</div>
-    <div class="book" style="top: 20%; left: 50%; animation-delay: 2s;">📚</div>
-    <div class="book" style="top: 70%; left: 60%; animation-delay: 6s;">📚</div>
-    <div class="diploma" style="top: 15%; left: 85%; animation-delay: 1s;">📜</div>
-    <div class="diploma" style="top: 55%; left: 25%; animation-delay: 5s;">📜</div>
-  </div>
 
   <div class="container-fluid">
     <!-- Header -->
@@ -484,16 +421,33 @@
 
     <!-- Contenido principal -->
     <div class="main-card">
-      <!-- Mensaje de bienvenida -->
-      <div class="welcome-banner">
-        <h3>
-          <i class="fas fa-heart"></i>
-          ¡Bienvenido estimado estudiante!
-        </h3>
-        <p><strong>Nos alegra que hayas culminado tu etapa académica.</strong> Este formulario te permitirá registrar tus datos para iniciar el trámite de tu grado académico.</p>
-        <p>La <strong>Universidad Tecnológica de los Andes</strong> te acompaña en este importante paso hacia tu futuro profesional. Por favor, completa la información solicitada con cuidado y precisión.</p>
-        <p><i class="fas fa-info-circle"></i> Los campos marcados con <span style="color: #e74c3c; font-weight: bold;">*</span> son obligatorios.</p>
-      </div>
+          <!-- Mensaje de bienvenida -->
+          <div class="welcome-banner">
+      <h3>
+        <i class="fas fa-heart"></i>
+        ¡Bienvenido(a), estimado(a) egresado(a)!
+      </h3>
+
+      <p>
+        <strong>Felicitaciones por haber culminado tu etapa académica.</strong>
+        Este formulario te permitirá registrar tus datos personales y tu declaración étnica
+        para iniciar el trámite de tu grado o título académico.
+      </p>
+
+      <p>
+        La <strong>Universidad Tecnológica de los Andes</strong> te acompaña en este importante
+        paso hacia tu desarrollo profesional. Por favor, completa la información solicitada
+        con atención y veracidad.
+      </p>
+
+      <p>
+        <i class="fas fa-info-circle"></i>
+        Los campos marcados con
+        <span style="color: #e74c3c; font-weight: bold;">*</span>
+        son obligatorios.
+      </p>
+    </div>
+
 
       <!-- Indicador de pasos -->
       <div class="step-indicator">
@@ -574,6 +528,10 @@
                 <option value="F">FEMENINO</option>
               </select>
             </div>
+            <div class="form-group" style="grid-column: span 3;">
+              <label class="form-label">Dirección</label>
+              <input type="text" id="txt_direccion" class="form-control" placeholder="Ej: Av. Los Andes 123">
+            </div>
           </div>
         </div>
 
@@ -585,6 +543,18 @@
           <div class="form-group">
             <label class="form-label">Código de Estudiante <span class="required">*</span></label>
             <input type="text" id="txt_codigo" class="form-control" placeholder="Ej: 2020001234">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Facultad <span class="required">*</span></label>
+            <select id="select_facultad" class="form-control" style="width: 100%;">
+              <option value="">Seleccione Facultad</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Escuela Profesional <span class="required">*</span></label>
+            <select id="select_escuela" class="form-control" style="width: 100%;">
+              <option value="">Seleccione Escuela</option>
+            </select>
           </div>
         </div>
 
@@ -767,6 +737,9 @@
 
     // Inicializar catálogos
     $(document).ready(function() {
+        // Cargar Facultades
+        Cargar_Select_Facultad();
+        
         // Poblar Etnia
         if (typeof CATALOGO_ETNIAS !== 'undefined') {
             const $cboEtnia = $('#cbo_etnia');
@@ -786,11 +759,6 @@
         // Eventos change para capturar nombres
         $('#cbo_etnia').change(function() {
             const id = $(this).val();
-            const texto = $(this).find('option:selected').text();
-            // Extraer solo el nombre (quitando el ID si es necesario, o guardando todo)
-            // El usuario quiere "la opción y el número", así que guardamos el nombre limpio
-            // Pero en el select mostramos "1. Achuar".
-            // Buscamos en el catálogo para tener el nombre limpio
             const item = CATALOGO_ETNIAS.find(x => x.id === id);
             $('#txt_nombre_etnia').val(item ? item.nombre : '');
         });
@@ -801,6 +769,71 @@
             $('#txt_nombre_lengua').val(item ? item.nombre : '');
         });
     });
+
+    // Cargar Facultades
+    function Cargar_Select_Facultad() {
+      $.ajax({
+        url: "controller/carreras/controlador_cargar_select_facultad.php",
+        type: 'POST',
+        dataType: 'json'
+      }).done(function(data) {
+        console.log('Facultades cargadas:', data);
+        let cadena = "<option value=''>Seleccione Facultad</option>";
+        if (data && data.length > 0) {
+          for (var i = 0; i < data.length; i++) {
+            // Guardar el NOMBRE como value, no el ID
+            cadena += "<option value='" + data[i][1] + "' data-id='" + data[i][0] + "'>" + data[i][1] + "</option>";
+          }
+          $('#select_facultad').html(cadena);
+          
+          // Listener para cambios
+          $('#select_facultad').off('change').on('change', function() {
+            const selectedOption = $(this).find('option:selected');
+            const idFacultad = selectedOption.attr('data-id');
+            console.log('Facultad seleccionada - ID:', idFacultad, 'Nombre:', $(this).val());
+            
+            if (idFacultad) {
+              Cargar_Select_Escuela(idFacultad);
+            } else {
+              $('#select_escuela').html("<option value=''>Seleccione Escuela</option>");
+            }
+          });
+        } else {
+          cadena += "<option value=''>No se encontraron registros</option>";
+          $('#select_facultad').html(cadena);
+        }
+      }).fail(function(xhr, status, error) {
+        console.error('Error cargando facultades:', error);
+        Swal.fire('Error', 'No se pudieron cargar las facultades', 'error');
+      });
+    }
+
+    // Cargar Escuelas según Facultad
+    function Cargar_Select_Escuela(idFacultad) {
+      console.log('Cargando escuelas para facultad ID:', idFacultad);
+      $.ajax({
+        url: "controller/carreras/controlador_cargar_select_escuela.php",
+        type: 'POST',
+        data: { id: idFacultad },
+        dataType: 'json'
+      }).done(function(data) {
+        console.log('Escuelas cargadas:', data);
+        let cadena = "<option value=''>Seleccione Escuela</option>";
+        if (data && data.length > 0) {
+          for (var i = 0; i < data.length; i++) {
+            // Guardar el NOMBRE como value, no el ID
+            cadena += "<option value='" + data[i][1] + "' data-id='" + data[i][0] + "'>" + data[i][1] + "</option>";
+          }
+          $('#select_escuela').html(cadena);
+        } else {
+          cadena += "<option value=''>No hay escuelas disponibles</option>";
+          $('#select_escuela').html(cadena);
+        }
+      }).fail(function(xhr, status, error) {
+        console.error('Error cargando escuelas:', error);
+        Swal.fire('Error', 'No se pudieron cargar las escuelas', 'error');
+      });
+    }
 
     // Buscar DNI
     function buscarDNI() {
@@ -1041,6 +1074,18 @@
           return;
         }
 
+        // Validar Facultad
+        if (!$('#select_facultad').val()) {
+          Swal.fire('Atención', 'Debe seleccionar una Facultad', 'warning');
+          return;
+        }
+
+        // Validar Escuela
+        if (!$('#select_escuela').val()) {
+          Swal.fire('Atención', 'Debe seleccionar una Escuela Profesional', 'warning');
+          return;
+        }
+
         // Validar Celular
         if (!$('#txt_celular').val().trim()) {
           Swal.fire('Atención', 'El número de celular es obligatorio', 'warning');
@@ -1100,42 +1145,84 @@
 
     // Mostrar resumen
     function mostrarResumen() {
-      let html = '<div style="background: #f8f9fa; padding: 20px; border-radius: 12px;">';
-      html += '<h4 style="color: #0065B2; margin-bottom: 15px;">Datos Personales</h4>';
-      html += '<p><strong>DNI:</strong> ' + $('#txt_dni_readonly').val() + '</p>';
-      html += '<p><strong>Nombres:</strong> ' + $('#txt_nombres').val() + '</p>';
-      html += '<p><strong>Apellidos:</strong> ' + $('#txt_apellido_paterno').val() + ' ' + $('#txt_apellido_materno').val() + '</p>';
-      html += '<p><strong>Código:</strong> ' + $('#txt_codigo').val() + '</p>';
+      let html = '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">';
       
-      if ($('#txt_celular').val()) {
-        html += '<p><strong>Celular:</strong> ' + $('#txt_celular').val() + '</p>';
-      }
+      // Tarjeta: Datos Personales
+      html += '<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 15px; box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3); color: white;">';
+      html += '<h5 style="margin: 0 0 20px 0; font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 10px;"><i class="fas fa-user-circle"></i> DATOS PERSONALES</h5>';
       
+      const datosPersonales = [
+        { icon: 'id-card', label: 'DNI', value: $('#txt_dni_readonly').val() },
+        { icon: 'user', label: 'Nombres', value: $('#txt_nombres').val() },
+        { icon: 'users', label: 'Apellidos', value: $('#txt_apellido_paterno').val() + ' ' + $('#txt_apellido_materno').val() },
+        { icon: 'graduation-cap', label: 'Código', value: $('#txt_codigo').val() },
+        { icon: 'university', label: 'Facultad', value: $('#select_facultad').val() || 'No especificado' },
+        { icon: 'book-open', label: 'Escuela Profesional', value: $('#select_escuela').val() || 'No especificado' }
+      ];
+
+      datosPersonales.forEach(item => {
+        html += `<div style="margin-bottom: 12px; padding: 12px; background: rgba(255,255,255,0.15); border-radius: 8px; backdrop-filter: blur(10px);">
+                  <div style="font-size: 11px; opacity: 0.9; margin-bottom: 4px;"><i class="fas fa-${item.icon}"></i> ${item.label}</div>
+                  <div style="font-size: 15px; font-weight: 600;">${item.value}</div>
+                </div>`;
+      });
+      html += '</div>';
+
+      // Tarjeta: Contacto (con correo destacado)
+      html += '<div style="background: linear-gradient(135deg, #0065B2 0%, #00a8ff 100%); padding: 25px; border-radius: 15px; box-shadow: 0 8px 20px rgba(0, 101, 178, 0.3); color: white;">';
+      html += '<h5 style="margin: 0 0 20px 0; font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 10px;"><i class="fas fa-address-book"></i> CONTACTO</h5>';
+      
+      html += `<div style="margin-bottom: 12px; padding: 12px; background: rgba(255,255,255,0.15); border-radius: 8px; backdrop-filter: blur(10px);">
+                <div style="font-size: 11px; opacity: 0.9; margin-bottom: 4px;"><i class="fas fa-phone"></i> Celular</div>
+                <div style="font-size: 15px; font-weight: 600;">${$('#txt_celular').val()}</div>
+              </div>`;
+      
+      // Correo destacado con animación
+      html += `<div style="margin-bottom: 0; padding: 15px; background: rgba(255,255,255,0.25); border: 2px solid rgba(255,255,255,0.5); border-radius: 10px; backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                <div style="font-size: 11px; opacity: 0.95; margin-bottom: 6px; font-weight: 600;"><i class="fas fa-envelope"></i> CORREO ELECTRÓNICO</div>
+                <div style="font-size: 16px; font-weight: 700; word-break: break-all;">${$('#txt_correo_personal').val()}</div>
+              </div>`;
+      html += '</div>';
+      
+      // Tarjeta: Declaración Étnica (si aplica)
       if ($('#chk_declaracion_etnica').is(':checked')) {
-        html += '<h4 style="color: #0065B2; margin: 20px 0 15px;">Declaración Étnica</h4>';
-        const autoident = $('input[name="autoidentificacion"]:checked').val();
-        if (autoident) {
-          // Si es pueblo indígena, mostramos el nombre seleccionado del combo
-          if (autoident === 'Pueblo indígena u originario') {
-             const nombreEtnia = $('#cbo_etnia option:selected').text();
-             html += '<p><strong>Autoidentificación:</strong> ' + nombreEtnia + '</p>';
-          } else {
-             html += '<p><strong>Autoidentificación:</strong> ' + autoident + '</p>';
-          }
-        }
+        html += '<div style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); padding: 25px; border-radius: 15px; box-shadow: 0 8px 20px rgba(40, 167, 69, 0.3); color: white; grid-column: 1 / -1;">';
+        html += '<h5 style="margin: 0 0 20px 0; font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 10px;"><i class="fas fa-fingerprint"></i> DECLARACIÓN ÉTNICA Y LINGÜÍSTICA</h5>';
         
-        const lengua = $('input[name="lengua_indigena"]:checked').val();
-        if (lengua) {
-          if (lengua === 'Sí') {
-             const nombreLengua = $('#cbo_lengua option:selected').text();
-             html += '<p><strong>Lengua indígena:</strong> ' + nombreLengua + '</p>';
-          } else {
-             html += '<p><strong>Lengua indígena:</strong> ' + lengua + '</p>';
-          }
+        html += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">';
+        
+        const autoident = $('input[name="autoidentificacion"]:checked').val();
+        let displayEtnia = autoident;
+        if (autoident === 'Pueblo indígena u originario') {
+          displayEtnia = $('#cbo_etnia option:selected').text();
         }
+
+        const lengua = $('input[name="lengua_indigena"]:checked').val();
+        let displayLengua = lengua;
+        if (lengua === 'Sí') {
+          displayLengua = $('#cbo_lengua option:selected').text();
+        }
+
+        html += `<div style="padding: 12px; background: rgba(255,255,255,0.15); border-radius: 8px; backdrop-filter: blur(10px);">
+                  <div style="font-size: 11px; opacity: 0.9; margin-bottom: 4px;"><i class="fas fa-user-tag"></i> Autoidentificación</div>
+                  <div style="font-size: 15px; font-weight: 600;">${displayEtnia || 'No especificado'}</div>
+                </div>`;
+        
+        html += `<div style="padding: 12px; background: rgba(255,255,255,0.15); border-radius: 8px; backdrop-filter: blur(10px);">
+                  <div style="font-size: 11px; opacity: 0.9; margin-bottom: 4px;"><i class="fas fa-language"></i> Lengua Indígena</div>
+                  <div style="font-size: 15px; font-weight: 600;">${displayLengua || 'No especificado'}</div>
+                </div>`;
+        
+        html += '</div></div>';
       }
       
       html += '</div>';
+      
+      // Mensaje de advertencia
+      html += '<div style="margin-top: 20px; padding: 15px; background: #fff3cd; border-left: 4px solid #ffc107; border-radius: 8px;">';
+      html += '<p style="margin: 0; color: #856404; font-size: 14px;"><i class="fas fa-exclamation-triangle"></i> <strong>Importante:</strong> Verifique que su correo electrónico sea correcto. Recibirá una copia de su declaración jurada en ese correo.</p>';
+      html += '</div>';
+      
       $('#resumen_datos').html(html);
     }
 
@@ -1219,8 +1306,10 @@
         apellido_materno: $('#txt_apellido_materno').val(),
         sexo: $('#cbo_sexo').val(),
         codigo: $('#txt_codigo').val(),
+        facultad: $('#select_facultad').val(),
+        escuela: $('#select_escuela').val(),
         celular: $('#txt_celular').val(),
-        direccion: '', // Campo removido del formulario
+        direccion: $('#txt_direccion').val() || '',
         correo_personal: $('#txt_correo_personal').val(),
         correo_institucional: '', // Campo removido del formulario
         fecha_matricula: '', // Campo removido del formulario

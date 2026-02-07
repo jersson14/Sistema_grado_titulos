@@ -1,0 +1,3 @@
+[2026-02-07 21:40:38] Error SQL Cargar Escuelas: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'grados_titulos.carrera' doesn't exist
+[2026-02-07 21:42:17] Error SQL Cargar Escuelas: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'grados_titulos.carrera' doesn't exist
+[2026-02-07 21:48:59] Error SQL Cargar Escuelas: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'grados_titulos.carrera' doesn't exist

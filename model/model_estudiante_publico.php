@@ -58,12 +58,12 @@ class Modelo_Estudiante_Publico extends conexionBD {
         try {
             $sql = "INSERT INTO estudiante (
                         Tipo_documento, Dni, Nombres, Apellido_paterno, Apellido_materno, Sexo, 
-                        Codigo, Celular, Direccion, correo_personal, correo_institucional, 
+                        Codigo, Facultad, Escuela, Celular, Direccion, correo_personal, correo_institucional, 
                         Fecha_matricula, Fecha_egreso, Observaciones, foto_pasaporte, 
                         declaracion_etnica_pdf, 
                         DET_ETNICA, COD_ETNIA, DET_LENGUA, COD_LENGUA,
                         fecha_declaracion_etnica, estado_var_etnica
-                    ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NOW(),1)";
+                    ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,NOW(),1)";
             
             $query = $c->prepare($sql);
             $query->bindParam(1, $datos['tipo_documento']);
@@ -73,21 +73,23 @@ class Modelo_Estudiante_Publico extends conexionBD {
             $query->bindParam(5, $datos['apellido_materno']);
             $query->bindParam(6, $datos['sexo']);
             $query->bindParam(7, $datos['codigo']);
-            $query->bindParam(8, $datos['celular']);
-            $query->bindParam(9, $datos['direccion']);
-            $query->bindParam(10, $datos['correo_personal']);
-            $query->bindParam(11, $datos['correo_institucional']);
-            $query->bindParam(12, $datos['fecha_matricula']);
-            $query->bindParam(13, $datos['fecha_egreso']);
-            $query->bindParam(14, $datos['observaciones']);
-            $query->bindParam(15, $datos['foto_pasaporte']);
-            $query->bindParam(16, $datos['declaracion_etnica_pdf']);
+            $query->bindParam(8, $datos['facultad']);
+            $query->bindParam(9, $datos['escuela']);
+            $query->bindParam(10, $datos['celular']);
+            $query->bindParam(11, $datos['direccion']);
+            $query->bindParam(12, $datos['correo_personal']);
+            $query->bindParam(13, $datos['correo_institucional']);
+            $query->bindParam(14, $datos['fecha_matricula']);
+            $query->bindParam(15, $datos['fecha_egreso']);
+            $query->bindParam(16, $datos['observaciones']);
+            $query->bindParam(17, $datos['foto_pasaporte']);
+            $query->bindParam(18, $datos['declaracion_etnica_pdf']);
             
             // Nuevos campos
-            $query->bindParam(17, $datos['det_etnica']);
-            $query->bindParam(18, $datos['cod_etnia']);
-            $query->bindParam(19, $datos['det_lengua']);
-            $query->bindParam(20, $datos['cod_lengua']);
+            $query->bindParam(19, $datos['det_etnica']);
+            $query->bindParam(20, $datos['cod_etnia']);
+            $query->bindParam(21, $datos['det_lengua']);
+            $query->bindParam(22, $datos['cod_lengua']);
             
             $resultado = $query->execute();
             // $id = $c->lastInsertId(); // No confiable si no es auto-increment
@@ -112,6 +114,8 @@ class Modelo_Estudiante_Publico extends conexionBD {
         
         $sql = "UPDATE estudiante SET
             Codigo = ?,
+            Facultad = ?,
+            Escuela = ?,
             Celular = ?,
             Direccion = ?,
             correo_personal = ?,
@@ -131,20 +135,22 @@ class Modelo_Estudiante_Publico extends conexionBD {
         
         $query = $c->prepare($sql);
         $query->bindParam(1, $datos['codigo']);
-        $query->bindParam(2, $datos['celular']);
-        $query->bindParam(3, $datos['direccion']);
-        $query->bindParam(4, $datos['correo_personal']);
-        $query->bindParam(5, $datos['correo_institucional']);
-        $query->bindParam(6, $datos['fecha_matricula']);
-        $query->bindParam(7, $datos['fecha_egreso']);
-        $query->bindParam(8, $datos['observaciones']);
-        $query->bindParam(9, $datos['foto_pasaporte']);
-        $query->bindParam(10, $datos['declaracion_etnica_pdf']);
-        $query->bindParam(11, $datos['det_etnica']);
-        $query->bindParam(12, $datos['cod_etnia']);
-        $query->bindParam(13, $datos['det_lengua']);
-        $query->bindParam(14, $datos['cod_lengua']);
-        $query->bindParam(15, $datos['dni']);
+        $query->bindParam(2, $datos['facultad']);
+        $query->bindParam(3, $datos['escuela']);
+        $query->bindParam(4, $datos['celular']);
+        $query->bindParam(5, $datos['direccion']);
+        $query->bindParam(6, $datos['correo_personal']);
+        $query->bindParam(7, $datos['correo_institucional']);
+        $query->bindParam(8, $datos['fecha_matricula']);
+        $query->bindParam(9, $datos['fecha_egreso']);
+        $query->bindParam(10, $datos['observaciones']);
+        $query->bindParam(11, $datos['foto_pasaporte']);
+        $query->bindParam(12, $datos['declaracion_etnica_pdf']);
+        $query->bindParam(13, $datos['det_etnica']);
+        $query->bindParam(14, $datos['cod_etnia']);
+        $query->bindParam(15, $datos['det_lengua']);
+        $query->bindParam(16, $datos['cod_lengua']);
+        $query->bindParam(17, $datos['dni']);
         
         $resultado = $query->execute();
         conexionBD::cerrar_conexion();

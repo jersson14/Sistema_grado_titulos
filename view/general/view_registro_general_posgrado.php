@@ -90,6 +90,7 @@
                                 <th style="text-align:center">Estudiante</th>
                                 <th style="text-align:center">Grado</th>
                                 <th style="text-align:center">Programa</th>
+                                <th style="text-align:center">Fecha de registro</th>
                                 <th style="text-align:center">Estado</th>
                                 <th style="text-align:center">Trabajo de Investigación</th>
                                 <th style="text-align:center">Expediente</th>

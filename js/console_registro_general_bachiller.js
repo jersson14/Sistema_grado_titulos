@@ -18,11 +18,11 @@ function establecerCicloInvestigacion(idEscuela, selectId) {
     17: "IX",
     19: "X",
     24: "X",
-    25: "X"
+    25: "X",
   };
 
   const selectCiclo = document.getElementById(selectId);
-  
+
   if (!selectCiclo) {
     console.warn(`No se encontró el elemento con ID: ${selectId}`);
     return;
@@ -34,12 +34,14 @@ function establecerCicloInvestigacion(idEscuela, selectId) {
   if (cicloAsignado) {
     // Establecer el valor del select
     selectCiclo.value = cicloAsignado;
-    
+
     // Disparar evento change para que otros listeners se enteren
-    const event = new Event('change', { bubbles: true });
+    const event = new Event("change", { bubbles: true });
     selectCiclo.dispatchEvent(event);
-    
-    console.log(`✅ Ciclo ${cicloAsignado} asignado automáticamente para escuela ID ${idEscuela}`);
+
+    console.log(
+      `✅ Ciclo ${cicloAsignado} asignado automáticamente para escuela ID ${idEscuela}`,
+    );
   } else {
     // Si no hay ciclo definido para esta escuela, limpiar el select
     selectCiclo.value = "";
@@ -152,8 +154,8 @@ function listar_expedientes_bachiller() {
         render: function (data, type, row) {
           // Concatenamos Modo_obtencion con ciclo_tesis
           let ciclo = row.ciclo_tesis ? row.ciclo_tesis : "";
-          if(!ciclo || ciclo == "0"){
-              return data;
+          if (!ciclo || ciclo == "0") {
+            return data;
           }
           return `${data} - (Ciclo ${ciclo})`;
         },
@@ -352,8 +354,8 @@ function listar_expedientes_alfabetico() {
         render: function (data, type, row) {
           // Concatenamos Modo_obtencion con ciclo_tesis
           let ciclo = row.ciclo_tesis ? row.ciclo_tesis : "";
-          if(!ciclo || ciclo == "0"){
-              return data;
+          if (!ciclo || ciclo == "0") {
+            return data;
           }
           return `${data} - (Ciclo ${ciclo})`;
         },
@@ -560,8 +562,8 @@ function listar_fechas_busqueda() {
         render: function (data, type, row) {
           // Concatenamos Modo_obtencion con ciclo_tesis
           let ciclo = row.ciclo_tesis ? row.ciclo_tesis : "";
-          if(!ciclo || ciclo == "0"){
-              return data;
+          if (!ciclo || ciclo == "0") {
+            return data;
           }
           return `${data} - (Ciclo ${ciclo})`;
         },
@@ -763,8 +765,8 @@ function listar_colacion() {
         render: function (data, type, row) {
           // Concatenamos Modo_obtencion con ciclo_tesis
           let ciclo = row.ciclo_tesis ? row.ciclo_tesis : "";
-          if(!ciclo || ciclo == "0"){
-              return data;
+          if (!ciclo || ciclo == "0") {
+            return data;
           }
           return `${data} - (Ciclo ${ciclo})`;
         },
@@ -891,11 +893,11 @@ $("#tabla_registro_general_bachiller").on("click", ".mostrar", function () {
   document.getElementById("txt_rector_mas").value = data.Autoridad_1;
   document.getElementById("txt_secretario_mas").value = data.Autoridad_2;
   document.getElementById("txt_decano_mas").value = data.Autoridad_3;
-    // LENGUAS
-  document.getElementById('txt_auto_etnica_mas').value=data.DET_ETNICA;
-  document.getElementById('txt_pueblo_indigena_mas').value=data.COD_ETNIA;
-  document.getElementById('txt_lengua_indigena_mas').value=data.DET_LENGUA;
-  document.getElementById('txt_lengua_detalle_mas').value=data.COD_LENGUA;
+  // LENGUAS
+  document.getElementById("txt_auto_etnica_mas").value = data.DET_ETNICA;
+  document.getElementById("txt_pueblo_indigena_mas").value = data.COD_ETNIA;
+  document.getElementById("txt_lengua_indigena_mas").value = data.DET_LENGUA;
+  document.getElementById("txt_lengua_detalle_mas").value = data.COD_LENGUA;
   document.getElementById("txt_fecha_reg_mas").value = data.expe;
   document.getElementById("txt_acuerdo_mas").value = data.Acuerdo;
   document.getElementById("txt_Resolucion_mas").value =
@@ -991,11 +993,11 @@ $("#tabla_registro_general_bachiller").on("click", ".editar", function () {
   document.getElementById("txt_rector_editar").value = data.Autoridad_1;
   document.getElementById("txt_secretario_editar").value = data.Autoridad_2;
   document.getElementById("txt_decano_editar").value = data.Autoridad_3;
-      // LENGUAS
-  document.getElementById('txt_auto_etnica_editar').value=data.DET_ETNICA;
-  document.getElementById('txt_pueblo_indigena_editar').value=data.COD_ETNIA;
-  document.getElementById('txt_lengua_indigena_editar').value=data.DET_LENGUA;
-  document.getElementById('txt_lengua_detalle_editar').value=data.COD_LENGUA;
+  // LENGUAS
+  document.getElementById("txt_auto_etnica_editar").value = data.DET_ETNICA;
+  document.getElementById("txt_pueblo_indigena_editar").value = data.COD_ETNIA;
+  document.getElementById("txt_lengua_indigena_editar").value = data.DET_LENGUA;
+  document.getElementById("txt_lengua_detalle_editar").value = data.COD_LENGUA;
   document.getElementById("txt_fecha_reg_editar").value = data.expe;
   document.getElementById("txt_acuerdo_editar").value = data.Acuerdo;
   document.getElementById("txt_Resolucion_editar").value =
@@ -1056,28 +1058,44 @@ $("#tabla_registro_general_bachiller").on("click", ".editar", function () {
     data.fecha_secreatria_general;
   document.getElementById("select_ciclo_investigacion_editar").value =
     data.ciclo_tesis;
-  
+
   // AUTO-SELECCIÓN DE CICLO DE INVESTIGACIÓN (si no hay ciclo guardado)
-  if ((!data.ciclo_tesis || data.ciclo_tesis === "") && typeof establecerCicloInvestigacion === 'function') {
+  if (
+    (!data.ciclo_tesis || data.ciclo_tesis === "") &&
+    typeof establecerCicloInvestigacion === "function"
+  ) {
     var idExpediente = data.Id_expediente;
     if (idExpediente) {
       $.ajax({
         url: "../controller/registro_general_bachiller/controlador_obtener_id_escuela.php",
         type: "POST",
         data: { id_expediente: idExpediente },
-        dataType: "json"
+        dataType: "json",
       })
-      .done(function(response) {
-        if (response.success && response.Id_escuela) {
-          console.log("Id_escuela obtenido para edición:", response.Id_escuela);
-          establecerCicloInvestigacion(response.Id_escuela, 'select_ciclo_investigacion_editar');
-        } else {
-          console.warn("No se pudo obtener Id_escuela para edición:", response.message);
-        }
-      })
-      .fail(function(jqXHR, textStatus, errorThrown) {
-        console.error("Error al obtener Id_escuela para edición:", textStatus, errorThrown);
-      });
+        .done(function (response) {
+          if (response.success && response.Id_escuela) {
+            console.log(
+              "Id_escuela obtenido para edición:",
+              response.Id_escuela,
+            );
+            establecerCicloInvestigacion(
+              response.Id_escuela,
+              "select_ciclo_investigacion_editar",
+            );
+          } else {
+            console.warn(
+              "No se pudo obtener Id_escuela para edición:",
+              response.message,
+            );
+          }
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+          console.error(
+            "Error al obtener Id_escuela para edición:",
+            textStatus,
+            errorThrown,
+          );
+        });
     }
   }
 });
@@ -1117,44 +1135,53 @@ $("#tabla_registro_general_bachiller").on("click", ".agregar", function () {
   document.getElementById("nom").value = data.Nombres;
   document.getElementById("ape").value = data.Apellido_paterno;
   document.getElementById("mate").value = data.Apellido_materno;
-  
+
   // AUTO-SELECCIÓN DE CICLO DE INVESTIGACIÓN
   // Obtener el Id_escuela del expediente mediante AJAX
   var idExpediente = data.Id_expediente;
   console.log("=== INICIO AUTO-SELECCIÓN CICLO ===");
   console.log("Id_expediente:", idExpediente);
-  console.log("Función establecerCicloInvestigacion disponible:", typeof establecerCicloInvestigacion);
-  
-  if (idExpediente && typeof establecerCicloInvestigacion === 'function') {
+  console.log(
+    "Función establecerCicloInvestigacion disponible:",
+    typeof establecerCicloInvestigacion,
+  );
+
+  if (idExpediente && typeof establecerCicloInvestigacion === "function") {
     console.log("Haciendo petición AJAX para obtener Id_escuela...");
     $.ajax({
       url: "../controller/registro_general_bachiller/controlador_obtener_id_escuela.php",
       type: "POST",
       data: { id_expediente: idExpediente },
-      dataType: "json"
+      dataType: "json",
     })
-    .done(function(response) {
-      console.log("Respuesta AJAX recibida:", response);
-      if (response.success && response.Id_escuela) {
-        console.log("Id_escuela obtenido exitosamente:", response.Id_escuela);
-        console.log("Llamando a establecerCicloInvestigacion...");
-        establecerCicloInvestigacion(response.Id_escuela, 'select_ciclo_investigacion');
-      } else {
-        console.warn("No se pudo obtener Id_escuela:", response.message);
-      }
-    })
-    .fail(function(jqXHR, textStatus, errorThrown) {
-      console.error("=== ERROR EN AJAX ===");
-      console.error("Status:", textStatus);
-      console.error("Error:", errorThrown);
-      console.error("Response:", jqXHR.responseText);
-    });
+      .done(function (response) {
+        console.log("Respuesta AJAX recibida:", response);
+        if (response.success && response.Id_escuela) {
+          console.log("Id_escuela obtenido exitosamente:", response.Id_escuela);
+          console.log("Llamando a establecerCicloInvestigacion...");
+          establecerCicloInvestigacion(
+            response.Id_escuela,
+            "select_ciclo_investigacion",
+          );
+        } else {
+          console.warn("No se pudo obtener Id_escuela:", response.message);
+        }
+      })
+      .fail(function (jqXHR, textStatus, errorThrown) {
+        console.error("=== ERROR EN AJAX ===");
+        console.error("Status:", textStatus);
+        console.error("Error:", errorThrown);
+        console.error("Response:", jqXHR.responseText);
+      });
   } else {
     console.warn("Condiciones no cumplidas para auto-selección");
     console.warn("idExpediente:", idExpediente);
-    console.warn("establecerCicloInvestigacion:", typeof establecerCicloInvestigacion);
+    console.warn(
+      "establecerCicloInvestigacion:",
+      typeof establecerCicloInvestigacion,
+    );
   }
-  
+
   Traernumero();
 });
 
@@ -1416,21 +1443,21 @@ function Agregar_diploma() {
     return Swal.fire(
       "Mensaje de Advertencia",
       "Tiene campos vacíos",
-      "warning"
+      "warning",
     );
   }
   if (ciclo_inves.length === 0) {
     return Swal.fire(
       "Mensaje de Advertencia",
       "El ciclo de trabajo de investigación es importante",
-      "warning"
+      "warning",
     );
   }
   if (fechamatri.length === 0 || fechaegre.length === 0) {
     return Swal.fire(
       "Mensaje de Advertencia",
       "La fecha de matrícula y fecha de egreso son importantes",
-      "warning"
+      "warning",
     );
   }
 
@@ -1461,7 +1488,7 @@ function Agregar_diploma() {
       return Swal.fire(
         "Mensaje de Advertencia",
         `La ${fechasAValidar[i].nombre} no es válida. Use el formato AAAA-MM-DD`,
-        "warning"
+        "warning",
       );
     }
   }
@@ -1471,7 +1498,7 @@ function Agregar_diploma() {
     return Swal.fire(
       "Mensaje de Advertencia",
       "El número de créditos no puede ser menor a 210",
-      "warning"
+      "warning",
     );
   }
 
@@ -1482,13 +1509,12 @@ function Agregar_diploma() {
 
   // Validar que la fecha de inicio de trámite sea del año actual
 
-
   // Validar que fecha de matrícula no sea mayor a fecha de egreso
   if (fechaMatricula > fechaEgreso) {
     return Swal.fire(
       "Mensaje de Advertencia",
       "La fecha de matrícula no puede ser mayor a la fecha de egreso",
-      "warning"
+      "warning",
     );
   }
 
@@ -1497,7 +1523,7 @@ function Agregar_diploma() {
     return Swal.fire(
       "Mensaje de Advertencia",
       "La fecha de egreso no puede ser menor a la fecha de matrícula",
-      "warning"
+      "warning",
     );
   }
 
@@ -1516,7 +1542,7 @@ function Agregar_diploma() {
     return Swal.fire(
       "Mensaje de Advertencia",
       "El período entre la fecha de matrícula y la fecha de egreso debe ser de al menos 5 años completos",
-      "warning"
+      "warning",
     );
   }
 
@@ -1525,7 +1551,7 @@ function Agregar_diploma() {
     return Swal.fire(
       "Mensaje de Advertencia",
       "La fecha de inicio de trámite no puede ser antes de la fecha de egreso",
-      "warning"
+      "warning",
     );
   }
 
@@ -1677,18 +1703,18 @@ function Registrar_Bachiller() {
   let mod_sustenta = document.getElementById("select_modo_sustenta").value;
   let idusuario = document.getElementById("txtprincipalid").value;
 
-    // LENGUAS
-  let auto_etnica = document.getElementById('txt_auto_etnica').value;
-  let pueblo_indi = document.getElementById('txt_pueblo_indigena').value;
-  let lengua_indi = document.getElementById('txt_lengua_indigena').value;
-  let lengua_detalle = document.getElementById('txt_lengua_detalle').value;
+  // LENGUAS
+  let auto_etnica = document.getElementById("txt_auto_etnica").value;
+  let pueblo_indi = document.getElementById("txt_pueblo_indigena").value;
+  let lengua_indi = document.getElementById("txt_lengua_indigena").value;
+  let lengua_detalle = document.getElementById("txt_lengua_detalle").value;
 
   if (ced === "") {
     // Comprueba si no hay un valor seleccionado
     return Swal.fire(
       "Mensaje de Advertencia",
       "Seleccione una cede en la segunda pestaña",
-      "warning"
+      "warning",
     );
   }
   if (esc === "") {
@@ -1696,7 +1722,7 @@ function Registrar_Bachiller() {
     return Swal.fire(
       "Mensaje de Advertencia",
       "Seleccione una facultad y programa profesional",
-      "warning"
+      "warning",
     );
   }
   if (validar_email(emaper)) {
@@ -1704,7 +1730,7 @@ function Registrar_Bachiller() {
     return Swal.fire(
       "Mensaje de Advertencia",
       "El formato de Email es incorrecto",
-      "warning"
+      "warning",
     );
   }
 
@@ -1717,7 +1743,7 @@ function Registrar_Bachiller() {
       return Swal.fire(
         "Mensaje de Advertencia",
         "El campo DNI es obligatorio",
-        "warning"
+        "warning",
       );
     }
     documentoFinal = dni;
@@ -1726,7 +1752,7 @@ function Registrar_Bachiller() {
       return Swal.fire(
         "Mensaje de Advertencia",
         "El campo de documento es obligatorio",
-        "warning"
+        "warning",
       );
     }
     documentoFinal = doc;
@@ -1745,7 +1771,7 @@ function Registrar_Bachiller() {
     return Swal.fire(
       "Mensaje de Advertencia",
       "Tiene campos vacíos, revise por favor",
-      "warning"
+      "warning",
     );
   }
   if (arc.length > 0) {
@@ -1772,7 +1798,7 @@ function Registrar_Bachiller() {
     return Swal.fire(
       "Mensaje de Advertencia",
       "El modo de estudio es un campo obligatorio",
-      "warning"
+      "warning",
     );
   }
 
@@ -1827,10 +1853,10 @@ function Registrar_Bachiller() {
   formData.append("mod_sustenta", mod_sustenta);
   formData.append("idusuario", idusuario);
 
-  formData.append("auto_etnica",auto_etnica);
-  formData.append("pueblo_indi",pueblo_indi);
-  formData.append("lengua_indi",lengua_indi);
-  formData.append("lengua_detalle",lengua_detalle);
+  formData.append("auto_etnica", auto_etnica);
+  formData.append("pueblo_indi", pueblo_indi);
+  formData.append("lengua_indi", lengua_indi);
+  formData.append("lengua_detalle", lengua_detalle);
 
   $.ajax({
     url: "../controller/registro_general_bachiller/controlador_registro_bachiller.php",
@@ -1847,7 +1873,7 @@ function Registrar_Bachiller() {
             $("#modal_registro").modal("hide");
             // Limpieza de campos
             limpiarCampos();
-          }
+          },
         );
       } else {
         Swal.fire("Mensaje de Advertencia", resp.message, "warning");
@@ -1953,18 +1979,18 @@ function Modificar_Bachiller() {
 
   let proce_bach = document.getElementById("txt_proceden_bachi_editar").value;
   let proce_insti = document.getElementById(
-    "txt_procedeni_insti_ori_editar"
+    "txt_procedeni_insti_ori_editar",
   ).value;
   let proce_titu = document.getElementById(
-    "txt_proceden_titu_ori_editar"
+    "txt_proceden_titu_ori_editar",
   ).value;
   let fecha_matri = document.getElementById("txt_fecha_matri_mod_editar").value;
   let fecha_inici = document.getElementById(
-    "txt_fecha_inicio_mod_editar"
+    "txt_fecha_inicio_mod_editar",
   ).value;
   let fecha_fin = document.getElementById("txt_fecha_fin_editar").value;
   let mod_sustenta = document.getElementById(
-    "select_modo_sustenta_editar"
+    "select_modo_sustenta_editar",
   ).value;
 
   //DATOS DEL DIPLOMA
@@ -1985,16 +2011,18 @@ function Modificar_Bachiller() {
   let nrooficio = document.getElementById("txt_nro_oficio_editar").value;
   let fechasecre = document.getElementById("txt_fecha_secre_editar").value;
   let ciclo_tra = document.getElementById(
-    "select_ciclo_investigacion_editar"
+    "select_ciclo_investigacion_editar",
   ).value;
 
   let idusuario = document.getElementById("txtprincipalid").value;
 
-    // LENGUAS
-  let auto_etnica = document.getElementById('txt_auto_etnica_editar').value;
-  let pueblo_indi = document.getElementById('txt_pueblo_indigena_editar').value;
-  let lengua_indi = document.getElementById('txt_lengua_indigena_editar').value;
-  let lengua_detalle = document.getElementById('txt_lengua_detalle_editar').value;
+  // LENGUAS
+  let auto_etnica = document.getElementById("txt_auto_etnica_editar").value;
+  let pueblo_indi = document.getElementById("txt_pueblo_indigena_editar").value;
+  let lengua_indi = document.getElementById("txt_lengua_indigena_editar").value;
+  let lengua_detalle = document.getElementById(
+    "txt_lengua_detalle_editar",
+  ).value;
 
   // if(arc.length==0){
   //   return Swal.fire("Mensaje de Advertencia","Seleccione algún tipo de documento","warning")
@@ -2004,7 +2032,7 @@ function Modificar_Bachiller() {
     return Swal.fire(
       "Mensaje de Advertencia",
       "El formato de Email es incorrecto",
-      "warning"
+      "warning",
     );
   }
 
@@ -2025,7 +2053,7 @@ function Modificar_Bachiller() {
     return Swal.fire(
       "Mensaje de Advertencia",
       "Tiene campos vacios en el registro de estudiantes, revise por favor",
-      "warning"
+      "warning",
     );
   }
 
@@ -2053,7 +2081,7 @@ function Modificar_Bachiller() {
     return Swal.fire(
       "Mensaje de Advertencia",
       "El modo de estudio es un campo obligatorio",
-      "warning"
+      "warning",
     );
   }
 
@@ -2131,10 +2159,10 @@ function Modificar_Bachiller() {
 
   formData.append("idusuario", idusuario);
 
-      formData.append("auto_etnica",auto_etnica);
-    formData.append("pueblo_indi",pueblo_indi);
-    formData.append("lengua_indi",lengua_indi);
-    formData.append("lengua_detalle",lengua_detalle);
+  formData.append("auto_etnica", auto_etnica);
+  formData.append("pueblo_indi", pueblo_indi);
+  formData.append("lengua_indi", lengua_indi);
+  formData.append("lengua_detalle", lengua_detalle);
 
   $.ajax({
     url: "../controller/registro_general_bachiller/controlador_modificar_bachiller.php",
@@ -2148,7 +2176,7 @@ function Modificar_Bachiller() {
           Swal.fire(
             "Mensaje de Confirmación",
             "Se actualizo de forma correcta al Titulado con el DNI N°: " + dni,
-            "success"
+            "success",
           ).then((value) => {
             $("#modal_editar").modal("hide");
             tbl_general_bachiller.ajax.reload();
@@ -2159,14 +2187,14 @@ function Modificar_Bachiller() {
           Swal.fire(
             "Mensaje de Advertencia",
             "El registro que intenta actualizar su número de diploma, registro o resolución ya se encuentran registrados en la base de datos,revise por favor",
-            "warning"
+            "warning",
           );
         }
       } else {
         Swal.fire(
           "Mensaje de Advertencia",
           "No se pudo realizar el registro verifique por favor",
-          "warning"
+          "warning",
         );
       }
     },
@@ -2187,7 +2215,7 @@ function Eliminar_Expediente(id) {
       Swal.fire(
         "Mensaje de Confirmación",
         "Se elimino el registro del titulando con exito",
-        "success"
+        "success",
       ).then((value) => {
         tbl_general_bachiller.ajax.reload();
       });
@@ -2195,7 +2223,7 @@ function Eliminar_Expediente(id) {
       return Swal.fire(
         "Mensaje de Advetencia",
         "No se puede eliminar este registro por que esta siendo utilizado en otros registros, verifique por favor",
-        "warning"
+        "warning",
       );
     }
   });
@@ -2274,7 +2302,7 @@ function Imprimir_informe() {
     return Swal.fire(
       "Mensaje de Advertencia",
       "Por favor ingrese el número del informe, es obligatorio",
-      "warning"
+      "warning",
     );
   }
 
@@ -2290,7 +2318,7 @@ function Imprimir_informe() {
     return Swal.fire(
       "Mensaje de Advertencia",
       "Tiene campos vacíos",
-      "warning"
+      "warning",
     );
   }
 
@@ -2345,7 +2373,7 @@ function Imprimir_informe() {
                     screen.width +
                     ",height=" +
                     screen.height +
-                    ",top=0,left=0"
+                    ",top=0,left=0",
                 );
 
                 // Incrementar el valor de txt_info
@@ -2356,20 +2384,20 @@ function Imprimir_informe() {
                 Swal.fire(
                   "Éxito",
                   "Informe generado y registrado correctamente",
-                  "success"
+                  "success",
                 );
               } else if (resp == 2) {
                 // El informe ya existe
                 Swal.fire(
                   "Mensaje de Advertencia",
                   "El informe ya existe en la Base de datos. Por favor, revise el número de informe.",
-                  "warning"
+                  "warning",
                 );
               } else {
                 Swal.fire(
                   "Mensaje de Advertencia",
                   "No se pudo realizar el registro",
-                  "warning"
+                  "warning",
                 );
               }
             },
@@ -2377,7 +2405,7 @@ function Imprimir_informe() {
               console.error(
                 "Error en la solicitud AJAX de registro: ",
                 status,
-                error
+                error,
               );
               Swal.fire("Error", "Hubo un error en el registro", "error");
             },
@@ -2386,14 +2414,14 @@ function Imprimir_informe() {
           Swal.fire(
             "Error",
             "No se pudo generar el PDF: " + pdfResult.message,
-            "error"
+            "error",
           );
         }
       } catch (e) {
         Swal.fire(
           "Error",
           "Error al procesar la respuesta del servidor al generar el PDF",
-          "error"
+          "error",
         );
         console.error("Error al procesar JSON: ", e);
       }
@@ -2402,12 +2430,12 @@ function Imprimir_informe() {
       console.error(
         "Error en la solicitud AJAX de generación de PDF: ",
         status,
-        error
+        error,
       );
       Swal.fire(
         "Error",
         "Error en la conexión con el servidor para generar el PDF",
-        "error"
+        "error",
       );
     },
   });
@@ -2423,7 +2451,7 @@ function Imprimir_informe_facul() {
     return Swal.fire(
       "Mensaje de Advertencia",
       "Tiene campos vacíos",
-      "warning"
+      "warning",
     );
   }
 
@@ -2439,7 +2467,7 @@ function Imprimir_informe_facul() {
     return Swal.fire(
       "Mensaje de Advertencia",
       "Debe ingresar las fechas",
-      "warning"
+      "warning",
     );
   }
 
@@ -2474,7 +2502,11 @@ function Imprimir_informe_facul() {
         window.open(
           url,
           "Informe por Facultad",
-          "scrollbars=NO,width=" + width + ",height=" + height + ",top=0,left=0"
+          "scrollbars=NO,width=" +
+            width +
+            ",height=" +
+            height +
+            ",top=0,left=0",
         );
 
         // Incrementar el valor de txt_info solo después de generar el informe
@@ -2487,7 +2519,7 @@ function Imprimir_informe_facul() {
         Swal.fire(
           "Mensaje de Error",
           "No se pudo ejecutar el informe",
-          "error"
+          "error",
         );
       }
     },
@@ -2546,7 +2578,7 @@ function imprimir_numero() {
     return Swal.fire(
       "Mensaje de Advertencia",
       "El numero de documento es obligatorio.",
-      "warning"
+      "warning",
     );
   } else {
     var url =
@@ -2565,7 +2597,7 @@ function imprimir_numero() {
     window.open(
       url,
       "DIPLOMA BACHILLER",
-      "scrollbars=NO,width=" + width + ",height=" + height + ",top=0,left=0"
+      "scrollbars=NO,width=" + width + ",height=" + height + ",top=0,left=0",
     );
   }
 }
@@ -2583,7 +2615,7 @@ function Total_diploma_bachiller() {
       return Swal.fire(
         "Mensaje de Error",
         "No se pudo traer los resultados",
-        "error"
+        "error",
       );
     }
   });
@@ -2602,7 +2634,7 @@ function Total_diploma_titulo() {
       return Swal.fire(
         "Mensaje de Error",
         "No se pudo traer los resultados",
-        "error"
+        "error",
       );
     }
   });
@@ -2621,7 +2653,7 @@ function Total_expediente_bach() {
       return Swal.fire(
         "Mensaje de Error",
         "No se pudo traer los resultados",
-        "error"
+        "error",
       );
     }
   });
@@ -2640,7 +2672,7 @@ function Total_expediente_titu() {
       return Swal.fire(
         "Mensaje de Error",
         "No se pudo traer los resultados",
-        "error"
+        "error",
       );
     }
   });
@@ -2659,7 +2691,7 @@ function Total_pregrado() {
       return Swal.fire(
         "Mensaje de Error",
         "No se pudo traer los resultados",
-        "error"
+        "error",
       );
     }
   });
@@ -2679,7 +2711,7 @@ function Imprimir_informe2() {
     return Swal.fire(
       "Mensaje de Advertencia",
       "Seleccione una cede o filial",
-      "warning"
+      "warning",
     );
   }
   // Validar que el campo no esté vacío o sea 0
@@ -2687,7 +2719,7 @@ function Imprimir_informe2() {
     return Swal.fire(
       "Mensaje de Advetencia",
       "Por favor ingrese el número del informe es obligatorio",
-      "warning"
+      "warning",
     );
   }
 
@@ -2703,7 +2735,7 @@ function Imprimir_informe2() {
     return Swal.fire(
       "Mensaje de Advertencia",
       "El numero de documento es obligatorio.",
-      "warning"
+      "warning",
     );
   } else {
     var url =
@@ -2730,7 +2762,7 @@ function Imprimir_informe2() {
     window.open(
       url,
       "Informe por filial",
-      "scrollbars=NO,width=" + width + ",height=" + height + ",top=0,left=0"
+      "scrollbars=NO,width=" + width + ",height=" + height + ",top=0,left=0",
     );
 
     // Incrementar el valor de txt_info solo después de generar el informe
@@ -2802,7 +2834,7 @@ function fetchSheetData() {
           Swal.fire(
             "Mensaje de Advertencia",
             "No se encontró un estudiante con ese DNI.",
-            "warning"
+            "warning",
           );
           return; // Detenemos ejecución adicional en este bloque
         }
@@ -2811,7 +2843,7 @@ function fetchSheetData() {
         Swal.fire(
           "Mensaje de Advertencia",
           "No se encontraron datos.",
-          "warning"
+          "warning",
         );
         return; // Detenemos ejecución adicional en este bloque
       }
@@ -2864,7 +2896,116 @@ function fillFormWithData(fila) {
     document.getElementById("select_cede").value = "3";
   }
 
+  // ⭐ NUEVO: Consultar variables étnicas de BD local
+  consultarVariablesEtnicas(dni, function (variablesEtnicas) {
+    if (variablesEtnicas) {
+      // Llenar los 4 campos de texto con CÓDIGOS (no nombres)
+      // 1. Autoidentificación étnica (A o B)
+      if (variablesEtnicas.det_etnica) {
+        $("#txt_auto_etnica").val(variablesEtnicas.det_etnica);
+      }
+
+      // 2. Pueblo indígena u originario (CÓDIGO, ej: 40)
+      if (variablesEtnicas.cod_etnia != null) {
+        $("#txt_pueblo_indigena").val(variablesEtnicas.cod_etnia);
+      }
+
+      // 3. Lengua indígena u originaria (A o B)
+      if (variablesEtnicas.det_lengua) {
+        $("#txt_lengua_indigena").val(variablesEtnicas.det_lengua);
+      }
+
+      // 4. Lengua indígena (detalle) - CÓDIGO (ej: 0)
+      if (variablesEtnicas.cod_lengua != null) {
+        $("#txt_lengua_detalle").val(variablesEtnicas.cod_lengua);
+      }
+
+      // ⭐ NUEVO: Llenar código del estudiante si existe el campo
+      if (variablesEtnicas.codigo_estudiante && $("#txt_codigo").length) {
+        $("#txt_codigo").val(variablesEtnicas.codigo_estudiante);
+      }
+
+      // Llenar campos de variables étnicas (selects) si existen
+      if ($("#select_det_etnica").length) {
+        $("#select_det_etnica")
+          .val(variablesEtnicas.det_etnica)
+          .trigger("change");
+      }
+      if ($("#select_det_lengua").length) {
+        $("#select_det_lengua")
+          .val(variablesEtnicas.det_lengua)
+          .trigger("change");
+      }
+
+      // Si seleccionó opción A, llenar los selects de códigos (si existen)
+      if (
+        variablesEtnicas.det_etnica === "A" &&
+        variablesEtnicas.cod_etnia != null &&
+        $("#select_cod_etnia").length
+      ) {
+        setTimeout(function () {
+          $("#select_cod_etnia")
+            .val(variablesEtnicas.cod_etnia)
+            .trigger("change");
+        }, 300);
+      }
+
+      if (
+        variablesEtnicas.det_lengua === "A" &&
+        variablesEtnicas.cod_lengua != null &&
+        $("#select_cod_lengua").length
+      ) {
+        setTimeout(function () {
+          $("#select_cod_lengua")
+            .val(variablesEtnicas.cod_lengua)
+            .trigger("change");
+        }, 300);
+      }
+
+      // Mostrar mensaje informativo
+      Swal.fire({
+        icon: "info",
+        title: "Datos Cargados",
+        html:
+          "Se cargaron los datos de UMIL y tus variables étnicas previamente declaradas:<br>" +
+          "<strong>Etnia:</strong> " +
+          (variablesEtnicas.nombre_etnia || "No especificada") +
+          "<br>" +
+          "<strong>Lengua:</strong> " +
+          (variablesEtnicas.nombre_lengua || "No especificada"),
+        timer: 4000,
+        timerProgressBar: true,
+      });
+    }
+  });
+
   // Puedes agregar más campos si es necesario
+}
+
+// ⭐ FUNCIÓN NUEVA: Consultar variables étnicas desde BD local
+function consultarVariablesEtnicas(dni, callback) {
+  $.ajax({
+    type: "POST",
+    url: "../controller/estudiante_publico/controlador_obtener_variables_etnicas.php",
+    data: { dni: dni },
+    dataType: "json",
+    success: function (response) {
+      if (response.existe) {
+        console.log("Variables étnicas encontradas:", response);
+        callback(response);
+      } else {
+        console.log(
+          "No se encontraron variables étnicas previas para DNI:",
+          dni,
+        );
+        callback(null);
+      }
+    },
+    error: function (xhr, status, error) {
+      console.error("Error al consultar variables étnicas:", error);
+      callback(null);
+    },
+  });
 }
 
 //pasar datos a titulado
@@ -3060,7 +3201,7 @@ function Pasar_titulo() {
     return Swal.fire(
       "Mensaje de Advertencia",
       "Tiene campos vacíos",
-      "warning"
+      "warning",
     );
   }
 
@@ -3106,7 +3247,7 @@ function Pasar_titulo() {
       return Swal.fire(
         "Mensaje de Error",
         "No se completó la actualización",
-        "error"
+        "error",
       );
     }
   });
@@ -3129,7 +3270,7 @@ function Validar_Expediente(id, nombre, correo) {
         Swal.fire("Mensaje de Confirmación", resp.message, "success").then(
           () => {
             tbl_general_bachiller.ajax.reload();
-          }
+          },
         );
       } else {
         Swal.fire("Mensaje de Advertencia", resp.message, "warning");
@@ -3139,7 +3280,7 @@ function Validar_Expediente(id, nombre, correo) {
       Swal.fire(
         "Mensaje de Error",
         "Ocurrió un error en la solicitud: " + error,
-        "error"
+        "error",
       );
     });
 }
@@ -3168,7 +3309,7 @@ $("#tabla_registro_general_bachiller").on("click", ".validar", function () {
       Validar_Expediente(
         data.Id_expediente,
         data.Estudiante,
-        data.correo_personal
+        data.correo_personal,
       );
     }
   });
@@ -3200,7 +3341,7 @@ function imprimir_varios_diplomas() {
     return Swal.fire(
       "Mensaje de Advertencia",
       "todos los campos son obligatorios.",
-      "warning"
+      "warning",
     );
   } else {
     var url =
@@ -3219,7 +3360,7 @@ function imprimir_varios_diplomas() {
     window.open(
       url,
       "DIPLOMAS TITULO PROFESIONAL",
-      "scrollbars=NO,width=" + width + ",height=" + height + ",top=0,left=0"
+      "scrollbars=NO,width=" + width + ",height=" + height + ",top=0,left=0",
     );
   }
 }

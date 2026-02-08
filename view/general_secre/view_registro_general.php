@@ -212,23 +212,27 @@
                                                     </div>
 
 
-                                                    <div class="col-5 form-group">
+                                                    <!-- Fila 1: Nombres y Apellidos -->
+                                                    <div class="col-4 form-group">
                                                         <label for="" style="font-size:small;">Nombres<b style="color:red">(*)</b>:</label>
                                                         <input type="text" class="form-control" id="txt_nom">
                                                     </div>
-                                                    <div class="col-3 form-group">
+                                                    <div class="col-4 form-group">
                                                         <label for="" style="font-size:small;">Apellido Paterno<b style="color:red">(*)</b>:</label>
                                                         <input type="text" class="form-control" id="txt_apepa">
                                                     </div>
-                                                    <div class="col-3 form-group">
+                                                    <div class="col-4 form-group">
                                                         <label for="" style="font-size:small;">Apellido Materno<b style="color:red">(*)</b>:</label>
                                                         <input type="text" class="form-control" id="txt_apema">
                                                     </div>
-                                                    <div class="col-3 form-group">
+                                                </div>
+                                                <div class="row">
+                                                    <!-- Fila 2: Código, Sexo, Celular -->
+                                                    <div class="col-4 form-group">
                                                         <label for="" style="font-size:small;">Código<b style="color:red">(*)</b>:</label>
                                                         <input type="text" class="form-control" id="txt_codigo" maxlenght="14" required>
                                                     </div>
-                                                    <div class="col-3 form-group">
+                                                    <div class="col-4 form-group">
                                                         <label for="" style="font-size:small;">Sexo<b style="color:red">(*)</b>:</label>
                                                         <select class="form-control" id="select_sexo" style="width:100%">
                                                             <option value="" disabled selected>Seleccione</option>
@@ -236,31 +240,40 @@
                                                             <option value="M">MASCULINO</option>
                                                         </select>
                                                     </div>
-                                                    <div class="col-3 form-group">
+                                                    <div class="col-4 form-group">
                                                         <label for="" style="font-size:small;">Celular<b style="color:red">(*)</b>:</label>
                                                         <input type="text" class="form-control" id="txt_movil" onkeypress="return soloNumeros(event)" maxlenght="9" required>
                                                     </div>
-                                                    <div class="col-6 form-group">
+                                                </div>
+                                                <div class="row">
+                                                    <!-- Fila 3: Dirección -->
+                                                    <div class="col-12 form-group">
                                                         <label for="" style="font-size:small;">Dirección<b style="color:red">(*)</b>:</label>
                                                         <input type="text" class="form-control" id="txt_dire" required>
                                                     </div>
-                                                    <div class="col-3 form-group">
+                                                </div>
+                                                <div class="row">
+                                                    <!-- Fila 4: Emails -->
+                                                    <div class="col-6 form-group">
                                                         <label for="" style="font-size:small;">Email personal <b style="color:red">(*)</b>:</label>
                                                         <input type="email" class="form-control" id="txt_email_per">
                                                     </div>
-                                                    <div class="col-3 form-group">
+                                                    <div class="col-6 form-group">
                                                         <label for="" style="font-size:small;">Email institucional (Opcional):</label>
                                                         <input type="email" class="form-control" id="txt_email_insti">
                                                     </div>
-                                                    <div class="col-3 form-group">
+                                                </div>
+                                                <div class="row">
+                                                    <!-- Fila 5: Fechas y Observaciones -->
+                                                    <div class="col-4 form-group">
                                                         <label for="" style="font-size:small;">Fecha de matricula<b style="color:red">(*)</b>:</label>
                                                         <input type="date" class="form-control" id="txt_fecha_matri">
                                                     </div>
-                                                    <div class="col-3 form-group">
+                                                    <div class="col-4 form-group">
                                                         <label for="" style="font-size:small;">Fecha de egreso<b style="color:red">(*)</b>:</label>
                                                         <input type="date" class="form-control" id="txt_fecha_egres">
                                                     </div>
-                                                    <div class="col-3 form-group">
+                                                    <div class="col-4 form-group">
                                                         <label for="" style="font-size:small;">Observaciones (Opcional):</label>
                                                         <textarea class="form-control" id="txt_oberva" rows="2" style="resize:none"></textarea>
                                                     </div>
@@ -308,6 +321,8 @@
                                                 <label for="" style="font-size:small;">Decano<b style="color:red">(*)</b>:</label>
                                                 <input type="text" class="form-control" id="txt_decano">
                                             </div>
+                                        </div>
+                                        <div class="row">
                                             <div class="col-3 form-group">
                                                 <label for="" style="font-size:small;">Autoidentificación étnica (Opcional):</label>
                                                 <input type="text" class="form-control" id="txt_auto_etnica">
@@ -324,6 +339,8 @@
                                                 <label for="" style="font-size:small;">Lengua indígena (detalle)(Opcional):</label>
                                                 <input type="text" class="form-control" id="txt_lengua_detalle">
                                             </div>
+                                        </div>
+                                        <div class="row">
                                             <div class="col-12 form-group">
                                                 <label for="" style="font-size:small;">Adjuntar Expediente<b style="color:red">(*)</b>:</label>
                                                 <input class="form-control" type="file" id="txt_archivo"><br>
@@ -613,6 +630,8 @@
                                                 <label for="" style="font-size:small;">Decano<b style="color:red">(*)</b>:</label>
                                                 <input type="text" class="form-control" id="txt_decano_editar" readonly>
                                             </div>
+                                        </div>
+                                        <div class="row">
                                             <div class="col-3 form-group">
                                                 <label for="" style="font-size:small;">Autoidentificación étnica (Opcional):</label>
                                                 <input type="text" class="form-control" id="txt_auto_etnica_editar">
@@ -629,6 +648,8 @@
                                                 <label for="" style="font-size:small;">Lengua indígena (detalle)(Opcional):</label>
                                                 <input type="text" class="form-control" id="txt_lengua_detalle_editar">
                                             </div>
+                                        </div>
+                                        <div class="row">
                                             <div class="col-12 form-group">
                                                 <label for="" style="font-size:small;">Adjuntar Expediente<b style="color:red">(*)</b>:</label>
                                                 <input class="form-control" type="text" id="txt_archivo_actual" hidden>
@@ -1076,6 +1097,8 @@
                                                 <label for="" style="font-size:small;">Decano<b style="color:red">(*)</b>:</label>
                                                 <input type="text" class="form-control" id="txt_decano_mas" readonly>
                                             </div>
+                                        </div>
+                                        <div class="row">
                                             <div class="col-3 form-group">
                                                 <label for="" style="font-size:small;">Autoidentificación étnica (Opcional):</label>
                                                 <input type="text" class="form-control" id="txt_auto_etnica_mas" readonly>
@@ -1092,6 +1115,8 @@
                                                 <label for="" style="font-size:small;">Lengua indígena (detalle)(Opcional):</label>
                                                 <input type="text" class="form-control" id="txt_lengua_detalle_mas" readonly>
                                             </div>
+                                        </div>
+                                        <div class="row">
                                             <div class="col-12 form-group" style="border: 1px solid #ccc; padding: 10px;" id="datos_antiguos">
                                                 <label for="" style="color:red">*Estos campos deben ser llenados si el expediente hace referencia a la versión anterior o es de fecha pasada.</label>
                                                 <div class="row">

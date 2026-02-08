@@ -406,6 +406,8 @@
                                                 <label for="" style="font-size:small;">Decano<b style="color:red">(*)</b>:</label>
                                                 <input type="text" class="form-control" id="txt_decano">
                                             </div>
+                                        </div>
+                                        <div class="row">
                                             <div class="col-3 form-group">
                                                 <label for="" style="font-size:small;">Autoidentificación étnica (Opcional):</label>
                                                 <input type="text" class="form-control" id="txt_auto_etnica">
@@ -422,6 +424,8 @@
                                                 <label for="" style="font-size:small;">Lengua indígena (detalle)(Opcional):</label>
                                                 <input type="text" class="form-control" id="txt_lengua_detalle">
                                             </div>
+                                        </div>
+                                        <div class="row">
                                             <div class="col-12 form-group">
                                                 <label for="" style="font-size:small;">Adjuntar Expediente<b style="color:red">(*)</b>:</label>
                                                 <input class="form-control" type="file" id="txt_archivo"><br>

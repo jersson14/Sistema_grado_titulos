@@ -75,6 +75,51 @@
           <div class="col-12 form-group" style="color:red">
             <h6><b>Campos Obligatorios (*)</b></h6>
           </div><br>
+          
+          <!-- Sección de Foto del Estudiante -->
+          <div class="col-12 form-group" id="seccion_foto_estudiante" style="display: block;">
+            <div class="card" style="border: 2px solid #17A2B8;">
+              <div class="card-header" style="background-color: #17A2B8; color: white;">
+                <h6><b><i class="fas fa-camera"></i> Fotografía del Estudiante</b></h6>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-4 text-center">
+                    <label><b>Foto Actual:</b></label>
+                    <div style="border: 2px solid #ddd; padding: 10px; border-radius: 8px; background-color: #f8f9fa;">
+                      <img id="img_foto_actual" 
+                           src="../imagenes/no_image.jpg" 
+                           alt="Foto actual" 
+                           style="width: 100%; max-width: 200px; height: auto; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    </div>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="form-group">
+                      <label><b>Cambiar Fotografía:</b></label>
+                      <input type="file" 
+                             class="form-control-file" 
+                             id="txt_foto_editar" 
+                             accept="image/jpeg,image/jpg,image/png">
+                      <small class="form-text text-muted">
+                        <i class="fas fa-info-circle"></i> Formatos permitidos: JPG, JPEG, PNG. Tamaño máximo: 2MB
+                      </small>
+                    </div>
+                    <div id="preview_nueva_foto" style="display: none; margin-top: 10px;">
+                      <label><b>Vista Previa:</b></label>
+                      <div style="border: 2px dashed #28a745; padding: 10px; border-radius: 8px; background-color: #f8f9fa;">
+                        <img id="img_preview" 
+                             src="" 
+                             alt="Vista previa" 
+                             style="width: 100%; max-width: 200px; height: auto; border-radius: 5px;">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Campos existentes del formulario -->
           <div class="col-4 form-group">
             <label for="">N° Documento<b style="color:red">(*)</b>:</label>
             <input type="text" class="form-control" id="txt_dni_editar" onkeypress="return soloNumeros(event)" maxlenght="8" disabled required>
@@ -107,15 +152,15 @@
             <input type="text" class="form-control" id="txt_movil_editar" onkeypress="return soloNumeros(event)" maxlenght="9"required>
           </div>
           <div class="col-8 form-group">
-            <label for="">Dirección<b style="color:red">(*)</b>:</label>
-            <input type="text" class="form-control" id="txt_dire_editar" required>
+            <label for="">Dirección:</label>
+            <input type="text" class="form-control" id="txt_dire_editar">
           </div>
           <div class="col-6 form-group">
-            <label for="">Fecha de matricula<b style="color:red">(*)</b>:</label>
+            <label for="">Fecha de matricula:</label>
             <input type="date" class="form-control" id="txt_fecha_matri_editar">
           </div>
           <div class="col-6 form-group">
-            <label for="">Fecha de egreso<b style="color:red">(*)</b>:</label>
+            <label for="">Fecha de egreso:</label>
             <input type="date" class="form-control" id="txt_fecha_egres_editar">
           </div>
          
@@ -124,6 +169,87 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times ml-1"></i> Cerrar</button>
         <button type="button" class="btn btn-success" onclick="Modificarr_Estudiante()"><i class="fas fa-edit"></i> Modificar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ⭐ NUEVO: Modal Ver Estudiante -->
+<div class="modal fade" id="modal_ver" tabindex="-1" role="dialog" aria-labelledby="modalVerLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color:#17A2B8;">
+        <h5 class="modal-title" id="modalVerLabel" style="color:white;"><b><i class="fas fa-eye"></i> INFORMACIÓN DEL ESTUDIANTE</b></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" style="color:white;">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <!-- Columna Izquierda: Foto -->
+          <div class="col-md-4 text-center">
+            <div class="form-group">
+              <label><b>Fotografía</b></label>
+              <div id="foto_container" style="border: 2px solid #17A2B8; padding: 10px; border-radius: 8px; background-color: #f8f9fa;">
+                <img id="img_ver_foto" 
+                     src="../imagenes/no_image.jpg" 
+                     alt="Foto del estudiante" 
+                     style="width: 100%; max-width: 250px; height: auto; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+              </div>
+            </div>
+          </div>
+          
+          <!-- Columna Derecha: Datos -->
+          <div class="col-md-8">
+            <div class="row">
+              <div class="col-6 form-group">
+                <label><b>N° Documento:</b></label>
+                <input type="text" class="form-control" id="txt_dni_ver" readonly style="background-color: #e9ecef;">
+              </div>
+              <div class="col-6 form-group">
+                <label><b>Código:</b></label>
+                <input type="text" class="form-control" id="txt_codigo_ver" readonly style="background-color: #e9ecef;">
+              </div>
+              <div class="col-12 form-group">
+                <label><b>Nombres:</b></label>
+                <input type="text" class="form-control" id="txt_nom_ver" readonly style="background-color: #e9ecef;">
+              </div>
+              <div class="col-6 form-group">
+                <label><b>Apellido Paterno:</b></label>
+                <input type="text" class="form-control" id="txt_apepa_ver" readonly style="background-color: #e9ecef;">
+              </div>
+              <div class="col-6 form-group">
+                <label><b>Apellido Materno:</b></label>
+                <input type="text" class="form-control" id="txt_apema_ver" readonly style="background-color: #e9ecef;">
+              </div>
+              <div class="col-4 form-group">
+                <label><b>Sexo:</b></label>
+                <input type="text" class="form-control" id="txt_sexo_ver" readonly style="background-color: #e9ecef;">
+              </div>
+              <div class="col-4 form-group">
+                <label><b>Celular:</b></label>
+                <input type="text" class="form-control" id="txt_movil_ver" readonly style="background-color: #e9ecef;">
+              </div>
+              <div class="col-12 form-group">
+                <label><b>Dirección:</b></label>
+                <input type="text" class="form-control" id="txt_dire_ver" readonly style="background-color: #e9ecef;">
+              </div>
+              <div class="col-6 form-group">
+                <label><b>Fecha Matrícula:</b></label>
+                <input type="text" class="form-control" id="txt_fecha_matri_ver" readonly style="background-color: #e9ecef;">
+              </div>
+              <div class="col-6 form-group">
+                <label><b>Fecha Egreso:</b></label>
+                <input type="text" class="form-control" id="txt_fecha_egres_ver" readonly style="background-color: #e9ecef;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          <i class="fas fa-times"></i> Cerrar
+        </button>
       </div>
     </div>
   </div>

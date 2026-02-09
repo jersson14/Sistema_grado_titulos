@@ -9,6 +9,7 @@ require '../../model/model_estudiante_publico.php';
 
 try {
     $dni = isset($_POST['dni']) ? trim($_POST['dni']) : '';
+    $nivel = isset($_POST['nivel']) ? $_POST['nivel'] : 'PREGRADO';
     
     // Validar DNI
     if (empty($dni)) {
@@ -30,7 +31,7 @@ try {
     $modelo = new Modelo_Estudiante_Publico();
     
     // Buscar estudiante
-    $estudiante = $modelo->Buscar_Estudiante_Por_DNI($dni);
+    $estudiante = $modelo->Buscar_Estudiante_Por_DNI($dni, $nivel);
     
     if ($estudiante) {
         // Verificar si puede actualizar

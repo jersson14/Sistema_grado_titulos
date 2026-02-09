@@ -9,8 +9,9 @@ require_once __DIR__ . '/../conexion.php';
 
 use Mpdf\Mpdf;
 
-// Obtener DNI del estudiante
+// Obtener DNI y Nivel
 $dni = isset($_GET['dni']) ? $_GET['dni'] : '';
+$nivel = isset($_GET['nivel']) ? $_GET['nivel'] : 'PREGRADO';
 
 if (empty($dni)) {
     die('DNI no proporcionado');
@@ -21,22 +22,22 @@ if ($mysqli->connect_error) {
     die('Conexion fallida: ' . $mysqli->connect_error);
 }
 
-// Consultar datos del estudiante
-$query = "SELECT 
-    estudiante.Dni,
-    estudiante.Codigo,
-    estudiante.Nombres,
-    estudiante.Apellido_paterno,
-    estudiante.Apellido_materno,
-    estudiante.DET_ETNICA,
-    estudiante.COD_ETNIA,
-    estudiante.DET_LENGUA,
-    estudiante.COD_LENGUA,
-    estudiante.fecha_declaracion_etnica,
-    estudiante.Facultad,
-    estudiante.Escuela
-FROM estudiante
-WHERE estudiante.Dni = '$dni'";
+// Consultar datos según el nivel
+if ($nivel === 'POSGRADO') {
+    $query = "SELECT 
+        Dni, Codigo, Nombres, Apellido_paterno, Apellido_materno,
+        DET_ETNICA, COD_ETNIA, DET_LENGUA, COD_LENGUA,
+        fecha_declaracion_etnica, Posgrado as Escuela, '' as Facultad
+    FROM estudiante_posgrado
+    WHERE Dni = '$dni'";
+} else {
+    $query = "SELECT 
+        Dni, Codigo, Nombres, Apellido_paterno, Apellido_materno,
+        DET_ETNICA, COD_ETNIA, DET_LENGUA, COD_LENGUA,
+        fecha_declaracion_etnica, Facultad, Escuela
+    FROM estudiante
+    WHERE Dni = '$dni'";
+}
 
 $resultado = $mysqli->query($query);
 
@@ -463,12 +464,13 @@ $html = '
     </div>
     
     <div class="info-line">
-        <strong>De la Escuela Profesional de:</strong> ' . strtoupper($estudiante['Escuela'] ?? 'NO ESPECIFICADO') . '
+        <strong>' . ($nivel === 'POSGRADO' ? 'Programa de Posgrado:' : 'De la Escuela Profesional de:') . '</strong> ' . strtoupper($estudiante['Escuela'] ?? 'NO ESPECIFICADO') . '
     </div>
     
+    ' . ($nivel === 'PREGRADO' ? '
     <div class="info-line">
         <strong>Facultad:</strong> ' . strtoupper($estudiante['Facultad'] ?? 'NO ESPECIFICADO') . '
-    </div>
+    </div>' : '') . '
     
     <div class="section">
         <div class="section-title">Declaro bajo juramento de ley autoidentificación étnica</div>

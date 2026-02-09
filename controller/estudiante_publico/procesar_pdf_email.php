@@ -48,6 +48,7 @@ try {
     // Generar PDF
     log_msg("Generando PDF...");
     $_GET['dni'] = $dni;
+    $_GET['nivel'] = isset($_POST['nivel']) ? $_POST['nivel'] : 'PREGRADO';
     
     // Buffer para capturar salida del generador PDF
     ob_start();
@@ -114,6 +115,9 @@ try {
         .h2 { color: #722f37; margin-top: 0; }
         .info-box { background-color: #f9f9f9; border-left: 4px solid #722f37; padding: 15px; margin: 20px 0; }
         .footer { background-color: #333; color: #fff; text-align: center; padding: 15px; font-size: 12px; }
+        .contact-item { margin-top: 10px; font-size: 14px; }
+        .contact-location { font-weight: bold; }
+        .contact-phone { color: #722f37; font-weight: bold; margin-left: 5px; }
     </style>
 </head>
 <body>
@@ -140,8 +144,23 @@ try {
             <p>Adjunto a este correo encontrará su declaración jurada en formato PDF. Le recomendamos guardar este documento para sus archivos personales.</p>
             
             <p style="font-size: 0.9em; color: #666; margin-top: 30px;">
-                Si usted no realizó este trámite, por favor comuníquese inmediatamente con nosotros.
+                Si usted no realizó este trámite, por favor comuníquese inmediatamente con nosotros:
             </p>
+
+            <div class="contact-item">
+                <span class="contact-location">📍 Sede Abancay:</span>
+                <span class="contact-phone">970 639 067</span>
+            </div>
+            
+            <div class="contact-item">
+                <span class="contact-location">📍 Filial Andahuaylas:</span>
+                <span class="contact-phone">957 306 881</span>
+            </div>
+            
+            <div class="contact-item">
+                <span class="contact-location">📍 Filial Cusco:</span>
+                <span class="contact-phone">970 639 067</span>
+            </div>
         </div>
         <div class="footer">
             <p> universidad Tecnológica de los Andes<br>Oficina de Grados y Títulos</p>

@@ -29,6 +29,10 @@
       background-attachment: fixed;
     }
 
+    .hidden {
+      display: none !important;
+    }
+
     /* Overlay con transparencia igual al login */
     body::before {
       content: '';
@@ -478,6 +482,13 @@
 
         <div class="form-row">
           <div class="form-group">
+            <label class="form-label">Nivel de Estudios <span class="required">*</span></label>
+            <select id="select_nivel" class="form-control">
+              <option value="PREGRADO">PREGRADO (Bachiller / Título)</option>
+              <option value="POSGRADO">POSGRADO (Maestría)</option>
+            </select>
+          </div>
+          <div class="form-group">
             <label class="form-label">Número de DNI <span class="required">*</span></label>
             <input type="text" id="txt_dni" class="form-control" placeholder="Ingrese 8 dígitos" maxlength="8" pattern="[0-9]{8}">
           </div>
@@ -544,16 +555,28 @@
             <label class="form-label">Código de Estudiante <span class="required">*</span></label>
             <input type="text" id="txt_codigo" class="form-control" placeholder="Ej: 2020001234">
           </div>
-          <div class="form-group">
-            <label class="form-label">Facultad <span class="required">*</span></label>
-            <select id="select_facultad" class="form-control" style="width: 100%;">
-              <option value="">Seleccione Facultad</option>
-            </select>
+          
+          <!-- Contenedor Pregrado -->
+          <div id="container_pregrado" class="form-row" style="grid-column: span 2; margin-bottom: 0; gap: 20px;">
+            <div class="form-group">
+              <label class="form-label">Facultad <span class="required">*</span></label>
+              <select id="select_facultad" class="form-control" style="width: 100%;">
+                <option value="">Seleccione Facultad</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Escuela Profesional <span class="required">*</span></label>
+              <select id="select_escuela" class="form-control" style="width: 100%;">
+                <option value="">Seleccione Escuela</option>
+              </select>
+            </div>
           </div>
-          <div class="form-group">
-            <label class="form-label">Escuela Profesional <span class="required">*</span></label>
-            <select id="select_escuela" class="form-control" style="width: 100%;">
-              <option value="">Seleccione Escuela</option>
+
+          <!-- Contenedor Posgrado -->
+          <div id="container_posgrado" class="form-group hidden" style="grid-column: span 2;">
+            <label class="form-label">Programa de Posgrado <span class="required">*</span></label>
+            <select id="select_posgrado" class="form-control" style="width: 100%;">
+              <option value="">Seleccione Programa</option>
             </select>
           </div>
         </div>
@@ -768,7 +791,39 @@
             const item = CATALOGO_LENGUAS.find(x => x.id === id);
             $('#txt_nombre_lengua').val(item ? item.nombre : '');
         });
+
+        // Manejar cambio de Nivel de Estudios
+        $('#select_nivel').change(function() {
+            const nivel = $(this).val();
+            if (nivel === 'POSGRADO') {
+                $('#container_pregrado').addClass('hidden');
+                $('#container_posgrado').removeClass('hidden');
+                Cargar_Select_Posgrado();
+            } else {
+                $('#container_pregrado').removeClass('hidden');
+                $('#container_posgrado').addClass('hidden');
+            }
+        });
     });
+
+    // Cargar Programas de Posgrado
+    function Cargar_Select_Posgrado() {
+      $.ajax({
+        url: "controller/registro_general_posgrado/controlador_cargar_select_programa.php",
+        type: 'POST',
+        dataType: 'json'
+      }).done(function(data) {
+        let cadena = "<option value=''>Seleccione Programa</option>";
+        if (data && data.length > 0) {
+            for (var i = 0; i < data.length; i++) {
+                cadena += "<option value='" + data[i][1] + "'>" + data[i][1] + "</option>";
+            }
+            $('#select_posgrado').html(cadena);
+        }
+      }).fail(function() {
+        Swal.fire('Error', 'No se pudieron cargar los programas de posgrado', 'error');
+      });
+    }
 
     // Cargar Facultades
     function Cargar_Select_Facultad() {
@@ -838,6 +893,7 @@
     // Buscar DNI
     function buscarDNI() {
       const dni = $('#txt_dni').val().trim();
+      const nivel = $('#select_nivel').val();
 
       if (dni.length !== 8 || !/^\d{8}$/.test(dni)) {
         Swal.fire('Error', 'Por favor ingrese un DNI válido de 8 dígitos', 'error');
@@ -846,7 +902,7 @@
 
       Swal.fire({
         title: 'Buscando...',
-        text: 'Consultando información',
+        text: 'Consultando información de ' + nivel,
         allowOutsideClick: false,
         didOpen: () => {
           Swal.showLoading();
@@ -857,7 +913,10 @@
       $.ajax({
         url: 'controller/estudiante_publico/controlador_buscar_estudiante.php',
         type: 'POST',
-        data: { dni: dni },
+        data: { 
+          dni: dni,
+          nivel: nivel
+        },
         dataType: 'json',
         success: function(response) {
           if (response.success && response.existe) {
@@ -1074,16 +1133,25 @@
           return;
         }
 
-        // Validar Facultad
-        if (!$('#select_facultad').val()) {
-          Swal.fire('Atención', 'Debe seleccionar una Facultad', 'warning');
-          return;
-        }
+        const nivel = $('#select_nivel').val();
+        if (nivel === 'PREGRADO') {
+            // Validar Facultad
+            if (!$('#select_facultad').val()) {
+              Swal.fire('Atención', 'Debe seleccionar una Facultad', 'warning');
+              return;
+            }
 
-        // Validar Escuela
-        if (!$('#select_escuela').val()) {
-          Swal.fire('Atención', 'Debe seleccionar una Escuela Profesional', 'warning');
-          return;
+            // Validar Escuela
+            if (!$('#select_escuela').val()) {
+              Swal.fire('Atención', 'Debe seleccionar una Escuela Profesional', 'warning');
+              return;
+            }
+        } else {
+            // Validar Posgrado
+            if (!$('#select_posgrado').val()) {
+              Swal.fire('Atención', 'Debe seleccionar un Programa de Posgrado', 'warning');
+              return;
+            }
         }
 
         // Validar Celular
@@ -1151,14 +1219,20 @@
       html += '<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 15px; box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3); color: white;">';
       html += '<h5 style="margin: 0 0 20px 0; font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 10px;"><i class="fas fa-user-circle"></i> DATOS PERSONALES</h5>';
       
+      const nivel = $('#select_nivel').val();
       const datosPersonales = [
         { icon: 'id-card', label: 'DNI', value: $('#txt_dni_readonly').val() },
         { icon: 'user', label: 'Nombres', value: $('#txt_nombres').val() },
         { icon: 'users', label: 'Apellidos', value: $('#txt_apellido_paterno').val() + ' ' + $('#txt_apellido_materno').val() },
-        { icon: 'graduation-cap', label: 'Código', value: $('#txt_codigo').val() },
-        { icon: 'university', label: 'Facultad', value: $('#select_facultad').val() || 'No especificado' },
-        { icon: 'book-open', label: 'Escuela Profesional', value: $('#select_escuela').val() || 'No especificado' }
+        { icon: 'graduation-cap', label: 'Código', value: $('#txt_codigo').val() }
       ];
+
+      if (nivel === 'PREGRADO') {
+        datosPersonales.push({ icon: 'university', label: 'Facultad', value: $('#select_facultad').val() || 'No especificado' });
+        datosPersonales.push({ icon: 'book-open', label: 'Escuela Profesional', value: $('#select_escuela').val() || 'No especificado' });
+      } else {
+        datosPersonales.push({ icon: 'university', label: 'Programa de Posgrado', value: $('#select_posgrado').val() || 'No especificado' });
+      }
 
       datosPersonales.forEach(item => {
         html += `<div style="margin-bottom: 12px; padding: 12px; background: rgba(255,255,255,0.15); border-radius: 8px; backdrop-filter: blur(10px);">
@@ -1300,14 +1374,18 @@
       // Preparar datos
       const formData = {
         tipo_documento: 'DNI',
+        nivel: $('#select_nivel').val(),
         dni: $('#txt_dni_readonly').val(),
         nombres: $('#txt_nombres').val(),
         apellido_paterno: $('#txt_apellido_paterno').val(),
         apellido_materno: $('#txt_apellido_materno').val(),
         sexo: $('#cbo_sexo').val(),
         codigo: $('#txt_codigo').val(),
-        facultad: $('#select_facultad').val(),
-        escuela: $('#select_escuela').val(),
+        // Campos académicos condicionales
+        facultad: $('#select_nivel').val() === 'PREGRADO' ? $('#select_facultad').val() : '',
+        escuela: $('#select_nivel').val() === 'PREGRADO' ? $('#select_escuela').val() : '',
+        posgrado: $('#select_nivel').val() === 'POSGRADO' ? $('#select_posgrado').val() : '',
+        
         celular: $('#txt_celular').val(),
         direccion: $('#txt_direccion').val() || '',
         correo_personal: $('#txt_correo_personal').val(),
@@ -1344,7 +1422,8 @@
                 nombres: $('#txt_nombres').val(),
                 apellido_paterno: $('#txt_apellido_paterno').val(),
                 apellido_materno: $('#txt_apellido_materno').val(),
-                correo_personal: $('#txt_correo_personal').val()
+                correo_personal: $('#txt_correo_personal').val(),
+                nivel: $('#select_nivel').val()
               },
               dataType: 'json',
               success: function(pdfResponse) {

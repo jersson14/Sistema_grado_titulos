@@ -19,9 +19,9 @@
             conexionBD::cerrar_conexion();
         }
        
-        public function Modificar_Estudiantes_Pos($dni,$codigo,$nombres,$apepa,$apema,$sexo,$celular,$direc,$fecha_matr,$fecha_egre,$id_usuario){
+        public function Modificar_Estudiantes_Pos($dni,$codigo,$nombres,$apepa,$apema,$sexo,$celular,$direc,$fecha_matr,$fecha_egre,$id_usuario,$foto){
             $c = conexionBD::conexionPDO();
-            $sql = "CALL SP_MODIFICAR_ESTUDIANTE_POS(?,?,?,?,?,?,?,?,?,?,?)";
+            $sql = "CALL SP_MODIFICAR_ESTUDIANTE_POS(?,?,?,?,?,?,?,?,?,?,?,?)";
             $arreglo = array();
             $query  = $c->prepare($sql);
             $query ->bindParam(1,$dni);
@@ -35,6 +35,7 @@
             $query ->bindParam(9,$fecha_matr);
             $query ->bindParam(10,$fecha_egre);
             $query ->bindParam(11,$id_usuario);
+            $query ->bindParam(12,$foto);
             $query->execute();
             if($row = $query->fetchColumn()){
                 return $row;

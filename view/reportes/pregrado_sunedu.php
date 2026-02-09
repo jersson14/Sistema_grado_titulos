@@ -183,9 +183,9 @@
                             <th style="display:none;text-align:center" >FEC_FIN_MOD</th>
                             <th style="display:none;text-align:center" >MOD_SUSTENTACIÓN</th>
 
-                            <th style="display:none;text-align:center" >DET_ETNICA</th>
+                            <th style="display:none;text-align:center" >VAR_ETNICA</th>
+                            <th style="display:none;text-align:center" >DET_ETNICO</th>
                             <th style="display:none;text-align:center" >LENGUA_IND</th>
-                            <th style="display:none;text-align:center" >DET_LENGUA</th>
                             <th style="display:none;text-align:center" >DET_LENGUA</th>
 
                         </tr>

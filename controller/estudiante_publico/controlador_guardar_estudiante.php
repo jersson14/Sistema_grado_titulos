@@ -16,6 +16,7 @@ use PHPMailer\PHPMailer\Exception;
 try {
     // Obtener datos del POST
     $dni = isset($_POST['dni']) ? trim($_POST['dni']) : '';
+    $nivel = isset($_POST['nivel']) ? $_POST['nivel'] : 'PREGRADO';
     $tipo_documento = isset($_POST['tipo_documento']) ? $_POST['tipo_documento'] : 'DNI';
     $nombres = isset($_POST['nombres']) ? strtoupper(trim($_POST['nombres'])) : '';
     $apellido_paterno = isset($_POST['apellido_paterno']) ? strtoupper(trim($_POST['apellido_paterno'])) : '';
@@ -24,6 +25,7 @@ try {
     $codigo = isset($_POST['codigo']) ? trim($_POST['codigo']) : '';
     $facultad = isset($_POST['facultad']) ? trim($_POST['facultad']) : null;
     $escuela = isset($_POST['escuela']) ? trim($_POST['escuela']) : null;
+    $posgrado = isset($_POST['posgrado']) ? trim($_POST['posgrado']) : null;
     
     // Datos opcionales
     $celular = isset($_POST['celular']) ? trim($_POST['celular']) : null;
@@ -69,20 +71,20 @@ try {
         exit;
     }
 
-    if (empty($facultad)) {
-        echo json_encode([
-            'success' => false,
-            'message' => 'Facultad es requerida'
-        ]);
-        exit;
-    }
-
-    if (empty($escuela)) {
-        echo json_encode([
-            'success' => false,
-            'message' => 'Escuela Profesional es requerida'
-        ]);
-        exit;
+    if ($nivel === 'PREGRADO') {
+        if (empty($facultad)) {
+            echo json_encode(['success' => false, 'message' => 'Facultad es requerida']);
+            exit;
+        }
+        if (empty($escuela)) {
+            echo json_encode(['success' => false, 'message' => 'Escuela Profesional es requerida']);
+            exit;
+        }
+    } else {
+        if (empty($posgrado)) {
+            echo json_encode(['success' => false, 'message' => 'Programa de Posgrado es requerido']);
+            exit;
+        }
     }
 
     if (empty($celular)) {
@@ -110,7 +112,6 @@ try {
     }
     
     // Preparar array de datos
-    // Convertir strings vacíos a NULL para campos numéricos
     $cod_etnia_final = (!empty($cod_etnia) && $cod_etnia !== '') ? $cod_etnia : null;
     $cod_lengua_final = (!empty($cod_lengua) && $cod_lengua !== '') ? $cod_lengua : null;
     $det_etnica_final = (!empty($det_etnica) && $det_etnica !== '') ? $det_etnica : null;
@@ -126,6 +127,7 @@ try {
         'codigo' => $codigo,
         'facultad' => $facultad,
         'escuela' => $escuela,
+        'posgrado' => $posgrado,
         'celular' => $celular,
         'direccion' => $direccion,
         'correo_personal' => $correo_personal,
@@ -138,17 +140,19 @@ try {
         'det_etnica' => $det_etnica_final,
         'cod_etnia' => $cod_etnia_final,
         'det_lengua' => $det_lengua_final,
-        'cod_lengua' => $cod_lengua_final
+        'cod_lengua' => $cod_lengua_final,
+        'nivel' => $nivel
     ];
+
     
     $modelo = new Modelo_Estudiante_Publico();
     
     // Verificar si existe
-    $estudiante_existe = $modelo->Buscar_Estudiante_Por_DNI($dni);
+    $estudiante_existe = $modelo->Buscar_Estudiante_Por_DNI($dni, $nivel);
     
     if ($estudiante_existe) {
         // Verificar si puede actualizar
-        if (!$modelo->Puede_Actualizar($dni)) {
+        if (!$modelo->Puede_Actualizar($dni, $nivel)) {
             echo json_encode([
                 'success' => false,
                 'message' => 'No puede actualizar sus datos porque ya tiene un diploma registrado.'
@@ -157,10 +161,10 @@ try {
         }
         
         // Verificar si puede editar declaración étnica
-        $puede_editar_var_etnica = $modelo->Puede_Editar_Var_Etnica($dni);
+        $puede_editar_var_etnica = $modelo->Puede_Editar_Var_Etnica($dni, $nivel);
         
         // Si está intentando modificar la declaración étnica pero está bloqueada
-        if (!$puede_editar_var_etnica && !empty($autoidentificacion_etnica)) {
+        if (!$puede_editar_var_etnica && !empty($det_etnica_final)) {
             echo json_encode([
                 'success' => false,
                 'message' => 'Ya llenó su declaración étnica. Si necesita modificarla, contacte al administrador.'
@@ -169,12 +173,12 @@ try {
         }
         
         // Actualizar
-        $resultado = $modelo->Actualizar_Estudiante($datos);
+        $resultado = $modelo->Actualizar_Estudiante($datos, $nivel);
         
         if ($resultado) {
-            // Si llenó declaración étnica y puede editarla, bloquearla
-            if ($puede_editar_var_etnica && !empty($autoidentificacion_etnica)) {
-                $modelo->Bloquear_Var_Etnica($dni);
+            // Si llenó declaración étnica e intentó guardarla, bloquearla
+            if ($puede_editar_var_etnica && !empty($det_etnica_final)) {
+                $modelo->Bloquear_Var_Etnica($dni, $nivel);
             }
             
             echo json_encode([
@@ -190,18 +194,17 @@ try {
         }
     } else {
         // Insertar nuevo
-        $resultado = $modelo->Registrar_Estudiante($datos);
+        $resultado = $modelo->Registrar_Estudiante($datos, $nivel);
         
         if ($resultado) {
             // Si llenó declaración étnica, bloquearla automáticamente
             if (!empty($det_etnica_final)) {
-                $modelo->Bloquear_Var_Etnica($dni);
+                $modelo->Bloquear_Var_Etnica($dni, $nivel);
             }
             
             echo json_encode([
                 'success' => true,
                 'action' => 'insert',
-                'id' => $resultado,
                 'message' => 'Datos registrados correctamente'
             ]);
         } else {

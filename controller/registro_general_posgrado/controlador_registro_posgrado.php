@@ -55,10 +55,15 @@
     $mod_sustenta = strtoupper(htmlspecialchars($_POST['mod_sustenta'],ENT_QUOTES,'UTF-8'));
     $idusuario = strtoupper(htmlspecialchars($_POST['idusuario'],ENT_QUOTES,'UTF-8'));
 
+    $auto_etnica = strtoupper(htmlspecialchars($_POST['auto_etnica'], ENT_QUOTES, 'UTF-8'));
+    $pueblo_indi = strtoupper(htmlspecialchars($_POST['pueblo_indi'], ENT_QUOTES, 'UTF-8'));
+    $lengua_indi = strtoupper(htmlspecialchars($_POST['lengua_indi'], ENT_QUOTES, 'UTF-8'));
+    $lengua_detalle = strtoupper(htmlspecialchars($_POST['lengua_detalle'], ENT_QUOTES, 'UTF-8'));
+
 
         $ruta='controller/registro_general_posgrado/documentos/'.$nombrearchivo;
     
-        $consulta = $MRGPG->Registrar_Posgrado($tipodoc,$documentoFinal,$nombres,$apepa,$apema,$codigo,$sexo,$celular,$direc,$emaper,$emainsti,$fecha_matr,$fecha_egre,$observa,$ced,$pro,$den,$moda,$idauto,$fecha,$acad,$acu,$res,$exped,$lib,$fol,$reg,$ruta,$mod_estu,$tra_inv,$turn,$porc,$cent,$meta,$proce_pais,$proce_univ,$proce_grado,$fecha_matri,$fecha_inici,$fecha_fin,$mod_sustenta,$idusuario);
+        $consulta = $MRGPG->Registrar_Posgrado($tipodoc,$documentoFinal,$nombres,$apepa,$apema,$codigo,$sexo,$celular,$direc,$emaper,$emainsti,$fecha_matr,$fecha_egre,$observa,$ced,$pro,$den,$moda,$idauto,$fecha,$acad,$acu,$res,$exped,$lib,$fol,$reg,$ruta,$mod_estu,$tra_inv,$turn,$porc,$cent,$meta,$proce_pais,$proce_univ,$proce_grado,$fecha_matri,$fecha_inici,$fecha_fin,$mod_sustenta,$idusuario, $auto_etnica, $pueblo_indi, $lengua_indi, $lengua_detalle);
  
  
  $config = include('../../config/config.php');

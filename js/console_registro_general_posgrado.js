@@ -561,6 +561,10 @@ $("#tabla_registro_general_posgrado").on("click", ".mostrar", function () {
   document.getElementById("txt_libro_mas").value = data.Libro;
   document.getElementById("txt_folio_mas").value = data.Folio;
   document.getElementById("txt_registro_mas").value = data.Registro;
+  document.getElementById("txt_auto_etnica_mas").value = data.DET_ETNICA;
+  document.getElementById("txt_pueblo_indigena_mas").value = data.COD_ETNIA;
+  document.getElementById("txt_lengua_indigena_mas").value = data.DET_LENGUA;
+  document.getElementById("txt_lengua_detalle_mas").value = data.COD_LENGUA;
   //DATOS DE LA MODALIDAD Y DIPLOMA
   document.getElementById("txt_modo_estu_mas").value = data.Modo_estudio;
   document.getElementById("txt_trabajo_inve_mas").value =
@@ -701,6 +705,11 @@ $("#tabla_registro_general_posgrado").on("click", ".editar", function () {
   document.getElementById("txt_nro_credi_editar").value = data.Nro_creditos;
   document.getElementById("txt_nro_oficio_editar").value = data.OFICIO;
   document.getElementById("txt_fecha_secre_editar").value = data.FECHA_SECRE;
+
+  document.getElementById("txt_auto_etnica_editar").value = data.DET_ETNICA;
+  document.getElementById("txt_pueblo_indigena_editar").value = data.COD_ETNIA;
+  document.getElementById("txt_lengua_indigena_editar").value = data.DET_LENGUA;
+  document.getElementById("txt_lengua_detalle_editar").value = data.COD_LENGUA;
 });
 
 //AGREGAR DIPLOMA
@@ -771,7 +780,6 @@ function Cargar_Select_Cede() {
 
     document.getElementById("select_cede").innerHTML = cadena;
     document.getElementById("txt_cede_editar").innerHTML = cadena;
-    document.getElementById("txtfilial").innerHTML = cadena;
   });
 }
 
@@ -1164,6 +1172,11 @@ function Registrar_Posgraduado() {
   let mod_sustenta = document.getElementById("select_modo_sustenta").value;
   let idusuario = document.getElementById("txtprincipalid").value;
 
+  let auto_etnica = document.getElementById("txt_auto_etnica").value;
+  let pueblo_indi = document.getElementById("txt_pueblo_indigena").value;
+  let lengua_indi = document.getElementById("txt_lengua_indigena").value;
+  let lengua_detalle = document.getElementById("txt_lengua_detalle").value;
+
   // if(arc.length==0){
   //   return Swal.fire("Mensaje de Advertencia","Seleccione algún tipo de documento","warning")
   // }
@@ -1206,9 +1219,7 @@ function Registrar_Posgraduado() {
     apema.length === 0 ||
     sexo.length === 0 ||
     celular.length === 0 ||
-    direc.length === 0 ||
-    fecha_matr.length === 0 ||
-    fecha_egre.length === 0
+    direc.length === 0
   ) {
     return Swal.fire(
       "Mensaje de Advertencia",
@@ -1297,6 +1308,11 @@ function Registrar_Posgraduado() {
   formData.append("mod_sustenta", mod_sustenta);
   formData.append("idusuario", idusuario);
 
+  formData.append("auto_etnica", auto_etnica);
+  formData.append("pueblo_indi", pueblo_indi);
+  formData.append("lengua_indi", lengua_indi);
+  formData.append("lengua_detalle", lengua_detalle);
+
   $.ajax({
     url: "../controller/registro_general_posgrado/controlador_registro_posgrado.php",
     type: "POST",
@@ -1353,6 +1369,11 @@ function limpiarCampos() {
   document.getElementById("txt_fecha_matri_mod").value = "";
   document.getElementById("txt_fecha_inicio_mod").value = "";
   document.getElementById("txt_fecha_fin").value = "";
+
+  document.getElementById("txt_auto_etnica").value = "";
+  document.getElementById("txt_pueblo_indigena").value = "";
+  document.getElementById("txt_lengua_indigena").value = "";
+  document.getElementById("txt_lengua_detalle").value = "";
 }
 
 function validar_email(email) {
@@ -1438,6 +1459,13 @@ function Modificar_Posgraduado() {
   let fechasecre = document.getElementById("txt_fecha_secre_editar").value;
   let idusuario = document.getElementById("txtprincipalid").value;
 
+  let auto_etnica = document.getElementById("txt_auto_etnica_editar").value;
+  let pueblo_indi = document.getElementById("txt_pueblo_indigena_editar").value;
+  let lengua_indi = document.getElementById("txt_lengua_indigena_editar").value;
+  let lengua_detalle = document.getElementById(
+    "txt_lengua_detalle_editar",
+  ).value;
+
   // if(arc.length==0){
   //   return Swal.fire("Mensaje de Advertencia","Seleccione algún tipo de documento","warning")
   // }
@@ -1460,9 +1488,7 @@ function Modificar_Posgraduado() {
     apema.length == 0 ||
     sexo.length == 0 ||
     celular.length == 0 ||
-    direc.length == 0 ||
-    fecha_matr.length == 0 ||
-    fecha_egre.length == 0
+    direc.length == 0
   ) {
     return Swal.fire(
       "Mensaje de Advertencia",
@@ -1570,6 +1596,11 @@ function Modificar_Posgraduado() {
   formData.append("nrooficio", nrooficio);
   formData.append("fechasecre", fechasecre);
   formData.append("idusuario", idusuario);
+
+  formData.append("auto_etnica", auto_etnica);
+  formData.append("pueblo_indi", pueblo_indi);
+  formData.append("lengua_indi", lengua_indi);
+  formData.append("lengua_detalle", lengua_detalle);
 
   $.ajax({
     url: "../controller/registro_general_posgrado/controlador_modificar_posgrado.php",
@@ -1914,6 +1945,10 @@ function loadClient() {
 
 gapi.load("client:auth2", loadClient);
 
+function BusquedaEtnica() {
+  fetchSheetData();
+}
+
 function fetchSheetData() {
   var spreadsheetId = "14ITvjf_jC-oQ4-sRAXr7x7i9gr6-KdxoWssZ07pp4VE"; // ID de tu hoja de cálculo de Google Sheets
   var range = "estudiante!A2:T"; // Rango donde están los datos (sin incluir el encabezado)
@@ -1947,13 +1982,11 @@ function fetchSheetData() {
           console.log("Fila encontrada:", filaEncontrada);
           fillFormWithData(filaEncontrada); // Llamamos a la función para llenar el formulario
         } else {
-          // Ventana de advertencia si no se encuentra el DNI
-          Swal.fire(
-            "Mensaje de Advertencia",
-            "No se encontró un estudiante con ese DNI.",
-            "warning",
+          // ⭐ NUEVO REQUERIMIENTO: Si no se encuentra en Sheets, buscar en BD Local
+          console.log(
+            "Estudiante no encontrado en Sheets, buscando en BD local...",
           );
-          return; // Detenemos ejecución adicional en este bloque
+          buscarEstudianteLocal(dniIngresado || dniIngresado2);
         }
       } else {
         // Ventana de advertencia si no hay datos
@@ -1966,8 +1999,90 @@ function fetchSheetData() {
       }
     })
     .catch(function (error) {
-      console.error("Error al obtener los datos:", error);
+      console.error("Error al obtener los datos de Sheets:", error);
+      // Fallback a búsqueda local si hay error con API de Google
+      buscarEstudianteLocal(dniIngresado || dniIngresado2);
     });
+}
+
+function buscarEstudianteLocal(dni) {
+  if (!dni) return;
+
+  $.ajax({
+    type: "POST",
+    url: "../controller/registro_general_posgrado/controlador_buscar_estudiante_posgrado.php",
+    data: { dni: dni },
+    dataType: "json",
+    success: function (response) {
+      if (response && response != "0") {
+        console.log("Estudiante encontrado en BD local:", response);
+        fillFormWithLocalData(response);
+      } else {
+        Swal.fire(
+          "Mensaje de Advertencia",
+          "No se encontró un estudiante con ese DNI.",
+          "warning",
+        );
+      }
+    },
+    error: function (xhr, status, error) {
+      console.error("Error al buscar estudiante local:", error);
+      Swal.fire(
+        "Error",
+        "Ocurrió un error al consultar la base de datos local.",
+        "error",
+      );
+    },
+  });
+}
+
+function fillFormWithLocalData(data) {
+  // Llenamos el formulario con los valores de la BD local
+  document.getElementById("select_tipo_documento").value =
+    data.tipo_documento || "DNI";
+  var tipodoc = data.tipo_documento || "DNI";
+
+  if (tipodoc === "DNI") {
+    document.getElementById("txt_dni").value = data.Dni;
+  } else {
+    document.getElementById("txt_dni2").value = data.Dni;
+  }
+
+  document.getElementById("txt_nom").value = data.Nombres;
+  document.getElementById("txt_apepa").value = data.Apellido_paterno;
+  document.getElementById("txt_apema").value = data.Apellido_materno;
+  document.getElementById("txt_codigo").value = data.Codigo;
+
+  document.getElementById("select_sexo").value = data.Sexo;
+  document.getElementById("txt_movil").value = data.Celular;
+  document.getElementById("txt_dire").value = data.Direccion;
+  document.getElementById("txt_email_per").value = data.correo_personal;
+  document.getElementById("txt_email_insti").value = data.correo_institucional;
+
+  // Llenar fechas y observaciones
+  if (data.Fecha_matricula) {
+    document.getElementById("txt_fecha_matri").value = data.Fecha_matricula;
+  }
+  if (data.Fecha_egreso) {
+    document.getElementById("txt_fecha_egres").value = data.Fecha_egreso;
+  }
+  if (data.Observaciones) {
+    document.getElementById("txt_oberva").value = data.Observaciones;
+  }
+
+  // Llenar variables étnicas si existen en el registro local
+  if (data.DET_ETNICA) {
+    document.getElementById("txt_auto_etnica").value = data.DET_ETNICA;
+  }
+  if (data.COD_ETNIA) {
+    document.getElementById("txt_pueblo_indigena").value = data.COD_ETNIA;
+  }
+  if (data.DET_LENGUA) {
+    document.getElementById("txt_lengua_indigena").value = data.DET_LENGUA;
+  }
+  if (data.COD_LENGUA) {
+    document.getElementById("txt_lengua_detalle").value = data.COD_LENGUA;
+  }
 }
 
 function fillFormWithData(fila) {
@@ -2119,4 +2234,204 @@ function consultarVariablesEtnicas(dni, callback) {
       callback(null);
     },
   });
+}
+
+function listar_colacion() {
+  let fechacol = document.getElementById("select_fechacola").value;
+
+  tbl_general_posgrado = $("#tabla_registro_general_posgrado").DataTable({
+    ordering: false,
+    bLengthChange: true,
+    searching: { regex: false },
+    lengthMenu: [
+      [10, 25, 50, 100, -1],
+      [10, 25, 50, 100, "All"],
+    ],
+    pageLength: 10,
+    destroy: true,
+    pagingType: "full_numbers",
+    scrollCollapse: true,
+    responsive: true,
+    async: false,
+    processing: true,
+    ajax: {
+      url: "../controller/registro_general_posgrado/controlador_listar_registro_general_posgrado_colacion.php",
+      type: "POST",
+      data: {
+        fechacol: fechacol,
+      },
+    },
+    dom: "Bfrtip",
+    buttons: [
+      {
+        extend: "excelHtml5",
+        text: '<i class="fas fa-file-excel"></i> ',
+        titleAttr: "Exportar a Excel",
+        filename: function () {
+          return "LISTA GENERAL DE POSGRADUADOS";
+        },
+        title: function () {
+          return "LISTA GENERAL DE POSGRADUADOS";
+        },
+        exportOptions: {
+          columns: [0, 1, 2, 3, 4, 5],
+        },
+      },
+      {
+        extend: "pdfHtml5",
+        text: '<i class="fas fa-file-pdf"></i> ',
+        titleAttr: "Exportar a PDF",
+        orientation: "landscape",
+        filename: function () {
+          return "LISTA GENERAL DE POSGRADUADOS";
+        },
+        title: function () {
+          return "LISTA GENERAL DE POSGRADUADOS";
+        },
+        exportOptions: {
+          columns: [0, 1, 2, 3, 4, 5],
+        },
+      },
+      {
+        extend: "print",
+        text: '<i class="fa fa-print"></i> ',
+        titleAttr: "Imprimir",
+        title: function () {
+          return "LISTA GENERAL DE POSGRADUADOS";
+        },
+        exportOptions: {
+          columns: [0, 1, 2, 3, 4, 5],
+        },
+      },
+    ],
+    columns: [
+      { data: "Diploma_numero" },
+      {
+        data: "tipo_documento",
+        render: function (data, type, row) {
+          if (data == "DNI") {
+            return '<span class="badge bg-success">DNI</span>';
+          } else if (data == "PASAPORTE") {
+            return '<span class="badge bg-primary">PASAPORTE</span>';
+          } else {
+            return '<span class="badge bg-warning">CARNET DE EXTRANJERIA</span>';
+          }
+        },
+      },
+      { data: "Dni" },
+      { data: "Estudiante" },
+      {
+        data: "Grado_academico",
+        render: function (data, type, row) {
+          if (data == "MAESTRIA") {
+            return '<span class="badge bg-success">MAESTRIA</span>';
+          } else if (data == "DOCTORADO") {
+            return '<span class="badge bg-primary">DOCTORADO</span>';
+          } else {
+            return '<span class="badge bg-primary">SEGUNDA ESPECIALIDAD</span>';
+          }
+        },
+      },
+      { data: "posgrado" },
+      { data: "fecha_registro1" },
+      {
+        data: "ESTADO",
+        render: function (data, type, row) {
+          if (data == "SIN DIPLOMA") {
+            return '<span class="badge bg-danger">SIN DIPLOMA</span>';
+          } else if (data == "CON DIPLOMA") {
+            return '<span class="badge bg-success">CON DIPLOMA</span>';
+          }
+        },
+      },
+      {
+        data: "Reglamento_metadado",
+        render: function (datae, type, row) {
+          if (datae == "") {
+            return (
+              "<a href=" +
+              datae +
+              "  target='_blank'><button disabled style='font-size:13px;' type='button' class='control btn btn-danger btn-sm' title='Ver Trabajo de investigación'><i class='fas fa-eye'></i> Ver</button></a>  "
+            );
+          }
+          return (
+            "<a href=" +
+            datae +
+            " target='_blank'><button style='font-size:13px;' type='button' class='control btn btn-warning btn-sm' title='Ver Trabajo de investigación'><i class='fas fa-eye'></i> Ver tesis</button></a>  "
+          );
+        },
+      },
+      {
+        data: "Archivo",
+        render: function (data, type, row) {
+          if (
+            data == "controller/registro_general_posgrado/documentos/" ||
+            data == ""
+          ) {
+            return "<a href=''  target='_blank'><button disabled style='font-size:13px;' type='button' class='control btn btn-danger btn-sm' title='Ver Trabajo de investigación'><i class='fas fa-file-download'></i> Expediente</button></a>  ";
+          }
+          return (
+            "<a href='../" +
+            data +
+            "' target='_blank'><button style='font-size:13px;' type='button' class='control btn btn-primary btn-sm' title='Ver Trabajo de investigación'><i class='fas fa-file-download'></i> Expediente</button></a>  "
+          );
+        },
+      },
+      {
+        data: "ESTADO",
+        render: function (data, type, row) {
+          if (data == "SIN DIPLOMA") {
+            return "<button hidden class='diploma btn btn-primary btn-sm' style='margin-right: 10px;' title='Ver diploma'><i class='fa fa-file'></i> Diploma</button><button hidden  class='informe btn btn-dark btn-sm' style='margin-right: 10px;' title='Imprimir informe'><i class='fa fa-file'></i> Informe</button><button  class='agregar btn btn-secondary btn-sm' style='margin-right: 10px;' title='Agregar diploma'><i class='fa fa-file'></i> Agregar diploma</button><button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>&nbsp;<button style='margin-right: 10px;' class='delete btn btn-danger btn-sm' title='Eliminar datos'><i class='fa fa-trash'></i> Eliminar</button>";
+          } else if (data == "CON DIPLOMA") {
+            return "<button class='letra btn btn-dark btn-sm' style='margin-right: 10px;' title='Cambiar tamaño de letra a nombre'><i class='fa fa-edit'></i> Cambiar tamaño letra</button><button  class='diploma btn btn-primary btn-sm' style='margin-right: 10px;' title='Ver diploma'><i class='fa fa-file'></i> Diploma</button><br><button  class='agregar btn btn-secondary btn-sm' hidden style='margin-right: 10px;' title='Agregar diploma'><i class='fa fa-file'></i> Agregar diploma</button><button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button><button class='editar btn btn-warning btn-sm' style='margin-right: 10px;' title='Editar datos'><i class='fa fa-edit'></i> Editar</button>&nbsp;<button style='margin-right: 10px;' class='delete btn btn-danger btn-sm' title='Eliminar datos'><i class='fa fa-trash'></i> Eliminar</button>";
+          }
+        },
+      },
+    ],
+    language: idioma_espanol,
+    select: true,
+  });
+
+  tbl_general_posgrado.on("draw.td", function () {
+    var PageInfo = $("#tabla_registro_general_posgrado")
+      .DataTable()
+      .page.info();
+    tbl_general_posgrado
+      .column(0, { page: "current" })
+      .nodes()
+      .each(function (cell, i) {
+        cell.innerHTML = i + 1 + PageInfo.start;
+      });
+  });
+}
+
+function Cargar_Select_Colacion_Reg_Pos() {
+  $.ajax({
+    url: "../controller/reportes/controlador_cargar_select_colacion_posgrado.php",
+    type: "POST",
+  })
+    .done(function (resp) {
+      console.log("Respuesta del servidor (Registro):", resp);
+      let data = JSON.parse(resp);
+      let cadena = "<option value=''>Seleccione</option>";
+      if (data.length > 0) {
+        for (let i = 0; i < data.length; i++) {
+          cadena +=
+            "<option value='" + data[i][0] + "'>" + data[i][1] + "</option>";
+        }
+      } else {
+        cadena +=
+          "<option value=''>No hay registros en la base de datos</option>";
+      }
+      document.getElementById("select_fechacola").innerHTML = cadena;
+      $("#select_fechacola").trigger("change");
+    })
+    .fail(function (jqXHR, textStatus, errorThrown) {
+      console.error(
+        "Error cargando colaciones (Registro):",
+        textStatus,
+        errorThrown,
+      );
+      console.error("Respuesta:", jqXHR.responseText);
+    });
 }

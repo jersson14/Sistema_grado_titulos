@@ -87,9 +87,9 @@
         return $arreglo;
         conexionBD::cerrar_conexion();
     }
-        public function Registrar_Posgrado($tipodoc,$documentoFinal,$nombres,$apepa,$apema,$codigo,$sexo,$celular,$direc,$emaper,$emainsti,$fecha_matr,$fecha_egre,$observa,$ced,$pro,$den,$moda,$idauto,$fecha,$acad,$acu,$res,$exped,$lib,$fol,$reg,$ruta,$mod_estu,$tra_inv,$turn,$porc,$cent,$meta,$proce_pais,$proce_univ,$proce_grado,$fecha_matri,$fecha_inici,$fecha_fin,$mod_sustenta,$idusuario){
+        public function Registrar_Posgrado($tipodoc,$documentoFinal,$nombres,$apepa,$apema,$codigo,$sexo,$celular,$direc,$emaper,$emainsti,$fecha_matr,$fecha_egre,$observa,$ced,$pro,$den,$moda,$idauto,$fecha,$acad,$acu,$res,$exped,$lib,$fol,$reg,$ruta,$mod_estu,$tra_inv,$turn,$porc,$cent,$meta,$proce_pais,$proce_univ,$proce_grado,$fecha_matri,$fecha_inici,$fecha_fin,$mod_sustenta,$idusuario, $auto_etnica, $pueblo_indi, $lengua_indi, $lengua_detalle){
             $c = conexionBD::conexionPDO();
-            $sql = "CALL SP_REGISTRAR_POSGRADO(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            $sql = "CALL SP_REGISTRAR_POSGRADO(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             $arreglo = array();
             $query  = $c->prepare($sql);
             $query ->bindParam(1,$tipodoc);
@@ -134,6 +134,10 @@
             $query ->bindParam(40,$fecha_fin);
             $query ->bindParam(41,$mod_sustenta);
             $query ->bindParam(42,$idusuario);
+            $query ->bindParam(43,$auto_etnica);
+            $query ->bindParam(44,$pueblo_indi);
+            $query ->bindParam(45,$lengua_indi);
+            $query ->bindParam(46,$lengua_detalle);
             $query->execute();
             if($row = $query->fetchColumn()){
                 return $row;
@@ -170,9 +174,9 @@
             conexionBD::cerrar_conexion();
         }
 
-        public function Modificar_Posgrado($dni,$nombres,$apepa,$apema,$codigo,$sexo,$celular,$direc,$emaper,$emainsti,$fecha_matr,$fecha_egre,$observa,$idexpe,$pro,$den,$moda,$idauto,$fecha,$acad,$acu,$res,$exped,$lib,$fol,$reg,$ruta,$idmoda,$mod_estu,$tra_inv,$turn,$porc,$cent,$meta,$proce_pais,$proce_univ,$proce_grado,$fecha_matri,$fecha_inici,$fecha_fin,$mod_sustenta,$iddiploma,$fechacu,$fechafirma,$resol,$fechareso,$numdiplo,$numregis,$libroregi,$regisfolio,$tipodiplo,$fechaini,$nrocre,$nrooficio,$fechasecre,$idusuario){
+        public function Modificar_Posgrado($dni,$nombres,$apepa,$apema,$codigo,$sexo,$celular,$direc,$emaper,$emainsti,$fecha_matr,$fecha_egre,$observa,$idexpe,$pro,$den,$moda,$idauto,$fecha,$acad,$acu,$res,$exped,$lib,$fol,$reg,$ruta,$idmoda,$mod_estu,$tra_inv,$turn,$porc,$cent,$meta,$proce_pais,$proce_univ,$proce_grado,$fecha_matri,$fecha_inici,$fecha_fin,$mod_sustenta,$iddiploma,$fechacu,$fechafirma,$resol,$fechareso,$numdiplo,$numregis,$libroregi,$regisfolio,$tipodiplo,$fechaini,$nrocre,$nrooficio,$fechasecre,$idusuario, $auto_etnica, $pueblo_indi, $lengua_indi, $lengua_detalle){
             $c = conexionBD::conexionPDO();
-            $sql = "CALL SP_MODIFICAR_POSGRADO(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            $sql = "CALL SP_MODIFICAR_POSGRADO(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             $arreglo = array();
             $query  = $c->prepare($sql);
             $query ->bindParam(1,$dni);
@@ -232,6 +236,10 @@
             $query ->bindParam(54,$nrooficio);
             $query ->bindParam(55,$fechasecre);
             $query ->bindParam(56,$idusuario);
+            $query ->bindParam(57,$auto_etnica);
+            $query ->bindParam(58,$pueblo_indi);
+            $query ->bindParam(59,$lengua_indi);
+            $query ->bindParam(60,$lengua_detalle);
             $query->execute();
             if($row = $query->fetchColumn()){
                 return $row;
@@ -332,6 +340,49 @@
             }else{
                 return 0;
             }
+            conexionBD::cerrar_conexion();
+        }
+
+        public function Buscar_Estudiante_Posgrado($dni){
+            $c = conexionBD::conexionPDO();
+            $sql = "SELECT * FROM estudiante_posgrado WHERE Dni = ?";
+            $query  = $c->prepare($sql);
+            $query->bindParam(1,$dni);
+            $query->execute();
+            $resultado = $query->fetch(PDO::FETCH_ASSOC);
+            if ($resultado) {
+                return $resultado;
+            } else {
+                return 0;
+            }
+            conexionBD::cerrar_conexion();
+        }
+
+        public function Listar_General_Pos_colacion($fechacol){
+            $c = conexionBD::conexionPDO();
+            $sql = "CALL SP_LISTAR_GENERAL_POSGRADO_COLACION(?)";
+            $arreglo = array();
+            $query  = $c->prepare($sql);
+            $query->bindParam(1,$fechacol);
+            $query->execute();
+            $resultado = $query->fetchAll(PDO::FETCH_ASSOC);
+            foreach($resultado as $resp){
+                $arreglo["data"][]=$resp;
+            }
+            return $arreglo;
+            conexionBD::cerrar_conexion();
+        }
+        public function Cargar_Select_Colacion(){
+            $c = conexionBD::conexionPDO();
+            $sql = "CALL SP_CARGAR_SELECT_COLACION_POSGRADO()";
+            $query  = $c->prepare($sql);
+            $query->execute();
+            $resultado = $query->fetchAll();
+            $arreglo = array();
+            foreach($resultado as $resp){
+                $arreglo[]=$resp;
+            }
+            return $arreglo;
             conexionBD::cerrar_conexion();
         }
     }

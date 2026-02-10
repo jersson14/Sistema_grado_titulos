@@ -78,6 +78,28 @@
                 </div>
                 </div>
                 </div>
+                <div class="table-responsive" style="text-align:left">
+                    <div class="card-body" >
+                        <div class="row" style="border: 1px solid #ccc; padding: 15px; border-radius: 8px;">
+                        <div class="col-12 col-md-3" role="document" >
+                            <div class="form-group">
+                            <label for="txtfechainicio">Fecha de colación:</label>
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                </div>
+                                <select class="js-example-basic-single" id="select_fechacola" style="width:100%"></select>
+                                <div class="valid-input invalid-feedback"></div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-3" role="document">
+                            <label for="">&nbsp;</label><br>
+                            <button onclick="listar_colacion()" class="btn btn-danger mr-2" style="width:100%"><i class="fas fa-search mr-1"></i>Buscar por colación</button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
                 <input type="text" id="dni" autocomplete="off" name="dni" hidden>
                 <div class="table-responsive" style="text-align:center">
                   <div class="card-body">
@@ -165,8 +187,8 @@
                             <div class="input-group">
                                 <input type="text" class="form-control" id="txt_dni">
                                 <div class="input-group-append">
-                                    <button onclick="" class="btn btn-success" id="umil" hidden><i class="fa fa-search"></i><b> UMIL</b></button>
-                                    <button onclick="" class="btn btn-primary" id="prueba"><i class="fa fa-search"></i><b> Reniec</b></button>
+                                    <button onclick="BusquedaEtnica()" class="btn btn-success" id="umil" title="Búsqueda de Datos y Variables Étnicas"><i class="fa fa-search"></i></button>
+                                    <button onclick="" class="btn btn-primary" id="prueba" title="Reniec"><i class="fa fa-search"></i><b> Reniec</b></button>
                                 </div>
                             </div>
                         </div>
@@ -175,7 +197,7 @@
                         <div class="input-group">
                                 <input type="text" class="form-control" id="txt_dni2">
                                 <div class="input-group-append">
-                                    <button onclick="" class="btn btn-success" id="umil2" hidden><i class="fa fa-search"></i><b> UMIL</b></button>
+                                    <button onclick="BusquedaEtnica()" class="btn btn-success" id="umil2" title="Búsqueda de Datos y Variables Étnicas"><i class="fa fa-search"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -273,6 +295,22 @@
                             <div class="col-3 form-group">
                                 <label for="" style="font-size:small;">Director<b style="color:red">(*)</b>:</label>
                                 <input type="text" class="form-control" id="txt_director">
+                            </div>
+                            <div class="col-3 form-group">
+                                <label for="" style="font-size:small;">Autoidentificación étnica (Opcional):</label>
+                                <input type="text" class="form-control" id="txt_auto_etnica">
+                            </div>
+                            <div class="col-3 form-group">
+                                <label for="" style="font-size:small;">Pueblo indígena u originario (Opcional):</label>
+                                <input type="text" class="form-control" id="txt_pueblo_indigena">
+                            </div>
+                            <div class="col-3 form-group">
+                                <label for="" style="font-size:small;">Lengua indígena u originaria (Opcional):</label>
+                                <input type="text" class="form-control" id="txt_lengua_indigena">
+                            </div>
+                            <div class="col-3 form-group">
+                                <label for="" style="font-size:small;">Lengua indígena (detalle)(Opcional):</label>
+                                <input type="text" class="form-control" id="txt_lengua_detalle">
                             </div>
                             <div class="col-12 form-group">
                                 <label for="" style="font-size:small;">Adjuntar Expediente<b style="color:red">(*)</b>:</label>
@@ -565,6 +603,22 @@
                             <div class="col-3 form-group">
                                 <label for="" style="font-size:small;">Director<b style="color:red">(*)</b>:</label>
                                 <input type="text" class="form-control" id="txt_director_editar" readonly>
+                            </div>
+                            <div class="col-3 form-group">
+                                <label for="" style="font-size:small;">Autoidentificación étnica (Opcional):</label>
+                                <input type="text" class="form-control" id="txt_auto_etnica_editar">
+                            </div>
+                            <div class="col-3 form-group">
+                                <label for="" style="font-size:small;">Pueblo indígena u originario (Opcional):</label>
+                                <input type="text" class="form-control" id="txt_pueblo_indigena_editar">
+                            </div>
+                            <div class="col-3 form-group">
+                                <label for="" style="font-size:small;">Lengua indígena u originaria (Opcional):</label>
+                                <input type="text" class="form-control" id="txt_lengua_indigena_editar">
+                            </div>
+                            <div class="col-3 form-group">
+                                <label for="" style="font-size:small;">Lengua indígena (detalle)(Opcional):</label>
+                                <input type="text" class="form-control" id="txt_lengua_detalle_editar">
                             </div>
                             <div class="col-12 form-group">
                                 <label for="" style="font-size:small;">Adjuntar Expediente<b style="color:red">(*)</b>:</label>
@@ -1016,6 +1070,22 @@
                                 <label for="" style="font-size:small;">Decano<b style="color:red">(*)</b>:</label>
                                 <input type="text" class="form-control" id="txt_decano_mas" readonly>
                             </div>
+                               <div class="col-3 form-group">
+                                        <label for="" style="font-size:small;">Autoidentificación étnica:</label>
+                                        <input type="text" class="form-control" id="txt_auto_etnica_mas" readonly>
+                                    </div>
+                                    <div class="col-3 form-group">
+                                        <label for="" style="font-size:small;">Pueblo indígena u originario:</label>
+                                        <input type="text" class="form-control" id="txt_pueblo_indigena_mas" readonly>
+                                    </div>
+                                    <div class="col-3 form-group">
+                                        <label for="" style="font-size:small;">Lengua indígena u originaria:</label>
+                                        <input type="text" class="form-control" id="txt_lengua_indigena_mas" readonly>
+                                    </div>
+                                    <div class="col-3 form-group">
+                                        <label for="" style="font-size:small;">Lengua indígena (detalle):</label>
+                                        <input type="text" class="form-control" id="txt_lengua_detalle_mas" readonly>
+                                    </div>
                                                        
                             <div class="col-12 form-group" style="border: 1px solid #ccc; padding: 10px;" id="datos_antiguos">
                                 <label for="" style="color:red">*Estos campos deben ser llenados si el expediente hace referencia a la versión anterior o es de fecha pasada.</label>
@@ -1053,6 +1123,7 @@
                                         <label for="" style="font-size: small;">Registro (Opcional):</label>
                                         <input type="text" class="form-control" id="txt_registro_mas" readonly>
                                     </div>
+                                 
                                 </div>
                             </div>
                         </div>
@@ -1576,6 +1647,8 @@ var input = document.getElementById("txt_dni");
 <script>
 txt_dni.focus();
  $(document).ready(function(){
+    $('.js-example-basic-single').select2();
+    Cargar_Select_Colacion_Reg_Pos();
     $('#txt_dni').change(function(){
   valor=$(this).val();
     $('#dni').val(valor);

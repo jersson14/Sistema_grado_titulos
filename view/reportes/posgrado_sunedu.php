@@ -32,7 +32,7 @@
               </div>
                 <div class="table-responsive" style="text-align:left">
                   <div class="card-body">
-                  <div class="row">
+                  <div class="row" style="border: 1px solid #ccc; padding: 15px; border-radius: 8px;">
                 <div class="col-12 col-md-4" role="document">
                     <div class="form-group">
                     <label for="txtfechainicio">Fecha Desde:</label>
@@ -68,6 +68,28 @@
                 </div>
                 </div>
                 </div>
+                <div class="table-responsive" style="text-align:left">
+                    <div class="card-body" >
+                        <div class="row" style="border: 1px solid #ccc; padding: 15px; border-radius: 8px;">
+                        <div class="col-12 col-md-3" role="document" >
+                            <div class="form-group">
+                            <label for="txtfechainicio">Fecha de colación:</label>
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                </div>
+                                <select class="js-example-basic-single" id="select_fechacola" style="width:100%"></select>
+                                <div class="valid-input invalid-feedback"></div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-3" role="document">
+                            <label for="">&nbsp;</label><br>
+                            <button onclick="listar_colacion()" class="btn btn-danger mr-2" style="width:100%"><i class="fas fa-search mr-1"></i>Buscar por colación</button>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
                 <div class="table-responsive" style="text-align:center">
                   <div class="card-body">
                   <table id="tabla_registro_general_posgrado" class="table table-striped table-bordered" style="width:100%">
@@ -159,6 +181,11 @@
                             <th style="display:none;text-align:center" >FEC_INICIO_MOD</th>
                             <th style="display:none;text-align:center" >FEC_FIN_MOD</th>
                             <th style="display:none;text-align:center" >MOD_SUSTENTACIÓN</th>
+                            
+                            <th style="display:none;text-align:center" >VAR_ETNICA</th>
+                            <th style="display:none;text-align:center" >DET_ETNICO</th>
+                            <th style="display:none;text-align:center" >LENGUA_IND</th>
+                            <th style="display:none;text-align:center" >DET_LENGUA</th>
                         </tr>
                     </thead>
                 </table>
@@ -545,12 +572,8 @@
 
 $(document).ready(function () {
     listar_fechas_busqueda();
-
-  $('.js-example-basic-single').select2();
-        Cargar_Select_Carrera_editar();
-        Cargar_Select_Cede();
-        Cargar_Select_programa();
-        Cargar_Select_Cede_editar();
+    $('.js-example-basic-single').select2();
+    Cargar_Select_Colacion_Repo_Pos();
 });
 
 

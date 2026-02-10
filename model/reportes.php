@@ -188,6 +188,33 @@
             return $arreglo;
             conexionBD::cerrar_conexion();
         }
+        public function Listar_General_Pos_colacion($fechacol){
+            $c = conexionBD::conexionPDO();
+            $sql = "CALL SP_LISTAR_GENERAL_POSGRADO_COLACION_SUNEDU(?)";
+            $arreglo = array();
+            $query  = $c->prepare($sql);
+            $query->bindParam(1,$fechacol);
+            $query->execute();
+            $resultado = $query->fetchAll(PDO::FETCH_ASSOC);
+            foreach($resultado as $resp){
+                $arreglo["data"][]=$resp;
+            }
+            return $arreglo;
+            conexionBD::cerrar_conexion();
+        }
+        public function Cargar_Select_Colacion_Posgrado(){
+            $c = conexionBD::conexionPDO();
+            $sql = "CALL SP_CARGAR_SELECT_COLACION_POSGRADO()";
+            $query  = $c->prepare($sql);
+            $query->execute();
+            $resultado = $query->fetchAll();
+            $arreglo = array();
+            foreach($resultado as $resp){
+                $arreglo[]=$resp;
+            }
+            return $arreglo;
+            conexionBD::cerrar_conexion();
+        }
     }
 
 ?>

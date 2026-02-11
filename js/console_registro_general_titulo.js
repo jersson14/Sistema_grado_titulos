@@ -2608,13 +2608,11 @@ function fetchSheetData() {
           console.log("Fila encontrada:", filaEncontrada);
           fillFormWithData(filaEncontrada); // Llamamos a la función para llenar el formulario
         } else {
-          // Ventana de advertencia si no se encuentra el DNI
-          Swal.fire(
-            "Mensaje de Advertencia",
-            "No se encontró un estudiante con ese DNI.",
-            "warning",
+          // Si no se encuentra en Sheets, buscar en BD Local
+          console.log(
+            "Estudiante no encontrado en Sheets, buscando en BD local...",
           );
-          return; // Detenemos ejecución adicional en este bloque
+          buscarEstudianteLocal(dniIngresado || dniIngresado2);
         }
       } else {
         // Ventana de advertencia si no hay datos
@@ -2627,7 +2625,14 @@ function fetchSheetData() {
       }
     })
     .catch(function (error) {
-      console.error("Error al obtener los datos:", error);
+      console.error("Error al obtener los datos de Sheets:", error);
+      // Fallback a búsqueda local si hay error con API de Google
+      var dni =
+        document.getElementById("txt_dni").value ||
+        document.getElementById("txtdni2").value;
+      if (dni) {
+        buscarEstudianteLocal(dni);
+      }
     });
 }
 
@@ -3122,16 +3127,60 @@ function ejecutarBusqueda(origin) {
       buscarBachiller();
       break;
     case "umil":
-      console.log("Buscando en UMIL...");
+      console.log("Buscando en UMIL y Repositorio...");
+
+      // Mostrar loading general
+      Swal.fire({
+        title: "Buscando datos...",
+        html: "Buscando en UMIL y Repositorio<br>Por favor espere...",
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
+
+      // Primero buscar en UMIL (si existe la función)
       if (typeof fetchSheetData === "function") {
         fetchSheetData();
-      } else {
-        Swal.fire(
-          "Error",
-          "La función de búsqueda en UMIL no está cargada.",
-          "error",
-        );
       }
+
+      // Esperar un momento y luego buscar en repositorio (modo silencioso)
+      setTimeout(function () {
+        buscarTesisEnRepositorio(true)
+          .then(function (repoResult) {
+            // Mostrar mensaje consolidado
+            let mensaje = "<div style='text-align: left;'>";
+            mensaje +=
+              "<strong>✓ Datos del estudiante:</strong> Cargados desde UMIL/BD Local<br><br>";
+
+            if (repoResult && repoResult.success) {
+              mensaje += "<strong>✓ Tesis encontrada:</strong><br>";
+              mensaje += `<p style="margin: 5px 0 5px 15px;">${repoResult.data.titulo}</p>`;
+              mensaje += `<a href="${repoResult.data.enlace}" target="_blank" style="color: #3085d6; margin-left: 15px;">${repoResult.data.enlace}</a>`;
+            } else {
+              mensaje +=
+                "<strong>ℹ Tesis:</strong> No se encontró en el repositorio";
+            }
+
+            mensaje += "</div>";
+
+            Swal.fire({
+              icon: "success",
+              title: "Datos Obtenidos",
+              html: mensaje,
+              confirmButtonText: "Aceptar",
+              width: "600px",
+            });
+          })
+          .catch(function () {
+            Swal.fire({
+              icon: "info",
+              title: "Datos Parciales",
+              html: "<strong>✓ Datos del estudiante:</strong> Cargados desde UMIL/BD Local<br><br><strong>⚠ Tesis:</strong> No se pudo consultar el repositorio",
+              confirmButtonText: "Aceptar",
+            });
+          });
+      }, 1500);
       break;
   }
 }
@@ -3275,5 +3324,168 @@ async function buscarBachiller() {
   } catch (error) {
     console.error("❌ Error en AJAX:", error);
     Swal.fire("Error", "No se pudo hacer la búsqueda.", "error");
+  }
+}
+
+// ========================================
+// FUNCIÓN PARA BUSCAR TESIS EN REPOSITORIO DSPACE
+// ========================================
+function buscarTesisEnRepositorio(silentMode = false) {
+  const dni = $("#txt_dni").val();
+
+  if (!dni) {
+    if (!silentMode) {
+      Swal.fire("Error", "Debe ingresar un DNI primero", "error");
+    }
+    return Promise.reject("No DNI");
+  }
+
+  // Mostrar loading solo si no está en modo silencioso
+  if (!silentMode) {
+    Swal.fire({
+      title: "Buscando en repositorio...",
+      text: "Por favor espere",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+  }
+
+  return $.ajax({
+    url: "../controller/repositorio/controlador_buscar_tesis_dni.php",
+    type: "POST",
+    data: { dni: dni },
+  })
+    .then(function (resp) {
+      const data = JSON.parse(resp);
+
+      if (data.success) {
+        // Llenar los campos con los datos obtenidos
+        $("#txt_trabajo_inve").val(data.data.titulo);
+        $("#txt_metadata").val(data.data.enlace);
+
+        if (!silentMode) {
+          Swal.fire({
+            icon: "success",
+            title: "¡Tesis encontrada en el repositorio!",
+            html: `
+          <div style="text-align: left;">
+            <strong>Título:</strong><br>
+            <p style="margin: 5px 0 15px 0;">${data.data.titulo}</p>
+            <strong>Enlace:</strong><br>
+            <a href="${data.data.enlace}" target="_blank" style="color: #3085d6;">${data.data.enlace}</a>
+          </div>
+        `,
+            confirmButtonText: "Aceptar",
+          });
+        }
+
+        return { success: true, data: data.data };
+      } else {
+        if (!silentMode) {
+          Swal.fire({
+            icon: "info",
+            title: "No se encontró tesis",
+            text: data.message,
+            confirmButtonText: "Aceptar",
+          });
+        }
+        return { success: false, message: data.message };
+      }
+    })
+    .fail(function () {
+      if (!silentMode) {
+        Swal.fire({
+          icon: "error",
+          title: "Error de conexión",
+          text: "No se pudo conectar con el repositorio. Intente nuevamente.",
+          confirmButtonText: "Aceptar",
+        });
+      }
+      return { success: false, message: "Error de conexión" };
+    });
+}
+
+// ========================================
+// FUNCIÓN PARA BUSCAR ESTUDIANTE EN BD LOCAL (TABLA ESTUDIANTES)
+// ========================================
+function buscarEstudianteLocal(dni) {
+  if (!dni) return;
+
+  $.ajax({
+    type: "POST",
+    url: "../controller/estudiante_publico/controlador_buscar_estudiante.php",
+    data: { dni: dni },
+    dataType: "json",
+    success: function (response) {
+      if (response && response != "0") {
+        console.log("Estudiante encontrado en BD local:", response);
+        fillFormWithLocalData(response);
+      } else {
+        Swal.fire(
+          "Mensaje de Advertencia",
+          "No se encontró un estudiante con ese DNI en Google Sheets ni en la base de datos local.",
+          "warning",
+        );
+      }
+    },
+    error: function (xhr, status, error) {
+      console.error("Error al buscar estudiante local:", error);
+      Swal.fire(
+        "Error",
+        "Ocurrió un error al consultar la base de datos local.",
+        "error",
+      );
+    },
+  });
+}
+
+function fillFormWithLocalData(data) {
+  // Llenamos el formulario con los valores de la BD local
+  document.getElementById("select_tipo_documento").value =
+    data.tipo_documento || "DNI";
+  var tipodoc = data.tipo_documento || "DNI";
+
+  if (tipodoc === "DNI") {
+    document.getElementById("txt_dni").value = data.Dni;
+  } else {
+    document.getElementById("txtdni2").value = data.Dni;
+  }
+
+  document.getElementById("txt_nom").value = data.Nombres;
+  document.getElementById("txt_apepa").value = data.Apellido_paterno;
+  document.getElementById("txt_apema").value = data.Apellido_materno;
+  document.getElementById("txt_codigo").value = data.Codigo;
+
+  document.getElementById("select_sexo").value = data.Sexo;
+  document.getElementById("txt_movil").value = data.Celular;
+  document.getElementById("txt_dire").value = data.Direccion;
+  document.getElementById("txt_email_per").value = data.correo_personal;
+  document.getElementById("txt_email_insti").value = data.correo_institucional;
+
+  // Llenar fechas y observaciones si existen
+  if (data.Fecha_matricula) {
+    document.getElementById("txt_fecha_matri").value = data.Fecha_matricula;
+  }
+  if (data.Fecha_egreso) {
+    document.getElementById("txt_fecha_egres").value = data.Fecha_egreso;
+  }
+  if (data.Observaciones) {
+    document.getElementById("txt_oberva").value = data.Observaciones;
+  }
+
+  // Llenar variables étnicas si existen en el registro local
+  if (data.DET_ETNICA) {
+    document.getElementById("txt_auto_etnica").value = data.DET_ETNICA;
+  }
+  if (data.COD_ETNIA) {
+    document.getElementById("txt_pueblo_indigena").value = data.COD_ETNIA;
+  }
+  if (data.DET_LENGUA) {
+    document.getElementById("txt_lengua_indigena").value = data.DET_LENGUA;
+  }
+  if (data.COD_LENGUA) {
+    document.getElementById("txt_lengua_detalle").value = data.COD_LENGUA;
   }
 }

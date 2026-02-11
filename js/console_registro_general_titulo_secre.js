@@ -2373,3 +2373,69 @@ async function buscarBachiller() {
     Swal.fire("Error", "No se pudo hacer la búsqueda.", "error");
   }
 }
+
+// ========================================
+// FUNCIÓN PARA BUSCAR TESIS EN REPOSITORIO DSPACE
+// ========================================
+function buscarTesisEnRepositorio() {
+  const dni = $("#txt_dni").val();
+
+  if (!dni) {
+    Swal.fire("Error", "Debe ingresar un DNI primero", "error");
+    return;
+  }
+
+  // Mostrar loading
+  Swal.fire({
+    title: "Buscando en repositorio...",
+    text: "Por favor espere",
+    allowOutsideClick: false,
+    didOpen: () => {
+      Swal.showLoading();
+    },
+  });
+
+  $.ajax({
+    url: "../controller/repositorio/controlador_buscar_tesis_dni.php",
+    type: "POST",
+    data: { dni: dni },
+  })
+    .done(function (resp) {
+      const data = JSON.parse(resp);
+
+      if (data.success) {
+        // Llenar los campos con los datos obtenidos
+        $("#txt_trabajo_inve").val(data.data.titulo);
+        $("#txt_metadata").val(data.data.enlace);
+
+        Swal.fire({
+          icon: "success",
+          title: "¡Tesis encontrada en el repositorio!",
+          html: `
+          <div style="text-align: left;">
+            <strong>Título:</strong><br>
+            <p style="margin: 5px 0 15px 0;">${data.data.titulo}</p>
+            <strong>Enlace:</strong><br>
+            <a href="${data.data.enlace}" target="_blank" style="color: #3085d6;">${data.data.enlace}</a>
+          </div>
+        `,
+          confirmButtonText: "Aceptar",
+        });
+      } else {
+        Swal.fire({
+          icon: "info",
+          title: "No se encontró tesis",
+          text: data.message,
+          confirmButtonText: "Aceptar",
+        });
+      }
+    })
+    .fail(function () {
+      Swal.fire({
+        icon: "error",
+        title: "Error de conexión",
+        text: "No se pudo conectar con el repositorio. Intente nuevamente.",
+        confirmButtonText: "Aceptar",
+      });
+    });
+}

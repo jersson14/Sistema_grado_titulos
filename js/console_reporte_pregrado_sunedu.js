@@ -602,75 +602,124 @@ $("#tabla_registro_general_pregrado").on("click", ".mostrar", function () {
     var data = tbl_general_pregrado.row(this).data();
   }
   $("#modal_mas").modal("show");
-  //DATOS DEL TITULADO
-  document.getElementById("txt_dni_mas").value = data.Dni;
-  document.getElementById("txt_nom_mas").value = data.Nombres;
-  document.getElementById("txt_apepa_mas").value = data.Apellido_paterno;
-  document.getElementById("txt_apema_mas").value = data.Apellido_materno;
-  document.getElementById("txt_codigo_mas").value = data.Codigo;
-  document.getElementById("select_sexo_mas").value = data.Sexo;
-  document.getElementById("txt_movil_mas").value = data.Celular;
-  document.getElementById("txt_dire_mas").value = data.Direccion;
-  document.getElementById("txt_email_per_mas").value = data.correo_personal;
+
+  //DATOS DEL ESTUDIANTE (TAB 1)
+  document.getElementById("txt_tipo_documento").value =
+    data.tipo_documento || "";
+  document.getElementById("txt_dni_mas").value = data.Dni || "";
+  document.getElementById("txt_nom_mas").value = data.Nombres || "";
+  document.getElementById("txt_apepa_mas").value = data.Apellido_paterno || "";
+  document.getElementById("txt_apema_mas").value = data.Apellido_materno || "";
+  document.getElementById("txt_codigo_mas").value = data.Codigo || "";
+  document.getElementById("select_sexo_mas").value = data.Sexo || "";
+  document.getElementById("txt_movil_mas").value = data.Celular || "";
+  document.getElementById("txt_dire_mas").value = data.Direccion || "";
+  document.getElementById("txt_email_per_mas").value =
+    data.correo_personal || "";
   document.getElementById("txt_email_insti_mas").value =
-    data.correo_institucional;
-  document.getElementById("txt_fecha_matri_mas").value = data.Fecha_matricula;
-  document.getElementById("txt_fecha_egres_mas").value = data.Fecha_egreso;
-  document.getElementById("txt_oberva_mas").value = data.Observaciones;
-  //DATOS DEL EXPEDIENTE
-  document.getElementById("txt_cede_mas").value = data.cede_nombre;
-  document.getElementById("select_programa_mas").value = data.posgrado;
-  document.getElementById("txt_denominacion_mas").value = data.Grado_maestro_de;
-  document.getElementById("txt_modalidad_mas").value = data.Modalidad;
-  document.getElementById("txt_rector_mas").value = data.Autoridad_1;
-  document.getElementById("txt_secretario_mas").value = data.Autoridad_2;
-  document.getElementById("txt_decano_mas").value = data.Autoridad_3;
-  document.getElementById("txt_fecha_reg_mas").value = data.expe;
-  document.getElementById("txt_academi_mas").value = data.Acto_academico;
-  document.getElementById("txt_acuerdo_mas").value = data.Acuerdo;
+    data.correo_institucional || "";
+  document.getElementById("txt_fecha_matri_mas").value =
+    data.Fecha_matricula || "";
+  document.getElementById("txt_fecha_egres_mas").value =
+    data.Fecha_egreso || "";
+  document.getElementById("txt_oberva_mas").value = data.Observaciones || "";
+
+  //DATOS DEL EXPEDIENTE (TAB 2)
+  document.getElementById("txt_cede_mas").value = data.emp_razon || "";
+  document.getElementById("txt_facultad_mas").value = data.FACULTAD || "";
+  document.getElementById("txt_escuela_mas").value = data.ESCUELA || "";
+
+  // Titulo de - depends on if it's Bachiller or Titulo
+  if (data.Abreviatura_grado === "B") {
+    document.getElementById("txt_titulo_mas").value =
+      "Bachiller en " + (data.Grado_bachiller_de || "");
+  } else {
+    document.getElementById("txt_titulo_mas").value =
+      "Titulo Profesional de " + (data.Titulo_de || "");
+  }
+
+  document.getElementById("txt_modalidad_mas").value = data.Modalidad || "";
+  document.getElementById("txt_rector_mas").value = data.Autoridad_1 || "";
+  document.getElementById("txt_secretario_mas").value = data.Autoridad_2 || "";
+  document.getElementById("txt_decano_mas").value = data.Autoridad_3 || "";
+
+  // Ethnic identification fields
+  document.getElementById("txt_auto_etnica_mas").value = data.DET_ETNICA || "";
+  document.getElementById("txt_pueblo_indigena_mas").value =
+    data.COD_ETNIA || "";
+  document.getElementById("txt_lengua_indigena_mas").value =
+    data.DET_LENGUA || "";
+  document.getElementById("txt_lengua_detalle_mas").value =
+    data.COD_LENGUA || "";
+
+  // Datos antiguos section
+  document.getElementById("txt_fecha_reg_mas").value = data.expe || "";
+  document.getElementById("txt_academi_mas").value = data.Acto_academico || "";
+  document.getElementById("txt_acuerdo_mas").value = data.Acuerdo || "";
   document.getElementById("txt_Resolucion_mas").value =
-    data.Resolucion_rectoral_N;
-  document.getElementById("txt_expedicion_mas").value = data.Expedicion;
-  document.getElementById("txt_libro_mas").value = data.Libro;
-  document.getElementById("txt_folio_mas").value = data.Folio;
-  document.getElementById("txt_registro_mas").value = data.Registro;
-  //DATOS DE LA MODALIDAD Y DIPLOMA
-  document.getElementById("txt_modo_estu_mas").value = data.Modo_estudio;
+    data.Resolucion_rectoral_N || "";
+  document.getElementById("txt_expedicion_mas").value = data.Expedicion || "";
+  document.getElementById("txt_libro_mas").value = data.Libro || "";
+  document.getElementById("txt_folio_mas").value = data.Folio || "";
+  document.getElementById("txt_registro_mas").value = data.Registro || "";
+
+  //DATOS DE LA MODALIDAD (TAB 3)
+  document.getElementById("txt_modo_estu_mas").value =
+    data.Abreviatura_modo_estudio || "";
   document.getElementById("txt_trabajo_inve_mas").value =
-    data.Trabajo_investigacion;
-  document.getElementById("txt_metadata_mas").value = data.Reglamento_metadado;
-  document.getElementById("txt_turni_mas").value = data.Turnitin;
-  document.getElementById("txt_porce_mas").value = data.Porcentaje;
-  document.getElementById("txt_centro_inve_mas").value =
-    data.Centro_investigacion;
-  document.getElementById("txt_proceden_pais_mas").value = data.Proce_pais_ext;
-  document.getElementById("txt_procedeni_univer_mas").value =
-    data.Proce_univ_ext;
-  document.getElementById("txt_proceden_grado_mas").value =
-    data.Proce_grado_ext;
+    data.Trabajo_investigacion || "";
+  document.getElementById("txt_metadata_mas").value =
+    data.Reglamento_metadado || "";
+  document.getElementById("txt_turni_mas").value = data.Turnitin || "";
+  document.getElementById("txt_porce_mas").value = data.Porcentaje || "";
+
+  // Centro de investigación - only for Titulo, not Bachiller
+  if (data.Abreviatura_grado === "B") {
+    document.getElementById("txt_centro_inve_mas").value = "";
+  } else {
+    document.getElementById("txt_centro_inve_mas").value =
+      "CENTRO DE INVESTIGACIÓN DE LA CARRERA PROFESIONAL DE " +
+      (data.ESCUELA ? data.ESCUELA.toUpperCase() : "");
+  }
+
+  // Pregrado uses different fields than posgrado for procedencia
+  document.getElementById("txt_proceden_bachi_mas").value =
+    data.Procedencia_bachiller || "";
+  document.getElementById("txt_procedeni_insti_ori_mas").value =
+    data.Procedencia_institucion_origen || "";
+  document.getElementById("txt_proceden_titu_ori_mas").value =
+    data.Procedencia_titulo_pedagogico || "";
+
   document.getElementById("txt_fecha_matri_mod_mas").value =
-    data.Fecha_matricula_modalidad;
+    data.Fecha_matricula_modalidad || "";
   document.getElementById("txt_fecha_inicio_mod_mas").value =
-    data.Fecha_inicio_modalidad;
-  document.getElementById("txt_fecha_fin_mas").value = data.Fecha_fin_modalidad;
+    data.Fecha_inicio_modalidad || "";
+  document.getElementById("txt_fecha_fin_mas").value =
+    data.Fecha_fin_modalidad || "";
   document.getElementById("select_modo_sustenta_mas").value =
-    data.Modo_sustentacion;
+    data.Modo_sustentacion || "PRESENCIAL";
 
-  document.getElementById("txt_fecha_cu_mas").value = data.fecha_consejo_uni;
-  document.getElementById("txt_fecha_firma_mas").value = data.fecha_firma;
-
-  document.getElementById("txt_resol_num").value = data.Resolucion_numero;
-  document.getElementById("txt_fecha_reso_mas").value = data.fecha_resolucion;
-  document.getElementById("txt_diploma_nume_mas").value = data.Diploma_numero;
-  document.getElementById("txt_registro_n°_mas").value = data.Registro_numero;
-  document.getElementById("txt_registro_libr_mas").value = data.Registro_libro;
-  document.getElementById("txt_registro_folio_mas").value = data.Registro_folio;
+  // DATOS DEL DIPLOMA
+  document.getElementById("txt_fecha_cu_mas").value =
+    data.fecha_consejo_uni || "";
+  document.getElementById("txt_fecha_firma_mas").value = data.fecha_firma || "";
+  document.getElementById("txt_resol_num").value = data.Resolucion_numero || "";
+  document.getElementById("txt_fecha_reso_mas").value =
+    data.fecha_resolucion || "";
+  document.getElementById("txt_diploma_nume_mas").value =
+    data.Diploma_numero || "";
+  document.getElementById("txt_registro_n°_mas").value =
+    data.Registro_numero || "";
+  document.getElementById("txt_registro_libr_mas").value =
+    data.Registro_libro || "";
+  document.getElementById("txt_registro_folio_mas").value =
+    data.Registro_folio || "";
   document.getElementById("select_tipo_diplo_mas").value =
-    data.Diploma_tipo_emitido;
+    data.Diploma_tipo_emitido || "";
   document.getElementById("txt_fecha_inicio_tra_mas").value =
-    data.Fecha_inicio_tramite;
-  document.getElementById("txt_nro_credi_mas").value = data.Nro_creditos;
-  document.getElementById("txt_nro_oficio_mas").value = data.Nro_oficio;
+    data.Fecha_inicio_tramite || "";
+  document.getElementById("txt_nro_credi_mas").value = data.Nro_creditos || "";
+  document.getElementById("txt_nro_oficio_mas").value = data.Nro_oficio || "";
   document.getElementById("txt_fecha_secre_mas").value =
-    data.fecha_secreatria_general;
+    data.fecha_secreatria_general || "";
 });

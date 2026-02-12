@@ -796,24 +796,24 @@
 
                                                     <div class="col-3 form-group">
                                                         <label for="" style="font-size:small;">Trabajo de Investigación<b style="color:red">(SOLO TESIS)</b>:</label>
-                                                        <textarea class="form-control" id="txt_trabajo_inve_editar" rows="2" style="resize:none" disabled></textarea>
+                                                        <textarea class="form-control" id="txt_trabajo_inve_editar" rows="2" style="resize:none" ></textarea>
                                                     </div>
                                                     <div class="col-3 form-group">
                                                         <label for="" style="font-size:small;">Metadato o Link<b style="color:red">(SOLO TESIS)</b>:</label>
-                                                        <textarea class="form-control" id="txt_metadata_editar" rows="2" style="resize:none" disabled></textarea>
+                                                        <textarea class="form-control" id="txt_metadata_editar" rows="2" style="resize:none" ></textarea>
                                                     </div>
 
                                                     <div class="col-2 form-group">
                                                         <label for="" style="font-size:small;">Turnitin<b style="color:red">(SOLO TESIS)</b>:</label>
-                                                        <input type="text" class="form-control" id="txt_turni_editar" disabled>
+                                                        <input type="text" class="form-control" id="txt_turni_editar">
                                                     </div>
                                                     <div class="col-2 form-group">
                                                         <label for="" style="font-size:small;">Porcentaje<b style="color:red">(SOLO TESIS)</b>:</label>
-                                                        <input type="text" class="form-control" id="txt_porce_editar" disabled>
+                                                        <input type="text" class="form-control" id="txt_porce_editar" >
                                                     </div>
                                                     <div class="col-3 form-group">
                                                         <label for="" style="font-size:small;">Centro de Investigación<b style="color:red">(*)</b>:</label>
-                                                        <textarea class="form-control" id="txt_centro_inve_editar" rows="2" style="resize:none" disabled></textarea>
+                                                        <textarea class="form-control" id="txt_centro_inve_editar" rows="2" style="resize:none" ></textarea>
                                                     </div>
 
                                                     <div class="col-3 form-group">

@@ -142,8 +142,43 @@
     }
 
     .welcome-banner p {
-      font-size: 15px;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
+      line-height: 1.6;
+    }
+
+    .btn-tutorial {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: white;
+      color: #722f37;
+      padding: 12px 25px;
+      border-radius: 50px;
+      font-weight: 700;
+      text-decoration: none !important;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      border: 2px solid transparent;
+      margin-top: 10px;
+    }
+
+    .btn-tutorial:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      filter: brightness(1.1);
+      background: #722f37;
+      color: white;
+    }
+
+    .main-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      display: block; /* Asegurar que no sea flex si no debe serlo */
     }
 
     .step-indicator {
@@ -445,6 +480,13 @@
         <span style="color: #e74c3c; font-weight: bold;">*</span>
         son obligatorios.
       </p>
+
+      <!-- Botón Video Tutorial -->
+      <div style="margin-top: 20px; text-align: center;">
+        <a href="#" class="btn-tutorial" target="_blank">
+          <i class="fas fa-play-circle"></i> Ver Video Tutorial de Registro
+        </a>
+      </div>
     </div>
 
 

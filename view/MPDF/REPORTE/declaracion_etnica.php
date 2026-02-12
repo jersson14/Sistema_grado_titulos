@@ -305,43 +305,44 @@ function generarFilasTablaCompleta($cod_etnia_seleccionado, $cod_lengua_seleccio
     $max_rows = 30; // Máximo 30 filas
     
     for ($i = 0; $i < $max_rows; $i++) {
-        $html .= '<tr>';
+        $html .= '<tr style="height: 25px;">';
         
         // VARIABLE ÉTNICA - Columna 1 (códigos 1-30)
         if (isset($etnia_col1[$i])) {
-            $html .= '<td style="border: 1px solid #000; padding: 0.5px; text-align: center; width: 8px;">' . ($etnia_col1[$i][0] == $cod_etnia_seleccionado ? 'X' : '') . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 0.5px; text-align: center; width: 12px;">' . $etnia_col1[$i][0] . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 0.5px 2px; width: 60px;">' . $etnia_col1[$i][1] . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 4px; text-align: center; width: 20px; font-size: 13pt; font-weight: bold; color: #000;">' . ($etnia_col1[$i][0] == $cod_etnia_seleccionado ? 'X' : '') . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 4px; text-align: center; width: 25px; font-size: 8pt;">' . $etnia_col1[$i][0] . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 4px 6px; width: 150px; font-size: 8pt;">' . $etnia_col1[$i][1] . '</td>';
         } else {
             $html .= '<td colspan="3" style="border: 1px solid #000;"></td>';
         }
         
         // VARIABLE ÉTNICA - Columna 2 (códigos 31-55)
         if (isset($etnia_col2[$i])) {
-            $html .= '<td style="border: 1px solid #000; padding: 0.5px; text-align: center; width: 8px;">' . ($etnia_col2[$i][0] == $cod_etnia_seleccionado ? 'X' : '') . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 0.5px; text-align: center; width: 12px;">' . $etnia_col2[$i][0] . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 0.5px 2px; width: 60px;">' . $etnia_col2[$i][1] . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 4px; text-align: center; width: 20px; font-size: 13pt; font-weight: bold; color: #000;">' . ($etnia_col2[$i][0] == $cod_etnia_seleccionado ? 'X' : '') . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 4px; text-align: center; width: 25px; font-size: 8pt;">' . $etnia_col2[$i][0] . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 4px 6px; width: 150px; font-size: 8pt;">' . $etnia_col2[$i][1] . '</td>';
         } else {
             $html .= '<td colspan="3" style="border: 1px solid #000;"></td>';
         }
         
         // LENGUA INDÍGENA - Columna 3 (códigos 1-30)
         if (isset($lengua_col1[$i])) {
-            $html .= '<td style="border: 1px solid #000; padding: 0.5px; text-align: center; width: 8px;">' . ($lengua_col1[$i][0] == $cod_lengua_seleccionado ? 'X' : '') . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 0.5px; text-align: center; width: 12px;">' . $lengua_col1[$i][0] . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 0.5px 2px; width: 60px;">' . $lengua_col1[$i][1] . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 4px; text-align: center; width: 20px; font-size: 13pt; font-weight: bold; color: #000;">' . ($lengua_col1[$i][0] == $cod_lengua_seleccionado ? 'X' : '') . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 4px; text-align: center; width: 25px; font-size: 8pt;">' . $lengua_col1[$i][0] . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 4px 6px; width: 150px; font-size: 8pt;">' . $lengua_col1[$i][1] . '</td>';
         } else {
             $html .= '<td colspan="3" style="border: 1px solid #000;"></td>';
         }
         
         // LENGUA INDÍGENA - Columna 4 (códigos 31-48)
         if (isset($lengua_col2[$i])) {
-            $html .= '<td style="border: 1px solid #000; padding: 0.5px; text-align: center; width: 8px;">' . ($lengua_col2[$i][0] == $cod_lengua_seleccionado ? 'X' : '') . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 0.5px; text-align: center; width: 12px;">' . $lengua_col2[$i][0] . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 0.5px 2px; width: 60px;">' . $lengua_col2[$i][1] . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 4px; text-align: center; width: 20px; font-size: 13pt; font-weight: bold; color: #000;">' . ($lengua_col2[$i][0] == $cod_lengua_seleccionado ? 'X' : '') . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 4px; text-align: center; width: 25px; font-size: 8pt;">' . $lengua_col2[$i][0] . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 4px 6px; width: 150px; font-size: 8pt;">' . $lengua_col2[$i][1] . '</td>';
         } else {
             $html .= '<td colspan="3" style="border: 1px solid #000;"></td>';
         }
+
         
         $html .= '</tr>';
     }
@@ -385,13 +386,14 @@ $html = '
         }
         .checkbox {
             display: inline-block;
-            width: 15px;
-            height: 15px;
+            width: 18px;
+            height: 18px;
             border: 2px solid #000;
             text-align: center;
-            line-height: 13px;
+            line-height: 16px;
             font-weight: bold;
             margin-right: 5px;
+            font-size: 14pt;
         }
         .checked {
             background-color: #000;
@@ -532,10 +534,10 @@ $html = '
     
     <p style="font-size: 8pt; margin: 5px 0 5px 0; text-align: center;"><strong>NOTA:</strong> Marcar con X la opción elegida.</p>
     
-    <table style="width: 100%; border-collapse: collapse; font-size: 5.5pt;">
+    <table style="width: 100%; border-collapse: collapse; font-size: 8pt;">
         <tr style="background-color: #f0f0f0;">
-            <th colspan="6" style="border: 1px solid #000; padding: 3px; text-align: center; font-weight: bold; font-size: 7pt;">VARIABLE ÉTNICA</th>
-            <th colspan="6" style="border: 1px solid #000; padding: 3px; text-align: center; font-weight: bold; font-size: 7pt;">LENGUA INDÍGENA</th>
+            <th colspan="6" style="border: 1px solid #000; padding: 5px; text-align: center; font-weight: bold; font-size: 10pt;">VARIABLE ÉTNICA</th>
+            <th colspan="6" style="border: 1px solid #000; padding: 5px; text-align: center; font-weight: bold; font-size: 10pt;">LENGUA INDÍGENA</th>
         </tr>
         ' . generarFilasTablaCompleta($cod_etnia, $cod_lengua) . '
     </table>

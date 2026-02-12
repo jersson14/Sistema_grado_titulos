@@ -182,7 +182,9 @@ function listar_expedientes_pregrado_fecha() {
         data: null,
         visible: false, // si deseas ocultarlo
         render: function (data, type, row) {
-          return row.Modalidad + " Ciclo (" + row.ciclo_tesis + ")";
+          return row.ciclo_tesis && row.ciclo_tesis !== ""
+            ? row.Modalidad + " Ciclo (" + row.ciclo_tesis + ")"
+            : row.Modalidad;
         },
       },
       { data: "Abreviatura_modo_estudio", visible: false }, // 22
@@ -469,7 +471,9 @@ function listar_colacion() {
         data: null,
         visible: false, // si deseas ocultarlo
         render: function (data, type, row) {
-          return row.Modalidad + " Ciclo (" + row.ciclo_tesis + ")";
+          return row.ciclo_tesis && row.ciclo_tesis !== ""
+            ? row.Modalidad + " Ciclo (" + row.ciclo_tesis + ")"
+            : row.Modalidad;
         },
       },
       { data: "Abreviatura_modo_estudio", visible: false }, // 22

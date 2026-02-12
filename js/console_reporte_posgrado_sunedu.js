@@ -318,72 +318,114 @@ function listar_fechas_busqueda() {
           "<button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button>",
       }, // 8
       // Añadimos las demás columnas según el orden de la consulta SQL y las ocultamos
-      { data: "emp_cod", visible: false }, // 9
-      { data: "emp_razon", visible: false }, // 10
-      { data: null, defaultContent: "", visible: false }, // Columna vacía
-      { data: "posgrado", visible: false }, // 10
-      { data: "Apellido_paterno", visible: false }, // 12
-      { data: "Apellido_materno", visible: false }, // 13
-      { data: "Nombres", visible: false }, // 11
-      { data: "Sexo", visible: false }, // 14
-      { data: "tipo_documento", visible: false }, // Columna vacía
-      { data: "Dni", visible: false }, // 14
-      { data: "Fecha_matricula", visible: false }, // 15
-      { data: "Fecha_egreso", visible: false }, // 16
-      { data: "Abreviatura_grado", visible: false }, // 17
-      { data: "Denominación_grado", visible: false }, // 18
-      { data: "Grado_academico", visible: false }, // 18
-      { data: null, defaultContent: "", visible: false }, // Columna vacía
-      { data: null, defaultContent: "", visible: false }, // Columna vacía
-      { data: null, defaultContent: "", visible: false }, // Columna vacía
-      { data: null, defaultContent: "", visible: false }, // Columna vacía
-      { data: "Programa_estudio", visible: false }, // 19
-      { data: "Numero_creditos", visible: false }, // 20
-      { data: "Modalidad", visible: false }, // 21
-      { data: "Modo_estudio", visible: false }, // 22
-      { data: "Reglamento_metadado", visible: false }, // 23
-      { data: "Trabajo_investigacion", visible: false }, // 23
-      { data: null, defaultContent: "SI", visible: false }, // Columna vacía
-      { data: null, defaultContent: "", visible: false }, // Columna vacía
-      { data: null, defaultContent: "", visible: false }, // Columna vacía
-      { data: null, defaultContent: "", visible: false }, // Columna vacía
-      { data: "Fecha_inicio_tramite", visible: false }, // 24
-      { data: "Turnitin", visible: false }, // 25
-      { data: "Porcentaje", visible: false }, // 26
-      { data: "Centro_investigacion", visible: false }, // 27
-      { data: null, defaultContent: "", visible: false }, // Columna vacía
-      { data: null, defaultContent: "", visible: false }, // Columna vacía
-      { data: null, defaultContent: "", visible: false }, // Columna vacía
-      { data: null, defaultContent: "", visible: false }, // Columna vacía
-      { data: "Resolucion_numero", visible: false }, // 28
-      { data: "fecha_registro2", visible: false }, // 28
-      { data: null, defaultContent: "", visible: false }, // Columna vacía
-      { data: null, defaultContent: "", visible: false }, // Columna vacía
-      { data: "fecha_registro3", visible: false }, // 29
-      { data: null, defaultContent: "", visible: false }, // Columna vacía
-      { data: "Diploma_numero", visible: false }, // 31
-      { data: "Diploma_tipo_emitido", visible: false }, // 31
-      { data: "Registro_libro", visible: false }, // 31
-      { data: "Registro_folio", visible: false }, // 31
-      { data: "Registro_numero", visible: false }, // 32
-      { data: "Cargo_auto1", visible: false }, // 33
-      { data: "Autoridad_1", visible: false }, // 34
-      { data: "Cargo_auto2", visible: false }, // 35
-      { data: "Autoridad_2", visible: false }, // 36
-      { data: "Cargo_auto3", visible: false }, // 37
-      { data: "Autoridad_3", visible: false }, // 38
-      { data: "Proce_pais_ext", visible: false }, // 39
-      { data: "Proce_univ_ext", visible: false }, // 40
-      { data: "Proce_grado_ext", visible: false }, // 41
-      { data: "Nro_oficio", visible: false }, // 42
-      { data: "Fecha_matricula_modalidad", visible: false }, // 43
-      { data: "Fecha_inicio_modalidad", visible: false }, // 44
-      { data: "Fecha_fin_modalidad", visible: false }, // 45
-      { data: "Modo_sustentacion", visible: false }, // 46
-      { data: "DET_ETNICA", visible: false }, // 45
-      { data: "COD_ETNIA", visible: false }, // 45
-      { data: "DET_LENGUA", visible: false }, // 45
-      { data: "COD_LENGUA", visible: false }, // 45
+      // Añadimos las demás columnas según el orden de la consulta SQL y las ocultamos
+      { data: "emp_cod", visible: false }, // 10 - COD_UNIV
+      { data: "emp_razon", visible: false }, // 11 - RAZ_SOC
+      { data: null, defaultContent: "", visible: false }, // 12 - FAC_NOM
+      {
+        data: function (row) {
+          return "MAESTRIA EN " + row.posgrado.toUpperCase();
+        },
+        visible: false,
+      }, // 13 - ESC_POS
+      { data: "Apellido_paterno", visible: false }, // 14 - PRIM_APE
+      { data: "Apellido_materno", visible: false }, // 15 - SEG_APE
+      { data: "Nombres", visible: false }, // 16 - NOMBRE
+      { data: "Sexo", visible: false }, // 17 - SEXO
+      { data: "tipo_documento", visible: false }, // 18 - DOCU_TIP
+      { data: "Dni", visible: false }, // 19 - DOCU_NUM
+      { data: "Fecha_matricula", visible: false }, // 20 - MATRI_FEC
+      { data: "Fecha_egreso", visible: false }, // 21 - EGRES_FEC
+      { data: "Abreviatura_grado", visible: false }, // 22 - ABRE_GYT
+      { data: "Denominación_grado", visible: false }, // 23 - CARR_PROG
+      { data: null, defaultContent: "MAESTRO", visible: false }, // 24 - DEN_GRAD
+      { data: null, defaultContent: "", visible: false }, // 25 - SEG_ESP
+      { data: null, defaultContent: "", visible: false }, // 26 - PROC_BACH
+      { data: null, defaultContent: "", visible: false }, // 27 - PROC_INST_ORIG
+      { data: null, defaultContent: "", visible: false }, // 28 - PROC_TITULO_PED
+      { data: "Programa_estudio", visible: false }, // 29 - PROG_ESTUs
+      { data: "Numero_creditos", visible: false }, // 30 - NUM_CRED
+      { data: "Modalidad", visible: false }, // 31 - MOD_OBT
+      { data: "Modo_estudio", visible: false }, // 32 - MOD_EST
+      { data: "Reglamento_metadado", visible: false }, // 33 - REG_METADATO
+      { data: "Trabajo_investigacion", visible: false }, // 34 - TRAB_INV
+      { data: null, defaultContent: "SI", visible: false }, // 35 - REQ_IDM
+      { data: null, defaultContent: "", visible: false }, // 36 - PROG_ACREDIT
+      { data: null, defaultContent: "", visible: false }, // 37 - FEC_INICIO_ACREDIT
+      { data: null, defaultContent: "", visible: false }, // 38 - FEC_FIN_ACREDIT
+      { data: "Fecha_inicio_tramite", visible: false }, // 39 - FEC_INI_TRA_TIT
+      { data: "Turnitin", visible: false }, // 40 - TRAB_INVEST_ORIGINAL
+      { data: "Porcentaje", visible: false }, // 41 - MEC_UTI
+      {
+        data: function (row) {
+          return (
+            "SUB DIRECCION DE INVESTIGACIÓN DE " + row.posgrado.toUpperCase()
+          );
+        },
+        visible: false,
+      }, // 42 - DEP_VER_ORIG
+      { data: null, defaultContent: "", visible: false }, // 43 - PROC_REV_PAIS
+      { data: null, defaultContent: "", visible: false }, // 44 - PROC_REV_UNIV
+      { data: null, defaultContent: "", visible: false }, // 45 - PROC_REV_GRADO
+      { data: null, defaultContent: "", visible: false }, // 46 - CRIT_REV
+      {
+        data: function (row) {
+          let year = new Date().getFullYear();
+          let resolucion = row.Resolucion_numero.toString().padStart(3, "0");
+          return `${resolucion} - ${year}-UTEA-CU`;
+        },
+        visible: false,
+      }, // 47 - RESO_NUM
+      { data: "fecha_registro2", visible: false }, // 48 - RESO_FEC
+      { data: null, defaultContent: "", visible: false }, // 49 - RESO_NUM_DUP_NUE
+      { data: null, defaultContent: "", visible: false }, // 50 - RESO_FEC_DUP_NUE
+      { data: "fecha_registro3", visible: false }, // 51 - DIPL_FEC_ORG
+      { data: null, defaultContent: "", visible: false }, // 52 - DIPL_FEC_DUP_NUE
+      { data: "Diploma_numero", visible: false }, // 53 - DIPL_NUM
+      { data: "Diploma_tipo_emitido", visible: false }, // 54 - DIPL_TIP_EMI
+      { data: "Registro_libro", visible: false }, // 55 - REG_LIBRO
+      { data: "Registro_folio", visible: false }, // 56 - REG_FOLIO
+      { data: "Registro_numero", visible: false }, // 57 - REG_REGISTRO
+      {
+        data: function (row) {
+          return row.genero1 === "MASCULINO" ? "RECTOR" : "RECTOR";
+        },
+        visible: false,
+      }, // 58 - CARGO1
+      { data: "Autoridad_1", visible: false }, // 59 - AUTORIDAD1
+      {
+        data: function (row) {
+          return row.genero2 === "MASCULINO"
+            ? "SECRETARIO GENERAL"
+            : "SECRETARIA GENERAL";
+        },
+        visible: false,
+      }, // 60 - CARGO2
+      { data: "Autoridad_2", visible: false }, // 61 - AUTORIDAD2
+      {
+        data: function (row) {
+          return row.genero3 === "MASCULINO" ? "DIRECTOR" : "DIRECTORA";
+        },
+        visible: false,
+      }, // 62 - CARGO3
+      { data: "Autoridad_3", visible: false }, // 63 - AUTORIDAD3
+      { data: "Proce_pais_ext", visible: false }, // 64 - PROC_PAIS_EXT
+      { data: "Proce_univ_ext", visible: false }, // 65 - PROC_UNIV_EXT
+      { data: "Proce_grado_ext", visible: false }, // 66 - PROC_GRADO_EXT
+      {
+        data: function (row) {
+          return `Oficio N° ${row.Nro_oficio}`;
+        },
+        visible: false,
+      }, // 67 - REG_OFICIO
+      { data: "Fecha_matricula_modalidad", visible: false }, // 68 - FEC_MAT_MOD
+      { data: "Fecha_inicio_modalidad", visible: false }, // 69 - FEC_INICIO_MOD
+      { data: "Fecha_fin_modalidad", visible: false }, // 70 - FEC_FIN_MOD
+      { data: "Modo_sustentacion", visible: false }, // 71 - MOD_SUSTENTACIÓN
+      { data: "DET_ETNICA", visible: false }, // 72 - VAR_ETNICA
+      { data: "COD_ETNIA", visible: false }, // 73 - DET_ETNICO
+      { data: "DET_LENGUA", visible: false }, // 74 - LENGUA_IND
+      { data: "COD_LENGUA", visible: false }, // 75 - DET_LENGUA
     ],
     language: idioma_espanol,
     select: true,
@@ -627,72 +669,113 @@ function listar_colacion() {
           "<button class='mostrar btn btn-success btn-sm' style='margin-right: 10px;' title='Mostrar más datos'><i class='fa fa-eye'></i> Mostrar</button>",
       }, // 8
       // Columnas ocultas para SUNEDU
-      { data: "emp_cod", visible: false },
-      { data: "emp_razon", visible: false },
-      { data: null, defaultContent: "", visible: false },
-      { data: "posgrado", visible: false },
-      { data: "Apellido_paterno", visible: false },
-      { data: "Apellido_materno", visible: false },
-      { data: "Nombres", visible: false },
-      { data: "Sexo", visible: false },
-      { data: "tipo_documento", visible: false },
-      { data: "Dni", visible: false },
-      { data: "Fecha_matricula", visible: false },
-      { data: "Fecha_egreso", visible: false },
-      { data: "Abreviatura_grado", visible: false },
-      { data: "Denominación_grado", visible: false },
-      { data: "Grado_academico", visible: false },
-      { data: null, defaultContent: "", visible: false },
-      { data: null, defaultContent: "", visible: false },
-      { data: null, defaultContent: "", visible: false },
-      { data: null, defaultContent: "", visible: false },
-      { data: "Programa_estudio", visible: false },
-      { data: "Numero_creditos", visible: false },
-      { data: "Modalidad", visible: false },
-      { data: "Modo_estudio", visible: false },
-      { data: "Reglamento_metadado", visible: false },
-      { data: "Trabajo_investigacion", visible: false },
-      { data: null, defaultContent: "SI", visible: false },
-      { data: null, defaultContent: "", visible: false },
-      { data: null, defaultContent: "", visible: false },
-      { data: null, defaultContent: "", visible: false },
-      { data: "Fecha_inicio_tramite", visible: false },
-      { data: "Turnitin", visible: false },
-      { data: "Porcentaje", visible: false },
-      { data: "Centro_investigacion", visible: false },
-      { data: null, defaultContent: "", visible: false },
-      { data: null, defaultContent: "", visible: false },
-      { data: null, defaultContent: "", visible: false },
-      { data: null, defaultContent: "", visible: false },
-      { data: "Resolucion_numero", visible: false },
-      { data: "fecha_registro2", visible: false },
-      { data: null, defaultContent: "", visible: false },
-      { data: null, defaultContent: "", visible: false },
-      { data: "fecha_registro3", visible: false },
-      { data: null, defaultContent: "", visible: false },
-      { data: "Diploma_numero", visible: false },
-      { data: "Diploma_tipo_emitido", visible: false },
-      { data: "Registro_libro", visible: false },
-      { data: "Registro_folio", visible: false },
-      { data: "Registro_numero", visible: false },
-      { data: "Cargo_auto1", visible: false },
-      { data: "Autoridad_1", visible: false },
-      { data: "Cargo_auto2", visible: false },
-      { data: "Autoridad_2", visible: false },
-      { data: "Cargo_auto3", visible: false },
-      { data: "Autoridad_3", visible: false },
-      { data: "Proce_pais_ext", visible: false },
-      { data: "Proce_univ_ext", visible: false },
-      { data: "Proce_grado_ext", visible: false },
-      { data: "Nro_oficio", visible: false },
-      { data: "Fecha_matricula_modalidad", visible: false },
-      { data: "Fecha_inicio_modalidad", visible: false },
-      { data: "Fecha_fin_modalidad", visible: false },
-      { data: "Modo_sustentacion", visible: false },
-      { data: "DET_ETNICA", visible: false },
-      { data: "COD_ETNIA", visible: false },
-      { data: "DET_LENGUA", visible: false },
-      { data: "COD_LENGUA", visible: false },
+      { data: "emp_cod", visible: false }, // 10 - COD_UNIV
+      { data: "emp_razon", visible: false }, // 11 - RAZ_SOC
+      { data: null, defaultContent: "", visible: false }, // 12 - FAC_NOM
+      {
+        data: function (row) {
+          return "MAESTRIA EN " + row.posgrado.toUpperCase();
+        },
+        visible: false,
+      }, // 13 - ESC_POS
+      { data: "Apellido_paterno", visible: false }, // 14 - PRIM_APE
+      { data: "Apellido_materno", visible: false }, // 15 - SEG_APE
+      { data: "Nombres", visible: false }, // 16 - NOMBRE
+      { data: "Sexo", visible: false }, // 17 - SEXO
+      { data: "tipo_documento", visible: false }, // 18 - DOCU_TIP
+      { data: "Dni", visible: false }, // 19 - DOCU_NUM
+      { data: "Fecha_matricula", visible: false }, // 20 - MATRI_FEC
+      { data: "Fecha_egreso", visible: false }, // 21 - EGRES_FEC
+      { data: "Abreviatura_grado", visible: false }, // 22 - ABRE_GYT
+      { data: "Denominación_grado", visible: false }, // 23 - CARR_PROG
+      { data: null, defaultContent: "MAESTRO", visible: false }, // 24 - DEN_GRAD
+      { data: null, defaultContent: "", visible: false }, // 25 - SEG_ESP
+      { data: null, defaultContent: "", visible: false }, // 26 - PROC_BACH
+      { data: null, defaultContent: "", visible: false }, // 27 - PROC_INST_ORIG
+      { data: null, defaultContent: "", visible: false }, // 28 - PROC_TITULO_PED
+      { data: "Programa_estudio", visible: false }, // 29 - PROG_ESTUs
+      { data: "Numero_creditos", visible: false }, // 30 - NUM_CRED
+      { data: "Modalidad", visible: false }, // 31 - MOD_OBT
+      { data: "Modo_estudio", visible: false }, // 32 - MOD_EST
+      { data: "Reglamento_metadado", visible: false }, // 33 - REG_METADATO
+      { data: "Trabajo_investigacion", visible: false }, // 34 - TRAB_INV
+      { data: null, defaultContent: "SI", visible: false }, // 35 - REQ_IDM
+      { data: null, defaultContent: "", visible: false }, // 36 - PROG_ACREDIT
+      { data: null, defaultContent: "", visible: false }, // 37 - FEC_INICIO_ACREDIT
+      { data: null, defaultContent: "", visible: false }, // 38 - FEC_FIN_ACREDIT
+      { data: "Fecha_inicio_tramite", visible: false }, // 39 - FEC_INI_TRA_TIT
+      { data: "Turnitin", visible: false }, // 40 - TRAB_INVEST_ORIGINAL
+      { data: "Porcentaje", visible: false }, // 41 - MEC_UTI
+      {
+        data: function (row) {
+          return (
+            "SUB DIRECCION DE INVESTIGACIÓN DE " + row.posgrado.toUpperCase()
+          );
+        },
+        visible: false,
+      }, // 42 - DEP_VER_ORIG
+      { data: null, defaultContent: "", visible: false }, // 43 - PROC_REV_PAIS
+      { data: null, defaultContent: "", visible: false }, // 44 - PROC_REV_UNIV
+      { data: null, defaultContent: "", visible: false }, // 45 - PROC_REV_GRADO
+      { data: null, defaultContent: "", visible: false }, // 46 - CRIT_REV
+      {
+        data: function (row) {
+          let year = new Date().getFullYear();
+          let resolucion = row.Resolucion_numero.toString().padStart(3, "0");
+          return `${resolucion} - ${year}-UTEA-CU`;
+        },
+        visible: false,
+      }, // 47 - RESO_NUM
+      { data: "fecha_registro2", visible: false }, // 48 - RESO_FEC
+      { data: null, defaultContent: "", visible: false }, // 49 - RESO_NUM_DUP_NUE
+      { data: null, defaultContent: "", visible: false }, // 50 - RESO_FEC_DUP_NUE
+      { data: "fecha_registro3", visible: false }, // 51 - DIPL_FEC_ORG
+      { data: null, defaultContent: "", visible: false }, // 52 - DIPL_FEC_DUP_NUE
+      { data: "Diploma_numero", visible: false }, // 53 - DIPL_NUM
+      { data: "Diploma_tipo_emitido", visible: false }, // 54 - DIPL_TIP_EMI
+      { data: "Registro_libro", visible: false }, // 55 - REG_LIBRO
+      { data: "Registro_folio", visible: false }, // 56 - REG_FOLIO
+      { data: "Registro_numero", visible: false }, // 57 - REG_REGISTRO
+      {
+        data: function (row) {
+          return row.genero1 === "MASCULINO" ? "RECTOR" : "RECTOR";
+        },
+        visible: false,
+      }, // 58 - CARGO1
+      { data: "Autoridad_1", visible: false }, // 59 - AUTORIDAD1
+      {
+        data: function (row) {
+          return row.genero2 === "MASCULINO"
+            ? "SECRETARIO GENERAL"
+            : "SECRETARIA GENERAL";
+        },
+        visible: false,
+      }, // 60 - CARGO2
+      { data: "Autoridad_2", visible: false }, // 61 - AUTORIDAD2
+      {
+        data: function (row) {
+          return row.genero3 === "MASCULINO" ? "DIRECTOR" : "DIRECTORA";
+        },
+        visible: false,
+      }, // 62 - CARGO3
+      { data: "Autoridad_3", visible: false }, // 63 - AUTORIDAD3
+      { data: "Proce_pais_ext", visible: false }, // 64 - PROC_PAIS_EXT
+      { data: "Proce_univ_ext", visible: false }, // 65 - PROC_UNIV_EXT
+      { data: "Proce_grado_ext", visible: false }, // 66 - PROC_GRADO_EXT
+      {
+        data: function (row) {
+          return `Oficio N° ${row.Nro_oficio}`;
+        },
+        visible: false,
+      }, // 67 - REG_OFICIO
+      { data: "Fecha_matricula_modalidad", visible: false }, // 68 - FEC_MAT_MOD
+      { data: "Fecha_inicio_modalidad", visible: false }, // 69 - FEC_INICIO_MOD
+      { data: "Fecha_fin_modalidad", visible: false }, // 70 - FEC_FIN_MOD
+      { data: "Modo_sustentacion", visible: false }, // 71 - MOD_SUSTENTACIÓN
+      { data: "DET_ETNICA", visible: false }, // 72 - VAR_ETNICA
+      { data: "COD_ETNIA", visible: false }, // 73 - DET_ETNICO
+      { data: "DET_LENGUA", visible: false }, // 74 - LENGUA_IND
+      { data: "COD_LENGUA", visible: false }, // 75 - DET_LENGUA
     ],
     language: idioma_espanol,
     select: true,

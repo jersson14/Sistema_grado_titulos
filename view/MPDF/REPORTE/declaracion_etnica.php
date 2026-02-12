@@ -131,9 +131,21 @@ $mpdf = new Mpdf([
     'format' => 'A4',
     'margin_left' => 20,
     'margin_right' => 20,
-    'margin_top' => 15,
-    'margin_bottom' => 15
+    'margin_top' => 55, // Aumentado para el logo de 160px
+    'margin_bottom' => 20,
+    'margin_header' => 15,
+    'margin_footer' => 10
 ]);
+
+// Configurar encabezado repetitivo
+$headerHTML = '
+    <div style="text-align: center; margin-bottom: 20px;">
+        <img src="C:/xampp/htdocs/ultimogrados/img/utea.png" style="width: 160px; height: auto; margin-bottom: 10px;">
+        <div style="background-color: #4A90E2; color: white; padding: 10px; font-weight: bold; font-size: 16pt; font-family: Arial, sans-serif; border-radius: 5px;">
+            UNIVERSIDAD TECNOLÓGICA DE LOS ANDES
+        </div>
+    </div>';
+$mpdf->SetHTMLHeader($headerHTML);
 
 // Fecha actual en formato largo español
 setlocale(LC_TIME, 'es_ES.UTF-8', 'es_ES', 'spanish');
@@ -305,40 +317,40 @@ function generarFilasTablaCompleta($cod_etnia_seleccionado, $cod_lengua_seleccio
     $max_rows = 30; // Máximo 30 filas
     
     for ($i = 0; $i < $max_rows; $i++) {
-        $html .= '<tr style="height: 25px;">';
+        $html .= '<tr style="height: 90px;">';
         
         // VARIABLE ÉTNICA - Columna 1 (códigos 1-30)
         if (isset($etnia_col1[$i])) {
-            $html .= '<td style="border: 1px solid #000; padding: 4px; text-align: center; width: 20px; font-size: 13pt; font-weight: bold; color: #000;">' . ($etnia_col1[$i][0] == $cod_etnia_seleccionado ? 'X' : '') . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 4px; text-align: center; width: 25px; font-size: 8pt;">' . $etnia_col1[$i][0] . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 4px 6px; width: 150px; font-size: 8pt;">' . $etnia_col1[$i][1] . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 6px; text-align: center; width: 60px; font-size: 30pt; font-weight: bold; color: #000;">' . ($etnia_col1[$i][0] == $cod_etnia_seleccionado ? 'X' : '') . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 6px; text-align: center; width: 60px; font-size: 20pt; font-weight: bold;">' . $etnia_col1[$i][0] . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 6px 15px; width: 350px; font-size: 20pt;">' . $etnia_col1[$i][1] . '</td>';
         } else {
             $html .= '<td colspan="3" style="border: 1px solid #000;"></td>';
         }
         
         // VARIABLE ÉTNICA - Columna 2 (códigos 31-55)
         if (isset($etnia_col2[$i])) {
-            $html .= '<td style="border: 1px solid #000; padding: 4px; text-align: center; width: 20px; font-size: 13pt; font-weight: bold; color: #000;">' . ($etnia_col2[$i][0] == $cod_etnia_seleccionado ? 'X' : '') . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 4px; text-align: center; width: 25px; font-size: 8pt;">' . $etnia_col2[$i][0] . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 4px 6px; width: 150px; font-size: 8pt;">' . $etnia_col2[$i][1] . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 6px; text-align: center; width: 60px; font-size: 30pt; font-weight: bold; color: #000;">' . ($etnia_col2[$i][0] == $cod_etnia_seleccionado ? 'X' : '') . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 6px; text-align: center; width: 60px; font-size: 20pt; font-weight: bold;">' . $etnia_col2[$i][0] . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 6px 15px; width: 350px; font-size: 20pt;">' . $etnia_col2[$i][1] . '</td>';
         } else {
             $html .= '<td colspan="3" style="border: 1px solid #000;"></td>';
         }
         
         // LENGUA INDÍGENA - Columna 3 (códigos 1-30)
         if (isset($lengua_col1[$i])) {
-            $html .= '<td style="border: 1px solid #000; padding: 4px; text-align: center; width: 20px; font-size: 13pt; font-weight: bold; color: #000;">' . ($lengua_col1[$i][0] == $cod_lengua_seleccionado ? 'X' : '') . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 4px; text-align: center; width: 25px; font-size: 8pt;">' . $lengua_col1[$i][0] . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 4px 6px; width: 150px; font-size: 8pt;">' . $lengua_col1[$i][1] . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 6px; text-align: center; width: 60px; font-size: 30pt; font-weight: bold; color: #000;">' . ($lengua_col1[$i][0] == $cod_lengua_seleccionado ? 'X' : '') . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 6px; text-align: center; width: 60px; font-size: 20pt; font-weight: bold;">' . $lengua_col1[$i][0] . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 6px 15px; width: 350px; font-size: 20pt;">' . $lengua_col1[$i][1] . '</td>';
         } else {
             $html .= '<td colspan="3" style="border: 1px solid #000;"></td>';
         }
         
         // LENGUA INDÍGENA - Columna 4 (códigos 31-48)
         if (isset($lengua_col2[$i])) {
-            $html .= '<td style="border: 1px solid #000; padding: 4px; text-align: center; width: 20px; font-size: 13pt; font-weight: bold; color: #000;">' . ($lengua_col2[$i][0] == $cod_lengua_seleccionado ? 'X' : '') . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 4px; text-align: center; width: 25px; font-size: 8pt;">' . $lengua_col2[$i][0] . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 4px 6px; width: 150px; font-size: 8pt;">' . $lengua_col2[$i][1] . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 6px; text-align: center; width: 60px; font-size: 30pt; font-weight: bold; color: #000;">' . ($lengua_col2[$i][0] == $cod_lengua_seleccionado ? 'X' : '') . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 6px; text-align: center; width: 60px; font-size: 20pt; font-weight: bold;">' . $lengua_col2[$i][0] . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 6px 15px; width: 350px; font-size: 20pt;">' . $lengua_col2[$i][1] . '</td>';
         } else {
             $html .= '<td colspan="3" style="border: 1px solid #000;"></td>';
         }
@@ -416,18 +428,18 @@ $html = '
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 9pt;
+            font-size: 10.5pt;
         }
         table th {
             background-color: #f0f0f0;
             border: 1px solid #000;
-            padding: 4px;
+            padding: 8px;
             text-align: center;
             font-weight: bold;
         }
         table td {
             border: 1px solid #000;
-            padding: 3px 5px;
+            padding: 8px 10px;
         }
         .signature-section {
             margin-top: 40px;
@@ -447,10 +459,6 @@ $html = '
     </style>
 </head>
 <body>
-    <div class="header">
-        <img src="C:/xampp/htdocs/ultimogrados/img/utea.png" style="width: 150px; height: auto; margin-bottom: 10px;">
-        <div class="header-bg">UNIVERSIDAD TECNOLÓGICA DE LOS ANDES</div>
-    </div>
     
     <div class="title">
         DECLARACIÓN JURADA VARIABLE<br>
@@ -523,21 +531,19 @@ $html = '
         </div>
     </div>
     
-<div class="signature-section" style="margin-top: 100px;">
+<div class="signature-section" style="margin-top: 40px;">
     <p style="text-align: right; margin-right: 20px;">Abancay, ' . $fecha_actual . '</p>
-    <div class="signature-line" style="margin-top: 120px;"></div>
+    <div class="signature-line" style="margin-top: 80px;"></div>
     <p><strong>Firma</strong></p>
 </div>
     
     <!-- PÁGINA 2: SOLO TABLAS DE CÓDIGOS -->
     <div style="page-break-before: always;"></div>
     
-    <p style="font-size: 8pt; margin: 5px 0 5px 0; text-align: center;"><strong>NOTA:</strong> Marcar con X la opción elegida.</p>
-    
-    <table style="width: 100%; border-collapse: collapse; font-size: 8pt;">
+    <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
         <tr style="background-color: #f0f0f0;">
-            <th colspan="6" style="border: 1px solid #000; padding: 5px; text-align: center; font-weight: bold; font-size: 10pt;">VARIABLE ÉTNICA</th>
-            <th colspan="6" style="border: 1px solid #000; padding: 5px; text-align: center; font-weight: bold; font-size: 10pt;">LENGUA INDÍGENA</th>
+            <th colspan="6" style="border: 1px solid #000; padding: 20px; text-align: center; font-weight: bold; font-size: 30pt;">VARIABLE ÉTNICA</th>
+            <th colspan="6" style="border: 1px solid #000; padding: 20px; text-align: center; font-weight: bold; font-size: 30pt;">LENGUA INDÍGENA</th>
         </tr>
         ' . generarFilasTablaCompleta($cod_etnia, $cod_lengua) . '
     </table>

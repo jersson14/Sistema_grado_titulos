@@ -159,7 +159,7 @@ try {
             
             <div class="contact-item">
                 <span class="contact-location">📍 Filial Cusco:</span>
-                <span class="contact-phone">970 639 067</span>
+                <span class="contact-phone">970 669 439</span>
             </div>
         </div>
         <div class="footer">

@@ -299,115 +299,110 @@
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
 
-    .radio-group {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+    /* Clases para el Resumen (utilizadas por JS) */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 15px;
     }
 
-    .radio-option {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    .summary-card {
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .summary-item {
+      margin-bottom: 12px;
       padding: 12px;
-      border: 2px solid #e0e0e0;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      backdrop-filter: blur(10px);
     }
 
-    .radio-option:hover {
-      background: #f8f9fa;
-      border-color: #0065B2;
+    .summary-item-label {
+      font-size: 11px;
+      opacity: 0.95;
+      margin-bottom: 4px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
-    .radio-option input[type="radio"] {
-      width: 20px;
-      height: 20px;
-      cursor: pointer;
+    .summary-item-value {
+      font-size: 15px;
+      font-weight: 600;
+      word-break: break-all;
     }
 
-    .radio-option.selected {
-      background: #e3f2fd;
-      border-color: #0065B2;
-    }
+    .summary-card-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+    .summary-card-info { background: linear-gradient(135deg, #0065B2 0%, #00a8ff 100%); }
+    .summary-card-success { background: linear-gradient(135deg, #28a745 0%, #20c997 100%); }
 
-    .btn-group {
-      display: flex;
-      justify-content: space-between;
-      gap: 15px;
-      margin-top: 30px;
+    /* Estilos de Controles */
+    .radio-group { display: flex; flex-direction: column; gap: 12px; }
+    .radio-option {
+      display: flex; align-items: center; gap: 10px; padding: 12px;
+      border: 2px solid #e0e0e0; border-radius: 10px; cursor: pointer; transition: all 0.3s ease;
     }
+    .radio-option:hover { background: #f8f9fa; border-color: #0065B2; }
+    .radio-option.selected { background: #e3f2fd; border-color: #0065B2; }
 
+    .btn-group { display: flex; justify-content: space-between; gap: 15px; margin-top: 30px; }
     .btn {
-      padding: 14px 32px;
-      border: none;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      padding: 14px 32px; border: none; border-radius: 12px; font-size: 16px; font-weight: 700;
+      cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center;
+      justify-content: center; gap: 10px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); }
+    .btn-primary { background: linear-gradient(135deg, #0065B2 0%, #00a8ff 100%); color: white; }
+    .btn-secondary { background: #6c757d; color: white; }
+    .btn-success { background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; }
 
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #0065B2 0%, #00a8ff 100%);
-      color: white;
-    }
-
-    .btn-secondary {
-      background: #6c757d;
-      color: white;
-    }
-
-    .btn-success {
-      background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-      color: white;
-    }
-
-    .hidden {
-      display: none !important;
+    /* Touch-friendly adjustments */
+    input[type="radio"], input[type="checkbox"] {
+      cursor: pointer; min-width: 20px; min-height: 20px;
     }
 
     /* Responsive */
     @media (max-width: 768px) {
-      body {
-        padding: 10px;
-      }
+      body { padding: 15px 10px; background-attachment: scroll; }
+      .header-section { padding: 20px 15px; margin-bottom: 20px; border-radius: 15px; }
+      .header-title { font-size: 19px; }
+      .header-subtitle { font-size: 14px; }
+      .main-card { padding: 20px 15px; border-radius: 15px; }
+      .welcome-banner { padding: 15px; font-size: 14px; }
+      .welcome-banner h3 { font-size: 18px; flex-direction: column; align-items: flex-start; }
 
-      .header-section {
-        padding: 20px;
-      }
+      .step-indicator { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 20px; }
+      .step { padding: 10px 5px; border-radius: 8px; }
+      .step-title { font-size: 11px; }
+      .step-number { width: 24px; height: 24px; line-height: 24px; font-size: 12px; margin-bottom: 4px; }
 
-      .main-card {
-        padding: 20px;
-      }
+      .section-title { font-size: 18px; }
+      .form-row { gap: 15px; }
+      .form-group[style*="grid-column"], .form-row[style*="grid-column"] { grid-column: span 1 !important; }
 
-      .step-indicator {
-        flex-direction: column;
-      }
+      .summary-grid { grid-template-columns: 1fr; gap: 15px; }
+      .summary-card { padding: 20px 15px; }
+      .summary-item { padding: 10px; }
 
-      .form-row {
-        grid-template-columns: 1fr;
-      }
-
-      .btn-group {
-        flex-direction: column;
-      }
-
-      .btn {
-        width: 100%;
-      }
+      .btn-group { flex-direction: column-reverse; gap: 10px; }
+      .btn { width: 100%; padding: 12px; font-size: 15px; }
+      .photo-upload { padding: 20px; }
     }
+
+    @media (max-width: 480px) {
+      .header-title { font-size: 17px; }
+      .step-indicator { grid-template-columns: 1fr; }
+      .welcome-banner h3 { font-size: 16px; }
+    }
+
+
   </style>
 </head>
 
@@ -1213,10 +1208,10 @@
 
     // Mostrar resumen
     function mostrarResumen() {
-      let html = '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">';
+      let html = '<div class="summary-grid">';
       
       // Tarjeta: Datos Personales
-      html += '<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 15px; box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3); color: white;">';
+      html += '<div class="summary-card summary-card-primary">';
       html += '<h5 style="margin: 0 0 20px 0; font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 10px;"><i class="fas fa-user-circle"></i> DATOS PERSONALES</h5>';
       
       const nivel = $('#select_nivel').val();
@@ -1235,32 +1230,31 @@
       }
 
       datosPersonales.forEach(item => {
-        html += `<div style="margin-bottom: 12px; padding: 12px; background: rgba(255,255,255,0.15); border-radius: 8px; backdrop-filter: blur(10px);">
-                  <div style="font-size: 11px; opacity: 0.9; margin-bottom: 4px;"><i class="fas fa-${item.icon}"></i> ${item.label}</div>
-                  <div style="font-size: 15px; font-weight: 600;">${item.value}</div>
+        html += `<div class="summary-item">
+                  <div class="summary-item-label"><i class="fas fa-${item.icon}"></i> ${item.label}</div>
+                  <div class="summary-item-value">${item.value}</div>
                 </div>`;
       });
       html += '</div>';
 
-      // Tarjeta: Contacto (con correo destacado)
-      html += '<div style="background: linear-gradient(135deg, #0065B2 0%, #00a8ff 100%); padding: 25px; border-radius: 15px; box-shadow: 0 8px 20px rgba(0, 101, 178, 0.3); color: white;">';
+      // Tarjeta: Contacto
+      html += '<div class="summary-card summary-card-info">';
       html += '<h5 style="margin: 0 0 20px 0; font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 10px;"><i class="fas fa-address-book"></i> CONTACTO</h5>';
       
-      html += `<div style="margin-bottom: 12px; padding: 12px; background: rgba(255,255,255,0.15); border-radius: 8px; backdrop-filter: blur(10px);">
-                <div style="font-size: 11px; opacity: 0.9; margin-bottom: 4px;"><i class="fas fa-phone"></i> Celular</div>
-                <div style="font-size: 15px; font-weight: 600;">${$('#txt_celular').val()}</div>
+      html += `<div class="summary-item">
+                <div class="summary-item-label"><i class="fas fa-phone"></i> Celular</div>
+                <div class="summary-item-value">${$('#txt_celular').val()}</div>
               </div>`;
       
-      // Correo destacado con animación
-      html += `<div style="margin-bottom: 0; padding: 15px; background: rgba(255,255,255,0.25); border: 2px solid rgba(255,255,255,0.5); border-radius: 10px; backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
-                <div style="font-size: 11px; opacity: 0.95; margin-bottom: 6px; font-weight: 600;"><i class="fas fa-envelope"></i> CORREO ELECTRÓNICO</div>
-                <div style="font-size: 16px; font-weight: 700; word-break: break-all;">${$('#txt_correo_personal').val()}</div>
+      html += `<div class="summary-item" style="background: rgba(255,255,255,0.25); border: 1px solid rgba(255,255,255,0.4);">
+                <div class="summary-item-label" style="font-weight: 700;"><i class="fas fa-envelope"></i> CORREO ELECTRÓNICO</div>
+                <div class="summary-item-value" style="font-size: 16px; font-weight: 700;">${$('#txt_correo_personal').val()}</div>
               </div>`;
       html += '</div>';
       
       // Tarjeta: Declaración Étnica (si aplica)
       if ($('#chk_declaracion_etnica').is(':checked')) {
-        html += '<div style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); padding: 25px; border-radius: 15px; box-shadow: 0 8px 20px rgba(40, 167, 69, 0.3); color: white; grid-column: 1 / -1;">';
+        html += '<div class="summary-card summary-card-success" style="grid-column: 1 / -1;">';
         html += '<h5 style="margin: 0 0 20px 0; font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 10px;"><i class="fas fa-fingerprint"></i> DECLARACIÓN ÉTNICA Y LINGÜÍSTICA</h5>';
         
         html += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">';
@@ -1277,14 +1271,14 @@
           displayLengua = $('#cbo_lengua option:selected').text();
         }
 
-        html += `<div style="padding: 12px; background: rgba(255,255,255,0.15); border-radius: 8px; backdrop-filter: blur(10px);">
-                  <div style="font-size: 11px; opacity: 0.9; margin-bottom: 4px;"><i class="fas fa-user-tag"></i> Autoidentificación</div>
-                  <div style="font-size: 15px; font-weight: 600;">${displayEtnia || 'No especificado'}</div>
+        html += `<div class="summary-item">
+                  <div class="summary-item-label"><i class="fas fa-user-tag"></i> Autoidentificación</div>
+                  <div class="summary-item-value">${displayEtnia || 'No especificado'}</div>
                 </div>`;
         
-        html += `<div style="padding: 12px; background: rgba(255,255,255,0.15); border-radius: 8px; backdrop-filter: blur(10px);">
-                  <div style="font-size: 11px; opacity: 0.9; margin-bottom: 4px;"><i class="fas fa-language"></i> Lengua Indígena</div>
-                  <div style="font-size: 15px; font-weight: 600;">${displayLengua || 'No especificado'}</div>
+        html += `<div class="summary-item">
+                  <div class="summary-item-label"><i class="fas fa-language"></i> Lengua Indígena</div>
+                  <div class="summary-item-value">${displayLengua || 'No especificado'}</div>
                 </div>`;
         
         html += '</div></div>';
@@ -1299,6 +1293,7 @@
       
       $('#resumen_datos').html(html);
     }
+
 
     // Guardar datos
     async function guardarDatos() {

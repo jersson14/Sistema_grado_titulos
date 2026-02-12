@@ -1944,60 +1944,61 @@ function loadClient() {
 gapi.load("client:auth2", loadClient);
 
 function fetchSheetData() {
-  var spreadsheetId = "1Q3H2bhhS3brQMsrzgJIcHWvGcHRD8YdtbiU2C1uEmyg"; // ID de tu hoja de cálculo de Google Sheets
-  var range = "Respuestas de formulario 1!A2:BP"; // Rango donde están los datos (sin incluir el encabezado)
+  return new Promise((resolve, reject) => {
+    var spreadsheetId = "1Q3H2bhhS3brQMsrzgJIcHWvGcHRD8YdtbiU2C1uEmyg";
+    var range = "Respuestas de formulario 1!A2:BP";
+    var dniIngresado = document.getElementById("txt_dni").value;
+    var dniIngresado2Element = document.getElementById("txt_dni2");
+    var dniIngresado2 = dniIngresado2Element ? dniIngresado2Element.value : "";
+    var dni = dniIngresado || dniIngresado2;
 
-  var dniIngresado = document.getElementById("txt_dni").value; // Obtienes el DNI ingresado
-  var dniIngresado2Element = document.getElementById("txt_dni2");
-  var dniIngresado2 = dniIngresado2Element ? dniIngresado2Element.value : ""; // Verificar si existe antes de leer
+    // Timeout de 6 segundos para la API de Google
+    const timeout = setTimeout(() => {
+      console.warn(
+        "UMIL (Sheets) timed out after 6s, falling back to local DB",
+      );
+      buscarEstudianteLocal(dni).then(resolve).catch(resolve);
+    }, 6000);
 
-  gapi.client.sheets.spreadsheets.values
-    .get({
-      spreadsheetId: spreadsheetId,
-      range: range,
-    })
-    .then(function (response) {
-      var data = response.result.values; // Obtienes los datos de la hoja
+    gapi.client.sheets.spreadsheets.values
+      .get({
+        spreadsheetId: spreadsheetId,
+        range: range,
+      })
+      .then(function (response) {
+        clearTimeout(timeout);
+        var data = response.result.values;
 
-      if (data.length > 0) {
-        console.log("Datos obtenidos:", data);
-
-        // Buscar la fila que tiene el DNI ingresado
-        var filaEncontrada = null;
-        for (var i = 0; i < data.length; i++) {
-          var fila = data[i];
-          if (fila[2] === dniIngresado || fila[2] === dniIngresado2) {
-            // Suponiendo que el DNI está en la columna 2 (índice 1)
-            filaEncontrada = fila;
-            break;
+        if (data && data.length > 0) {
+          var filaEncontrada = null;
+          for (var i = 0; i < data.length; i++) {
+            var fila = data[i];
+            if (fila[2] === dniIngresado || fila[2] === dniIngresado2) {
+              filaEncontrada = fila;
+              break;
+            }
           }
-        }
 
-        if (filaEncontrada) {
-          console.log("Fila encontrada:", filaEncontrada);
-          fillFormWithData(filaEncontrada); // Llamamos a la función para llenar el formulario
+          if (filaEncontrada) {
+            console.log("Fila encontrada en Sheets:", filaEncontrada);
+            fillFormWithData(filaEncontrada);
+            resolve({ success: true, source: "sheets" });
+          } else {
+            console.log(
+              "Estudiante no encontrado en Sheets, buscando en BD local...",
+            );
+            buscarEstudianteLocal(dni).then(resolve).catch(resolve);
+          }
         } else {
-          // Ventana de advertencia si no se encuentra el DNI
-          Swal.fire(
-            "Mensaje de Advertencia",
-            "No se encontró un estudiante con ese DNI.",
-            "warning",
-          );
-          return; // Detenemos ejecución adicional en este bloque
+          buscarEstudianteLocal(dni).then(resolve).catch(resolve);
         }
-      } else {
-        // Ventana de advertencia si no hay datos
-        Swal.fire(
-          "Mensaje de Advertencia",
-          "No se encontraron datos.",
-          "warning",
-        );
-        return; // Detenemos ejecución adicional en este bloque
-      }
-    })
-    .catch(function (error) {
-      console.error("Error al obtener los datos:", error);
-    });
+      })
+      .catch(function (error) {
+        clearTimeout(timeout);
+        console.error("Error al obtener los datos de Sheets:", error);
+        buscarEstudianteLocal(dni).then(resolve).catch(resolve);
+      });
+  });
 }
 
 function fillFormWithData(fila) {
@@ -2218,16 +2219,64 @@ function ejecutarBusqueda(origin) {
       buscarBachiller();
       break;
     case "umil":
-      console.log("Buscando en UMIL...");
-      if (typeof fetchSheetData === "function") {
-        fetchSheetData();
-      } else {
-        Swal.fire(
-          "Error",
-          "La función de búsqueda en UMIL no está cargada.",
-          "error",
-        );
-      }
+      Swal.fire({
+        title: "Buscando datos...",
+        text: "Consultando UMIL y Repositorio, por favor espere.",
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
+
+      // Ejecutar ambas búsquedas en paralelo
+      Promise.all([
+        typeof fetchSheetData === "function"
+          ? fetchSheetData()
+          : Promise.resolve({ success: false, message: "Función no definida" }),
+        buscarTesisEnRepositorio(true),
+      ])
+        .then((results) => {
+          const studentResult = results[0];
+          const repoResult = results[1];
+
+          let mensaje = "<div style='text-align: left;'>";
+
+          if (studentResult.success) {
+            mensaje += `<strong>✓ Datos del estudiante:</strong> Cargados desde ${studentResult.source === "sheets" ? "UMIL (Sheets)" : "Base de Datos Local"}<br><br>`;
+          } else {
+            mensaje +=
+              "<strong>⚠ Datos del estudiante:</strong> No se encontró información en UMIL ni Local<br><br>";
+          }
+
+          if (repoResult && repoResult.success) {
+            mensaje += "<strong>✓ Tesis encontrada:</strong><br>";
+            mensaje += `<p style="margin: 5px 0 5px 15px;">${repoResult.data.titulo}</p>`;
+            mensaje += `<a href="${repoResult.data.enlace}" target="_blank" style="color: #3085d6; margin-left: 15px;">${repoResult.data.enlace}</a>`;
+          } else {
+            mensaje +=
+              "<strong>ℹ Tesis:</strong> No se encontró en el repositorio";
+          }
+
+          mensaje += "</div>";
+
+          Swal.fire({
+            icon: studentResult.success ? "success" : "warning",
+            title: studentResult.success
+              ? "Datos Obtenidos"
+              : "Resultado Búsqueda",
+            html: mensaje,
+            confirmButtonText: "Aceptar",
+            width: "600px",
+          });
+        })
+        .catch((error) => {
+          console.error("Error en búsqueda sincronizada:", error);
+          Swal.fire(
+            "Error",
+            "Ocurrió un error inesperado al procesar la búsqueda.",
+            "error",
+          );
+        });
       break;
   }
 }
@@ -2270,9 +2319,7 @@ function buscarEnReniecLocal(dni) {
 async function buscarBachiller() {
   const dni = ($("#txt_dni").val() || $("#txtdni2").val() || "").trim();
 
-  let numero_documento = dni;
-
-  if (numero_documento === "") {
+  if (dni === "") {
     Swal.fire(
       "Advertencia",
       "Debe ingresar un número de documento válido.",
@@ -2281,13 +2328,26 @@ async function buscarBachiller() {
     return;
   }
 
+  Swal.fire({
+    title: "Buscando datos...",
+    text: "Consultando Bachiller y Repositorio, por favor espere.",
+    allowOutsideClick: false,
+    didOpen: () => {
+      Swal.showLoading();
+    },
+  });
+
   try {
-    const resp = await $.ajax({
-      url: "../controller/registro_general/controlador_buscar_persona_por_documento.php",
-      type: "POST",
-      data: { numero_documento },
-      dataType: "json",
-    });
+    // Ejecutar ambas búsquedas en paralelo
+    const [resp, repoResult] = await Promise.all([
+      $.ajax({
+        url: "../controller/registro_general/controlador_buscar_persona_por_documento.php",
+        type: "POST",
+        data: { numero_documento: dni },
+        dataType: "json",
+      }),
+      buscarTesisEnRepositorio(true),
+    ]);
 
     if (resp.data && resp.data.length > 0) {
       const d = resp.data[0];
@@ -2314,16 +2374,16 @@ async function buscarBachiller() {
 
       // Lógica de Mapeo de Escuela (Bachiller -> Título)
       const mappingEscuela = {
-        2: "1", // EPISI
-        4: "3", // EPIC
-        6: "5", // EPA
-        8: "7", // EPIARN
-        10: "9", // EPD
-        11: "12", // EPC
-        14: "13", // EPTHG
-        15: "16", // EPE
-        17: "18", // EPES
-        19: "20", // EPED Inicial
+        2: "1",
+        4: "3",
+        6: "5",
+        8: "7",
+        10: "9",
+        11: "12",
+        14: "13",
+        15: "16",
+        17: "18",
+        19: "20",
       };
 
       const idBachillerEscuela = d.Id_escuela;
@@ -2345,28 +2405,45 @@ async function buscarBachiller() {
           .trigger("change", [idTituloEscuela]);
       }
 
-      // Alerta informativa después de cargar los datos
+      // Preparar mensaje consolidado
+      let mensaje = "<div style='text-align: left;'>";
+      mensaje +=
+        "<strong>✓ Datos de Bachiller:</strong> Cargados y mapeados correctamente.<br><br>";
+
+      if (repoResult && repoResult.success) {
+        mensaje += "<strong>✓ Tesis encontrada en Repositorio:</strong><br>";
+        mensaje += `<p style="margin: 5px 0 5px 15px;">${repoResult.data.titulo}</p>`;
+        mensaje += `<a href="${repoResult.data.enlace}" target="_blank" style="color: #3085d6; margin-left: 15px;">${repoResult.data.enlace}</a>`;
+      } else {
+        mensaje +=
+          "<strong>ℹ Tesis:</strong> No se encontró en el repositorio.";
+      }
+
+      mensaje +=
+        "<br><br><p style='font-size: 0.9em; color: #666;'>• Por favor, confirme la modalidad de estudio para completar el registro.</p>";
+      mensaje += "</div>";
+
       await Swal.fire({
         icon: "success",
-        title: "Datos de Bachiller Encontrados",
-        html: `
-          <div style="text-align: left; padding: 10px;">
-            <p>• Los datos personales, étnicos y de idioma se han cargado.</p>
-            <p>• La <strong>Carrera y Autoridades</strong> se han mapeado y cargado automáticamente.</p>
-            <p>• Por favor, <strong>confirme la modalidad de estudio</strong> para completar el registro.</p>
-          </div>
-        `,
+        title: "Búsqueda Completada",
+        html: mensaje,
         confirmButtonText: "Entendido",
         confirmButtonColor: "#3085d6",
-        allowOutsideClick: false,
-        allowEscapeKey: false,
+        width: "600px",
       });
     } else {
-      Swal.fire(
-        "No encontrado",
-        "No se encontró ningún bachiller con ese Nro. de Documento",
-        "warning",
-      );
+      let mensajeError = "No se encontraron datos previos de Bachiller.";
+      if (repoResult && repoResult.success) {
+        mensajeError +=
+          "<br><br><strong>Nota:</strong> Se encontró una tesis en el repositorio, pero no hay datos de bachiller registrados.";
+      }
+
+      Swal.fire({
+        icon: "info",
+        title: "Resultado",
+        html: mensajeError,
+        confirmButtonText: "Aceptar",
+      });
     }
   } catch (error) {
     console.error("❌ Error en AJAX:", error);
@@ -2377,30 +2454,34 @@ async function buscarBachiller() {
 // ========================================
 // FUNCIÓN PARA BUSCAR TESIS EN REPOSITORIO DSPACE
 // ========================================
-function buscarTesisEnRepositorio() {
+function buscarTesisEnRepositorio(silentMode = false) {
   const dni = $("#txt_dni").val();
 
   if (!dni) {
-    Swal.fire("Error", "Debe ingresar un DNI primero", "error");
-    return;
+    if (!silentMode) {
+      Swal.fire("Error", "Debe ingresar un DNI primero", "error");
+    }
+    return Promise.reject("No DNI");
   }
 
-  // Mostrar loading
-  Swal.fire({
-    title: "Buscando en repositorio...",
-    text: "Por favor espere",
-    allowOutsideClick: false,
-    didOpen: () => {
-      Swal.showLoading();
-    },
-  });
+  // Mostrar loading solo si no está en modo silencioso
+  if (!silentMode) {
+    Swal.fire({
+      title: "Buscando en repositorio...",
+      text: "Por favor espere",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+  }
 
-  $.ajax({
+  return $.ajax({
     url: "../controller/repositorio/controlador_buscar_tesis_dni.php",
     type: "POST",
     data: { dni: dni },
   })
-    .done(function (resp) {
+    .then(function (resp) {
       const data = JSON.parse(resp);
 
       if (data.success) {
@@ -2408,10 +2489,11 @@ function buscarTesisEnRepositorio() {
         $("#txt_trabajo_inve").val(data.data.titulo);
         $("#txt_metadata").val(data.data.enlace);
 
-        Swal.fire({
-          icon: "success",
-          title: "¡Tesis encontrada en el repositorio!",
-          html: `
+        if (!silentMode) {
+          Swal.fire({
+            icon: "success",
+            title: "¡Tesis encontrada en el repositorio!",
+            html: `
           <div style="text-align: left;">
             <strong>Título:</strong><br>
             <p style="margin: 5px 0 15px 0;">${data.data.titulo}</p>
@@ -2419,23 +2501,126 @@ function buscarTesisEnRepositorio() {
             <a href="${data.data.enlace}" target="_blank" style="color: #3085d6;">${data.data.enlace}</a>
           </div>
         `,
-          confirmButtonText: "Aceptar",
-        });
+            confirmButtonText: "Aceptar",
+          });
+        }
+
+        return { success: true, data: data.data };
       } else {
+        if (!silentMode) {
+          Swal.fire({
+            icon: "info",
+            title: "No se encontró tesis",
+            text: data.message,
+            confirmButtonText: "Aceptar",
+          });
+        }
+        return { success: false, message: data.message };
+      }
+    })
+    .catch(function () {
+      if (!silentMode) {
         Swal.fire({
-          icon: "info",
-          title: "No se encontró tesis",
-          text: data.message,
+          icon: "error",
+          title: "Error de conexión",
+          text: "No se pudo conectar con el repositorio. Intente nuevamente.",
           confirmButtonText: "Aceptar",
         });
       }
-    })
-    .fail(function () {
-      Swal.fire({
-        icon: "error",
-        title: "Error de conexión",
-        text: "No se pudo conectar con el repositorio. Intente nuevamente.",
-        confirmButtonText: "Aceptar",
-      });
+      return { success: false, message: "Error de conexión" };
     });
+}
+
+function buscarEstudianteLocal(dni) {
+  if (!dni) return Promise.reject("DNI no proporcionado");
+
+  return $.ajax({
+    type: "POST",
+    url: "../controller/estudiante_publico/controlador_buscar_estudiante.php",
+    data: { dni: dni },
+    dataType: "json",
+  })
+    .then(function (response) {
+      if (response && response.success && response.datos) {
+        console.log("Estudiante encontrado en BD local:", response.datos);
+        fillFormWithLocalData(response.datos);
+        return { success: true, source: "local", data: response.datos };
+      } else {
+        return { success: false, message: "No se encontró en BD local" };
+      }
+    })
+    .catch(function (error) {
+      console.error("Error al buscar estudiante local:", error);
+      return { success: false, message: "Error en BD local" };
+    });
+}
+
+function fillFormWithLocalData(data) {
+  // Llenamos el formulario con los valores de la BD local
+  var selectTipoDoc = document.getElementById("select_tipo_documento");
+  if (selectTipoDoc) selectTipoDoc.value = data.tipo_documento || "DNI";
+
+  var tipodoc = data.tipo_documento || "DNI";
+  if (tipodoc === "DNI") {
+    var txtDni = document.getElementById("txt_dni");
+    if (txtDni) txtDni.value = data.Dni;
+  } else {
+    var txtDni2 = document.getElementById("txtdni2");
+    if (txtDni2) txtDni2.value = data.Dni;
+  }
+
+  var txtNom = document.getElementById("txt_nom");
+  if (txtNom) txtNom.value = data.Nombres;
+
+  var txtApepa = document.getElementById("txt_apepa");
+  if (txtApepa) txtApepa.value = data.Apellido_paterno;
+
+  var txtApema = document.getElementById("txt_apema");
+  if (txtApema) txtApema.value = data.Apellido_materno;
+
+  var txtCodigo = document.getElementById("txt_codigo");
+  if (txtCodigo) txtCodigo.value = data.Codigo;
+
+  var selectSexo = document.getElementById("select_sexo");
+  if (selectSexo) selectSexo.value = data.Sexo;
+
+  var txtMovil = document.getElementById("txt_movil");
+  if (txtMovil) txtMovil.value = data.Celular;
+
+  var txtDire = document.getElementById("txt_dire");
+  if (txtDire) txtDire.value = data.Direccion;
+
+  var txtEmailPer = document.getElementById("txt_email_per");
+  if (txtEmailPer) txtEmailPer.value = data.correo_personal;
+
+  var txtEmailInsti = document.getElementById("txt_email_insti");
+  if (txtEmailInsti) txtEmailInsti.value = data.correo_institucional;
+
+  // Llenar fechas y observaciones si existen
+  if (data.Fecha_matricula) {
+    var txtFechaMatri = document.getElementById("txt_fecha_matri");
+    if (txtFechaMatri) txtFechaMatri.value = data.Fecha_matricula;
+  }
+  if (data.Fecha_egreso) {
+    var txtFechaEgres = document.getElementById("txt_fecha_egres");
+    if (txtFechaEgres) txtFechaEgres.value = data.Fecha_egreso;
+  }
+  if (data.Observaciones) {
+    var txtObser = document.getElementById("txt_oberva");
+    if (txtObser) txtObser.value = data.Observaciones;
+  }
+
+  // Llenar variables étnicas si existen en el registro local
+  if (data.DET_ETNICA) {
+    $("#txt_auto_etnica").val(data.DET_ETNICA);
+  }
+  if (data.COD_ETNIA) {
+    $("#txt_pueblo_indigena").val(data.COD_ETNIA);
+  }
+  if (data.DET_LENGUA) {
+    $("#txt_lengua_indigena").val(data.DET_LENGUA);
+  }
+  if (data.COD_LENGUA) {
+    $("#txt_lengua_detalle").val(data.COD_LENGUA);
+  }
 }

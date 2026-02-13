@@ -1,7 +1,7 @@
 <?php
 /**
  * Generador de PDF - Declaración Jurada Variable Étnica y Lengua Indígena
- * Basado en formato SUNEDU
+ * Basado en formato SUNEDU - VERSIÓN MODIFICADA CON TABLA MÁS GRANDE
  */
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -131,7 +131,7 @@ $mpdf = new Mpdf([
     'format' => 'A4',
     'margin_left' => 20,
     'margin_right' => 20,
-    'margin_top' => 55, // Aumentado para el logo de 160px
+    'margin_top' => 55,
     'margin_bottom' => 20,
     'margin_header' => 15,
     'margin_footer' => 10
@@ -155,114 +155,7 @@ $mes = $meses[date('n') - 1];
 $anio = date('Y');
 $fecha_actual = $dia . ' de ' . $mes . ' de ' . $anio;
 
-// Funciones auxiliares para generar las filas de las tablas (4 columnas)
-function generarFilasEtnias($cod_seleccionado) {
-    $etnias = [
-  ['1','Achuar'], ['2','Aimara'], ['3','Amahuaca'], ['4','Arabela'],
-  ['5','Ashaninka'], ['6','Asheninka'], ['7','Awajún'], ['8','Bora'],
-  ['9','Cashinahua'], ['10','Chamicuro'], ['11','Chapra'], ['12','Chitonahua'],
-  ['13','Ese Eja'], ['14','Harakbut'], ['15','Ikitu'], ['16','Iñapari'],
-  ['17','Iskonawa'], ['18','Jaqaru'], ['19','Jibaro'], ['20','Kakataibo'],
-  ['21','Kakinte'], ['22','Kandozi-Chapra'], ['23','Kapanawa'], ['24','Kichwa'],
-  ['25','Kukama - Kukamirla'], ['26','Madija'], ['27','Maijuna'],
-  ['28','Marinahua'], ['29','Mashco Piro'], ['30','Mastanahua'],
-  ['31','Matsés'], ['32','Matsigenka'], ['33','Muniche'],
-  ['34','Murui-Muinani'], ['35','Nahua'], ['36','Nanti'],
-  ['37','Nomatsigenga'], ['38','Ocaina'], ['39','Omagua'],
-  ['40','Quechuas'], ['41','Resigaro'], ['42','Secoya'],
-  ['43','Sharanahua'], ['44','Shawi'], ['45','Shipibo-Konibo'],
-  ['46','Shiwilu'], ['47','Ticuna'], ['48','Urarina'],
-  ['49','Uro'], ['50','Vacacocha'], ['51','Wampis'],
-  ['52','Yagua'], ['53','Yaminahua'], ['54','Yanesha'], ['55','Yine']
-    ];
-    
-    // Dividir en dos columnas: 1-30 y 31-55
-    $col1 = array_slice($etnias, 0, 30);  // 1-30
-    $col2 = array_slice($etnias, 30);      // 31-55
-    
-    $html = '';
-    $max_rows = max(count($col1), count($col2));
-    
-    for ($i = 0; $i < $max_rows; $i++) {
-        $html .= '<tr>';
-        
-        // Columna 1 (códigos 1-30)
-        if (isset($col1[$i])) {
-            $html .= '<td style="border: 1px solid #000; padding: 1px; text-align: center; width: 10px; font-size: 6pt;">' . ($col1[$i][0] == $cod_seleccionado ? 'X' : '') . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 1px; text-align: center; width: 15px; font-size: 6pt;">' . $col1[$i][0] . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 1px 2px; font-size: 6pt;">' . $col1[$i][1] . '</td>';
-        } else {
-            $html .= '<td colspan="3" style="border: 1px solid #000;"></td>';
-        }
-        
-        // Columna 2 (códigos 31-55)
-        if (isset($col2[$i])) {
-            $html .= '<td style="border: 1px solid #000; padding: 1px; text-align: center; width: 10px; font-size: 6pt;">' . ($col2[$i][0] == $cod_seleccionado ? 'X' : '') . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 1px; text-align: center; width: 15px; font-size: 6pt;">' . $col2[$i][0] . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 1px 2px; font-size: 6pt;">' . $col2[$i][1] . '</td>';
-        } else {
-            $html .= '<td colspan="3" style="border: 1px solid #000;"></td>';
-        }
-        
-        $html .= '</tr>';
-    }
-    return $html;
-}
-
-function generarFilasLenguas($cod_seleccionado) {
-    $lenguas = [
-       ['1','Achuar'], ['2','Aimara'], ['3','Amahuaca'], ['4','Arabela'],
-  ['5','Ashaninka'], ['6','Asheninka'], ['7','Awajún'], ['8','Bora'],
-  ['9','Cashinahua'], ['10','Chamicuro'], ['11','Ese Eja'], ['12','Harakbut'],
-  ['13','Ikitu'], ['14','Iñapari'], ['15','Iskonawa'], ['16','Jaqaru'],
-  ['17','Kakataibo'], ['18','Kakinte'], ['19','Kandozi-Chapra'],
-  ['20','Kapanawa'], ['21','Kawki'], ['22','Kukama - Kukamiria'],
-  ['23','Madija'], ['24','Majiki'], ['25','Matsés'],
-  ['26','Matsigenka'], ['27','Matsigenka Montetokuninri'],
-  ['28','Munichi'], ['29','Murui-Muinani'], ['30','Nahua'],
-
-  // 31–48
-  ['31','Nomatsigenga'], ['32','Ocaina'], ['33','Omagua'],
-  ['34','Quechua'], ['35','Resígaro'], ['36','Secoya'],
-  ['37','Sharanahua'], ['38','Shawi'], ['39','Shipibo-Konibo'],
-  ['40','Shiwilu'], ['41','Taushiro'], ['42','Ticuna'],
-  ['43','Urarina'], ['44','Wampis'], ['45','Yagua'],
-  ['46','Yaminahua'], ['47','Yanesha'], ['48','Yine']
-    ];
-    
-    // Dividir en dos columnas: 1-30 y 31-48
-    $col1 = array_slice($lenguas, 0, 30);  // 1-30
-    $col2 = array_slice($lenguas, 30);      // 31-48
-    
-    $html = '';
-    $max_rows = max(count($col1), count($col2));
-    
-    for ($i = 0; $i < $max_rows; $i++) {
-        $html .= '<tr>';
-        
-        // Columna 3 (códigos 1-30)
-        if (isset($col1[$i])) {
-            $html .= '<td style="border: 1px solid #000; padding: 1px; text-align: center; width: 10px; font-size: 6pt;">' . ($col1[$i][0] == $cod_seleccionado ? 'X' : '') . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 1px; text-align: center; width: 15px; font-size: 6pt;">' . $col1[$i][0] . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 1px 2px; font-size: 6pt;">' . $col1[$i][1] . '</td>';
-        } else {
-            $html .= '<td colspan="3" style="border: 1px solid #000;"></td>';
-        }
-        
-        // Columna 4 (códigos 31-48)
-        if (isset($col2[$i])) {
-            $html .= '<td style="border: 1px solid #000; padding: 1px; text-align: center; width: 10px; font-size: 6pt;">' . ($col2[$i][0] == $cod_seleccionado ? 'X' : '') . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 1px; text-align: center; width: 15px; font-size: 6pt;">' . $col2[$i][0] . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 1px 2px; font-size: 6pt;">' . $col2[$i][1] . '</td>';
-        } else {
-            $html .= '<td colspan="3" style="border: 1px solid #000;"></td>';
-        }
-        
-        $html .= '</tr>';
-    }
-    return $html;
-}
-
+// Función para generar la tabla completa con LETRAS MÁS GRANDES Y CELDAS MÁS ALTAS
 function generarFilasTablaCompleta($cod_etnia_seleccionado, $cod_lengua_seleccionado) {
     // VARIABLE ÉTNICA
     $etnias = [
@@ -317,40 +210,44 @@ function generarFilasTablaCompleta($cod_etnia_seleccionado, $cod_lengua_seleccio
     $max_rows = 30; // Máximo 30 filas
     
     for ($i = 0; $i < $max_rows; $i++) {
-        $html .= '<tr style="height: 90px;">';
+        // Altura de fila aumentada a 25px para más espacio vertical
+        $html .= '<tr style="height: 25px;">';
         
         // VARIABLE ÉTNICA - Columna 1 (códigos 1-30)
         if (isset($etnia_col1[$i])) {
-            $html .= '<td style="border: 1px solid #000; padding: 6px; text-align: center; width: 60px; font-size: 30pt; font-weight: bold; color: #000;">' . ($etnia_col1[$i][0] == $cod_etnia_seleccionado ? 'X' : '') . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 6px; text-align: center; width: 60px; font-size: 20pt; font-weight: bold;">' . $etnia_col1[$i][0] . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 6px 15px; width: 350px; font-size: 20pt;">' . $etnia_col1[$i][1] . '</td>';
+            // Checkbox: 20pt para X más grande y visible
+            $html .= '<td style="border: 1px solid #000; padding: 10px 4px; text-align: center; width: 45px; font-size: 20pt; font-weight: bold; color: #000; vertical-align: middle;">' . ($etnia_col1[$i][0] == $cod_etnia_seleccionado ? 'X' : '') . '</td>';
+            // Código: 13pt
+            $html .= '<td style="border: 1px solid #000; padding: 10px 4px; text-align: center; width: 45px; font-size: 13pt; font-weight: bold; vertical-align: middle;">' . $etnia_col1[$i][0] . '</td>';
+            // Nombre: 13pt
+            $html .= '<td style="border: 1px solid #000; padding: 10px 8px; width: 180px; font-size: 13pt; vertical-align: middle;">' . $etnia_col1[$i][1] . '</td>';
         } else {
             $html .= '<td colspan="3" style="border: 1px solid #000;"></td>';
         }
         
         // VARIABLE ÉTNICA - Columna 2 (códigos 31-55)
         if (isset($etnia_col2[$i])) {
-            $html .= '<td style="border: 1px solid #000; padding: 6px; text-align: center; width: 60px; font-size: 30pt; font-weight: bold; color: #000;">' . ($etnia_col2[$i][0] == $cod_etnia_seleccionado ? 'X' : '') . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 6px; text-align: center; width: 60px; font-size: 20pt; font-weight: bold;">' . $etnia_col2[$i][0] . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 6px 15px; width: 350px; font-size: 20pt;">' . $etnia_col2[$i][1] . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 10px 4px; text-align: center; width: 45px; font-size: 20pt; font-weight: bold; color: #000; vertical-align: middle;">' . ($etnia_col2[$i][0] == $cod_etnia_seleccionado ? 'X' : '') . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 10px 4px; text-align: center; width: 45px; font-size: 13pt; font-weight: bold; vertical-align: middle;">' . $etnia_col2[$i][0] . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 10px 8px; width: 180px; font-size: 13pt; vertical-align: middle;">' . $etnia_col2[$i][1] . '</td>';
         } else {
             $html .= '<td colspan="3" style="border: 1px solid #000;"></td>';
         }
         
         // LENGUA INDÍGENA - Columna 3 (códigos 1-30)
         if (isset($lengua_col1[$i])) {
-            $html .= '<td style="border: 1px solid #000; padding: 6px; text-align: center; width: 60px; font-size: 30pt; font-weight: bold; color: #000;">' . ($lengua_col1[$i][0] == $cod_lengua_seleccionado ? 'X' : '') . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 6px; text-align: center; width: 60px; font-size: 20pt; font-weight: bold;">' . $lengua_col1[$i][0] . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 6px 15px; width: 350px; font-size: 20pt;">' . $lengua_col1[$i][1] . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 10px 4px; text-align: center; width: 45px; font-size: 20pt; font-weight: bold; color: #000; vertical-align: middle;">' . ($lengua_col1[$i][0] == $cod_lengua_seleccionado ? 'X' : '') . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 10px 4px; text-align: center; width: 45px; font-size: 13pt; font-weight: bold; vertical-align: middle;">' . $lengua_col1[$i][0] . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 10px 8px; width: 180px; font-size: 13pt; vertical-align: middle;">' . $lengua_col1[$i][1] . '</td>';
         } else {
             $html .= '<td colspan="3" style="border: 1px solid #000;"></td>';
         }
         
         // LENGUA INDÍGENA - Columna 4 (códigos 31-48)
         if (isset($lengua_col2[$i])) {
-            $html .= '<td style="border: 1px solid #000; padding: 6px; text-align: center; width: 60px; font-size: 30pt; font-weight: bold; color: #000;">' . ($lengua_col2[$i][0] == $cod_lengua_seleccionado ? 'X' : '') . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 6px; text-align: center; width: 60px; font-size: 20pt; font-weight: bold;">' . $lengua_col2[$i][0] . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 6px 15px; width: 350px; font-size: 20pt;">' . $lengua_col2[$i][1] . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 10px 4px; text-align: center; width: 45px; font-size: 20pt; font-weight: bold; color: #000; vertical-align: middle;">' . ($lengua_col2[$i][0] == $cod_lengua_seleccionado ? 'X' : '') . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 10px 4px; text-align: center; width: 45px; font-size: 13pt; font-weight: bold; vertical-align: middle;">' . $lengua_col2[$i][0] . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 10px 8px; width: 180px; font-size: 13pt; vertical-align: middle;">' . $lengua_col2[$i][1] . '</td>';
         } else {
             $html .= '<td colspan="3" style="border: 1px solid #000;"></td>';
         }
@@ -531,19 +428,20 @@ $html = '
         </div>
     </div>
     
-<div class="signature-section" style="margin-top: 40px;">
-    <p style="text-align: right; margin-right: 20px;">Abancay, ' . $fecha_actual . '</p>
-    <div class="signature-line" style="margin-top: 80px;"></div>
-    <p><strong>Firma</strong></p>
+<div class="signature-section" style="margin-top: 30px;">
+    <p style="text-align: right; margin-right: 20px; font-size: 11pt;">Abancay, ' . $fecha_actual . '</p>
+    <div style="height: 60px;"></div>
+    <div class="signature-line" style="border-top: 1px solid #000; width: 200px; margin: 0 auto;"></div>
+    <p style="margin-top: 5px;"><strong>Firma</strong></p>
 </div>
     
-    <!-- PÁGINA 2: SOLO TABLAS DE CÓDIGOS -->
+    <!-- PÁGINA 2: TABLA CON LETRAS MÁS GRANDES Y MÁS ESPACIADO VERTICAL -->
     <div style="page-break-before: always;"></div>
     
     <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
         <tr style="background-color: #f0f0f0;">
-            <th colspan="6" style="border: 1px solid #000; padding: 20px; text-align: center; font-weight: bold; font-size: 30pt;">VARIABLE ÉTNICA</th>
-            <th colspan="6" style="border: 1px solid #000; padding: 20px; text-align: center; font-weight: bold; font-size: 30pt;">LENGUA INDÍGENA</th>
+            <th colspan="6" style="border: 1px solid #000; padding: 15px; text-align: center; font-weight: bold; font-size: 18pt;">VARIABLE ÉTNICA</th>
+            <th colspan="6" style="border: 1px solid #000; padding: 15px; text-align: center; font-weight: bold; font-size: 18pt;">LENGUA INDÍGENA</th>
         </tr>
         ' . generarFilasTablaCompleta($cod_etnia, $cod_lengua) . '
     </table>

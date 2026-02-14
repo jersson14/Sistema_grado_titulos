@@ -42,11 +42,11 @@ $nombrearchivo = htmlspecialchars($_POST['nombrearchivo'], ENT_QUOTES, 'UTF-8');
 
 // DATOS DE LA MODALIDAD
 $mod_estu = strtoupper(htmlspecialchars($_POST['mod_estu'], ENT_QUOTES, 'UTF-8'));
-$tra_inv = strtoupper(htmlspecialchars($_POST['tra_inv'], ENT_QUOTES, 'UTF-8'));
+$tra_inv = strtoupper(htmlspecialchars($_POST['tra_inv'] ?? '', ENT_QUOTES, 'UTF-8'));
 $turn = strtoupper(htmlspecialchars($_POST['turn'], ENT_QUOTES, 'UTF-8'));
 $porc = strtoupper(htmlspecialchars($_POST['porc'], ENT_QUOTES, 'UTF-8'));
 $cent = strtoupper(htmlspecialchars($_POST['cent'], ENT_QUOTES, 'UTF-8'));
-$meta = htmlspecialchars($_POST['meta'], ENT_QUOTES, 'UTF-8');
+$meta = htmlspecialchars($_POST['meta'] ?? '', ENT_QUOTES, 'UTF-8');
 $proce_bach = strtoupper(htmlspecialchars($_POST['proce_bach'], ENT_QUOTES, 'UTF-8'));
 $proce_insti = strtoupper(htmlspecialchars($_POST['proce_insti'], ENT_QUOTES, 'UTF-8'));
 $proce_titu = strtoupper(htmlspecialchars($_POST['proce_titu'], ENT_QUOTES, 'UTF-8'));
@@ -364,7 +364,7 @@ body{
                 
                 <div class="contact-item">
                     <span class="contact-location">📍 Filial Cusco:</span>
-                    <span class="contact-phone">970 639 067</span>
+                    <span class="contact-phone">970 669 439</span>
                 </div>
 </div>
 

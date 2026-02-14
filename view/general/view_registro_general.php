@@ -1,6 +1,7 @@
 <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
 <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
 <script src="../js/console_registro_general_titulo.js?rev=<?php echo time(); ?>"></script>
+<link rel="stylesheet" href="../plantilla/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
 
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -551,6 +552,7 @@
                                                         <div class="form-group clearfix">
                                                             <div class="icheck-success d-inline">
                                                                 <input type="checkbox" id="checkboxSuccess1" onclick="Validar_Informacion()">
+                                                                <label for="checkboxSuccess1" style="align:justify">
                                                                     Declaro que datos registrados y los documentos adjuntados son fidedignos y verídicos.
                                                                 </label>
                                                             </div>

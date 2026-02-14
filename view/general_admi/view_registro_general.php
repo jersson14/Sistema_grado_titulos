@@ -1,6 +1,7 @@
 <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
 <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
 <script src="../js/console_registro_general_titulo.js?rev=<?php echo time(); ?>"></script>
+<link rel="stylesheet" href="../plantilla/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
 
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -744,7 +745,7 @@
 
                                                     <div class="col-2 form-group">
                                                         <label for="" style="font-size:small;">Turnitin<b style="color:red">(SOLO TESIS)</b>:</label>
-                                                        <input type="text" class="form-control" id="txt_turni_editar" disabled>
+                                                        <input type="text" class="form-control" id="txt_turni_editar" >
                                                     </div>
                                                     <div class="col-2 form-group">
                                                         <label for="" style="font-size:small;">Porcentaje<b style="color:red">(SOLO TESIS)</b>:</label>

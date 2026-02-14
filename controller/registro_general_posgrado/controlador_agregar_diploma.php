@@ -266,7 +266,7 @@ body{
         <span>📍 Andahuaylas</span><span class="contact-phone">957 306 881</span>
     </div>
     <div class="contact-item">
-        <span>📍 Cusco</span><span class="contact-phone">970 639 067</span>
+        <span>📍 Cusco</span><span class="contact-phone">970 669 439</span>
     </div>
 </div>
 

@@ -58,3 +58,15 @@
 [2026-02-13 11:12:41] PDF generado en: C:\xampp\htdocs\ultimogrados\controller\estudiante_publico/../../uploads/declaraciones_etnicas/declaracion_etnica_76050151_1770999161.pdf
 [2026-02-13 11:12:41] Intentando enviar correo a: jersson14071996@gmail.com
 [2026-02-13 11:12:44] Correo enviado exitosamente.
+[2026-02-14 00:29:19] Inicio de procesamiento para DNI: 72020151
+[2026-02-13 18:29:19] Generando PDF...
+[2026-02-13 18:29:21] Respuesta raw del generador PDF: {"success":true,"filename":"declaracion_etnica_72020151_1771025360.pdf","filepath":"uploads\/declara...
+[2026-02-13 18:29:21] PDF generado en: C:\xampp\htdocs\ultimogrados\controller\estudiante_publico/../../uploads/declaraciones_etnicas/declaracion_etnica_72020151_1771025360.pdf
+[2026-02-13 18:29:21] Intentando enviar correo a: jersson14071996@gmail.com
+[2026-02-13 18:29:24] Correo enviado exitosamente.
+[2026-02-14 00:40:51] Inicio de procesamiento para DNI: 62145511
+[2026-02-13 18:40:51] Generando PDF...
+[2026-02-13 18:40:52] Respuesta raw del generador PDF: {"success":true,"filename":"declaracion_etnica_62145511_1771026051.pdf","filepath":"uploads\/declara...
+[2026-02-13 18:40:52] PDF generado en: C:\xampp\htdocs\ultimogrados\controller\estudiante_publico/../../uploads/declaraciones_etnicas/declaracion_etnica_62145511_1771026051.pdf
+[2026-02-13 18:40:52] Intentando enviar correo a: jersson14071996@gmail.com
+[2026-02-13 18:40:55] Correo enviado exitosamente.

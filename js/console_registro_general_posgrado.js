@@ -875,6 +875,7 @@ function AbrirModal() {
 }
 
 //AGREGAR DIPLOMA
+//AGREGAR DIPLOMA
 function Agregar_diploma() {
   let idexpe = document.getElementById("id_expe").value;
   let id = document.getElementById("txt_id_diplo").value;
@@ -1062,7 +1063,7 @@ function Agregar_diploma() {
       var url =
         "../view/MPDF/REPORTE/maestria.php?codigo=" +
         id +
-        "&tamaño=45&tamaño2=100#zoom=100%";
+        "&tamaño=45&tamaño2=97#zoom=100%";
       tbl_general_posgrado.ajax.reload();
       $("#modal_registrar_diploma").modal("hide");
       var newWindow = window.open(url, "DIPLOMA POSGRADO", "scrollbars=NO");
@@ -1078,6 +1079,7 @@ function Agregar_diploma() {
 
 var contadorFolio3 = parseInt(localStorage.getItem("contadorFolio3")) || 0;
 var contadorLibro3 = parseInt(localStorage.getItem("contadorLibro3")) || 0;
+
 function Traernumero() {
   $.ajax({
     url: "../controller/registro_general_posgrado/controlador_traernumero.php",

@@ -98,6 +98,21 @@ function listar_estudiantes() {
         },
       },
       {
+        data: "estado_var_etnica",
+        render: function (data, type, row) {
+          let checked = data == "1" ? "checked" : "";
+          return `
+            <label class="toggle-switch">
+              <input type="checkbox" ${checked} onchange="CambiarEstatusEtnica('${row.Dni}', this.checked ? 1 : 0)">
+              <span class="slider">
+                <span class="on-text">ON</span>
+                <span class="off-text">OFF</span>
+              </span>
+            </label>
+          `;
+        },
+      },
+      {
         defaultContent:
           "<button class='ver btn btn-info btn-sm' title='Ver información'><i class='fa fa-eye'></i> Ver</button> <button class='editar btn btn-primary  btn-sm' title='Editar datos de área'><i class='fa fa-edit'></i> Editar</button>",
       },
@@ -282,6 +297,31 @@ function Modificarr_Estudiante() {
       return Swal.fire(
         "Mensaje de Error",
         "No se completo la actualización",
+        "error",
+      );
+    }
+  });
+}
+
+function CambiarEstatusEtnica(dni, estatus) {
+  $.ajax({
+    url: "../controller/estudiantes_posgrado/controlador_modificar_estatus_etnica.php",
+    type: "POST",
+    data: { dni: dni, estatus: estatus },
+  }).done(function (resp) {
+    if (resp > 0) {
+      Swal.fire({
+        icon: "success",
+        title: "Estatus actualizado",
+        text: "El estado de la declaración ha sido cambiado",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+      tbl_estudiantes.ajax.reload();
+    } else {
+      Swal.fire(
+        "Mensaje de Error",
+        "No se pudo actualizar el estatus",
         "error",
       );
     }

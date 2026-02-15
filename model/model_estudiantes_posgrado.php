@@ -42,7 +42,21 @@
             }
             conexionBD::cerrar_conexion();
         }
-       
+
+        public function Modificar_Estatus_Etnica($dni, $estatus){
+            $c = conexionBD::conexionPDO();
+            $sql = "UPDATE estudiante_posgrado SET estado_var_etnica = ? WHERE Dni = ?";
+            $query = $c->prepare($sql);
+            $query->bindParam(1, $estatus);
+            $query->bindParam(2, $dni);
+            $resultado = $query->execute();
+            if($resultado){
+                return 1;
+            }else{
+                return 0;
+            }
+            conexionBD::cerrar_conexion();
+        }
     }
 
 

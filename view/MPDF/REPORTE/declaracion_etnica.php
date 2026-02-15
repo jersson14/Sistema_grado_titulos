@@ -140,7 +140,7 @@ $mpdf = new Mpdf([
 // Configurar encabezado repetitivo
 $headerHTML = '
     <div style="text-align: center; margin-bottom: 20px;">
-        <img src="C:/xampp/htdocs/ultimogrados/img/utea.png" style="width: 160px; height: auto; margin-bottom: 10px;">
+        <img src="../../../img/utea.png" style="width: 160px; height: auto; margin-bottom: 10px;">
         <div style="background-color: #4A90E2; color: white; padding: 10px; font-weight: bold; font-size: 16pt; font-family: Arial, sans-serif; border-radius: 5px;">
             UNIVERSIDAD TECNOLÓGICA DE LOS ANDES
         </div>

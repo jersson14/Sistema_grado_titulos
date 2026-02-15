@@ -1,4 +1,62 @@
 <script src="../js/console_estudiantes.js?rev=<?php echo time();?>"></script>
+<style>
+    .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 30px;
+    }
+    .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: .4s;
+        border-radius: 34px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 8px;
+        color: white;
+        font-weight: bold;
+        font-size: 10px;
+    }
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 22px;
+        width: 22px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+        z-index: 2;
+    }
+    input:checked + .slider {
+        background: linear-gradient(90deg, #1fa0e0 0%, #17a2b8 100%);
+    }
+    input:checked + .slider:before {
+        transform: translateX(30px);
+    }
+    .slider .on-text, .slider .off-text {
+        z-index: 1;
+    }
+    input:checked + .slider .off-text {
+        display: none;
+    }
+    input:not(:checked) + .slider .on-text {
+        display: none;
+    }
+</style>
 
 <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -43,6 +101,7 @@
                           <th style="text-align:center">Fecha de Matricula</th>
                           <th style="text-align:center">Fecha de Egreso</th>
                           <th style="text-align:center">Tiempo Transcurrido</th>
+                          <th style="text-align:center">Declaración</th>
                           <th style="text-align:center">Acción</th>
                       </tr>
                   </thead>

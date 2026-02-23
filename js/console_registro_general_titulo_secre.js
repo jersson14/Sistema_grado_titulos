@@ -1351,6 +1351,8 @@ function limpiarCampos() {
   document.getElementById("txt_secretario").value = "";
   document.getElementById("txt_decano").value = "";
   document.getElementById("txt_titulo").value = "";
+  document.getElementById("txt_modalidad").value = "TESIS";
+  document.getElementById("txt_turni").value = "SI (TURNITIN)";
 
   // No resetear selects completamente para evitar errores al re-seleccionar
   $("#select_facultad").val("").trigger("change");
@@ -2299,9 +2301,10 @@ function buscarEnReniecLocal(dni) {
           icon: "success",
           title: "DNI Encontrado",
           text: `Se cargaron los datos de ${data.first_name} desde Reniec.`,
-          timer: 1500,
           showConfirmButton: false,
         });
+        // BUSCAR TESIS AUTOMATICAMENTE
+        buscarTesisEnRepositorio(true);
       } else {
         Swal.fire(
           "No encontrado",

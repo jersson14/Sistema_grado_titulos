@@ -24,7 +24,12 @@
         <ul class="nav nav-tabs" id="buzonTabs" role="tablist">
           <li class="nav-item">
             <a class="nav-link active" id="tab-gestion-tab" data-toggle="pill" href="#tab-gestion" role="tab" aria-controls="tab-gestion" aria-selected="true">
-                <i class="fas fa-folder-open"></i> Gestión por Colación
+                <i class="fas fa-folder-open"></i> Gestión Pregrado
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="tab-posgrado-tab" data-toggle="pill" href="#tab-posgrado" role="tab" aria-controls="tab-posgrado" aria-selected="false">
+                <i class="fas fa-graduation-cap"></i> Gestión Posgrado
             </a>
           </li>
           <li class="nav-item">
@@ -43,7 +48,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label>Seleccione Colación:</label>
+                            <label>Seleccione Colación Pregrado:</label>
                             <select class="form-control select2" id="cbo_colacion" style="width: 100%;">
                                 <!-- Carga AJAX -->
                             </select>
@@ -52,7 +57,7 @@
                     <div class="col-md-8 text-right">
                         <label>&nbsp;</label><br>
                         <button class="btn btn-primary" id="btn_subir_mostrar" onclick="AbrirModalSubida()" disabled>
-                            <i class="fas fa-cloud-upload-alt"></i> Subir Diplomas (ZIP/PDF)
+                            <i class="fas fa-cloud-upload-alt"></i> Subir Diplomas Pregrado
                         </button>
                     </div>
                 </div>
@@ -75,7 +80,44 @@
                 </div>
             </div>
             
-            <!-- TAB 2: BÚSQUEDA -->
+            <!-- TAB 2: GESTIÓN POSGRADO -->
+            <div class="tab-pane fade" id="tab-posgrado" role="tabpanel" aria-labelledby="tab-posgrado-tab">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Seleccione Colación Posgrado:</label>
+                            <select class="form-control select2" id="cbo_colacion_pos" style="width: 100%;">
+                                <!-- Carga AJAX -->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-8 text-right">
+                        <label>&nbsp;</label><br>
+                        <button class="btn btn-warning" id="btn_subir_mostrar_pos" onclick="AbrirModalSubidaPos()" disabled>
+                            <i class="fas fa-cloud-upload-alt"></i> Subir Diplomas Posgrado
+                        </button>
+                    </div>
+                </div>
+                
+                <hr>
+                
+                <div class="table-responsive">
+                    <table id="tabla_archivos_pos" class="table table-striped table-bordered" style="width:100%">
+                        <thead style="background-color:#856404;color:#FFFFFF;">
+                            <tr>
+                                <th>ID</th>
+                                <th>DNI Estudiante</th>
+                                <th>Nombre Archivo</th>
+                                <th>Fecha Subida</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TAB 3: BÚSQUEDA -->
             <div class="tab-pane fade" id="tab-busqueda" role="tabpanel" aria-labelledby="tab-busqueda-tab">
                 <div class="row justify-content-center">
                     <div class="col-md-6">

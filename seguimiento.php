@@ -1353,6 +1353,10 @@
               if (row.estadoexpediente === "COLACION") {
                 let fechaColacion = "";
 
+                if (row.id_colacion == 99) {
+                  return '<span style="color: #10b981; font-weight: 600; font-size: 11px; white-space: nowrap;"><i class="fas fa-check-circle"></i> LISTO</span>';
+                }
+
                 if (row.Id_cede == 1) {
                   fechaColacion = row.fecha_larga || "No programada";
                 } else if (row.Id_cede == 2) {

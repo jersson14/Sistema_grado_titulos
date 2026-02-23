@@ -9,7 +9,7 @@ function establecerCicloInvestigacion(idEscuela, selectId) {
   const ciclosPorEscuela = {
     2: "X",
     4: "X",
-    6: "VIII",
+    6: "X",
     8: "X",
     10: "XI",
     11: "X",

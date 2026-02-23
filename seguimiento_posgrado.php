@@ -1388,6 +1388,9 @@ function crearTablaExpedientes(datadetalle) {
         data: "fecha_larga",
         render: function(data, type, row) {
           if (row.esta === "COLACION") {
+            if (row.id_colacion == 99) {
+              return '<span style="color: #10b981; font-weight: 600; font-size: 11px; white-space: nowrap;"><i class="fas fa-check-circle"></i> LISTO</span>';
+            }
             if (data && data !== "" && data !== "No programada") {
               return '<span style="color: #10b981; font-weight: 600; font-size: 11px; white-space: nowrap;"><i class="fas fa-calendar-check"></i> ' + data + '</span>';
             } else {

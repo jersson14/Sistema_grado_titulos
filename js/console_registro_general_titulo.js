@@ -1822,7 +1822,8 @@ function limpiarCampos() {
   document.getElementById("txt_fecha_inicio_mod").value = "";
   document.getElementById("txt_fecha_fin").value = "";
 
-  document.getElementById("txt_modalidad").value = "";
+  document.getElementById("txt_modalidad").value = "TESIS";
+  document.getElementById("txt_turni").value = "SI (TURNITIN)";
   document.getElementById("select_cede").value = "";
   document.getElementById("select_sexo").value = "";
 
@@ -3219,6 +3220,8 @@ function buscarEnReniecLocal(dni) {
           timer: 1500,
           showConfirmButton: false,
         });
+        // BUSCAR TESIS AUTOMATICAMENTE
+        buscarTesisEnRepositorio(true);
       } else {
         Swal.fire(
           "No encontrado",

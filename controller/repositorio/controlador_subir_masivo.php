@@ -10,6 +10,8 @@
     $MU = new Modelo_Repositorio();
 
     $id_colacion = htmlspecialchars($_POST['id_colacion'], ENT_QUOTES, 'UTF-8');
+    $nivel = htmlspecialchars($_POST['nivel'], ENT_QUOTES, 'UTF-8');
+    if(empty($nivel)) $nivel = 'PREGRADO';
     
     if(empty($id_colacion)){
         echo json_encode(['success' => false, 'message' => 'No se seleccionó ninguna colación.']);
@@ -37,7 +39,7 @@
     ];
 
     // Función auxiliar para procesar un archivo individual
-    function procesar_archivo_pdf($tmp_path, $original_name, $target_dir, $id_colacion, $MU) {
+    function procesar_archivo_pdf($tmp_path, $original_name, $target_dir, $id_colacion, $nivel, $MU) {
         // Validar extensión
         $ext = strtolower(pathinfo($original_name, PATHINFO_EXTENSION));
         if($ext != 'pdf'){
@@ -57,7 +59,7 @@
         if(copy($tmp_path, $final_path)) {
             // Registrar en BD
             $ruta_bd = 'uploads/repositorio/' . $id_colacion . '/' . $clean_name;
-            $res = $MU->Registrar_Archivo($id_colacion, $dni, $original_name, $ruta_bd);
+            $res = $MU->Registrar_Archivo($id_colacion, $dni, $original_name, $ruta_bd, $nivel);
             
             if($res){
                 return ['status' => true, 'dni' => $dni];
@@ -123,7 +125,7 @@
                 // Ignorar archivos de sistema ocultos (como .DS_Store o __MACOSX)
                 if(strpos($name, '.') === 0 || strpos($path, '__MACOSX') !== false) continue;
                 
-                $result = procesar_archivo_pdf($path, $name, $target_dir, $id_colacion, $MU);
+                $result = procesar_archivo_pdf($path, $name, $target_dir, $id_colacion, $nivel, $MU);
                 
                 if($result['status']){
                     $response['processed']++;
@@ -159,7 +161,7 @@
                 // move_uploaded_file es necesario para $_FILES, pero mi función usa copy.
                 // copy funciona con tmp_name también.
                 
-                $result = procesar_archivo_pdf($tmp_name, $name, $target_dir, $id_colacion, $MU);
+                $result = procesar_archivo_pdf($tmp_name, $name, $target_dir, $id_colacion, $nivel, $MU);
                 
                  if($result['status']){
                     $response['processed']++;

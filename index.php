@@ -2,6 +2,7 @@
   session_start();
   if(isset($_SESSION['S_ID'])){
     header('Location: view/index.php');
+    
   }
    // Generar token CSRF si no existe
    if (!isset($_SESSION['csrf_token']) || 

@@ -12,6 +12,11 @@
             $query->execute();
             $resultado = $query->fetchAll(PDO::FETCH_ASSOC);
             foreach($resultado as $resp){
+                if($resp['id_colacion'] == 99) {
+                    $resp['nombre_colacion'] = 'DIPLOMAS ANTIGUOS';
+                    // We don't have fechacolacion in this result array directly usually, 
+                    // but we ensure the name is clean.
+                }
                 $arreglo["data"][]=$resp;
             }
             return $arreglo;

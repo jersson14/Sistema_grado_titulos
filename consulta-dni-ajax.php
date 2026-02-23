@@ -1,7 +1,7 @@
 <?php
 
 $dni = $_POST['dni'];
-$token = 'sk_6484.Nc0D8FvCLx5ICODwuQWwWlBS0HBy7MRt'; // Tu token real
+$token = 'sk_6484.CgEdJjm9Tpeg044t0FwLVrWbPC6rPXb6'; // Tu token real
 
 if(strlen($dni) != 8){
     echo json_encode(1); // Validación de 8 dígitos

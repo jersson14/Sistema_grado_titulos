@@ -380,6 +380,9 @@
             $resultado = $query->fetchAll();
             $arreglo = array();
             foreach($resultado as $resp){
+                if($resp[0] == 99) {
+                    $resp[1] = 'DIPLOMAS ANTIGUOS';
+                }
                 $arreglo[]=$resp;
             }
             return $arreglo;

@@ -13,7 +13,7 @@ function establecerCicloInvestigacion(idEscuela, selectId) {
   const ciclosPorEscuela = {
     2: "X",
     4: "X",
-    6: "VIII",
+    6: "X",
     8: "X",
     10: "XI",
     11: "X",
@@ -22,11 +22,11 @@ function establecerCicloInvestigacion(idEscuela, selectId) {
     17: "IX",
     19: "X",
     24: "X",
-    25: "X"
+    25: "X",
   };
 
   const selectCiclo = document.getElementById(selectId);
-  
+
   if (!selectCiclo) {
     console.warn(`No se encontró el elemento con ID: ${selectId}`);
     return;
@@ -38,12 +38,14 @@ function establecerCicloInvestigacion(idEscuela, selectId) {
   if (cicloAsignado) {
     // Establecer el valor del select
     selectCiclo.value = cicloAsignado;
-    
+
     // Disparar evento change para que otros listeners se enteren
-    const event = new Event('change', { bubbles: true });
+    const event = new Event("change", { bubbles: true });
     selectCiclo.dispatchEvent(event);
-    
-    console.log(`Ciclo ${cicloAsignado} asignado automáticamente para escuela ID ${idEscuela}`);
+
+    console.log(
+      `Ciclo ${cicloAsignado} asignado automáticamente para escuela ID ${idEscuela}`,
+    );
   } else {
     // Si no hay ciclo definido para esta escuela, limpiar el select
     selectCiclo.value = "";

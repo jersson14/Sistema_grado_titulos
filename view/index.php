@@ -1554,6 +1554,44 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </div>
 
 
+<!-- MODAL RECORDATORIO PAGO HOSTING -->
+<div class="modal fade" id="modal_recordatorio_hosting" tabindex="-1" role="dialog" aria-labelledby="labelHosting" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content" style="border-radius: 15px; overflow: hidden; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+      <div class="modal-header" style="background: linear-gradient(135deg, #FFC107 0%, #FFA000 100%); border-bottom: none; padding: 20px;">
+        <h5 class="modal-title" id="labelHosting" style="color:#212529; font-weight: 800; letter-spacing: 1px; width: 100%; text-align: center;">
+          <i class="fas fa-hand-holding-usd mr-2"></i> RECORDATORIO DE PAGO
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: #212529; opacity: 1;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center" style="padding: 40px 30px; background-color: #fcfcfc;">
+        <div style="background: rgba(255, 193, 7, 0.1); width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px;">
+           <i class="fas fa-server" style="color:#FFA000; font-size: 35px;"></i>
+        </div>
+        <h4 style="color: #023D77; font-weight: 700; margin-bottom: 15px;">Estimado Administrador</h4>
+        <p style="font-size: 17px; color: #555; line-height: 1.6;">
+          Se le comunica que debe realizar el pago puntual del servicio de <strong>HOSTING</strong> para mantener la continuidad del sistema.
+        </p>
+        <div style="background: #eef2f7; border-radius: 12px; padding: 20px; margin-top: 25px;">
+           <p style="margin-bottom: 5px; color: #666; font-size: 14px; text-transform: uppercase; font-weight: 600;">Monto a transferir</p>
+           <h2 style="color: #023D77; font-weight: 900; margin-bottom: 0;">S/ 150.00</h2>
+        </div>
+        <div style="margin-top: 20px; color: #d32f2f; font-weight: 700; font-size: 16px;">
+           <i class="fas fa-calendar-alt mr-2"></i> EL PLAZO VENCE EL QUINCE DE CADA MES
+        </div>
+      </div>
+      <div class="modal-footer" style="border-top: none; padding: 0 30px 30px; justify-content: center;">
+        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal" style="background: #023D77; border: none; padding: 12px 40px; border-radius: 10px; font-weight: 600; box-shadow: 0 4px 15px rgba(2, 61, 119, 0.3);">
+          ENTENDIDO
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <!-- REQUIRED SCRIPTS -->
 <script>
   function cargar_contenido(id, vista) {
@@ -1664,6 +1702,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
     Total_escuelas();
     Total_programada();
     Total_autoridad();
+
+    // RECORDATORIO PAGO HOSTING
+    var rol = "<?php echo $_SESSION['S_ROL']; ?>";
+    var fecha = new Date();
+    var dia = fecha.getDate();
+    // Días 13, 14, 15 y el 4 para pruebas (dia 4 hoy)
+    if (rol == "Administrador" && (dia == 13 || dia == 14 || dia == 15 || dia == 4)) {
+      $('#modal_recordatorio_hosting').modal({backdrop: 'static', keyboard: false});
+      $('#modal_recordatorio_hosting').modal('show');
+    }
   });
   // Reiniciar los valores en el localStorage
 

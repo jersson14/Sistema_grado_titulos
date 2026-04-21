@@ -1796,14 +1796,24 @@ function Imprimir_informe() {
 
 //IMPRIMIR DIPLOMA
 $("#tabla_registro_general_posgrado").on("click", ".diploma", function () {
-  var data = tbl_general_posgrado.row($(this).parents("tr")).data();
+  var data = tbl_general_posgrado.row($(this).closest("tr")).data();
 
   var tamaño = 45;
   var tamaño2 = 100;
 
   if (tbl_general_posgrado.row(this).child.isShown()) {
-    var data = tbl_general_posgrado.row(this).data();
+    data = tbl_general_posgrado.row(this).data();
   }
+
+  if (!data || !data.Id_Diploma) {
+    Swal.fire(
+      "Error al imprimir diploma",
+      "No se encontró el ID del diploma (Id_Diploma). El stored procedure activo puede no incluir este campo. Verifique que SP_LISTAR_GENERAL_POSGRADO_COLACION y los demás SPs incluyan 'diploma_posgrado.Id_Diploma' en su SELECT.",
+      "error"
+    );
+    return;
+  }
+
   var url =
     "../view/MPDF/REPORTE/maestria.php?codigo=" +
     encodeURIComponent(data.Id_Diploma) +

@@ -3,7 +3,11 @@ require_once __DIR__ . '/../vendor/autoload.php';
 $fontPath = __DIR__ . '/../view/MPDF/fonts/Mtcorsva.ttf';
 
 require_once '../conexion.php'; // Incluye tu archivo de conexión si es necesario
-$codigo = $mysqli->real_escape_string($_GET['codigo']);
+$codigo_raw = isset($_GET['codigo']) ? $_GET['codigo'] : '';
+if (empty($codigo_raw) || $codigo_raw === 'undefined' || $codigo_raw === 'null' || !is_numeric($codigo_raw)) {
+    die('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Error</title></head><body style="font-family:Arial;padding:40px;text-align:center;"><h2 style="color:#c0392b;">&#9888; Error al generar el diploma</h2><p>No se pudo obtener el ID del diploma (codigo=' . htmlspecialchars($codigo_raw) . ').</p><p>Esto ocurre cuando el stored procedure utilizado no retorna el campo <strong>Id_Diploma</strong>.<br>Verifique que el SP activo incluya <code>diploma_posgrado.Id_Diploma</code> en su SELECT.</p><p><button onclick="window.close()">Cerrar</button></p></body></html>');
+}
+$codigo = $mysqli->real_escape_string($codigo_raw);
 $tamaño = $mysqli->real_escape_string($_GET['tamaño']);
 $tamaño2 = $mysqli->real_escape_string($_GET['tamaño2']);
 use Mpdf\Mpdf;

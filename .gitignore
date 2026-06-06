@@ -17,6 +17,7 @@ tramitedoc/view/MPDF/vendor/
 
 # ─── Archivos de configuración de entorno ──────────────────────────────────────
 config/config.php
+model/model_conexion.php
 .env
 
 # ─── Archivos subidos por usuarios ─────────────────────────────────────────────

@@ -1,0 +1,40 @@
+# ─── Bases de datos ────────────────────────────────────────────────────────────
+*.sql
+
+# ─── Sistema operativo ─────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.log
+
+# ─── Dependencias Node.js ──────────────────────────────────────────────────────
+node_modules/
+
+# ─── Dependencias Composer (PHP) ───────────────────────────────────────────────
+view/vendor/
+view/MPDF/vendor/
+incocap/view/MPDF/vendor/
+tramitedoc/view/MPDF/vendor/
+
+# ─── Archivos de configuración de entorno ──────────────────────────────────────
+config/config.php
+.env
+
+# ─── Archivos subidos por usuarios ─────────────────────────────────────────────
+uploads/*
+!uploads/.gitkeep
+
+# ─── Archivos generados temporalmente ──────────────────────────────────────────
+view/storage/
+*.tmp
+
+# ─── IDEs y editores ───────────────────────────────────────────────────────────
+.idea/
+.vscode/
+.vs/
+nbproject/
+*.suo
+*.user
+
+# ─── Archivos de caché ─────────────────────────────────────────────────────────
+.sass-cache/
+.cache/

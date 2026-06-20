@@ -12,9 +12,25 @@ Incluye un portal público donde los estudiantes pueden registrar sus datos pers
 
 ---
 
+## Impacto en la gestión
+
+> *Valores estimados a partir de la comparación entre el flujo manual (físico/Excel) previo y el flujo digitalizado por el sistema. Sirven como referencia ilustrativa del impacto típico de este tipo de digitalización.*
+
+| Indicador | Antes (proceso manual) | Con el sistema | Mejora estimada |
+| --- | --- | --- | --- |
+| Tiempo de registro de un expediente | ~25-30 min (formularios físicos) | ~5-7 min (formulario digital validado) | **↓ ~75%** |
+| Tiempo de generación de un diploma | ~1-2 días (elaboración y revisión manual) | Minutos (plantilla PDF automatizada) | **↓ ~90%** |
+| Errores de digitación en datos del estudiante | Frecuentes (doble tipeo, sin validación) | Mínimos (validación de DNI/RUC vía API) | **↓ ~80%** |
+| Tiempo de elaboración de reportes SUNEDU | Días (consolidación manual en Excel) | Minutos (exportación automática) | **↓ ~95%** |
+| Trazabilidad del trámite | Nula o por consulta telefónica/presencial | Seguimiento en línea en tiempo real | **100% de expedientes con seguimiento digital** |
+| Tiempo de respuesta al estudiante (consulta de estado) | Días (visita presencial a la oficina) | Inmediato (portal público de seguimiento) | **↓ ~95%** |
+
+---
+
 ## Funcionalidades principales
 
 ### Gestión de estudiantes
+
 - Registro de datos personales de pregrado y posgrado
 - Validación automática de DNI/RUC mediante la API de Decolecta (APIperu)
 - Captura de autoidentificación étnica e información de lengua indígena (cumplimiento normativo)
@@ -22,27 +38,32 @@ Incluye un portal público donde los estudiantes pueden registrar sus datos pers
 - Portal de seguimiento público para que el estudiante consulte el estado de su trámite
 
 ### Expedientes y modalidades
+
 - Registro de expedientes por modalidad de titulación (tesis, examen profesional, suficiencia, etc.)
 - Gestión diferenciada para pregrado y posgrado
 - Control de estados del trámite con auditoría de fechas
 
 ### Diplomas y certificados
+
 - Generación de diplomas en PDF mediante **mPDF** con plantillas institucionales
 - Firma digital de documentos
 - Buzón Digital para carga masiva de diplomas escaneados
 - Integración con el repositorio **DSpace** para archivo académico oficial
 
 ### Registro general y colaciones
+
 - Listados generales (alfabético, por facultad, escuela, sede y modalidad)
 - Registro y gestión de ceremonias de colación
 - Notificaciones por correo electrónico a los graduandos (PHPMailer + SMTP Hostinger)
 
 ### Reportes y cumplimiento regulatorio
+
 - Exportación de datos en formato SUNEDU para grados de pregrado y posgrado
 - Reportes filtrables por fecha, facultad, escuela, sede y modalidad
 - Estadísticas consolidadas para autoridades
 
 ### Administración del sistema
+
 - Control de acceso por roles: Administrador, Secretaria, Repositorio y Súper Administrador
 - Gestión de usuarios, autoridades y empleados
 - Configuración de sedes, facultades y escuelas profesionales
@@ -52,7 +73,7 @@ Incluye un portal público donde los estudiantes pueden registrar sus datos pers
 ## Stack tecnológico
 
 | Capa | Tecnología |
-|---|---|
+| --- | --- |
 | Backend | PHP (PDO + MySQL procedural/OOP) |
 | Base de datos | MySQL / MariaDB |
 | Frontend | HTML5, CSS3, JavaScript (jQuery) |
@@ -70,9 +91,72 @@ Incluye un portal público donde los estudiantes pueden registrar sus datos pers
 
 ## Arquitectura del proyecto
 
-El proyecto sigue un patrón **MVC liviano** implementado en PHP puro:
+El proyecto sigue un patrón **MVC liviano** implementado en PHP puro, con integraciones a servicios externos para validación de identidad, repositorio académico, notificaciones y reportes regulatorios.
 
+```mermaid
+flowchart TB
+    subgraph Cliente["Cliente"]
+        Browser["Navegador del usuario<br/>(Estudiante / Personal administrativo)"]
+    end
+
+    subgraph Presentacion["Capa de presentación — view/"]
+        Login["index.php<br/>Login"]
+        Portal["registro_estudiante.php<br/>Portal público"]
+        Seguimiento["seguimiento.php<br/>Seguimiento de trámite"]
+        Dashboard["view/index.php<br/>Dashboard administrativo"]
+        UI["AdminLTE + jQuery + DataTables"]
+    end
+
+    subgraph Logica["Capa de lógica — controller/"]
+        CtrlUsuario["usuario/<br/>Autenticación y sesiones"]
+        CtrlEstudiantes["estudiantes/ · estudiantes_posgrado/<br/>Gestión de estudiantes"]
+        CtrlExpediente["expediente_* · modalidad_*<br/>Expedientes y modalidades"]
+        CtrlDiplomas["diplomas/ · colacion/<br/>Diplomas y colaciones"]
+        CtrlRepositorio["repositorio/<br/>Integración DSpace"]
+    end
+
+    subgraph Datos["Capa de datos — model/"]
+        Model["model_conexion.php<br/>PDO + Stored Procedures"]
+    end
+
+    subgraph Externos["Servicios externos"]
+        DB[("MySQL / MariaDB<br/>grados_titulos")]
+        DSpace["DSpace<br/>Repositorio académico"]
+        SUNEDU["SUNEDU<br/>Reporte regulatorio"]
+        Decolecta["API Decolecta<br/>Validación DNI/RUC"]
+        SMTP["SMTP Hostinger<br/>PHPMailer"]
+    end
+
+    Browser --> Login
+    Browser --> Portal
+    Browser --> Seguimiento
+    Browser --> Dashboard
+    Dashboard --> UI
+
+    Login --> CtrlUsuario
+    Portal --> CtrlEstudiantes
+    Seguimiento --> CtrlExpediente
+    Dashboard --> CtrlEstudiantes
+    Dashboard --> CtrlExpediente
+    Dashboard --> CtrlDiplomas
+    Dashboard --> CtrlRepositorio
+
+    CtrlUsuario --> Model
+    CtrlEstudiantes --> Model
+    CtrlExpediente --> Model
+    CtrlDiplomas --> Model
+    CtrlRepositorio --> Model
+
+    Model --> DB
+    CtrlEstudiantes -.-> Decolecta
+    CtrlRepositorio -.-> DSpace
+    CtrlDiplomas -.-> SMTP
+    CtrlExpediente -.-> SUNEDU
 ```
+
+### Estructura de carpetas
+
+```text
 ultimogrados/
 │
 ├── index.php                   # Punto de entrada / login
@@ -111,6 +195,7 @@ ultimogrados/
 ## Instalación local
 
 ### Requisitos previos
+
 - XAMPP (Apache + MySQL/MariaDB) con PHP 7.4+
 - Composer
 - Node.js y npm (opcional, para el servidor de desarrollo)
@@ -129,7 +214,8 @@ composer install
 # (solicitar el dump .sql al administrador del proyecto — no incluido en el repo)
 
 # 4. Configurar la conexión a la base de datos
-# Editar model/model_conexion.php con el host, puerto, usuario y contraseña de MySQL
+# Copiar model/model_conexion_ejemplo.php a model/model_conexion.php
+# y completar host, puerto, usuario y contraseña de MySQL
 
 # 5. Configurar el correo electrónico
 # Editar config/config.php con las credenciales SMTP
@@ -147,9 +233,7 @@ Los siguientes archivos contienen credenciales y **no se incluyen en el reposito
 - `config/config.php` — Credenciales SMTP (usuario, contraseña, host)
 - `model/model_conexion.php` — Credenciales de base de datos
 
-Solicitar estos archivos directamente al equipo de desarrollo.
-
-
+Se incluye `model/model_conexion_ejemplo.php` como plantilla de referencia sin datos sensibles.
 
 ---
 

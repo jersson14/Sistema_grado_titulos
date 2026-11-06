@@ -15,6 +15,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>UTEA | PERÚ</title>
+  <script>
+    // Evita que se vea el dashboard mientras se restaura el módulo de la URL
+    if (new URLSearchParams(location.search).get("modulo")) {
+      document.documentElement.classList.add("modulo-cargando");
+    }
+  </script>
+  <style>
+    .modulo-cargando #contenido_principal {
+      visibility: hidden;
+    }
+  </style>
   <script src="../js/jquery.min.js"></script>
   <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
   <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
@@ -893,214 +904,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- /.content-header -->
       <?php if ($_SESSION['S_ROL'] == "Super Administrador") { ?>
 
-        <!-- Main content -->
-        <div class="content">
-          <div class="container-fluid">
-            <div class="row">
-              <!-- /.col-md-6 -->
-              <div class="col-lg-12">
-                <div class="card-primary">
-                  <div class="card-header">
-                    <h5 class="m-0" style="font-family:Arial;text-align:center"><i class="fas fa-list-ol"></i><b> DATOS ESTADÍSTICOS</b></h5>
-                  </div>
-                  <div class="card-body" style="background-color:white">
-                    <div class="row">
-                      <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-info">
-                          <div class="inner">
-                            <b>Total de Diplomas Bachiller</b>
-                            <h3 id="total_diplo_bachiller"><sup style="font-size: 20px"></sup></h3>
-
-                          </div>
-                          <div class="icon">
-                            <i class="fas fa-file"></i>
-                          </div>
-                          <a href="#" onclick="cargar_contenido('contenido_principal','diplomas/view_diploma_bachiller.php')" class="small-box-footer"><b>Ver diplomas bachiller</b>&nbsp;<i class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                      </div>
-                      <!-- ./col -->
-                      <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-warning">
-                          <div class="inner">
-                            <b>Total de Diplomas Título</b>
-                            <h3 id="total_diplo_titulo"><sup style="font-size: 20px"></sup></h3>
-
-                          </div>
-                          <div class="icon">
-                            <i class="fas fa-file"></i>
-                          </div>
-                          <a href="#" onclick="cargar_contenido('contenido_principal','diplomas/view_diploma_titulo.php')" class="small-box-footer"><b>Ver diplomas titulo</b>&nbsp;<i class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                      </div>
-                      <!-- ./col -->
-                      <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-success">
-                          <div class="inner">
-
-                            <b>Total de Diplomas Posgrado</b>
-                            <h3 id="total_diplo_pos"><sup style="font-size: 20px"></sup></h3>
-
-                          </div>
-                          <div class="icon">
-                            <i class="fas fa-file"></i>
-                          </div>
-                          <a href="#" onclick="cargar_contenido('contenido_principal','diplomas/view_diploma_posgrado.php')" class="small-box-footer"><b>Ver diplomas posgrado</b>&nbsp; <i class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                      </div>
-                      <!-- ./col -->
-                      <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-dark">
-                          <div class="inner">
-                            <b>Total de Graduados a Nivel Pregrado</b>
-                            <h3 id="total_pregrado"><sup style="font-size: 20px"></sup></h3>
-
-                          </div>
-                          <div class="icon">
-                            <i class="fas fa-user-graduate"></i>
-                          </div>
-                          <a href="#" onclick="cargar_contenido('contenido_principal','estudiantes/view_estudiantes.php')" class="small-box-footer"><b>Ver graduados pregrado</b>&nbsp; <i class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                      </div>
-                      <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-danger">
-                          <div class="inner">
-                            <b>Total de Expedientes Bachiller</b>
-                            <h3 id="totalexpe_bachiller"><sup style="font-size: 20px"></sup></h3>
-
-                          </div>
-                          <div class="icon">
-                            <i class="fas fa-file"></i>
-                          </div>
-                          <a href="#" onclick="cargar_contenido('contenido_principal','expediente/view_expediente_bachiller.php')" class="small-box-footer"><b>Ver expedientes bachiller</b></b>&nbsp; <i class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                      </div>
-                      <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-secondary">
-                          <div class="inner">
-                            <b>Total de Expedientes de Título</b>
-                            <h3 id="totalexpe_titulo"><sup style="font-size: 20px"></sup></h3>
-
-                          </div>
-                          <div class="icon">
-                            <i class="fas fa-file"></i>
-                          </div>
-                          <a href="#" onclick="cargar_contenido('contenido_principal','expediente_titulo/view_expediente_titulo.php')" class="small-box-footer"><b>Ver expedientes titulo</b></b>&nbsp; <i class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                      </div>
-                      <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-light">
-                          <div class="inner">
-                            <b>Total de Expedientes de Posgrado</b>
-                            <h3 id="total_expe_pos"><sup style="font-size: 20px"></sup></h3>
-
-                          </div>
-                          <div class="icon">
-                            <i class="fas fa-file"></i>
-                          </div>
-                          <a href="#" onclick="cargar_contenido('contenido_principal','expediente_posgrado/view_expediente_posgrado.php')" class="small-box-footer"><b>Ver expedientes posgrado</b>&nbsp; <i class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                      </div>
-                      <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-dark">
-                          <div class="inner">
-                            <b>Total de Graduados a Nivel Posgrado</b>
-                            <h3 id="total_posgrado"><sup style="font-size: 20px"></sup></h3>
-
-                          </div>
-                          <div class="icon">
-                            <i class="fas fa-user-graduate"></i>
-                          </div>
-                          <a href="#" onclick="cargar_contenido('contenido_principal','estudiantes_posgrado/view_estudiantes.php')" class="small-box-footer"><b>Ver graduados posgrado</b>&nbsp; <i class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                      </div>
-                      <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <hr>
-                        <div class="small-box bg-dark">
-                          <div class="inner">
-                            <b>Total Facultades</b>
-                            <h3 id="total_facul"><sup style="font-size: 20px"></sup></h3>
-
-                          </div>
-                          <div class="icon">
-                            <i class="fas fa-school"></i>
-                          </div>
-                          <a href="#" onclick="cargar_contenido('contenido_principal','facultad/view_facultad.php')" class="small-box-footer"><b>Ver facultades</b></b>&nbsp; <i class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                      </div>
-                      <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <hr>
-                        <div class="small-box bg-primary">
-                          <div class="inner">
-                            <b>Total Programas Pregrado</b>
-                            <h3 id="totalescuelas"><sup style="font-size: 20px"></sup>0</h3>
-
-                          </div>
-                          <div class="icon">
-                            <i class="fas fa-layer-group"></i>
-                          </div>
-                          <a href="#" onclick="cargar_contenido('contenido_principal','carrera/view_carrera.php')" class="small-box-footer"><b>Ver programas</b></b>&nbsp; <i class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                      </div>
-                      <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <hr>
-                        <div class="small-box bg-danger">
-                          <div class="inner">
-                            <b>Total Programas Posgrado</b>
-                            <h3 id="total_program"><sup style="font-size: 20px"></sup>0</h3>
-
-                          </div>
-                          <div class="icon">
-                            <i class="fas fa-layer-group"></i>
-                          </div>
-                          <a href="#" onclick="cargar_contenido('contenido_principal','programa/view_programa.php')" class="small-box-footer"><b>Ver programas</b>&nbsp; <i class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                      </div>
-                      <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <hr>
-                        <div class="small-box bg-info">
-                          <div class="inner">
-                            <b>Total Autoridades</b>
-                            <h3 id="total_autoridad"><sup style="font-size: 20px"></sup>0</h3>
-
-                          </div>
-                          <div class="icon">
-                            <i class="fas fa-user-graduate"></i>
-                          </div>
-                          <a href="#" onclick="cargar_contenido('contenido_principal','autoridades/view_autoridades.php')" class="small-box-footer"><b>Ver autoridades</b>&nbsp; <i class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-              <!-- /.col-md-6 -->
-            </div>
-            <!-- /.row -->
-          </div><!-- /.container-fluid -->
-        </div>
+        <?php include __DIR__ . '/dashboard/panel_dashboard.php'; ?>
 
         <div class="content">
           <div class="container-fluid">
             <div class="row">
               <!-- /.col-md-6 -->
               <div class="col-lg-12">
-                <div class="card-primary">
-                  <div class="card-header">
-                    <h5 class="m-0" style="font-family:Arial;text-align:center"><i class="fas fa-school"></i><b> DATOS INSTITUCIÓN</b< /h5>
-                  </div>
+                <section class="panel-institucion">
+                  <h2>Datos de la institución</h2>
                   <div class="table-responsive" style="text-align:center">
                     <div class="card-body">
                       <table id="tabla_empresa" class="table table-striped table-bordered" style="width:100%">
@@ -1120,7 +932,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       </table>
                     </div>
                   </div>
-                </div>
+                </section>
                 <!-- /.col-md-6 -->
               </div>
               <!-- /.row -->
@@ -1210,206 +1022,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   ?>
   <?php if ($_SESSION['S_ROL'] == "Administrador") { ?>
 
-    <!-- Main content -->
-    <div class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <!-- /.col-md-6 -->
-          <div class="col-lg-12">
-            <div class="card-primary">
-              <div class="card-header">
-                <h5 class="m-0" style="font-family:Arial;text-align:center"><i class="fas fa-list-ol"></i><b> DATOS ESTADÍSTICOS</b></h5>
-              </div>
-              <div class="card-body" style="background-color:white">
-                <div class="row">
-                  <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-info">
-                      <div class="inner">
-                        <b>Total de Diplomas Bachiller</b>
-                        <h3 id="total_diplo_bachiller"><sup style="font-size: 20px"></sup></h3>
-
-                      </div>
-                      <div class="icon">
-                        <i class="fas fa-file"></i>
-                      </div>
-                      <a href="#" onclick="cargar_contenido('contenido_principal','diplomas/view_diploma_bachiller.php')" class="small-box-footer"><b>Ver diplomas bachiller</b>&nbsp;<i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                  </div>
-                  <!-- ./col -->
-                  <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-warning">
-                      <div class="inner">
-                        <b>Total de Diplomas Título</b>
-                        <h3 id="total_diplo_titulo"><sup style="font-size: 20px"></sup></h3>
-
-                      </div>
-                      <div class="icon">
-                        <i class="fas fa-file"></i>
-                      </div>
-                      <a href="#" onclick="cargar_contenido('contenido_principal','diplomas/view_diploma_titulo.php')" class="small-box-footer"><b>Ver diplomas titulo</b>&nbsp;<i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                  </div>
-                  <!-- ./col -->
-                  <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-success">
-                      <div class="inner">
-
-                        <b>Total de Diplomas Posgrado</b>
-                        <h3 id="total_diplo_pos"><sup style="font-size: 20px"></sup></h3>
-
-                      </div>
-                      <div class="icon">
-                        <i class="fas fa-file"></i>
-                      </div>
-                      <a href="#" onclick="cargar_contenido('contenido_principal','diplomas/view_diploma_posgrado.php')" class="small-box-footer"><b>Ver diplomas posgrado</b>&nbsp; <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                  </div>
-                  <!-- ./col -->
-                  <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-dark">
-                      <div class="inner">
-                        <b>Total de Graduados a Nivel Pregrado</b>
-                        <h3 id="total_pregrado"><sup style="font-size: 20px"></sup></h3>
-
-                      </div>
-                      <div class="icon">
-                        <i class="fas fa-user-graduate"></i>
-                      </div>
-                      <a href="#" onclick="cargar_contenido('contenido_principal','estudiantes/view_estudiantes.php')" class="small-box-footer"><b>Ver graduados pregrado</b>&nbsp; <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-danger">
-                      <div class="inner">
-                        <b>Total de Expedientes Bachiller</b>
-                        <h3 id="totalexpe_bachiller"><sup style="font-size: 20px"></sup></h3>
-
-                      </div>
-                      <div class="icon">
-                        <i class="fas fa-file"></i>
-                      </div>
-                      <a href="#" onclick="cargar_contenido('contenido_principal','expediente/view_expediente_bachiller.php')" class="small-box-footer"><b>Ver expedientes bachiller</b></b>&nbsp; <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-secondary">
-                      <div class="inner">
-                        <b>Total de Expedientes de Título</b>
-                        <h3 id="totalexpe_titulo"><sup style="font-size: 20px"></sup></h3>
-
-                      </div>
-                      <div class="icon">
-                        <i class="fas fa-file"></i>
-                      </div>
-                      <a href="#" onclick="cargar_contenido('contenido_principal','expediente_titulo/view_expediente_titulo.php')" class="small-box-footer"><b>Ver expedientes titulo</b></b>&nbsp; <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-light">
-                      <div class="inner">
-                        <b>Total de Expedientes de Posgrado</b>
-                        <h3 id="total_expe_pos"><sup style="font-size: 20px"></sup></h3>
-
-                      </div>
-                      <div class="icon">
-                        <i class="fas fa-file"></i>
-                      </div>
-                      <a href="#" onclick="cargar_contenido('contenido_principal','expediente_posgrado/view_expediente_posgrado.php')" class="small-box-footer"><b>Ver expedientes posgrado</b>&nbsp; <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-dark">
-                      <div class="inner">
-                        <b>Total de Graduados a Nivel Posgrado</b>
-                        <h3 id="total_posgrado"><sup style="font-size: 20px"></sup></h3>
-
-                      </div>
-                      <div class="icon">
-                        <i class="fas fa-user-graduate"></i>
-                      </div>
-                      <a href="#" onclick="cargar_contenido('contenido_principal','estudiantes_posgrado/view_estudiantes.php')" class="small-box-footer"><b>Ver graduados posgrado</b>&nbsp; <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <hr>
-                    <div class="small-box bg-dark">
-                      <div class="inner">
-                        <b>Total Facultades</b>
-                        <h3 id="total_facul"><sup style="font-size: 20px"></sup></h3>
-
-                      </div>
-                      <div class="icon">
-                        <i class="fas fa-school"></i>
-                      </div>
-                      <a href="#" onclick="cargar_contenido('contenido_principal','facultad/view_facultad.php')" class="small-box-footer"><b>Ver facultades</b></b>&nbsp; <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <hr>
-                    <div class="small-box bg-primary">
-                      <div class="inner">
-                        <b>Total Programas Pregrado</b>
-                        <h3 id="totalescuelas"><sup style="font-size: 20px"></sup>0</h3>
-
-                      </div>
-                      <div class="icon">
-                        <i class="fas fa-layer-group"></i>
-                      </div>
-                      <a href="#" onclick="cargar_contenido('contenido_principal','carrera/view_carrera.php')" class="small-box-footer"><b>Ver programas</b></b>&nbsp; <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <hr>
-                    <div class="small-box bg-danger">
-                      <div class="inner">
-                        <b>Total Programas Posgrado</b>
-                        <h3 id="total_program"><sup style="font-size: 20px"></sup>0</h3>
-
-                      </div>
-                      <div class="icon">
-                        <i class="fas fa-layer-group"></i>
-                      </div>
-                      <a href="#" onclick="cargar_contenido('contenido_principal','programa/view_programa.php')" class="small-box-footer"><b>Ver programas</b>&nbsp; <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <hr>
-                    <div class="small-box bg-info">
-                      <div class="inner">
-                        <b>Total Autoridades</b>
-                        <h3 id="total_autoridad"><sup style="font-size: 20px"></sup>0</h3>
-
-                      </div>
-                      <div class="icon">
-                        <i class="fas fa-user-graduate"></i>
-                      </div>
-                      <a href="#" onclick="cargar_contenido('contenido_principal','autoridades/view_autoridades.php')" class="small-box-footer"><b>Ver autoridades</b>&nbsp; <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-          <!-- /.col-md-6 -->
-        </div>
-        <!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-
-
+    <?php include __DIR__ . '/dashboard/panel_dashboard.php'; ?>
 
     <!-- /.content -->
   </div>
@@ -1594,8 +1207,29 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <!-- REQUIRED SCRIPTS -->
 <script>
+  var modulo_mostrado = null;
+
+  function modulo_de_url() {
+    return new URLSearchParams(location.search).get("modulo");
+  }
+
+  function mostrar_modulo(modulo) {
+    modulo_mostrado = modulo;
+    $("#contenido_principal").load(modulo + ".php", function() {
+      document.documentElement.classList.remove("modulo-cargando");
+    });
+  }
+
   function cargar_contenido(id, vista) {
-    $("#" + id).load(vista);
+    if (id != "contenido_principal") {
+      $("#" + id).load(vista);
+      return;
+    }
+    var modulo = vista.replace(/\.php$/, "");
+    if (modulo !== modulo_de_url()) {
+      history.pushState(null, "", "?modulo=" + modulo);
+    }
+    mostrar_modulo(modulo);
   }
   var idioma_espanol = {
     select: {
@@ -1683,25 +1317,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="../js/console_registro_general_posgrado.js?rev=<?php echo time(); ?>"></script>
 <script src="../js/console_empresa.js?rev=<?php echo time(); ?>"></script>
 <script src="../js/console_usuario.js?rev=<?php echo time(); ?>"></script>
+<script src="../js/console_dashboard.js?rev=<?php echo time(); ?>"></script>
 
 </body>
 
 </html>
 <script>
   $(document).ready(function() {
-    listar_empresa();
-    Total_diploma_bachiller();
-    Total_diploma_titulo();
-    Total_expediente_bach();
-    Total_expediente_titu();
-    Total_pregrado();
-    Total_diploma_posgrado();
-    Total_expediente_posgrado();
-    Total_posgraduados();
-    Total_facultad();
-    Total_escuelas();
-    Total_programada();
-    Total_autoridad();
+    // Si se va a abrir un módulo de la URL, el dashboard no se ve y no hace falta consultarlo
+    if (modulos_permitidos.indexOf(modulo_de_url()) === -1) {
+      listar_empresa();
+      cargar_panel();
+    }
 
     // RECORDATORIO PAGO HOSTING
     var rol = "<?php echo $_SESSION['S_ROL']; ?>";
@@ -1713,6 +1340,50 @@ scratch. This page gets rid of all links and provides the needed markup only.
       $('#modal_recordatorio_hosting').modal('show');
     }
   });
+
+  // RUTAS POR MÓDULO: index.php?modulo=carpeta/vista
+  // Solo se abren los módulos enlazados en la página, que PHP ya filtró según el rol
+  var modulos_permitidos = $('a[onclick*="cargar_contenido"]').map(function() {
+    var ruta = this.getAttribute("onclick").match(/'([^']+)\.php'\)/);
+    return ruta ? ruta[1] : null;
+  }).get();
+
+  function restaurar_modulo() {
+    var modulo = modulo_de_url();
+    if (modulos_permitidos.indexOf(modulo) !== -1) {
+      mostrar_modulo(modulo);
+    } else {
+      history.replaceState(null, "", location.pathname);
+      document.documentElement.classList.remove("modulo-cargando");
+    }
+  }
+
+  // href="#" agregaría una entrada extra al historial
+  $(document).on("click", 'a[onclick*="cargar_contenido"]', function(e) {
+    e.preventDefault();
+  });
+
+  // Espera a "load" porque las vistas usan gapi, que se carga de forma asíncrona
+  $(window).on("load", function() {
+    if (modulo_de_url() && modulo_mostrado === null) {
+      restaurar_modulo();
+    }
+  });
+
+  // Botones Atrás y Adelante del navegador
+  $(window).on("popstate", function() {
+    var modulo = modulo_de_url();
+    if (modulo === modulo_mostrado) {
+      return;
+    }
+    $(".modal.show").modal("hide");
+    if (modulo) {
+      restaurar_modulo();
+    } else {
+      location.reload();
+    }
+  });
+
   // Reiniciar los valores en el localStorage
 
 

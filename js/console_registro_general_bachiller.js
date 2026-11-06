@@ -1342,7 +1342,7 @@ function Cargar_Select_facul_carrera(id) {
       $("#txtes_filial").html(cadena);
 
       // Esperar a que el usuario seleccione un valor antes de llamar a Traerauto
-      $("#select_escuela").on("change", function () {
+      $("#select_escuela").off("change.grado").on("change.grado", function () {
         var idSeleccionado = $(this).val();
         if (idSeleccionado) {
           Traergrado(idSeleccionado);
@@ -1358,8 +1358,15 @@ function Cargar_Select_facul_carrera(id) {
   });
 }
 
-function Traergrado(idgrado) {
+function Traergrado(idgrado, reintento) {
   console.log("Cargando datos para el ID: ", idgrado);
+
+  // Sin programa seleccionado no hay nada que consultar
+  if (!idgrado) {
+    $("#txt_bachiller").val("");
+    $("#txt_bachiller_editar").val("");
+    return;
+  }
 
   $.ajax({
     url: "../controller/expediente_bachiller/controlador_traergrado.php",
@@ -1382,8 +1389,23 @@ function Traergrado(idgrado) {
         $("#txt_bachiller_editar").val("No se encontraron registros");
       }
     })
-    .fail(function () {
-      alert("Error al cargar la información de grado");
+    .fail(function (xhr, status) {
+      // Un "abort" lo pide el propio código, no es un error
+      if (status === "abort") {
+        return;
+      }
+      console.error("Traergrado falló:", xhr.status, status);
+      if (!reintento) {
+        setTimeout(function () {
+          Traergrado(idgrado, true);
+        }, 1500);
+        return;
+      }
+      Swal.fire(
+        "Mensaje de Advertencia",
+        "No se pudo traer la denominación del grado. Vuelve a seleccionar el programa.",
+        "warning",
+      );
     });
 }
 

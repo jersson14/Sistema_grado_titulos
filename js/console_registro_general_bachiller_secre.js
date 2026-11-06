@@ -735,7 +735,7 @@ function Cargar_Select_facul_carrera(id) {
       $("#txtes_filial").html(cadena);
 
       // Esperar a que el usuario seleccione un valor antes de llamar a Traerauto
-      $("#select_escuela").on("change", function () {
+      $("#select_escuela").off("change.grado").on("change.grado", function () {
         var idSeleccionado = $(this).val();
         if (idSeleccionado) {
           Traergrado(idSeleccionado);

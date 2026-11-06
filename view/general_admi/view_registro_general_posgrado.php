@@ -375,45 +375,43 @@
                                 <h7><b>Campos Obligatorios (*)</b></h7>
                             </div>
                             
-                            <div class="col-2 form-group">
+                            <div class="col-4 form-group">
                                 <label for="" style="font-size:small;">Modo de estudio<b style="color:red">(*)</b>:</label>
                                 <input type="text" class="form-control" id="txt_modo_estu" value="PRESENCIAL">                           
                             </div>
-                            
-                            <div class="col-3 form-group">
-                                <label for="" style="font-size:small;">Trabajo de Investigación<b style="color:red">(SOLO TESIS)</b>:</label>
-                                <textarea  class="form-control" id="txt_trabajo_inve"  rows="2" style="resize:none"></textarea>
-                            </div>
-                            <div class="col-3 form-group">
-                                <label for="" style="font-size:small;">Metadato o Link<b style="color:red">(SOLO TESIS)</b>:</label>
-                                <textarea class="form-control" id="txt_metadata"  rows="2" style="resize:none"></textarea>
-                            </div>
-                           
-                            <div class="col-2 form-group">
+                            <div class="col-4 form-group">
                                 <label for="" style="font-size:small;">Turnitin<b style="color:red">(SOLO TESIS)</b>:</label>
                                 <input type="text" class="form-control" id="txt_turni" value="SI (TURNITIN)">                           
                             </div>
-                            <div class="col-2 form-group">
+                            <div class="col-4 form-group">
                                 <label for="" style="font-size:small;">Porcentaje<b style="color:red">(SOLO TESIS)</b>:</label>
                                 <input type="text" class="form-control" id="txt_porce" >                           
                             </div>
-                            <div class="col-3 form-group">
+                            <div class="col-6 form-group">
+                                <label for="" style="font-size:small;">Trabajo de Investigación<b style="color:red">(SOLO TESIS)</b>:</label>
+                                <textarea  class="form-control" id="txt_trabajo_inve"  rows="3" style="resize:vertical"></textarea>
+                            </div>
+                            <div class="col-6 form-group">
+                                <label for="" style="font-size:small;">Metadato o Link<b style="color:red">(SOLO TESIS)</b>:</label>
+                                <textarea class="form-control" id="txt_metadata"  rows="3" style="resize:vertical"></textarea>
+                            </div>
+                            <div class="col-6 form-group">
                                 <label for="" style="font-size:small;">Centro de Investigación<b style="color:red">(*)</b>:</label>
-                                <textarea class="form-control" id="txt_centro_inve"  rows="2" style="resize:none"></textarea>
+                                <textarea class="form-control" id="txt_centro_inve"  rows="3" style="resize:vertical"></textarea>
                             </div>
-                           
-                            <div class="col-3 form-group">
+                            <div class="col-6 form-group">
                                 <label for="" style="font-size:small;">Procedencia de País Extran. (Opcional):</label>
-                                <textarea class="form-control" id="txt_proceden_pais"  rows="2" style="resize:none"></textarea>
+                                <textarea class="form-control" id="txt_proceden_pais"  rows="3" style="resize:vertical"></textarea>
                             </div>
-                            <div class="col-3 form-group">
+                            <div class="col-6 form-group">
                                 <label for="" style="font-size:small;">Procedencia de Unive. Extran. (Opcional):</label>
-                                <textarea class="form-control" id="txt_procedeni_univer"  rows="2" style="resize:none"></textarea>
+                                <textarea class="form-control" id="txt_procedeni_univer"  rows="3" style="resize:vertical"></textarea>
                             </div>
-                            <div class="col-3 form-group">
+                            <div class="col-6 form-group">
                                 <label for="" style="font-size:small;">Procedencia de Grado Extran. (Opcional):</label>
-                                <textarea class="form-control" id="txt_proceden_grado"  rows="2" style="resize:none"></textarea>
+                                <textarea class="form-control" id="txt_proceden_grado"  rows="3" style="resize:vertical"></textarea>
                             </div>
+
                             <div class="col-3 form-group">
                                 <label for="" style="font-size:small;">Fecha de matri. de modalidad (Opcional):</label>
                                 <input type="date" class="form-control" id="txt_fecha_matri_mod">                           
@@ -674,45 +672,43 @@
                                 <h7><b>Campos Obligatorios (*)</b></h7>
                             </div>
                         <input type="text" id="txt_id_modalidad" hidden> 
-                            <div class="col-2 form-group">
+                            <div class="col-4 form-group">
                                 <label for="" style="font-size:small;">Modo de estudio<b style="color:red">(*)</b>:</label>
                                 <input type="text" class="form-control" id="txt_modo_estu_editar">                           
                             </div>
-                            
-                            <div class="col-3 form-group">
-                                <label for="" style="font-size:small;">Trabajo de Investigación<b style="color:red">(SOLO TESIS)</b>:</label>
-                                <textarea  class="form-control" id="txt_trabajo_inve_editar"  rows="2" style="resize:none"></textarea>
-                            </div>
-                            <div class="col-3 form-group">
-                                <label for="" style="font-size:small;">Metadato o Link<b style="color:red">(SOLO TESIS)</b>:</label>
-                                <textarea class="form-control" id="txt_metadata_editar"  rows="2" style="resize:none"></textarea>
-                            </div>
-                           
-                            <div class="col-2 form-group">
+                            <div class="col-4 form-group">
                                 <label for="" style="font-size:small;">Turnitin<b style="color:red">(SOLO TESIS)</b>:</label>
                                 <input type="text" class="form-control" id="txt_turni_editar">                           
                             </div>
-                            <div class="col-2 form-group">
+                            <div class="col-4 form-group">
                                 <label for="" style="font-size:small;">Porcentaje<b style="color:red">(SOLO TESIS)</b>:</label>
                                 <input type="text" class="form-control" id="txt_porce_editar">                           
                             </div>
-                            <div class="col-3 form-group">
+                            <div class="col-6 form-group">
+                                <label for="" style="font-size:small;">Trabajo de Investigación<b style="color:red">(SOLO TESIS)</b>:</label>
+                                <textarea  class="form-control" id="txt_trabajo_inve_editar"  rows="3" style="resize:vertical"></textarea>
+                            </div>
+                            <div class="col-6 form-group">
+                                <label for="" style="font-size:small;">Metadato o Link<b style="color:red">(SOLO TESIS)</b>:</label>
+                                <textarea class="form-control" id="txt_metadata_editar"  rows="3" style="resize:vertical"></textarea>
+                            </div>
+                            <div class="col-6 form-group">
                                 <label for="" style="font-size:small;">Centro de Investigación<b style="color:red">(*)</b>:</label>
-                                <textarea class="form-control" id="txt_centro_inve_editar"  rows="2" style="resize:none"></textarea>
+                                <textarea class="form-control" id="txt_centro_inve_editar"  rows="3" style="resize:vertical"></textarea>
                             </div>
-                           
-                            <div class="col-3 form-group">
+                            <div class="col-6 form-group">
                                 <label for="" style="font-size:small;">Procedencia de País Extran. (Opcional):</label>
-                                <textarea class="form-control" id="txt_proceden_pais_editar"  rows="2" style="resize:none"></textarea>
+                                <textarea class="form-control" id="txt_proceden_pais_editar"  rows="3" style="resize:vertical"></textarea>
                             </div>
-                            <div class="col-3 form-group">
+                            <div class="col-6 form-group">
                                 <label for="" style="font-size:small;">Procedencia de Unive. Extran. (Opcional):</label>
-                                <textarea class="form-control" id="txt_procedeni_univer_editar"  rows="2" style="resize:none"></textarea>
+                                <textarea class="form-control" id="txt_procedeni_univer_editar"  rows="3" style="resize:vertical"></textarea>
                             </div>
-                            <div class="col-3 form-group">
+                            <div class="col-6 form-group">
                                 <label for="" style="font-size:small;">Procedencia de Grado Extran. (Opcional):</label>
-                                <textarea class="form-control" id="txt_proceden_grado_editar"  rows="2" style="resize:none"></textarea>
+                                <textarea class="form-control" id="txt_proceden_grado_editar"  rows="3" style="resize:vertical"></textarea>
                             </div>
+
                             <div class="col-3 form-group">
                                 <label for="" style="font-size:small;">Fecha de matri. de modalidad (Opcional):</label>
                                 <input type="date" class="form-control" id="txt_fecha_matri_mod_editar">                           
@@ -1133,45 +1129,43 @@
                     <div class="col-12">
                         <div class="row">
                                                   
-                            <div class="col-2 form-group">
+                            <div class="col-4 form-group">
                                 <label for="" style="font-size:small;">Modo de estudio<b style="color:red">(*)</b>:</label>
                                 <input type="text" class="form-control" id="txt_modo_estu_mas" readonly>                           
                             </div>
-                            
-                            <div class="col-3 form-group">
-                                <label for="" style="font-size:small;">Trabajo de Investigación<b style="color:red">(SOLO TESIS)</b>:</label>
-                                <textarea  class="form-control" id="txt_trabajo_inve_mas"  rows="2" style="resize:none" readonly></textarea>
-                            </div>
-                            <div class="col-3 form-group">
-                                <label for="" style="font-size:small;">Metadato o Link<b style="color:red">(SOLO TESIS)</b>:</label>
-                                <textarea class="form-control" id="txt_metadata_mas"  rows="2" style="resize:none" readonly></textarea>
-                            </div>
-                           
-                            <div class="col-2 form-group">
+                            <div class="col-4 form-group">
                                 <label for="" style="font-size:small;">Turnitin<b style="color:red">(SOLO TESIS)</b>:</label>
                                 <input type="text" class="form-control" id="txt_turni_mas" readonly>                           
                             </div>
-                            <div class="col-2 form-group">
+                            <div class="col-4 form-group">
                                 <label for="" style="font-size:small;">Porcentaje<b style="color:red">(SOLO TESIS)</b>:</label>
                                 <input type="text" class="form-control" id="txt_porce_mas" readonly>                           
                             </div>
-                            <div class="col-3 form-group">
+                            <div class="col-6 form-group">
+                                <label for="" style="font-size:small;">Trabajo de Investigación<b style="color:red">(SOLO TESIS)</b>:</label>
+                                <textarea  class="form-control" id="txt_trabajo_inve_mas"  rows="3" style="resize:vertical" readonly></textarea>
+                            </div>
+                            <div class="col-6 form-group">
+                                <label for="" style="font-size:small;">Metadato o Link<b style="color:red">(SOLO TESIS)</b>:</label>
+                                <textarea class="form-control" id="txt_metadata_mas"  rows="3" style="resize:vertical" readonly></textarea>
+                            </div>
+                            <div class="col-6 form-group">
                                 <label for="" style="font-size:small;">Centro de Investigación<b style="color:red">(*)</b>:</label>
-                                <textarea class="form-control" id="txt_centro_inve_mas"  rows="2" style="resize:none" readonly></textarea>
+                                <textarea class="form-control" id="txt_centro_inve_mas"  rows="3" style="resize:vertical" readonly></textarea>
                             </div>
-                           
-                            <div class="col-3 form-group">
+                            <div class="col-6 form-group">
                                 <label for="" style="font-size:small;">Procedencia de País Extran. (Opcional):</label>
-                                <textarea class="form-control" id="txt_proceden_pais_mas"  rows="2" style="resize:none" readonly></textarea>
+                                <textarea class="form-control" id="txt_proceden_pais_mas"  rows="3" style="resize:vertical" readonly></textarea>
                             </div>
-                            <div class="col-3 form-group">
+                            <div class="col-6 form-group">
                                 <label for="" style="font-size:small;">Procedencia de Unive. Extran. (Opcional):</label>
-                                <textarea class="form-control" id="txt_procedeni_univer_mas"  rows="2" style="resize:none" readonly></textarea>
+                                <textarea class="form-control" id="txt_procedeni_univer_mas"  rows="3" style="resize:vertical" readonly></textarea>
                             </div>
-                            <div class="col-3 form-group">
+                            <div class="col-6 form-group">
                                 <label for="" style="font-size:small;">Procedencia de Grado Extran. (Opcional):</label>
-                                <textarea class="form-control" id="txt_proceden_grado_mas"  rows="2" style="resize:none" readonly></textarea>
+                                <textarea class="form-control" id="txt_proceden_grado_mas"  rows="3" style="resize:vertical" readonly></textarea>
                             </div>
+
                             <div class="col-3 form-group">
                                 <label for="" style="font-size:small;">Fecha de matri. de modalidad (Opcional):</label>
                                 <input type="date" class="form-control" id="txt_fecha_matri_mod_mas" readonly>                           

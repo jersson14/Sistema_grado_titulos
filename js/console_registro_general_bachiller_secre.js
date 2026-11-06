@@ -2048,7 +2048,8 @@ function fetchSheetData() {
         var filaEncontrada = null;
         for (var i = 0; i < data.length; i++) {
           var fila = data[i];
-          if (fila[2] === dniIngresado || fila[2] === dniIngresado2) {
+          var dniFila = String(fila[2] || "").trim();
+          if (dniFila && (dniFila === String(dniIngresado || "").trim() || dniFila === String(dniIngresado2 || "").trim())) {
             // Suponiendo que el DNI está en la columna 2 (índice 1)
             filaEncontrada = fila;
             break;
